@@ -1,8 +1,134 @@
 {
   "culture": "en",
   "texts": {
-    "Menu:Home": "Home",
     "Welcome": "Welcome",
-    "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information, visit abp.io."
+    "LongWelcomeMessage": "Welcome to the HTS application.",
+
+    "Table:Summary": "In total there are {0} {1}.",
+    "Table:PageSummary": "Showing {{0}} to {{1}} of {{2}} entries",
+    "Message:RequiredField": "required field",
+    "Confirm": "Confirm",
+    "Save": "Save",
+    "Cancel": "Cancel",
+    "Accept": "Yes",
+    "Reject": "No",
+
+    /*GENERIC MESSAGES*/
+    "Message:DeleteConfirmation": "Are you sure you want to delete {0}?",
+    "Message:SuccessfulDeletion": "{0} deleted",
+    "Message:Successful": "Successful",
+
+    /*MENU*/
+    "Menu:Home": "Home",
+    "Menu:Patients": "Patients",
+    "Menu:Admin": "Admin",
+    "Menu:Admin:Hospital": "Hospital Management",
+    "Menu:Admin:Nationality": "Nationality Management",
+    "Menu:Admin:Language": "Language Management",
+    "Menu:Admin:PatientNoteStatus": "Patient Note Status Management",
+    "Menu:Admin:DocumentType": "Document Type Management",
+    "Menu:Admin:PatientDocumentStatus": "Patient Document Status Management",
+    "Menu:Admin:TreatmentProcessStatus": "Treatment Process Status Management",
+    "Menu:Admin:PatientAdmissionMethod": "Patient Admission Method Management",
+    "Menu:Admin:ContractedInstitution": "Contracted Institution Management",
+    "Menu:Admin:HospitalConsultationStatus": "Hospital Consultation Status Management",
+
+    /*HOSPITAL MANAGEMENT*/
+    "Admin:Hospital:Name": "Hospital",
+    "Admin:Hospital:HospitalManagement": "Hospital Management",
+    "Admin:Hospital:NewHospital": "New Hospital",
+    "Admin:Hospital:Column:Name": "Name",
+    "Admin:Hospital:Column:PhoneNumber": "Phone Number",
+    "Admin:Hospital:Column:ContactInfo": "Contact Information",
+    "Admin:Hospital:Column:ContactInfoName": "Name",
+    "Admin:Hospital:Column:ContactInfoPhoneNumber": "Phone Number",
+    "Admin:Hospital:HospitalDetails": "Hospital Details",
+
+    /*NATIONALITY MANAGEMENT*/
+    "Admin:Nationality:Name": "Nationality",
+    "Admin:Nationality:NationalityManagement": "Nationality Management",
+    "Admin:Nationality:NewNationality": "New Nationality",
+    "Admin:Nationality:Column:Name": "Name",
+    "Admin:Nationality:Column:Code": "Code",
+    "Admin:Nationality:NationalityDetails": "Nationality Details",
+
+    /*PATIENT NOTE MANAGEMENT*/
+    "Admin:PatientNoteStatus:Name": "Patient Note Status",
+    "Admin:PatientNoteStatus:PatientNoteStatusManagement": "Patient Note Status Management",
+    "Admin:PatientNoteStatus:NewPatientNoteStatus": "New Patient Note Status",
+    "Admin:PatientNoteStatus:Column:Name": "Name",
+    "Admin:PatientNoteStatus:Column:Description": "Description",
+    "Admin:PatientNoteStatus:PatientNoteStatusDetails": "Patient Note Status Details",
+
+    /*DOCUMENT TYPE MANAGEMENT*/
+    "Admin:DocumentType:Name": "Document Type",
+    "Admin:DocumentType:DocumentTypeManagement": "Document Type Management",
+    "Admin:DocumentType:NewDocumentType": "New Document Type",
+    "Admin:DocumentType:Column:Name": "Name",
+    "Admin:DocumentType:Column:Description": "Description",
+    "Admin:DocumentType:DocumentTypeDetails": "Document Type Details",
+
+    /*PATIENT DOCUMENT STATUS MANAGEMENT*/
+    "Admin:PatientDocumentStatus:Name": "Patient Document Status",
+    "Admin:PatientDocumentStatus:PatientDocumentStatusManagement": "Patient Document Status Management",
+    "Admin:PatientDocumentStatus:NewPatientDocumentStatus": "New Patient Document Status",
+    "Admin:PatientDocumentStatus:Column:Name": "Name",
+    "Admin:PatientDocumentStatus:Column:Description": "Description",
+    "Admin:PatientDocumentStatus:PatientDocumentStatusDetails": "Patient Document Status Details",
+
+    /*TREATMENT PROCESS STATUS MANAGEMENT*/
+    "Admin:TreatmentProcessStatus:Name": "Treatment Process Status",
+    "Admin:TreatmentProcessStatus:TreatmentProcessStatusManagement": "Treatment Process Status Management",
+    "Admin:TreatmentProcessStatus:NewTreatmentProcessStatus": "New Treatment Process Status",
+    "Admin:TreatmentProcessStatus:Column:Name": "Name",
+    "Admin:TreatmentProcessStatus:Column:Description": "Description",
+    "Admin:TreatmentProcessStatus:TreatmentProcessStatusDetails": "Treatment Process Status Details",
+
+    /*PATIENT ADMISSION METHOD MANAGEMENT*/
+    "Admin:PatientAdmissionMethod:Name": "Patient Admission Method",
+    "Admin:PatientAdmissionMethod:PatientAdmissionMethodManagement": "Patient Admission Method Management",
+    "Admin:PatientAdmissionMethod:NewPatientAdmissionMethod": "New Patient Admission Method",
+    "Admin:PatientAdmissionMethod:Column:Name": "Name",
+    "Admin:PatientAdmissionMethod:Column:Description": "Description",
+    "Admin:PatientAdmissionMethod:PatientAdmissionMethodDetails": "Patient Admission Method Details",
+
+    /*CONTRACTED INSTITUTION MANAGEMENT*/
+    "Admin:ContractedInstitution:Name": "Contracted Institution",
+    "Admin:ContractedInstitution:ContractedInstitutionManagement": "Contracted Institution Management",
+    "Admin:ContractedInstitution:NewContractedInstitution": "New Contracted Institution",
+    "Admin:ContractedInstitution:Column:Name": "Name",
+    "Admin:ContractedInstitution:Column:Description": "Description",
+    "Admin:ContractedInstitution:ContractedInstitutionDetails": "Contracted Institution Details",
+
+    /*HOSPITAL CONSULTATION MANAGEMENT*/
+    "Admin:HospitalConsultationStatus:Name": "Hospital Consultation Status",
+    "Admin:HospitalConsultationStatus:HospitalConsultationStatusManagement": "Hospital Consultation Status Management",
+    "Admin:HospitalConsultationStatus:NewHospitalConsultationStatus": "New Hospital Consultation Status",
+    "Admin:HospitalConsultationStatus:Column:Name": "Name",
+    "Admin:HospitalConsultationStatus:Column:Description": "Description",
+    "Admin:HospitalConsultationStatus:HospitalConsultationStatusDetails": "Hospital Consultation Status Details",
+
+    /*LANGUAGE MANAGEMENT*/
+    "Admin:Language:Name": "Language",
+    "Admin:Language:LanguageManagement": "Language Management",
+    "Admin:Language:NewLanguage": "New Language",
+    "Admin:Language:Column:Name": "Name",
+    "Admin:Language:Column:Code": "Code",
+    "Admin:Language:LanguageDetails": "Language Details",
+
+    /*PATIENTS*/
+    "Patients:Title": "Patients",
+    "Patients:NewPatient": "New Patient",
+    "Patients:Column:Name": "Name",
+    "Patients:Column:Surname": "Surname",
+    "Patients:Column:Nationality": "Nationality",
+    "Patients:Column:PassportNo": "Passport Number",
+    "Patients:Column:BirthDate": "Birth Date",
+    "Patients:Column:Sex": "Sex",
+    "Patients:Column:Language": "Language",
+    "Patients:Column:TreatmentProcess": "Treatment Process",
+    "Patients:Column:Created": "Creation Date",
+    "Patients:Column:CreatedBy": "Created By"
+
   }
 }

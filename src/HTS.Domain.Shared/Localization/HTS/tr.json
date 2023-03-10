@@ -1,8 +1,133 @@
 {
   "culture": "tr",
   "texts": {
-    "Menu:Home": "Ana sayfa",
     "Welcome": "Hoşgeldiniz",
-    "LongWelcomeMessage": "Uygulamaya hoşgeldiniz. Bu, ABP framework'ü üzerine bina edilmiş bir başlangıç projesidir. Daha fazla bilgi için abp.io adresini ziyaret edebilirsiniz."
+    "LongWelcomeMessage": "HTS uygulamasına hoşgeldiniz.",
+
+    "Table:Summary": "Toplam {0} adet {1} vardır.",
+    "Table:PageSummary": "{{2}} kaydın {{0}} ile {{1}} arasındakiler gösteriliyor",
+    "Message:RequiredField": "zorunlu alan",
+    "Confirm": "Onay",
+    "Save": "Kaydet",
+    "Cancel": "Vazgeç",
+    "Accept": "Evet",
+    "Reject": "Hayır",
+
+    /*GENERIC MESSAGES*/
+    "Message:DeleteConfirmation": "{0} isimli kaydı silmek istediğinize emin misiniz?",
+    "Message:SuccessfulDeletion": "{0} başarıyla silindi",
+    "Message:Successful": "Başarılı",
+
+    /*MENU*/
+    "Menu:Home": "Ana sayfa",
+    "Menu:Admin": "Yönetim",
+    "Menu:Patients": "Hastalar",
+    "Menu:Admin:Hospital": "Hastane Yönetimi",
+    "Menu:Admin:Nationality": "Milliyet Yönetimi",
+    "Menu:Admin:Language": "Dil Yönetimi",
+    "Menu:Admin:PatientNoteStatus": "Hasta Not Durumu Yönetimi",
+    "Menu:Admin:DocumentType": "Doküman Tipi Yönetimi",
+    "Menu:Admin:PatientDocumentStatus": "Hasta Doküman Durumu Yönetimi",
+    "Menu:Admin:TreatmentProcessStatus": "Tedavi Süreci Durumu Yönetimi",
+    "Menu:Admin:PatientAdmissionMethod": "Hasta Geliş Yöntemi Yönetimi",
+    "Menu:Admin:ContractedInstitution": "Anlaşmalı Kurum Yönetimi",
+    "Menu:Admin:HospitalConsultationStatus": "Hastane Danışma Durumu Yönetimi",
+
+    /*HOSPITAL MANAGEMENT*/
+    "Admin:Hospital:Name": "Hastane",
+    "Admin:Hospital:HospitalManagement": "Hastane Yönetimi",
+    "Admin:Hospital:NewHospital": "Yeni Hastane",
+    "Admin:Hospital:Column:Name": "Hastane İsmi",
+    "Admin:Hospital:Column:PhoneNumber": "Telefon Numarası",
+    "Admin:Hospital:Column:ContactInfo": "İletişim Bilgisi",
+    "Admin:Hospital:Column:ContactInfoName": "Ad Soyad",
+    "Admin:Hospital:Column:ContactInfoPhoneNumber": "Telefon Numarası",
+    "Admin:Hospital:HospitalDetails": "Hastane Detayları",
+
+    /*NATIONALITY MANAGEMENT*/
+    "Admin:Nationality:Name": "Milliyet",
+    "Admin:Nationality:NationalityManagement": "Milliyet Yönetimi",
+    "Admin:Nationality:NewNationality": "Yeni Milliyet",
+    "Admin:Nationality:Column:Name": "İsim",
+    "Admin:Nationality:Column:Code": "Kod",
+    "Admin:Nationality:NationalityDetails": "Milliyet Detayları",
+
+    /*PATIENT NOTE MANAGEMENT*/
+    "Admin:PatientNoteStatus:Name": "Hasta Not Durumu",
+    "Admin:PatientNoteStatus:PatientNoteStatusManagement": "Hasta Not Durumu Yönetimi",
+    "Admin:PatientNoteStatus:NewPatientNoteStatus": "Yeni Hasta Not Durumu",
+    "Admin:PatientNoteStatus:Column:Name": "İsim",
+    "Admin:PatientNoteStatus:Column:Description": "Açıklama",
+    "Admin:PatientNoteStatus:PatientNoteStatusDetails": "Hasta Not Durumu Detayları",
+
+    /*DOCUMENT TYPE MANAGEMENT*/
+    "Admin:DocumentType:Name": "Doküman Tipi",
+    "Admin:DocumentType:DocumentTypeManagement": "Doküman Tipi Yönetimi",
+    "Admin:DocumentType:NewDocumentType": "Yeni Doküman Tipi",
+    "Admin:DocumentType:Column:Name": "İsim",
+    "Admin:DocumentType:Column:Description": "Açıklama",
+    "Admin:DocumentType:DocumentTypeDetails": "Doküman Tipi Detayları",
+
+    /*PATIENT DOCUMENT STATUS MANAGEMENT*/
+    "Admin:PatientDocumentStatus:Name": "Hasta Doküman Durumu",
+    "Admin:PatientDocumentStatus:PatientDocumentStatusManagement": "Hasta Doküman Durumu Yönetimi",
+    "Admin:PatientDocumentStatus:NewPatientDocumentStatus": "Yeni Hasta Doküman Durumu",
+    "Admin:PatientDocumentStatus:Column:Name": "İsim",
+    "Admin:PatientDocumentStatus:Column:Description": "Açıklama",
+    "Admin:PatientDocumentStatus:PatientDocumentStatusDetails": "Hasta Doküman Durumu Detayları",
+
+    /*TREATMENT PROCESS STATUS MANAGEMENT*/
+    "Admin:TreatmentProcessStatus:Name": "Tedavi Süreci Durumu",
+    "Admin:TreatmentProcessStatus:TreatmentProcessStatusManagement": "Tedavi Süreci Durumu Yönetimi",
+    "Admin:TreatmentProcessStatus:NewTreatmentProcessStatus": "Yeni Tedavi Süreci Durumu",
+    "Admin:TreatmentProcessStatus:Column:Name": "İsim",
+    "Admin:TreatmentProcessStatus:Column:Description": "Açıklama",
+    "Admin:TreatmentProcessStatus:TreatmentProcessStatusDetails": "Tedavi Süreci Durumu Detayları",
+
+    /*PATIENT ADMISSION METHOD MANAGEMENT*/
+    "Admin:PatientAdmissionMethod:Name": "Hasta Geliş Yöntemi",
+    "Admin:PatientAdmissionMethod:PatientAdmissionMethodManagement": "Hasta Geliş Yöntemi Yönetimi",
+    "Admin:PatientAdmissionMethod:NewPatientAdmissionMethod": "Yeni Hasta Geliş Yöntemi",
+    "Admin:PatientAdmissionMethod:Column:Name": "İsim",
+    "Admin:PatientAdmissionMethod:Column:Description": "Açıklama",
+    "Admin:PatientAdmissionMethod:PatientAdmissionMethodDetails": "Hasta Geliş Yöntemi Detayları",
+
+    /*CONTRACTED INSTITUTION MANAGEMENT*/
+    "Admin:ContractedInstitution:Name": "Anlaşmalı Kurum",
+    "Admin:ContractedInstitution:ContractedInstitutionManagement": "Anlaşmalı Kurum Yönetimi",
+    "Admin:ContractedInstitution:NewContractedInstitution": "Yeni Anlaşmalı Kurum",
+    "Admin:ContractedInstitution:Column:Name": "İsim",
+    "Admin:ContractedInstitution:Column:Description": "Açıklama",
+    "Admin:ContractedInstitution:ContractedInstitutionDetails": "Anlaşmalı Kurum Detayları",
+
+    /*HOSPITAL CONSULTATION MANAGEMENT*/
+    "Admin:HospitalConsultationStatus:Name": "Hastane Danışma Durumu",
+    "Admin:HospitalConsultationStatus:HospitalConsultationStatusManagement": "Hastane Danışma Durumu Yönetimi",
+    "Admin:HospitalConsultationStatus:NewHospitalConsultationStatus": "Yeni Hastane Danışma Durumu",
+    "Admin:HospitalConsultationStatus:Column:Name": "İsim",
+    "Admin:HospitalConsultationStatus:Column:Description": "Açıklama",
+    "Admin:HospitalConsultationStatus:HospitalConsultationStatusDetails": "Hastane Danışma Durumu Detayları",
+
+    /*LANGUAGE MANAGEMENT*/
+    "Admin:Language:Name": "Dil",
+    "Admin:Language:LanguageManagement": "Dil Yönetimi",
+    "Admin:Language:NewLanguage": "Yeni Dil",
+    "Admin:Language:Column:Name": "İsim",
+    "Admin:Language:Column:Code": "Kod",
+    "Admin:Language:LanguageDetails": "Dil Detayları",
+
+    /*PATIENTS*/
+    "Patients:Title": "Hastalar",
+    "Patients:NewPatient": "Yeni Hasta",
+    "Patients:Column:Name": "Ad",
+    "Patients:Column:Surname": "Soyad",
+    "Patients:Column:Nationality": "Uyruk",
+    "Patients:Column:PassportNo": "Pasaport No",
+    "Patients:Column:BirthDate": "Doğum Tarihi",
+    "Patients:Column:Sex": "Cinsiyet",
+    "Patients:Column:Language": "Ana Dil",
+    "Patients:Column:TreatmentProcess": "Tedavi Süreci",
+    "Patients:Column:Created": "Eklenme Tarihi",
+    "Patients:Column:CreatedBy": "Ekleyen Kullanıcı"
   }
 }

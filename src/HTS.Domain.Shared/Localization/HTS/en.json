@@ -12,6 +12,11 @@
     "Cancel": "Cancel",
     "Accept": "Yes",
     "Reject": "No",
+    "Filter": "Filter",
+    "ClearFilter": "Clear Filters",
+    "Select": "Select",
+    "New": "New",
+    "Delete": "Delete",
 
     /*GENERIC MESSAGES*/
     "Message:DeleteConfirmation": "Are you sure you want to delete {0}?",
@@ -124,11 +129,26 @@
     "Patients:Column:Nationality": "Nationality",
     "Patients:Column:PassportNo": "Passport Number",
     "Patients:Column:BirthDate": "Birth Date",
-    "Patients:Column:Sex": "Sex",
-    "Patients:Column:Language": "Language",
+    "Patients:Column:Gender": "Gender",
+    "Patients:Column:NativeLanguage": "Native Language",
+    "Patients:Column:SecondLanguage": "Second Language",
     "Patients:Column:TreatmentProcess": "Treatment Process",
     "Patients:Column:Created": "Creation Date",
-    "Patients:Column:CreatedBy": "Created By"
+    "Patients:Column:CreatedBy": "Created By",
+    "Patients:Column:PhoneNo": "Phone",
+    "Patients:Column:Email": "E-Mail",
 
+    /*NEW PATIENT*/
+    "NewPatient:Title": "New Patient",
+    "PatientDetail:Profile": "Profile Information",
+    "PatientDetail:Notes": "Notes",
+    "PatientDetail:Documents": "Documents",
+    "PatientDetail:TreatmentProcesses": "Treatment Processes",
+
+    /*NOTES*/
+    "Notes:Title": "Notes",
+    "Notes:Column:Message": "Message",
+    "Notes:Column:CreatedBy": "Created By",
+    "Notes:Column:Created": "Creation Date"
   }
 }

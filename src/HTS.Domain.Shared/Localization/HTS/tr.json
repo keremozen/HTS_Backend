@@ -12,6 +12,11 @@
     "Cancel": "Vazgeç",
     "Accept": "Evet",
     "Reject": "Hayır",
+    "Filter": "Filtre",
+    "ClearFilter": "Filtreleri Temizle",
+    "Select": "Seçiniz",
+    "New": "Yeni Ekle",
+    "Delete": "Sil",
 
     /*GENERIC MESSAGES*/
     "Message:DeleteConfirmation": "{0} isimli kaydı silmek istediğinize emin misiniz?",
@@ -124,10 +129,26 @@
     "Patients:Column:Nationality": "Uyruk",
     "Patients:Column:PassportNo": "Pasaport No",
     "Patients:Column:BirthDate": "Doğum Tarihi",
-    "Patients:Column:Sex": "Cinsiyet",
-    "Patients:Column:Language": "Ana Dil",
+    "Patients:Column:Gender": "Cinsiyet",
+    "Patients:Column:NativeLanguage": "Ana Dil",
+    "Patients:Column:SecondLanguage": "İkinci Dil",
     "Patients:Column:TreatmentProcess": "Tedavi Süreci",
     "Patients:Column:Created": "Eklenme Tarihi",
-    "Patients:Column:CreatedBy": "Ekleyen Kullanıcı"
+    "Patients:Column:CreatedBy": "Ekleyen Kullanıcı",
+    "Patients:Column:PhoneNo": "Telefon",
+    "Patients:Column:Email": "E-Posta",
+
+    /*NEW PATIENT*/
+    "NewPatient:Title": "Yeni Hasta",
+    "PatientDetail:Profile": "Profil Bilgileri",
+    "PatientDetail:Notes": "Notlar",
+    "PatientDetail:Documents": "Dokümanlar",
+    "PatientDetail:TreatmentProcesses": "Tedavi Süreçleri",
+
+    /*NOTES*/
+    "Notes:Title": "Notlar",
+    "Notes:Column:Message": "Mesaj",
+    "Notes:Column:CreatedBy": "Ekleyen Kullanıcı",
+    "Notes:Column:Created": "Eklenme Tarihi"
   }
 }

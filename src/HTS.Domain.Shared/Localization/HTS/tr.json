@@ -18,6 +18,11 @@
     "New": "Yeni Ekle",
     "Delete": "Sil",
 
+    /*TOAST TITLES*/
+    "ToastTitle:Successful": "Başarılı",
+    "ToastTitle:Info": "Bilgi",
+    "ToastTitle:Error": "Hatalı",
+
     /*GENERIC MESSAGES*/
     "Message:DeleteConfirmation": "{0} isimli kaydı silmek istediğinize emin misiniz?",
     "Message:SuccessfulDeletion": "{0} başarıyla silindi",
@@ -138,17 +143,21 @@
     "Patients:Column:PhoneNo": "Telefon",
     "Patients:Column:Email": "E-Posta",
 
-    /*NEW PATIENT*/
-    "NewPatient:Title": "Yeni Hasta",
+    /*PATIENT*/
     "PatientDetail:Profile": "Profil Bilgileri",
     "PatientDetail:Notes": "Notlar",
     "PatientDetail:Documents": "Dokümanlar",
     "PatientDetail:TreatmentProcesses": "Tedavi Süreçleri",
+    "PatientDetail:SaveProfile": "Profil Kaydet",
+    "PatientDetail:EditTitle": "Hasta Detayları",
+    "PatientDetail:NewTitle": "Yeni Hasta",
+    "PatientDetail:SaveSuccessful": "Hasta başarıyla kaydedildi",
 
     /*NOTES*/
     "Notes:Title": "Notlar",
     "Notes:Column:Message": "Mesaj",
     "Notes:Column:CreatedBy": "Ekleyen Kullanıcı",
-    "Notes:Column:Created": "Eklenme Tarihi"
+    "Notes:Column:Created": "Eklenme Tarihi",
+    "Notes:NoteDetails": "Not Detayları"
   }
 }

@@ -13,7 +13,11 @@ namespace HTS.Data
         {
         }
 
-        public DbSet<Language> Language { get; set; }
+        public DbSet<Language> Languages { get; set; }
+        public DbSet<Gender> Genders { get; set; }
+        public DbSet<DocumentType> DocumentTypes { get; set; }
+        public DbSet<Patient> Patients { get; set; }
+        public DbSet<Nationality> Nationalities { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

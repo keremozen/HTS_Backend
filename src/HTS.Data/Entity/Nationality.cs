@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 namespace HTS.Data.Entity
 {
 
-    public class Language : FullAuditedEntity,IPassivable
+    public class Nationality : FullAuditedEntity,IPassivable
     {
         [Required, StringLength(50)]
         public string Name { get; set; }

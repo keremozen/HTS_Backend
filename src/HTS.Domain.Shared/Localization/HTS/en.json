@@ -17,6 +17,8 @@
     "Select": "Select",
     "New": "New",
     "Delete": "Delete",
+    "Revoke": "Revoke",
+    "ShowRevokedRecords": "Show revoked",
 
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Successful",
@@ -25,8 +27,12 @@
 
     /*GENERIC MESSAGES*/
     "Message:DeleteConfirmation": "Are you sure you want to delete {0}?",
-    "Message:SuccessfulDeletion": "{0} deleted",
-    "Message:Successful": "Successful",
+    "Message:SuccessfulDeletion": "{0} is successfully deleted.",
+    "Message:SuccessfulSave": "{0} is successfully saved.",
+    "Message:RevokeConfirmation": "Are you sure you want to revoke this record?",
+    "Message:RevokeMultipleConfirmation": "Are you sure you want to revoke selected records?",
+    "Message:SuccessfulRevokation": "{0} is successfully revoked.",
+    "Message:SuccessfulMultipleRevokation": "{0} are successfully revoked.",
 
     /*MENU*/
     "Menu:Home": "Home",
@@ -154,10 +160,21 @@
     "PatientDetail:SaveSuccessful": "Patient is saved successfully",
 
     /*NOTES*/
+    "Notes:NameSingular": "Note",
+    "Notes:NamePlural": "Notes",
     "Notes:Title": "Notes",
     "Notes:Column:Message": "Message",
     "Notes:Column:CreatedBy": "Created By",
     "Notes:Column:Created": "Creation Date",
-    "Notes:NoteDetails": "Note Details"
+    "Notes:NoteDetails": "Note Details",
+
+    /*Documents*/
+    "Documents:NameSingular": "Document",
+    "Documents:NamePlural": "Documents",
+    "Documents:Title": "Documents",
+    "Documents:Column:Description": "Description",
+    "Documents:Column:CreatedBy": "Created By",
+    "Documents:Column:Created": "Creation Date",
+    "Documents:DocumentDetails": "Document Details"
   }
 }

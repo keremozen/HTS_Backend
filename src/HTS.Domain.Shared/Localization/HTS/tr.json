@@ -17,6 +17,8 @@
     "Select": "Seçiniz",
     "New": "Yeni Ekle",
     "Delete": "Sil",
+    "Revoke": "İptal Et",
+    "ShowRevokedRecords": "İptal edilenleri göster",
 
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Başarılı",
@@ -25,8 +27,12 @@
 
     /*GENERIC MESSAGES*/
     "Message:DeleteConfirmation": "{0} isimli kaydı silmek istediğinize emin misiniz?",
-    "Message:SuccessfulDeletion": "{0} başarıyla silindi",
-    "Message:Successful": "Başarılı",
+    "Message:SuccessfulDeletion": "{0} başarıyla silindi.",
+    "Message:SuccessfulSave": "{0} başarıyla kaydedildi.",
+    "Message:RevokeConfirmation": "Kaydı iptal etmek istediğinize emin misiniz?",
+    "Message:RevokeMultipleConfirmation": "Seçili kayıtları iptal etmek istediğinize emin miiniz?",
+    "Message:SuccessfulRevokation": "{0} başarıyla iptal edildi.",
+    "Message:SuccessfulMultipleRevokation": "{0} başarıyla iptal edildi.",
 
     /*MENU*/
     "Menu:Home": "Ana sayfa",
@@ -154,10 +160,21 @@
     "PatientDetail:SaveSuccessful": "Hasta başarıyla kaydedildi",
 
     /*NOTES*/
+    "Notes:NameSingular": "Not",
+    "Notes:NamePlural": "Notlar",
     "Notes:Title": "Notlar",
     "Notes:Column:Message": "Mesaj",
     "Notes:Column:CreatedBy": "Ekleyen Kullanıcı",
     "Notes:Column:Created": "Eklenme Tarihi",
-    "Notes:NoteDetails": "Not Detayları"
+    "Notes:NoteDetails": "Not Detayları",
+
+    /*Documents*/
+    "Documents:NameSingular": "Belge",
+    "Documents:NamePlural": "Belgeler",
+    "Documents:Title": "Belgeler",
+    "Documents:Column:Description": "Açıklama",
+    "Documents:Column:CreatedBy": "Ekleyen Kullanıcı",
+    "Documents:Column:Created": "Eklenme Tarihi",
+    "Documents:DocumentDetails": "Belge Detayları"
   }
 }

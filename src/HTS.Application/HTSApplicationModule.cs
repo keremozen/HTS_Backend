@@ -1,4 +1,5 @@
-﻿using Volo.Abp.Account;
+﻿using AutoMapper;
+using Volo.Abp.Account;
 using Volo.Abp.AutoMapper;
 using Volo.Abp.FeatureManagement;
 using Volo.Abp.Identity;
@@ -26,6 +27,7 @@ public class HTSApplicationModule : AbpModule
         Configure<AbpAutoMapperOptions>(options =>
         {
             options.AddMaps<HTSApplicationModule>();
+            //options.AddProfile<MyProfile>(validate: true);
         });
     }
 }

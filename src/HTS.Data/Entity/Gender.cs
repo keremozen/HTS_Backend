@@ -1,7 +1,7 @@
-﻿using Abp.Domain.Entities;
-using Abp.Domain.Entities.Auditing;
+﻿using Abp.Domain.Entities.Auditing;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Volo.Abp.Domain.Entities;
 
 namespace HTS.Data.Entity
 {
@@ -20,6 +20,10 @@ namespace HTS.Data.Entity
                 return true;
             }
             return Convert.ToInt32(Id) <= 0;
+        }
+        public object[] GetKeys()
+        {
+            return new object[] { Id };
         }
     }
 }

@@ -1,4 +1,7 @@
 ﻿using AutoMapper;
+using HTS.Data.Entity;
+using HTS.Dto;
+using static Volo.Abp.Identity.Settings.IdentitySettingNames;
 
 namespace HTS;
 
@@ -9,5 +12,6 @@ public class HTSApplicationAutoMapperProfile : Profile
         /* You can configure your AutoMapper mapping configuration here.
          * Alternatively, you can split your mapping configurations
          * into multiple profile classes for a better organization. */
+        CreateMap<Gender, GenderDto>();
     }
 }

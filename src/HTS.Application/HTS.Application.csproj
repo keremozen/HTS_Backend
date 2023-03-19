@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HTS.Data\HTS.Data.csproj" />
     <ProjectReference Include="..\HTS.Domain\HTS.Domain.csproj" />
     <ProjectReference Include="..\HTS.Application.Contracts\HTS.Application.Contracts.csproj" />
   </ItemGroup>

@@ -18,6 +18,11 @@
     "New": "New",
     "Delete": "Delete",
 
+    /*TOAST TITLES*/
+    "ToastTitle:Successful": "Successful",
+    "ToastTitle:Info": "Information",
+    "ToastTitle:Error": "Error",
+
     /*GENERIC MESSAGES*/
     "Message:DeleteConfirmation": "Are you sure you want to delete {0}?",
     "Message:SuccessfulDeletion": "{0} deleted",
@@ -139,16 +144,20 @@
     "Patients:Column:Email": "E-Mail",
 
     /*NEW PATIENT*/
-    "NewPatient:Title": "New Patient",
     "PatientDetail:Profile": "Profile Information",
     "PatientDetail:Notes": "Notes",
     "PatientDetail:Documents": "Documents",
     "PatientDetail:TreatmentProcesses": "Treatment Processes",
+    "PatientDetail:SaveProfile": "Save Profile",
+    "PatientDetail:EditTitle": "Patient Details",
+    "PatientDetail:NewTitle": "New Patient",
+    "PatientDetail:SaveSuccessful": "Patient is saved successfully",
 
     /*NOTES*/
     "Notes:Title": "Notes",
     "Notes:Column:Message": "Message",
     "Notes:Column:CreatedBy": "Created By",
-    "Notes:Column:Created": "Creation Date"
+    "Notes:Column:Created": "Creation Date",
+    "Notes:NoteDetails": "Note Details"
   }
 }

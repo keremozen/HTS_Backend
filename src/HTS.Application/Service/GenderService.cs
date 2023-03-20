@@ -12,7 +12,7 @@ using Volo.Abp.DependencyInjection;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Uow;
 
-namespace HTS
+namespace HTS.Service
 {
     public class GenderService : ApplicationService, IGenderService
     {
@@ -25,7 +25,7 @@ namespace HTS
         }
         public async Task<ListResultDto<GenderDto>> GetListAsync()
         {
-            var responseList = ObjectMapper.Map<List<Gender>,List<GenderDto>>(await _genderRepository.GetListAsync());
+            var responseList = ObjectMapper.Map<List<Gender>, List<GenderDto>>(await _genderRepository.GetListAsync());
             //Return the result
             return new ListResultDto<GenderDto>(responseList);
         }

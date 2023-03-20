@@ -1,11 +1,11 @@
-﻿using Volo.Abp.Domain.Entities;
-using Volo.Abp.Domain.Entities.Auditing;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text;
 
-namespace HTS.Data.Entity
+namespace HTS.Dto.Language
 {
-
-    public class Language : FullAuditedEntity<int>
+    public class SaveLanguageDto
     {
         [Required, StringLength(50)]
         public string Name { get; set; }
@@ -15,7 +15,6 @@ namespace HTS.Data.Entity
 
         [StringLength(500)]
         public string Description { get; set; }
-
         public bool IsActive { get; set; }
     }
 }

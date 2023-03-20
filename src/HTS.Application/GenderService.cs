@@ -23,7 +23,7 @@ namespace HTS
             _genderRepository = genderRepository;
 
         }
-        public async Task<List<GenderDto>> GetListAsync()
+        public async Task<ListResultDto<GenderDto>> GetListAsync()
         {
             var responseList = ObjectMapper.Map<List<Gender>,List<GenderDto>>(await _genderRepository.GetListAsync());
             //Return the result

@@ -28,6 +28,7 @@ using Volo.Abp.Modularity;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.VirtualFileSystem;
+using HTS.Data;
 
 namespace HTS;
 
@@ -37,6 +38,7 @@ namespace HTS;
     typeof(AbpAspNetCoreMultiTenancyModule),
     typeof(HTSApplicationModule),
     typeof(HTSEntityFrameworkCoreModule),
+    typeof(HTSDataModule),
     typeof(AbpAspNetCoreMvcUiLeptonXLiteThemeModule),
     typeof(AbpAccountWebOpenIddictModule),
     typeof(AbpAspNetCoreSerilogModule),

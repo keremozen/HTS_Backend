@@ -1,11 +1,10 @@
-﻿using Abp.Domain.Entities;
-using Abp.Domain.Entities.Auditing;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using Volo.Abp.Domain.Entities.Auditing;
 
 namespace HTS.Data.Entity
 {
 
-    public class Nationality : FullAuditedEntity,IPassivable
+    public class Nationality : FullAuditedEntity<int>
     {
         [Required, StringLength(50)]
         public string Name { get; set; }

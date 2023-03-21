@@ -172,6 +172,8 @@
     "Documents:NameSingular": "Document",
     "Documents:NamePlural": "Documents",
     "Documents:Title": "Documents",
+    "Documents:Column:Document": "Document",
+    "Documents:Column:DocumentType": "Document Type",
     "Documents:Column:Description": "Description",
     "Documents:Column:CreatedBy": "Created By",
     "Documents:Column:Created": "Creation Date",

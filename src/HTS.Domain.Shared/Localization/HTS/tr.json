@@ -172,6 +172,8 @@
     "Documents:NameSingular": "Belge",
     "Documents:NamePlural": "Belgeler",
     "Documents:Title": "Belgeler",
+    "Documents:Column:Document": "Belge",
+    "Documents:Column:DocumentType": "Belge Tipi",
     "Documents:Column:Description": "Açıklama",
     "Documents:Column:CreatedBy": "Ekleyen Kullanıcı",
     "Documents:Column:Created": "Eklenme Tarihi",

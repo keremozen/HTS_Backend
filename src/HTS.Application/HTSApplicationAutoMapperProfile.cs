@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using HTS.Data.Entity;
 using HTS.Dto;
+using HTS.Dto.DocumentType;
 using HTS.Dto.Gender;
 using HTS.Dto.Language;
+using HTS.Dto.Nationality;
 using static Volo.Abp.Identity.Settings.IdentitySettingNames;
 
 namespace HTS;
@@ -17,5 +19,9 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<Gender, GenderDto>();
         CreateMap<Language,LanguageDto>();
         CreateMap<SaveLanguageDto, Language>();
+        CreateMap<Nationality,NationalityDto>();
+        CreateMap<SaveNationalityDto, Nationality>();
+        CreateMap<DocumentType, DocumentTypeDto>();
+        CreateMap<SaveDocumentTypeDto, DocumentTypeDto>();
     }
 }

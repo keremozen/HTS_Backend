@@ -33,19 +33,23 @@ namespace HTS.Service
             return new PagedResultDto<LanguageDto>(totalCount,responseList);
         }
 
-        public Task<LanguageDto> CreateAsync(SaveLanguageDto language)
+        public async Task<LanguageDto> CreateAsync(SaveLanguageDto language)
         {
-            throw new System.NotImplementedException();
+            var entity = ObjectMapper.Map<SaveLanguageDto, Language>(language);
+           await _languageRepository.InsertAsync(entity);
+           return ObjectMapper.Map<Language, LanguageDto>(entity);
         }
 
-        public Task UpdateAsync(int id, SaveLanguageDto language)
+        public async Task<LanguageDto> UpdateAsync(int id, SaveLanguageDto language)
         {
-            throw new System.NotImplementedException();
+            var entity = await _languageRepository.GetAsync(id);
+            ObjectMapper.Map(language, entity);
+            return ObjectMapper.Map<Language,LanguageDto>( await _languageRepository.UpdateAsync(entity));
         }
         
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
-            throw new System.NotImplementedException();
+          await _languageRepository.DeleteAsync(id);
         }
     }
 }

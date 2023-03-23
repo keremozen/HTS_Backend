@@ -23,9 +23,20 @@ namespace HTS.Interface
         /// </summary>
         /// <returns>Language list</returns>
         Task<PagedResultDto<LanguageDto>> GetListAsync();
+        /// <summary>
+        /// Creates language
+        /// </summary>
+        /// <param name="language">Language information to be insert</param>
+        /// <returns>Inserted Language</returns>
         Task<LanguageDto> CreateAsync(SaveLanguageDto language);
         
-        Task UpdateAsync(int id, SaveLanguageDto language);
+        /// <summary>
+        /// Updates languge
+        /// </summary>
+        /// <param name="id">To be updated language id</param>
+        /// <param name="language">To be updated information</param>
+        /// <returns>Updated language object</returns>
+        Task<LanguageDto> UpdateAsync(int id, SaveLanguageDto language);
         
         /// <summary>
         /// Delete given id of language

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Volo.Abp.Application.Dtos;
 
-namespace HTS.Dto
+namespace HTS.Dto.Gender
 {
     public class GenderDto : EntityDto<int>
     {

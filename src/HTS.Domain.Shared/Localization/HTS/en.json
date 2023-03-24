@@ -18,7 +18,11 @@
     "New": "New",
     "Delete": "Delete",
     "Revoke": "Revoke",
+    "Import": "Import",
     "ShowRevokedRecords": "Show revoked",
+    "ChooseFile": "Choose File",
+    "EmptyMessage": "No records found.",
+    "EmptyFilterMessage": "No records found.",
 
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Successful",
@@ -168,15 +172,57 @@
     "Notes:Column:Created": "Creation Date",
     "Notes:NoteDetails": "Note Details",
 
-    /*Documents*/
+    /*DOCUMENTS*/
     "Documents:NameSingular": "Document",
     "Documents:NamePlural": "Documents",
     "Documents:Title": "Documents",
+    "Documents:Column:FileName": "File Name",
     "Documents:Column:Document": "Document",
     "Documents:Column:DocumentType": "Document Type",
     "Documents:Column:Description": "Description",
     "Documents:Column:CreatedBy": "Created By",
     "Documents:Column:Created": "Creation Date",
-    "Documents:DocumentDetails": "Document Details"
+    "Documents:DocumentDetails": "Document Details",
+
+    /*TREATMENT PROCESS*/
+    "TreatmentProcess:Title": "Treatment Process",
+    "TreatmentProcess:StartTreatmentProcess": "Start Treatment Process",
+    "TreatmentProcess:ShowCompletedRecords": "Show completed",
+    "TreatmentProcess:Column:Code": "Treatment Code",
+    "TreatmentProcess:Column:CreatedBy": "Created By",
+    "TreatmentProcess:Column:Created": "Creation Date",
+    "TreatmentProcess:Column:State": "State",
+    "TreatmentProcess:Step:SalesAndAttendantInfo": "Sales Management and Attendant Information",
+    "TreatmentProcess:Step:HospitalConsultation": "Hospital Consultation",
+    "TreatmentProcess:Step:OperationalInformation": "Operational Information",
+    "TreatmentProcess:Step:ProcessQuotationRevenue": "Process, Quotation, Revenue",
+
+    /*ATTENDANT INFORMATION*/
+    "AttendantInfo:Column:PatientAdmissionMethod": "Patient Admission Method",
+    "AttendantInfo:Column:ContractedInstitutionName": "Contracted Institution Name",
+    "AttendantInfo:Column:InstitutionOfficerName": "Institution Officer",
+    "AttendantInfo:Column:InstitutionOfficerPhoneNumber": "Institution Officer Phone Number",
+    "AttendantInfo:Column:InstitutionOfficerEmail": "Institution Officer E-Mail",
+    "AttendantInfo:Column:AttendantNameSurname": "Attendant Name Surname",
+    "AttendantInfo:Column:AttendantNationality": "Attendant Nationality",
+    "AttendantInfo:Column:AttendantPassportNo": "Attendant Passport No",
+    "AttendantInfo:Column:AttendantEmail": "Attendant E-Mail",
+    "AttendantInfo:Column:AttendantPhoneNumber": "Attendant Phone Number",
+    "AttendantInfo:Column:AttendantRelationship": "Attendant Relationship",
+
+    /*HOSPITAL CONSULTATION*/
+    "HospitalConsultation:Title": "Hospital Consultation",
+    "HospitalConsultation:NewConsultation": "Consult Hospitals",
+    "HospitalConsultation:Column:ConsultationNo": "Consultation No",
+    "HospitalConsultation:Column:CreatedBy": "Created By",
+    "HospitalConsultation:Column:Created": "Creation Date",
+    "HospitalConsultation:Column:Hospital": "Hospital",
+    "HospitalConsultation:Column:State": "State",
+    "HospitalConsultation:Column:DetailsAndActions": "Details and Actions",
+    "HospitalConsultation:FieldLegend:HospitalChoice": "Hospital Choice",
+    "HospitalConsultation:FieldLegend:PatientComplaintAndDescription": "Patient Complaint and Descriptions",
+    "HospitalConsultation:FieldLegend:Documents": "Documents",
+    "HospitalConsultation:Button:Consultation": "Consultation",
+    "HospitalConsultation:Button:Answer": "Answer"
   }
 }

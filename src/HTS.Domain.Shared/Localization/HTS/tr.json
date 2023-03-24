@@ -18,7 +18,11 @@
     "New": "Yeni Ekle",
     "Delete": "Sil",
     "Revoke": "İptal Et",
+    "Import": "Aktar",
     "ShowRevokedRecords": "İptal edilenleri göster",
+    "ChooseFile": "Dosya Seç",
+    "EmptyMessage": "Kayıt bulunamadı.",
+    "EmptyFilterMessage": "Kayıt bulunamadı.",
 
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Başarılı",
@@ -168,15 +172,58 @@
     "Notes:Column:Created": "Eklenme Tarihi",
     "Notes:NoteDetails": "Not Detayları",
 
-    /*Documents*/
+    /*DOCUMENTS*/
     "Documents:NameSingular": "Belge",
     "Documents:NamePlural": "Belgeler",
     "Documents:Title": "Belgeler",
+    "Documents:Column:FileName": "Dosya Adı",
     "Documents:Column:Document": "Belge",
     "Documents:Column:DocumentType": "Belge Tipi",
     "Documents:Column:Description": "Açıklama",
     "Documents:Column:CreatedBy": "Ekleyen Kullanıcı",
     "Documents:Column:Created": "Eklenme Tarihi",
-    "Documents:DocumentDetails": "Belge Detayları"
+    "Documents:DocumentDetails": "Belge Detayları",
+
+    /*TREATMENT PROCESS*/
+    "TreatmentProcess:Title": "Tedavi Süreci",
+    "TreatmentProcess:StartTreatmentProcess": "Tedavi Süreci Başlat",
+    "TreatmentProcess:ShowCompletedRecords": "Tamamlananları göster",
+    "TreatmentProcess:Column:Code": "Tedavi Kodu",
+    "TreatmentProcess:Column:CreatedBy": "Ekleyen Kullanıcı",
+    "TreatmentProcess:Column:Created": "Eklenme Tarihi",
+    "TreatmentProcess:Column:State": "Durum",
+    "TreatmentProcess:Step:SalesAndAttendantInfo": "Satış Yönetimi ve Refakatçi Bilgileri",
+    "TreatmentProcess:Step:HospitalConsultation": "Hastane Danışma",
+    "TreatmentProcess:Step:OperationalInformation": "Operasyonel Bilgiler",
+    "TreatmentProcess:Step:ProcessQuotationRevenue": "İşlem, Fiyatlandırma, Tahsilat",
+
+    /*ATTENDANT INFORMATION*/
+    "AttendantInfo:Column:PatientAdmissionMethod": "Hasta Geliş Yönetimi",
+    "AttendantInfo:Column:ContractedInstitutionName": "Anlaşmalı Kurum Adı",
+    "AttendantInfo:Column:InstitutionOfficerName": "Kurum Yetkilisi",
+    "AttendantInfo:Column:InstitutionOfficerPhoneNumber": "Kurum Yetkilisi Telefon",
+    "AttendantInfo:Column:InstitutionOfficerEmail": "Kurum Yetkilisi E-Posta",
+    "AttendantInfo:Column:AttendantNameSurname": "Refakatçi Adı Soyadı",
+    "AttendantInfo:Column:AttendantNationality": "Refakatçi Uyruğu",
+    "AttendantInfo:Column:AttendantPassportNo": "Refakatçi Pasaport No",
+    "AttendantInfo:Column:AttendantEmail": "Refakatçi E-Posta",
+    "AttendantInfo:Column:AttendantPhoneNumber": "Refakatçi Telefon",
+    "AttendantInfo:Column:AttendantRelationship": "Yakınlık Derecesi",
+
+    /*HOSPITAL CONSULTATION*/
+    "HospitalConsultation:Title": "Hastane Danışma",
+    "HospitalConsultation:NewConsultation": "Hastanelere Danış",
+    "HospitalConsultation:Column:ConsultationNo": "Danışma No",
+    "HospitalConsultation:Column:CreatedBy": "Ekleyen Kullanıcı",
+    "HospitalConsultation:Column:Created": "Eklenme Tarihi",
+    "HospitalConsultation:Column:Hospital": "Hastane",
+    "HospitalConsultation:Column:State": "Durum",
+    "HospitalConsultation:Column:DetailsAndActions": "Detaylar ve İşlem",
+    "HospitalConsultation:FieldLegend:HospitalChoice": "Hastane Seçimi",
+    "HospitalConsultation:FieldLegend:PatientComplaintAndDescription": "Hasta Şikayeti ve Açıklamalar",
+    "HospitalConsultation:FieldLegend:Documents": "Dokümanlar",
+    "HospitalConsultation:Button:Consultation": "Danışma",
+    "HospitalConsultation:Button:Answer": "Cevap"
+
   }
 }

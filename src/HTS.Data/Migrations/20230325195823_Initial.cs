@@ -259,16 +259,16 @@ namespace HTS.Data.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     Surname = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    PassportNumber = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
-                    BirthDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    PassportNumber = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    BirthDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
-                    Email = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    PhoneCountryCodeId = table.Column<int>(type: "integer", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
+                    Email = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    PhoneCountryCodeId = table.Column<int>(type: "integer", nullable: true),
                     NationalityId = table.Column<int>(type: "integer", nullable: false),
-                    GenderId = table.Column<int>(type: "integer", nullable: false),
-                    MotherTongueIdId = table.Column<int>(type: "integer", nullable: false),
-                    SecondTongueIdId = table.Column<int>(type: "integer", nullable: false),
+                    GenderId = table.Column<int>(type: "integer", nullable: true),
+                    MotherTongueId = table.Column<int>(type: "integer", nullable: true),
+                    SecondTongueId = table.Column<int>(type: "integer", nullable: true),
                     ExtraProperties = table.Column<string>(type: "text", nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: true),
                     CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -286,20 +286,17 @@ namespace HTS.Data.Migrations
                         name: "FK_Patients_Genders_GenderId",
                         column: x => x.GenderId,
                         principalTable: "Genders",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Patients_Languages_MotherTongueIdId",
-                        column: x => x.MotherTongueIdId,
+                        name: "FK_Patients_Languages_MotherTongueId",
+                        column: x => x.MotherTongueId,
                         principalTable: "Languages",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Patients_Languages_SecondTongueIdId",
-                        column: x => x.SecondTongueIdId,
+                        name: "FK_Patients_Languages_SecondTongueId",
+                        column: x => x.SecondTongueId,
                         principalTable: "Languages",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Patients_Nationalities_NationalityId",
                         column: x => x.NationalityId,
@@ -310,8 +307,7 @@ namespace HTS.Data.Migrations
                         name: "FK_Patients_Nationalities_PhoneCountryCodeId",
                         column: x => x.PhoneCountryCodeId,
                         principalTable: "Nationalities",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -584,9 +580,9 @@ namespace HTS.Data.Migrations
                 column: "GenderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Patients_MotherTongueIdId",
+                name: "IX_Patients_MotherTongueId",
                 table: "Patients",
-                column: "MotherTongueIdId");
+                column: "MotherTongueId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Patients_NationalityId",
@@ -599,9 +595,9 @@ namespace HTS.Data.Migrations
                 column: "PhoneCountryCodeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Patients_SecondTongueIdId",
+                name: "IX_Patients_SecondTongueId",
                 table: "Patients",
-                column: "SecondTongueIdId");
+                column: "SecondTongueId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PatientTreatmentProcesses_PatientId",

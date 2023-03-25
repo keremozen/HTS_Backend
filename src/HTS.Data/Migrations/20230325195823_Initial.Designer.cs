@@ -13,7 +13,7 @@ using Volo.Abp.EntityFrameworkCore;
 namespace HTS.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230325145054_Initial")]
+    [Migration("20230325195823_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -496,7 +496,7 @@ namespace HTS.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("BirthDate")
+                    b.Property<DateTime?>("BirthDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -522,7 +522,6 @@ namespace HTS.Data.Migrations
                         .HasColumnName("DeletionTime");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
@@ -530,7 +529,7 @@ namespace HTS.Data.Migrations
                         .HasColumnType("text")
                         .HasColumnName("ExtraProperties");
 
-                    b.Property<int>("GenderId")
+                    b.Property<int?>("GenderId")
                         .HasColumnType("integer");
 
                     b.Property<bool>("IsActive")
@@ -550,7 +549,7 @@ namespace HTS.Data.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("LastModifierId");
 
-                    b.Property<int>("MotherTongueIdId")
+                    b.Property<int?>("MotherTongueId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Name")
@@ -562,19 +561,17 @@ namespace HTS.Data.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("PassportNumber")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
-                    b.Property<int>("PhoneCountryCodeId")
+                    b.Property<int?>("PhoneCountryCodeId")
                         .HasColumnType("integer");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
-                    b.Property<int>("SecondTongueIdId")
+                    b.Property<int?>("SecondTongueId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Surname")
@@ -586,13 +583,13 @@ namespace HTS.Data.Migrations
 
                     b.HasIndex("GenderId");
 
-                    b.HasIndex("MotherTongueIdId");
+                    b.HasIndex("MotherTongueId");
 
                     b.HasIndex("NationalityId");
 
                     b.HasIndex("PhoneCountryCodeId");
 
-                    b.HasIndex("SecondTongueIdId");
+                    b.HasIndex("SecondTongueId");
 
                     b.ToTable("Patients");
                 });
@@ -995,15 +992,11 @@ namespace HTS.Data.Migrations
                 {
                     b.HasOne("HTS.Data.Entity.Gender", "Gender")
                         .WithMany()
-                        .HasForeignKey("GenderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GenderId");
 
-                    b.HasOne("HTS.Data.Entity.Language", "MotherTongueId")
+                    b.HasOne("HTS.Data.Entity.Language", "MotherTongue")
                         .WithMany()
-                        .HasForeignKey("MotherTongueIdId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MotherTongueId");
 
                     b.HasOne("HTS.Data.Entity.Nationality", "Nationality")
                         .WithMany()
@@ -1013,25 +1006,21 @@ namespace HTS.Data.Migrations
 
                     b.HasOne("HTS.Data.Entity.Nationality", "PhoneCountryCode")
                         .WithMany()
-                        .HasForeignKey("PhoneCountryCodeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PhoneCountryCodeId");
 
-                    b.HasOne("HTS.Data.Entity.Language", "SecondTongueId")
+                    b.HasOne("HTS.Data.Entity.Language", "SecondTongue")
                         .WithMany()
-                        .HasForeignKey("SecondTongueIdId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SecondTongueId");
 
                     b.Navigation("Gender");
 
-                    b.Navigation("MotherTongueId");
+                    b.Navigation("MotherTongue");
 
                     b.Navigation("Nationality");
 
                     b.Navigation("PhoneCountryCode");
 
-                    b.Navigation("SecondTongueId");
+                    b.Navigation("SecondTongue");
                 });
 
             modelBuilder.Entity("HTS.Data.Entity.PatientDocument", b =>

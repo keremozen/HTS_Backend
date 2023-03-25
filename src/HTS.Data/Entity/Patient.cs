@@ -12,21 +12,21 @@ namespace HTS.Data.Entity
         public string Surname { get; set; }
 
         [StringLength(500)]
-        public string PassportNumber { get; set; }
+        public string? PassportNumber { get; set; }
 
-        public DateTime BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
 
         public bool IsActive { get; set; }
         [StringLength(20)]
-        public string PhoneNumber { get; set; }
-        [StringLength(50)]
-        public string Email { get; set; }
+        public string? PhoneNumber { get; set; }
+        [StringLength(50), EmailAddress]
+        public string? Email { get; set; }
 
-        public Nationality PhoneCountryCode { get; set; }
+        public Nationality? PhoneCountryCode { get; set; }
         public Nationality Nationality { get; set; }
-        public Gender Gender { get; set; }
-        public Language MotherTongueId { get; set; }
-        public Language SecondTongueId { get; set; }
+        public Gender? Gender { get; set; }
+        public Language? MotherTongue { get; set; }
+        public Language? SecondTongue { get; set; }
         public virtual ICollection<PatientNote> PatientNotes { get; set; }
         public virtual ICollection<PatientDocument> PatientDocuments { get; set; }
         public virtual ICollection<PatientTreatmentProcess> PatientTreatmentProcesses { get; set; }

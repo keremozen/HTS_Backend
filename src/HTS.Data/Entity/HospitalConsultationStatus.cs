@@ -5,7 +5,7 @@ using Volo.Abp.Domain.Entities;
 namespace HTS.Data.Entity
 {
 
-    public class Gender : IEntity<int>
+    public class HospitalConsultationStatus : IEntity<int>
     {
         [Key, Required, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }

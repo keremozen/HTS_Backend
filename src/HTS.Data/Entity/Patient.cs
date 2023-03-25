@@ -21,14 +21,15 @@ namespace HTS.Data.Entity
         public string PhoneNumber { get; set; }
         [StringLength(50)]
         public string Email { get; set; }
-        //public int NationalityId { get; set; }
-        //public int GenderId { get; set; }
-        //public int MotherTongueId { get; set; }
-        //public int SecondTongueId { get; set; }
+
+        public Nationality PhoneCountryCode { get; set; }
         public Nationality Nationality { get; set; }
         public Gender Gender { get; set; }
         public Language MotherTongueId { get; set; }
         public Language SecondTongueId { get; set; }
+        public virtual ICollection<PatientNote> PatientNotes { get; set; }
+        public virtual ICollection<PatientDocument> PatientDocuments { get; set; }
+        public virtual ICollection<PatientTreatmentProcess> PatientTreatmentProcesses { get; set; }
 
 
     }

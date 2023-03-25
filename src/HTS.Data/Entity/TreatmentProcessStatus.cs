@@ -5,13 +5,12 @@ using Volo.Abp.Domain.Entities;
 namespace HTS.Data.Entity
 {
 
-    public class Gender : IEntity<int>
+    public class TreatmentProcessStatus : IEntity<int>
     {
         [Key, Required, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
         [Required, StringLength(50)]
         public string Name { get; set; }
-        public bool IsActive { get; set; }
         public object[] GetKeys()
         {
             return new object[] { Id };

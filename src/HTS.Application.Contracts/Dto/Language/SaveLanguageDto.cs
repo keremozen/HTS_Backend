@@ -12,9 +12,6 @@ namespace HTS.Dto.Language
 
         [Required, StringLength(10)]
         public string Code { get; set; }
-
-        [StringLength(500)]
-        public string Description { get; set; }
         public bool IsActive { get; set; }
     }
 }

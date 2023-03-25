@@ -12,6 +12,8 @@ namespace HTS.Data.Entity
 
         [Required, StringLength(100)]
         public string FileName { get; set; }
+        [Required]
+        public string FilePath { get; set; }
         public Patient Patient { get; set; }
         public DocumentType DocumentType { get; set; }
         public PatientDocumentStatus PatientDocumentStatus { get; set; }

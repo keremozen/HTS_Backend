@@ -3,7 +3,7 @@ using Volo.Abp.Domain.Entities.Auditing;
 namespace HTS.Data.Entity
 {
 
-    public class SalesMethodAndCompanionInfo : AuditedAggregateRoot<int>
+    public class SalesMethodAndCompanionInfo : AuditedEntity<int>
     {
         [StringLength(500)]
         public string CompanionNameSurname { get; set; }

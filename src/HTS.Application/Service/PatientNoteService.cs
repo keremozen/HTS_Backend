@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,15 +10,20 @@ using HTS.Interface;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
+using Volo.Abp.Identity;
+using static HTS.Enum.EntityEnum;
 
 namespace HTS.Service;
 
 public class PatientNoteService : ApplicationService, IPatientNoteService
 {
     private readonly IRepository<PatientNote, int> _patientNoteRepository;
-    public PatientNoteService(IRepository<PatientNote, int> nationalityRepository)
+    private readonly IIdentityUserRepository _userRepository;
+    public PatientNoteService(IRepository<PatientNote, int> nationalityRepository,
+        IIdentityUserRepository userRepository)
     {
         _patientNoteRepository = nationalityRepository;
+        _userRepository = userRepository;
     }
 
     public async Task<PagedResultDto<PatientNoteDto>> GetListAsync(int patientId)
@@ -26,13 +32,33 @@ public class PatientNoteService : ApplicationService, IPatientNoteService
         var query = (await _patientNoteRepository.GetQueryableAsync()).Where(p => p.PatientId == patientId);
         var responseList = ObjectMapper.Map<List<PatientNote>, List<PatientNoteDto>>(await AsyncExecuter.ToListAsync(query));
         var totalCount = await _patientNoteRepository.CountAsync();//item count
-        //TODO:Hopsy Ask Kerem the isActive case 
+
+        Dictionary<Guid, IdentityUserDto> creators = new Dictionary<Guid, IdentityUserDto>();
+        foreach (var patientNote in responseList)
+        {
+            if (patientNote.CreatorId.HasValue)
+            {
+                if (creators.ContainsKey(patientNote.CreatorId.Value))
+                {
+                    patientNote.Creator = creators[patientNote.CreatorId.Value];
+                }
+                else
+                {
+                    var creatorUser = ObjectMapper.Map<IdentityUser, IdentityUserDto>(await _userRepository.FindAsync(patientNote.CreatorId.Value));
+                    patientNote.Creator = creatorUser;
+                    creators.Add(creatorUser.Id, creatorUser);
+                }
+
+            }
+        }
+
         return new PagedResultDto<PatientNoteDto>(totalCount, responseList);
     }
 
     public async Task<PatientNoteDto> CreateAsync(SavePatientNoteDto patientNote)
     {
         var entity = ObjectMapper.Map<SavePatientNoteDto, PatientNote>(patientNote);
+        entity.PatientNoteStatusId = PatientNoteStatusEnum.NewRecord.GetHashCode();
         await _patientNoteRepository.InsertAsync(entity);
         return ObjectMapper.Map<PatientNote, PatientNoteDto>(entity);
     }

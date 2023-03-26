@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Volo.Abp.Domain.Entities.Auditing;
 namespace HTS.Data.Entity
 {
@@ -22,10 +23,25 @@ namespace HTS.Data.Entity
         [StringLength(50), EmailAddress]
         public string? Email { get; set; }
 
+        public int? PhoneCountryCodeId { get; set; }
+        public int NationalityId { get; set; }
+        public int? GenderId { get; set; }
+        public int? MotherTongueId { get; set; }
+        public int? SecondTongueId { get; set; }
+
+        [ForeignKey("PhoneCountryCodeId")]
         public Nationality? PhoneCountryCode { get; set; }
+        
+        [ForeignKey("NationalityId")]
         public Nationality Nationality { get; set; }
+        
+        [ForeignKey("GenderId")]
         public Gender? Gender { get; set; }
+        
+        [ForeignKey("MotherTongueId")]
         public Language? MotherTongue { get; set; }
+        
+        [ForeignKey("SecondTongueId")]
         public Language? SecondTongue { get; set; }
         public virtual ICollection<PatientNote> PatientNotes { get; set; }
         public virtual ICollection<PatientDocument> PatientDocuments { get; set; }

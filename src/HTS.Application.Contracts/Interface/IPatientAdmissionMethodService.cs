@@ -39,7 +39,7 @@ namespace HTS.Interface
         /// <param name="id">To be updated patient admission method id</param>
         /// <param name="patient">To be updated information</param>
         /// <returns>Updated patient admission method object</returns>
-        Task<PatientDto> UpdateAsync(int id, SavePatientAdmissionMethodDto patientAdmissionMethod);
+        Task<PatientAdmissionMethodDto> UpdateAsync(int id, SavePatientAdmissionMethodDto patientAdmissionMethod);
 
         /// <summary>
         /// Delete given id of patient admission method

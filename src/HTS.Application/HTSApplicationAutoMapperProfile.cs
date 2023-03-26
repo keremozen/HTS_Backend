@@ -5,6 +5,7 @@ using HTS.Dto.DocumentType;
 using HTS.Dto.Gender;
 using HTS.Dto.Language;
 using HTS.Dto.Nationality;
+using HTS.Dto.Patient;
 using HTS.Dto.PatientNoteStatus;
 using static Volo.Abp.Identity.Settings.IdentitySettingNames;
 
@@ -24,6 +25,9 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<SaveNationalityDto, Nationality>();
         CreateMap<DocumentType, DocumentTypeDto>();
         CreateMap<SaveDocumentTypeDto, DocumentType>();
+
+        CreateMap<Patient, PatientDto>();
+        CreateMap<SavePatientDto, Patient>();
         CreateMap<PatientNoteStatus, PatientNoteStatusDto>();
     }
 }

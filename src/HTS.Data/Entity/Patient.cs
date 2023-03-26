@@ -31,6 +31,6 @@ namespace HTS.Data.Entity
         public virtual ICollection<PatientDocument> PatientDocuments { get; set; }
         public virtual ICollection<PatientTreatmentProcess> PatientTreatmentProcesses { get; set; }
 
-
+   
     }
 }

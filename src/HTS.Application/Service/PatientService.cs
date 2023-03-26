@@ -51,4 +51,6 @@ public class PatientService : ApplicationService, IPatientService
     {
         await _patientRepository.DeleteAsync(id);
     }
+    //TODO:Hopsy check nationality and passportnumber unique
+
 }

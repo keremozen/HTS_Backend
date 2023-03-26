@@ -12,7 +12,8 @@ namespace HTS.Data.Entity
 
         [StringLength(500)]
         public string Description { get; set; }
-
+        
+        [Required]
         public bool IsActive { get; set; }
 
         public virtual ICollection<ContractedInstitutionStaff> ContractedInstitutionStaff { get; set; }

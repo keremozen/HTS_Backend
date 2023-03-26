@@ -7,6 +7,7 @@ namespace HTS.Data.Entity
     {
         [Required]
         public string Note { get; set; }
+        [Required]
         public bool IsActive { get; set; }    
         public Hospital Hospital { get; set; }
         public HospitalConsultationStatus HospitalConsultationStatus { get; set; }

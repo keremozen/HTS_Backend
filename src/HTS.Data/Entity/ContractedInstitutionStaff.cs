@@ -15,6 +15,7 @@ namespace HTS.Data.Entity
         [StringLength(50)]
         public string Email { get; set; }
 
+        [Required]
         public bool IsActive { get; set; }
 
         public ContractedInstitution ContractedInstitution { get; set; }

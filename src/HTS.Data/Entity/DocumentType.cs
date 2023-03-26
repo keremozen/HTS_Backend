@@ -10,6 +10,7 @@ namespace HTS.Data.Entity
         public string Name { get; set; }
         [StringLength(500)]
         public string? Description { get; set; }
+        [Required]
         public bool IsActive { get; set; }
      
     }

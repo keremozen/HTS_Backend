@@ -10,6 +10,7 @@ namespace HTS.Data.Entity
 
         [Required, StringLength(10)]
         public string PhoneCode { get; set; }
+        [Required]
         public bool IsActive { get; set; }
     }
 }

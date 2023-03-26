@@ -17,6 +17,7 @@ namespace HTS.Data.Entity
 
         public DateTime? BirthDate { get; set; }
 
+        [Required]
         public bool IsActive { get; set; }
         [StringLength(20)]
         public string? PhoneNumber { get; set; }

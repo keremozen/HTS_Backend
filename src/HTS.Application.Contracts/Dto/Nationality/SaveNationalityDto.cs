@@ -8,6 +8,6 @@ public class SaveNationalityDto
     public string Name { get; set; }
 
     [Required, StringLength(10)]
-    public string Code { get; set; }
+    public string PhoneCode { get; set; }
     public bool IsActive { get; set; }
 }

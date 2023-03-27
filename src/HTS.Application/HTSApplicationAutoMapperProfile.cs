@@ -35,5 +35,7 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<PatientNoteStatus, PatientNoteStatusDto>(); 
         CreateMap<SavePatientAdmissionMethodDto, PatientAdmissionMethod>();
         CreateMap<PatientAdmissionMethod, PatientAdmissionMethodDto>();
+        CreateMap<SaveContractedInstitutionDto, ContractedInstitution>();
+        CreateMap<ContractedInstitution, ContractedInstitutionDto>();
     }
 }

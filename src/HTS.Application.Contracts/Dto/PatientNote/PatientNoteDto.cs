@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Identity;
+using static HTS.Enum.EntityEnum;
 
 namespace HTS.Dto.PatientNote
 {
@@ -10,5 +11,6 @@ namespace HTS.Dto.PatientNote
     {
         public string Note { get; set; }
         public int PatientId { get; set; }
+        public PatientNoteStatusEnum PatientNoteStatusId { get; set; }
     }
 }

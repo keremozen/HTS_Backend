@@ -15,8 +15,7 @@ namespace HTS.Enum
         public enum PatientNoteStatusEnum
         {
             NewRecord = 1,
-            Approved = 2,
-            Rejected = 3
+            Revoked = 2
         }
     }
 }

@@ -4,8 +4,9 @@
     "Welcome": "Hoşgeldiniz",
     "LongWelcomeMessage": "HTS uygulamasına hoşgeldiniz.",
 
-    "Table:Summary": "Toplam {0} adet {1} vardır.",
+    "Table:Summary": "Toplam {0} adet kayıt vardır.",
     "Table:PageSummary": "{{2}} kaydın {{0}} ile {{1}} arasındakiler gösteriliyor",
+    "Table:EmptyMessage": "Kayıt bulunamadı.",
     "Message:RequiredField": "zorunlu alan",
     "Confirm": "Onay",
     "Save": "Kaydet",
@@ -18,6 +19,7 @@
     "New": "Yeni Ekle",
     "Delete": "Sil",
     "Revoke": "İptal Et",
+    "Revoked": "İptal",
     "Import": "Aktar",
     "ShowRevokedRecords": "İptal edilenleri göster",
     "ChooseFile": "Dosya Seç",
@@ -43,7 +45,7 @@
     "Menu:Admin": "Yönetim",
     "Menu:Patients": "Hastalar",
     "Menu:Admin:Hospital": "Hastane Yönetimi",
-    "Menu:Admin:Nationality": "Milliyet Yönetimi",
+    "Menu:Admin:Nationality": "Uyruk Yönetimi",
     "Menu:Admin:Language": "Dil Yönetimi",
     "Menu:Admin:PatientNoteStatus": "Hasta Not Durumu Yönetimi",
     "Menu:Admin:DocumentType": "Doküman Tipi Yönetimi",
@@ -65,20 +67,13 @@
     "Admin:Hospital:HospitalDetails": "Hastane Detayları",
 
     /*NATIONALITY MANAGEMENT*/
-    "Admin:Nationality:Name": "Milliyet",
-    "Admin:Nationality:NationalityManagement": "Milliyet Yönetimi",
-    "Admin:Nationality:NewNationality": "Yeni Milliyet",
+    "Admin:Nationality:Name": "Uyruk",
+    "Admin:Nationality:NationalityManagement": "Uyruk Yönetimi",
+    "Admin:Nationality:NewNationality": "Yeni Uyruk",
     "Admin:Nationality:Column:Name": "İsim",
-    "Admin:Nationality:Column:Code": "Kod",
-    "Admin:Nationality:NationalityDetails": "Milliyet Detayları",
-
-    /*PATIENT NOTE MANAGEMENT*/
-    "Admin:PatientNoteStatus:Name": "Hasta Not Durumu",
-    "Admin:PatientNoteStatus:PatientNoteStatusManagement": "Hasta Not Durumu Yönetimi",
-    "Admin:PatientNoteStatus:NewPatientNoteStatus": "Yeni Hasta Not Durumu",
-    "Admin:PatientNoteStatus:Column:Name": "İsim",
-    "Admin:PatientNoteStatus:Column:Description": "Açıklama",
-    "Admin:PatientNoteStatus:PatientNoteStatusDetails": "Hasta Not Durumu Detayları",
+    "Admin:Nationality:Column:PhoneCode": "Telefon Kodu",
+    "Admin:Nationality:Column:IsActive": "Aktif mi?",
+    "Admin:Nationality:NationalityDetails": "Uyruk Detayları",
 
     /*DOCUMENT TYPE MANAGEMENT*/
     "Admin:DocumentType:Name": "Doküman Tipi",
@@ -86,23 +81,8 @@
     "Admin:DocumentType:NewDocumentType": "Yeni Doküman Tipi",
     "Admin:DocumentType:Column:Name": "İsim",
     "Admin:DocumentType:Column:Description": "Açıklama",
+    "Admin:DocumentType:Column:IsActive": "Aktif mi?",
     "Admin:DocumentType:DocumentTypeDetails": "Doküman Tipi Detayları",
-
-    /*PATIENT DOCUMENT STATUS MANAGEMENT*/
-    "Admin:PatientDocumentStatus:Name": "Hasta Doküman Durumu",
-    "Admin:PatientDocumentStatus:PatientDocumentStatusManagement": "Hasta Doküman Durumu Yönetimi",
-    "Admin:PatientDocumentStatus:NewPatientDocumentStatus": "Yeni Hasta Doküman Durumu",
-    "Admin:PatientDocumentStatus:Column:Name": "İsim",
-    "Admin:PatientDocumentStatus:Column:Description": "Açıklama",
-    "Admin:PatientDocumentStatus:PatientDocumentStatusDetails": "Hasta Doküman Durumu Detayları",
-
-    /*TREATMENT PROCESS STATUS MANAGEMENT*/
-    "Admin:TreatmentProcessStatus:Name": "Tedavi Süreci Durumu",
-    "Admin:TreatmentProcessStatus:TreatmentProcessStatusManagement": "Tedavi Süreci Durumu Yönetimi",
-    "Admin:TreatmentProcessStatus:NewTreatmentProcessStatus": "Yeni Tedavi Süreci Durumu",
-    "Admin:TreatmentProcessStatus:Column:Name": "İsim",
-    "Admin:TreatmentProcessStatus:Column:Description": "Açıklama",
-    "Admin:TreatmentProcessStatus:TreatmentProcessStatusDetails": "Tedavi Süreci Durumu Detayları",
 
     /*PATIENT ADMISSION METHOD MANAGEMENT*/
     "Admin:PatientAdmissionMethod:Name": "Hasta Geliş Yöntemi",
@@ -110,6 +90,7 @@
     "Admin:PatientAdmissionMethod:NewPatientAdmissionMethod": "Yeni Hasta Geliş Yöntemi",
     "Admin:PatientAdmissionMethod:Column:Name": "İsim",
     "Admin:PatientAdmissionMethod:Column:Description": "Açıklama",
+    "Admin:PatientAdmissionMethod:Column:IsActive": "Aktif mi?",
     "Admin:PatientAdmissionMethod:PatientAdmissionMethodDetails": "Hasta Geliş Yöntemi Detayları",
 
     /*CONTRACTED INSTITUTION MANAGEMENT*/
@@ -118,6 +99,7 @@
     "Admin:ContractedInstitution:NewContractedInstitution": "Yeni Anlaşmalı Kurum",
     "Admin:ContractedInstitution:Column:Name": "İsim",
     "Admin:ContractedInstitution:Column:Description": "Açıklama",
+    "Admin:ContractedInstitution:Column:IsActive": "Aktif mi?",
     "Admin:ContractedInstitution:ContractedInstitutionDetails": "Anlaşmalı Kurum Detayları",
 
     /*HOSPITAL CONSULTATION MANAGEMENT*/
@@ -134,6 +116,7 @@
     "Admin:Language:NewLanguage": "Yeni Dil",
     "Admin:Language:Column:Name": "İsim",
     "Admin:Language:Column:Code": "Kod",
+    "Admin:Language:Column:IsActive": "Aktif mi?",
     "Admin:Language:LanguageDetails": "Dil Detayları",
 
     /*PATIENTS*/
@@ -154,6 +137,7 @@
     "Patients:Column:Email": "E-Posta",
 
     /*PATIENT*/
+    "PatientDetail:Name": "Hasta",
     "PatientDetail:Profile": "Profil Bilgileri",
     "PatientDetail:Notes": "Notlar",
     "PatientDetail:Documents": "Dokümanlar",
@@ -167,7 +151,7 @@
     "Notes:NameSingular": "Not",
     "Notes:NamePlural": "Notlar",
     "Notes:Title": "Notlar",
-    "Notes:Column:Message": "Mesaj",
+    "Notes:Column:Note": "Not",
     "Notes:Column:CreatedBy": "Ekleyen Kullanıcı",
     "Notes:Column:Created": "Eklenme Tarihi",
     "Notes:NoteDetails": "Not Detayları",

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using HTS.Data.Entity;
@@ -8,15 +9,19 @@ using HTS.Interface;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
+using Volo.Abp.Identity;
+using Volo.Abp.Users;
 
 namespace HTS.Service;
 
 public class PatientService : ApplicationService, IPatientService
 {
     private readonly IRepository<Patient, int> _patientRepository;
-    public PatientService(IRepository<Patient, int> patientRepository) 
+    private readonly IIdentityUserRepository _userRepository;
+    public PatientService(IRepository<Patient, int> patientRepository, IIdentityUserRepository userRepository) 
     {
         _patientRepository = patientRepository;
+        _userRepository = userRepository;
     }
     
     public async Task<PatientDto> GetAsync(int id)
@@ -30,6 +35,25 @@ public class PatientService : ApplicationService, IPatientService
         var responseList = ObjectMapper.Map<List<Patient>, List<PatientDto>>(await _patientRepository.GetListAsync());
         var totalCount = await _patientRepository.CountAsync();//item count
         //TODO:Hopsy Ask Kerem the isActive case 
+
+        Dictionary<Guid, IdentityUserDto> creators = new Dictionary<Guid, IdentityUserDto>();
+        foreach (var patient in responseList)
+        {
+            if (patient.CreatorId.HasValue)
+            {
+                if (creators.ContainsKey(patient.CreatorId.Value))
+                {
+                    patient.Creator = creators[patient.CreatorId.Value];
+                }
+                else
+                {
+                    var creatorUser = ObjectMapper.Map<IdentityUser, IdentityUserDto>(await _userRepository.FindAsync(patient.CreatorId.Value));
+                    patient.Creator = creatorUser;
+                    creators.Add(creatorUser.Id, creatorUser);
+                }
+            }
+        }
+
         return new PagedResultDto<PatientDto>(totalCount,responseList);
     }
 

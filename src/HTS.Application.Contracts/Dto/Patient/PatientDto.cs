@@ -6,10 +6,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using Volo.Abp.Application.Dtos;
+using Volo.Abp.Identity;
 
 namespace HTS.Dto.Patient
 {
-    public class PatientDto : AuditedEntityWithUserDto<int>
+    public class PatientDto : AuditedEntityWithUserDto<int, IdentityUserDto>
     {
         public string Name { get; set; }
         public string Surname { get; set; }

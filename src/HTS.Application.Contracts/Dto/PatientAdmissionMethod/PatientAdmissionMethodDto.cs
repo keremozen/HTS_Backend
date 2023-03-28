@@ -7,7 +7,7 @@ using Volo.Abp.Identity;
 
 namespace HTS.Dto.PatientAdmissionMethod
 {
-    public class PatientAdmissionMethodDto : AuditedEntityWithUserDto<int,IdentityUserDto>
+    public class PatientAdmissionMethodDto : EntityDto<int>
     {
         public string Name { get; set; }
         public string Description { get; set; }

@@ -8,6 +8,7 @@ using HTS.Dto.Nationality;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.DependencyInjection;
+using HTS.Dto.ContractedInstitution;
 
 namespace HTS.Interface
 {

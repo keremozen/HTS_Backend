@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using HTS.Data.Entity;
+using HTS.Dto.ContractedInstitution;
 using HTS.Dto.Language;
 using HTS.Dto.Nationality;
 using HTS.Interface;

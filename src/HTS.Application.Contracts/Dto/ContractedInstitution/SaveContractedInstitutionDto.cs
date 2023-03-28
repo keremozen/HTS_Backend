@@ -1,5 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 
+namespace HTS.Dto.ContractedInstitution;
+
 public class SaveContractedInstitutionDto
 {
     [Required, StringLength(50)]

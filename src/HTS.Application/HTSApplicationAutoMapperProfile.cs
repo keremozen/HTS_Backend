@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HTS.Data.Entity;
 using HTS.Dto;
+using HTS.Dto.ContractedInstitution;
 using HTS.Dto.DocumentType;
 using HTS.Dto.Gender;
 using HTS.Dto.Language;

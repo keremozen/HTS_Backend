@@ -18,12 +18,13 @@ public class PatientService : ApplicationService, IPatientService
 {
     private readonly IRepository<Patient, int> _patientRepository;
     private readonly IIdentityUserRepository _userRepository;
-    public PatientService(IRepository<Patient, int> patientRepository, IIdentityUserRepository userRepository) 
+    private ProcessedUserHelper ProcessedUserHelper;
+    public PatientService(IRepository<Patient, int> patientRepository, IIdentityUserRepository userRepository)
     {
         _patientRepository = patientRepository;
         _userRepository = userRepository;
     }
-    
+
     public async Task<PatientDto> GetAsync(int id)
     {
         return ObjectMapper.Map<Patient, PatientDto>(await _patientRepository.GetAsync(id));
@@ -34,27 +35,9 @@ public class PatientService : ApplicationService, IPatientService
         //Get all entities
         var responseList = ObjectMapper.Map<List<Patient>, List<PatientDto>>(await _patientRepository.GetListAsync());
         var totalCount = await _patientRepository.CountAsync();//item count
-        //TODO:Hopsy Ask Kerem the isActive case 
-
-        Dictionary<Guid, IdentityUserDto> creators = new Dictionary<Guid, IdentityUserDto>();
-        foreach (var patient in responseList)
-        {
-            if (patient.CreatorId.HasValue)
-            {
-                if (creators.ContainsKey(patient.CreatorId.Value))
-                {
-                    patient.Creator = creators[patient.CreatorId.Value];
-                }
-                else
-                {
-                    var creatorUser = ObjectMapper.Map<IdentityUser, IdentityUserDto>(await _userRepository.FindAsync(patient.CreatorId.Value));
-                    patient.Creator = creatorUser;
-                    creators.Add(creatorUser.Id, creatorUser);
-                }
-            }
-        }
-
-        return new PagedResultDto<PatientDto>(totalCount,responseList);
+        ProcessedUserHelper = new ProcessedUserHelper();
+        ProcessedUserHelper.LoadCreator<PatientDto>(_userRepository, responseList);
+        return new PagedResultDto<PatientDto>(totalCount, responseList);
     }
 
     public async Task<PatientDto> CreateAsync(SavePatientDto patient)
@@ -68,9 +51,9 @@ public class PatientService : ApplicationService, IPatientService
     {
         var entity = await _patientRepository.GetAsync(id);
         ObjectMapper.Map(patient, entity);
-        return ObjectMapper.Map<Patient,PatientDto>( await _patientRepository.UpdateAsync(entity));
+        return ObjectMapper.Map<Patient, PatientDto>(await _patientRepository.UpdateAsync(entity));
     }
-        
+
     public async Task DeleteAsync(int id)
     {
         await _patientRepository.DeleteAsync(id);

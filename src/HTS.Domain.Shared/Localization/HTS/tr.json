@@ -40,6 +40,14 @@
     "Message:SuccessfulRevokation": "{0} başarıyla iptal edildi.",
     "Message:SuccessfulMultipleRevokation": "{0} başarıyla iptal edildi.",
 
+    /*PERMISSIONS*/
+    "Permission:HospitalManagement": "Hastane Yönetimi",
+    "Permission:LanguageManagement": "Dil Yönetimi",
+    "Permission:NationalityManagement": "Uyruk Yönetimi",
+    "Permission:DocumentTypeManagement": "Doküman Tipi Yönetimi",
+    "Permission:PatientAdmissionMethodManagement": "Hasta Geliş Yönetimi Yönetimi",
+    "Permission:ContractedInstitutionManagement": "Anlaşmalı Kurum Yönetimi",
+
     /*MENU*/
     "Menu:Home": "Ana sayfa",
     "Menu:Admin": "Yönetim",

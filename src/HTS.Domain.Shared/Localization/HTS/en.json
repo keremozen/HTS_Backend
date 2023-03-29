@@ -55,6 +55,14 @@
     "Menu:Admin:ContractedInstitution": "Contracted Institution Management",
     "Menu:Admin:HospitalConsultationStatus": "Hospital Consultation Status Management",
 
+    /*PERMISSIONS*/
+    "Permission:HospitalManagement": "Hospital Management",
+    "Permission:LanguageManagement": "Language Management",
+    "Permission:NationalityManagement": "Nationality Management",
+    "Permission:DocumentTypeManagement": "Document Type Management",
+    "Permission:PatientAdmissionMethodManagement": "Patient Admission Method Management",
+    "Permission:ContractedInstitutionManagement": "Contracted Institution Management",
+
     /*HOSPITAL MANAGEMENT*/
     "Admin:Hospital:Name": "Hospital",
     "Admin:Hospital:HospitalManagement": "Hospital Management",

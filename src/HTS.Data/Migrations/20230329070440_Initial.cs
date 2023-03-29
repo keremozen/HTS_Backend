@@ -190,19 +190,9 @@ namespace HTS.Data.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    NameSurname = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
-                    PhoneNumber = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
-                    Email = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
                     ContractedInstitutionId = table.Column<int>(type: "integer", nullable: false),
-                    PhoneCountryCodeId = table.Column<int>(type: "integer", nullable: false),
-                    CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
-                    LastModificationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    LastModifierId = table.Column<Guid>(type: "uuid", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
-                    DeleterId = table.Column<Guid>(type: "uuid", nullable: true),
-                    DeletionTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -211,12 +201,6 @@ namespace HTS.Data.Migrations
                         name: "FK_ContractedInstitutionStaff_ContractedInstitutions_Contracte~",
                         column: x => x.ContractedInstitutionId,
                         principalTable: "ContractedInstitutions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ContractedInstitutionStaff_Nationalities_PhoneCountryCodeId",
-                        column: x => x.PhoneCountryCodeId,
-                        principalTable: "Nationalities",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -229,9 +213,9 @@ namespace HTS.Data.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     PhoneNumber = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    PhoneCountryCodeId = table.Column<int>(type: "integer", nullable: false),
                     Email = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
-                    PhoneCountryCodeId = table.Column<int>(type: "integer", nullable: false),
                     CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
                     LastModificationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
@@ -523,11 +507,6 @@ namespace HTS.Data.Migrations
                 name: "IX_ContractedInstitutionStaff_ContractedInstitutionId",
                 table: "ContractedInstitutionStaff",
                 column: "ContractedInstitutionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ContractedInstitutionStaff_PhoneCountryCodeId",
-                table: "ContractedInstitutionStaff",
-                column: "PhoneCountryCodeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_HospitalConsultations_HospitalConsultationStatusId",

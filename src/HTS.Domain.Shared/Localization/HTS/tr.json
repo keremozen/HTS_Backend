@@ -61,6 +61,7 @@
     "Admin:Hospital:NewHospital": "Yeni Hastane",
     "Admin:Hospital:Column:Name": "Hastane İsmi",
     "Admin:Hospital:Column:PhoneNumber": "Telefon Numarası",
+    "Admin:Hospital:Column:EMail": "E-Posta Adresi",
     "Admin:Hospital:Column:ContactInfo": "İletişim Bilgisi",
     "Admin:Hospital:Column:ContactInfoName": "Ad Soyad",
     "Admin:Hospital:Column:ContactInfoPhoneNumber": "Telefon Numarası",
@@ -101,6 +102,7 @@
     "Admin:ContractedInstitution:Column:Description": "Açıklama",
     "Admin:ContractedInstitution:Column:IsActive": "Aktif mi?",
     "Admin:ContractedInstitution:ContractedInstitutionDetails": "Anlaşmalı Kurum Detayları",
+    "Admin:ContractedInstitution:ContractedInstitutionStaffManagement": "Anlaşmalı Kurum Çalışanı Yönetimi",
 
     /*HOSPITAL CONSULTATION MANAGEMENT*/
     "Admin:HospitalConsultationStatus:Name": "Hastane Danışma Durumu",

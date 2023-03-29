@@ -61,6 +61,7 @@
     "Admin:Hospital:NewHospital": "New Hospital",
     "Admin:Hospital:Column:Name": "Name",
     "Admin:Hospital:Column:PhoneNumber": "Phone Number",
+    "Admin:Hospital:Column:EMail": "E-Mail",
     "Admin:Hospital:Column:ContactInfo": "Contact Information",
     "Admin:Hospital:Column:ContactInfoName": "Name",
     "Admin:Hospital:Column:ContactInfoPhoneNumber": "Phone Number",
@@ -101,6 +102,7 @@
     "Admin:ContractedInstitution:Column:Description": "Description",
     "Admin:ContractedInstitution:Column:IsActive": "Is Active?",
     "Admin:ContractedInstitution:ContractedInstitutionDetails": "Contracted Institution Details",
+    "Admin:ContractedInstitution:ContractedInstitutionStaffManagement": "Contracted Institution Staff Management",
 
     /*HOSPITAL CONSULTATION MANAGEMENT*/
     "Admin:HospitalConsultationStatus:Name": "Hospital Consultation Status",

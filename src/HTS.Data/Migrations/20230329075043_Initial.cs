@@ -213,7 +213,7 @@ namespace HTS.Data.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     PhoneNumber = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
-                    PhoneCountryCodeId = table.Column<int>(type: "integer", nullable: false),
+                    PhoneCountryCodeId = table.Column<int>(type: "integer", nullable: true),
                     Email = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
                     CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -231,8 +231,7 @@ namespace HTS.Data.Migrations
                         name: "FK_Hospitals_Nationalities_PhoneCountryCodeId",
                         column: x => x.PhoneCountryCodeId,
                         principalTable: "Nationalities",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(

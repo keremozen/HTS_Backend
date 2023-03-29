@@ -228,7 +228,7 @@ namespace HTS.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<int>("PhoneCountryCodeId")
+                    b.Property<int?>("PhoneCountryCodeId")
                         .HasColumnType("integer");
 
                     b.Property<string>("PhoneNumber")
@@ -896,9 +896,7 @@ namespace HTS.Data.Migrations
                 {
                     b.HasOne("HTS.Data.Entity.Nationality", "PhoneCountryCode")
                         .WithMany()
-                        .HasForeignKey("PhoneCountryCodeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PhoneCountryCodeId");
 
                     b.Navigation("PhoneCountryCode");
                 });

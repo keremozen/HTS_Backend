@@ -9,5 +9,7 @@ public class SaveContractedInstitutionStaffDto
     [Required]
     public Guid UserId { get; set; }
     [Required]
+    public int ContractedInstitutionId { get; set; }
+    [Required]
     public bool IsActive { get; set; }
 }

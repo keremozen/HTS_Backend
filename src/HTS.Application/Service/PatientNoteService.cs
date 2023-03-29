@@ -19,7 +19,6 @@ public class PatientNoteService : ApplicationService, IPatientNoteService
 {
     private readonly IRepository<PatientNote, int> _patientNoteRepository;
     private readonly IIdentityUserRepository _userRepository;
-    private ProcessedUserHelper ProcessedUserHelper;
     public PatientNoteService(IRepository<PatientNote, int> nationalityRepository,
         IIdentityUserRepository userRepository)
     {
@@ -33,9 +32,24 @@ public class PatientNoteService : ApplicationService, IPatientNoteService
         var query = (await _patientNoteRepository.GetQueryableAsync()).Where(p => p.PatientId == patientId);
         var responseList = ObjectMapper.Map<List<PatientNote>, List<PatientNoteDto>>(await AsyncExecuter.ToListAsync(query));
         var totalCount = await _patientNoteRepository.CountAsync();//item count
-        ProcessedUserHelper = new ProcessedUserHelper();
-        ProcessedUserHelper.LoadCreator<PatientNoteDto>(_userRepository, responseList);
 
+        Dictionary<Guid, IdentityUserDto> identityUsers = new Dictionary<Guid, IdentityUserDto>();
+        foreach (var dto in responseList)//Check every item if contains creator information
+        {
+            if (dto.CreatorId.HasValue)
+            {//Set creator information
+                if (identityUsers.ContainsKey(dto.CreatorId.Value))//Already exist
+                {
+                    dto.Creator = identityUsers[dto.CreatorId.Value];
+                }
+                else
+                {//Get creator from db
+                    var creatorUser = ObjectMapper.Map<IdentityUser, IdentityUserDto>(await _userRepository.FindAsync(dto.CreatorId.Value));
+                    dto.Creator = creatorUser;
+                    identityUsers.Add(creatorUser.Id, creatorUser);
+                }
+            }
+        }
         return new PagedResultDto<PatientNoteDto>(totalCount, responseList);
     }
 

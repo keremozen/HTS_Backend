@@ -19,5 +19,6 @@ namespace HTS.Data.Entity
         public bool IsActive { get; set; }
         [ForeignKey("PhoneCountryCodeId")]
         public Nationality? PhoneCountryCode { get; set; }
+        public virtual ICollection<HospitalStaff> HospitalStaffs { get; set; }
     }
 }

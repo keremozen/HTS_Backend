@@ -16,10 +16,11 @@ namespace HTS.Data
         }
 
         public DbSet<ContractedInstitution> ContractedInstitutions { get; set; }
-        public DbSet<ContractedInstitutionStaff> ContractedInstitutionStaff { get; set; }
+        public DbSet<ContractedInstitutionStaff> ContractedInstitutionStaffs { get; set; }
         public DbSet<DocumentType> DocumentTypes { get; set; }
         public DbSet<Gender> Genders { get; set; }
         public DbSet<Hospital> Hospitals { get; set; }
+        public DbSet<HospitalStaff> HospitalStaffs { get; set; }
         public DbSet<HospitalConsultation> HospitalConsultations { get; set; }
         public DbSet<HospitalConsultationStatus> HospitalConsultationStatuses { get; set; }
         public DbSet<Language> Languages { get; set; }

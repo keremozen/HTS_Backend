@@ -30,14 +30,25 @@ public class ContractedInstitutionStaffService : ApplicationService, IContracted
         return new PagedResultDto<ContractedInstitutionStaffDto>(totalCount,responseList);
     }
 
-    public async Task SaveAsync(int institutionId, List<SaveContractedInstitutionStaffDto> contractedInstitutionStaffs)
+    public async Task<ContractedInstitutionStaffDto> GetAsync(int id)
     {
-        var newEntities = ObjectMapper.Map<List<SaveContractedInstitutionStaffDto>,List<ContractedInstitutionStaff>>(contractedInstitutionStaffs);
-        var query = (await _contractedInstitutionStaffRepository.GetQueryableAsync())
-            .Where(p => p.ContractedInstitutionId == institutionId);
-        var dbEntities = await AsyncExecuter.ToListAsync(query);
-        await _contractedInstitutionStaffRepository.DeleteManyAsync(dbEntities);
-        await _contractedInstitutionStaffRepository.InsertManyAsync(newEntities);
+        return ObjectMapper.Map<ContractedInstitutionStaff, ContractedInstitutionStaffDto>(await _contractedInstitutionStaffRepository.GetAsync(id));
+    }
+
+    public async Task<ContractedInstitutionStaffDto> CreateAsync(SaveContractedInstitutionStaffDto contractedInstitutionStaff)
+    {
+        var entity = ObjectMapper.Map<SaveContractedInstitutionStaffDto, ContractedInstitutionStaff>(contractedInstitutionStaff);
+        await _contractedInstitutionStaffRepository.InsertAsync(entity);
+        return ObjectMapper.Map<ContractedInstitutionStaff, ContractedInstitutionStaffDto>(entity);
+    }
+
+    public async Task<ContractedInstitutionStaffDto> UpdateAsync(int id,
+        SaveContractedInstitutionStaffDto contractedInstitutionStaff)
+    {
+        var entity = await _contractedInstitutionStaffRepository.GetAsync(id);
+        ObjectMapper.Map(contractedInstitutionStaff, entity);
+        return ObjectMapper.Map<ContractedInstitutionStaff, ContractedInstitutionStaffDto>(
+            await _contractedInstitutionStaffRepository.UpdateAsync(entity));
     }
 
     public async Task DeleteAsync(int id)

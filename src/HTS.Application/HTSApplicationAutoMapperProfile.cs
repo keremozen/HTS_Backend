@@ -2,6 +2,7 @@
 using HTS.Data.Entity;
 using HTS.Dto;
 using HTS.Dto.ContractedInstitution;
+using HTS.Dto.ContractedInstitutionStaff;
 using HTS.Dto.DocumentType;
 using HTS.Dto.Gender;
 using HTS.Dto.Hospital;
@@ -40,6 +41,8 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<PatientAdmissionMethod, PatientAdmissionMethodDto>();
         CreateMap<SaveContractedInstitutionDto, ContractedInstitution>();
         CreateMap<ContractedInstitution, ContractedInstitutionDto>();
+        CreateMap<SaveContractedInstitutionStaffDto, ContractedInstitutionStaff>();
+        CreateMap<ContractedInstitutionStaff, ContractedInstitutionStaffDto>();
         CreateMap<SaveHospitalDto, Hospital>();
         CreateMap<Hospital, HospitalDto>();
         CreateMap<SaveHospitalStaffDto, HospitalStaff>();

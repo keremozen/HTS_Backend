@@ -185,22 +185,38 @@ namespace HTS.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ContractedInstitutionStaff",
+                name: "ContractedInstitutionStaffs",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    NameSurname = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
+                    PhoneNumber = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    Email = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     ContractedInstitutionId = table.Column<int>(type: "integer", nullable: false),
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false)
+                    PhoneCountryCodeId = table.Column<int>(type: "integer", nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    LastModifierId = table.Column<Guid>(type: "uuid", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
+                    DeleterId = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ContractedInstitutionStaff", x => x.Id);
+                    table.PrimaryKey("PK_ContractedInstitutionStaffs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ContractedInstitutionStaff_ContractedInstitutions_Contracte~",
+                        name: "FK_ContractedInstitutionStaffs_ContractedInstitutions_Contract~",
                         column: x => x.ContractedInstitutionId,
                         principalTable: "ContractedInstitutions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ContractedInstitutionStaffs_Nationalities_PhoneCountryCodeId",
+                        column: x => x.PhoneCountryCodeId,
+                        principalTable: "Nationalities",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -212,9 +228,9 @@ namespace HTS.Data.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    PhoneNumber = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    PhoneNumber = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
                     PhoneCountryCodeId = table.Column<int>(type: "integer", nullable: true),
-                    Email = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Email = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
                     CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
@@ -291,6 +307,27 @@ namespace HTS.Data.Migrations
                         column: x => x.PhoneCountryCodeId,
                         principalTable: "Nationalities",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "HospitalStaffs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    HospitalId = table.Column<int>(type: "integer", nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HospitalStaffs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_HospitalStaffs_Hospitals_HospitalId",
+                        column: x => x.HospitalId,
+                        principalTable: "Hospitals",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -465,9 +502,9 @@ namespace HTS.Data.Migrations
                 {
                     table.PrimaryKey("PK_SalesMethodAndCompanionInfos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SalesMethodAndCompanionInfos_ContractedInstitutionStaff_Con~",
+                        name: "FK_SalesMethodAndCompanionInfos_ContractedInstitutionStaffs_Co~",
                         column: x => x.ContractedInstitutionStaffId,
-                        principalTable: "ContractedInstitutionStaff",
+                        principalTable: "ContractedInstitutionStaffs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -503,9 +540,14 @@ namespace HTS.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ContractedInstitutionStaff_ContractedInstitutionId",
-                table: "ContractedInstitutionStaff",
+                name: "IX_ContractedInstitutionStaffs_ContractedInstitutionId",
+                table: "ContractedInstitutionStaffs",
                 column: "ContractedInstitutionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ContractedInstitutionStaffs_PhoneCountryCodeId",
+                table: "ContractedInstitutionStaffs",
+                column: "PhoneCountryCodeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_HospitalConsultations_HospitalConsultationStatusId",
@@ -526,6 +568,11 @@ namespace HTS.Data.Migrations
                 name: "IX_Hospitals_PhoneCountryCodeId",
                 table: "Hospitals",
                 column: "PhoneCountryCodeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_HospitalStaffs_HospitalId",
+                table: "HospitalStaffs",
+                column: "HospitalId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PatientDocuments_DocumentTypeId",
@@ -625,6 +672,9 @@ namespace HTS.Data.Migrations
                 name: "HospitalConsultations");
 
             migrationBuilder.DropTable(
+                name: "HospitalStaffs");
+
+            migrationBuilder.DropTable(
                 name: "PatientDocuments");
 
             migrationBuilder.DropTable(
@@ -649,7 +699,7 @@ namespace HTS.Data.Migrations
                 name: "PatientNoteStatuses");
 
             migrationBuilder.DropTable(
-                name: "ContractedInstitutionStaff");
+                name: "ContractedInstitutionStaffs");
 
             migrationBuilder.DropTable(
                 name: "PatientAdmissionMethods");

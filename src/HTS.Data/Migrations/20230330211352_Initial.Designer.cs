@@ -13,7 +13,7 @@ using Volo.Abp.EntityFrameworkCore;
 namespace HTS.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230329075043_Initial")]
+    [Migration("20230330211352_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -94,17 +94,64 @@ namespace HTS.Data.Migrations
                     b.Property<int>("ContractedInstitutionId")
                         .HasColumnType("integer");
 
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("DeleterId");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("DeletionTime");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<string>("NameSurname")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<int>("PhoneCountryCodeId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ContractedInstitutionId");
 
-                    b.ToTable("ContractedInstitutionStaff");
+                    b.HasIndex("PhoneCountryCodeId");
+
+                    b.ToTable("ContractedInstitutionStaffs");
                 });
 
             modelBuilder.Entity("HTS.Data.Entity.DocumentType", b =>
@@ -205,7 +252,6 @@ namespace HTS.Data.Migrations
                         .HasColumnName("DeletionTime");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
@@ -235,7 +281,6 @@ namespace HTS.Data.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
@@ -327,6 +372,30 @@ namespace HTS.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("HospitalConsultationStatuses");
+                });
+
+            modelBuilder.Entity("HTS.Data.Entity.HospitalStaff", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("HospitalId")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HospitalId");
+
+                    b.ToTable("HospitalStaffs");
                 });
 
             modelBuilder.Entity("HTS.Data.Entity.Language", b =>
@@ -892,7 +961,15 @@ namespace HTS.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("HTS.Data.Entity.Nationality", "PhoneCountryCode")
+                        .WithMany()
+                        .HasForeignKey("PhoneCountryCodeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("ContractedInstitution");
+
+                    b.Navigation("PhoneCountryCode");
                 });
 
             modelBuilder.Entity("HTS.Data.Entity.Hospital", b =>
@@ -929,6 +1006,17 @@ namespace HTS.Data.Migrations
                     b.Navigation("HospitalConsultationStatus");
 
                     b.Navigation("PatientTreatmentProcess");
+                });
+
+            modelBuilder.Entity("HTS.Data.Entity.HospitalStaff", b =>
+                {
+                    b.HasOne("HTS.Data.Entity.Hospital", "Hospital")
+                        .WithMany("HospitalStaffs")
+                        .HasForeignKey("HospitalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Hospital");
                 });
 
             modelBuilder.Entity("HTS.Data.Entity.Patient", b =>
@@ -1085,6 +1173,11 @@ namespace HTS.Data.Migrations
             modelBuilder.Entity("HTS.Data.Entity.ContractedInstitution", b =>
                 {
                     b.Navigation("ContractedInstitutionStaff");
+                });
+
+            modelBuilder.Entity("HTS.Data.Entity.Hospital", b =>
+                {
+                    b.Navigation("HospitalStaffs");
                 });
 
             modelBuilder.Entity("HTS.Data.Entity.Patient", b =>

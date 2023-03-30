@@ -23,12 +23,27 @@ namespace HTS.Interface
         Task<PagedResultDto<ContractedInstitutionStaffDto>> GetByInstitutionListAsync(int institutionId);
         
         /// <summary>
-        /// Creates contracted institution staffs of institution
+        /// Get contracted institution staff by id
         /// </summary>
-        /// <param name="institutionId">To be saved staffs of contracted institution id</param>
-        /// <param name="contractedInstitutionStaffs">contracted institution information to be insert</param>
-        /// <returns></returns>
-        Task SaveAsync(int institutionId, List<SaveContractedInstitutionStaffDto> contractedInstitutionStaffs);
+        /// <param name="id">Desired object id</param>
+        /// <returns>Desired object</returns>
+        Task<ContractedInstitutionStaffDto> GetAsync(int id);
+
+        /// <summary>
+        /// Creates contracted institution staff
+        /// </summary>
+        /// <param name="contractedInstitutionStaff">contracted institution staff information to insert</param>
+        /// <returns>Inserted object</returns>
+        Task<ContractedInstitutionStaffDto> CreateAsync(SaveContractedInstitutionStaffDto contractedInstitutionStaff);
+        
+        /// <summary>
+        /// Creates contracted institution staff of institution
+        /// </summary>
+        /// <param name="id">To be updated contracted institution staff id</param>
+        /// <param name="contractedInstitutionStaff">contracted institution staff information to be updated</param>
+        /// <returns>Updated object</returns>
+        Task<ContractedInstitutionStaffDto> UpdateAsync(int id, SaveContractedInstitutionStaffDto contractedInstitutionStaff);
+        
 
         /// <summary>
         /// Delete given id of contracted institution staff
@@ -36,5 +51,8 @@ namespace HTS.Interface
         /// <param name="id">To be deleted contracted institution staff id</param>
         /// <returns></returns>
         Task DeleteAsync(int id);
+        
+       
+        
     }
 }

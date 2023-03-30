@@ -12,5 +12,4 @@ INSERT INTO "Languages"("Name", "Code", "IsActive", "CreationTime", "IsDeleted")
 
 --Patient Note Status
 INSERT INTO "PatientNoteStatuses"("Id", "Name") VALUES (1, 'New Record');
-INSERT INTO "PatientNoteStatuses"("Id", "Name") VALUES (2, 'Approved');
-INSERT INTO "PatientNoteStatuses"("Id", "Name") VALUES (3, 'Rejected');
+INSERT INTO "PatientNoteStatuses"("Id", "Name") VALUES (2, 'Revoked');

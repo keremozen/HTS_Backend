@@ -8,9 +8,14 @@ public class HTSPermissionDefinitionProvider : PermissionDefinitionProvider
 {
     public override void Define(IPermissionDefinitionContext context)
     {
-        var myGroup = context.AddGroup(HTSPermissions.GroupName);
-        //Define your own permissions here. Example:
-        //myGroup.AddPermission(HTSPermissions.MyPermission1, L("Permission:MyPermission1"));
+        var htsGroup = context.AddGroup(HTSPermissions.GroupName);
+
+        htsGroup.AddPermission(HTSPermissions.HospitalManagement, L("Permission:HospitalManagement"));
+        htsGroup.AddPermission(HTSPermissions.NationalityManagement, L("Permission:NationalityManagement"));
+        htsGroup.AddPermission(HTSPermissions.LanguageManagement, L("Permission:LanguageManagement")); 
+        htsGroup.AddPermission(HTSPermissions.DocumentTypeManagement, L("Permission:DocumentTypeManagement"));
+        htsGroup.AddPermission(HTSPermissions.PatientAdmissionMethodManagement, L("Permission:PatientAdmissionMethodManagement"));
+        htsGroup.AddPermission(HTSPermissions.ContractedInstitutionManagement, L("Permission:ContractedInstitutionManagement"));
     }
 
     private static LocalizableString L(string name)

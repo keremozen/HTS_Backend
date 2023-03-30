@@ -11,10 +11,10 @@ namespace HTS.Data.Entity
         [Required, StringLength(50)]
         public string Name { get; set; }
         [StringLength(20)]
-        public string PhoneNumber { get; set; }
+        public string? PhoneNumber { get; set; }
         public int? PhoneCountryCodeId { get; set; }
         [StringLength(50)]
-        public string Email { get; set; }
+        public string? Email { get; set; }
         [Required]
         public bool IsActive { get; set; }
         [ForeignKey("PhoneCountryCodeId")]

@@ -13,6 +13,7 @@ using HTS.Dto.Patient;
 using HTS.Dto.PatientAdmissionMethod;
 using HTS.Dto.PatientNote;
 using HTS.Dto.PatientNoteStatus;
+using HTS.Dto.PatientTreatmentProcess;
 using static Volo.Abp.Identity.Settings.IdentitySettingNames;
 
 namespace HTS;
@@ -47,5 +48,6 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<Hospital, HospitalDto>();
         CreateMap<SaveHospitalStaffDto, HospitalStaff>();
         CreateMap<HospitalStaff, HospitalStaffDto>();
+        CreateMap<PatientTreatmentProcess, PatientTreatmentProcessDto>();
     }
 }

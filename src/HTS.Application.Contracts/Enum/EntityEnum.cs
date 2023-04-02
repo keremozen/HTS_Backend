@@ -17,5 +17,13 @@ namespace HTS.Enum
             NewRecord = 1,
             Revoked = 2
         }
+
+        public enum PatientTreatmentStatusEnum
+        {
+            NewRecord = 1,
+            HospitalAsked = 2,
+            AssessmentWaiting = 3,
+            QuotationWaiting = 4
+        }
     }
 }

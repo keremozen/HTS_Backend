@@ -13,7 +13,7 @@ using Volo.Abp.EntityFrameworkCore;
 namespace HTS.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230402093946_Initial")]
+    [Migration("20230402133057_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -583,8 +583,8 @@ namespace HTS.Data.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("PassportNumber")
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<int?>("PhoneCountryCodeId")
                         .HasColumnType("integer");
@@ -872,32 +872,32 @@ namespace HTS.Data.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CompanionEmail")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
                     b.Property<string>("CompanionNameSurname")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
-                    b.Property<int>("CompanionNationalityId")
+                    b.Property<int?>("CompanionNationalityId")
                         .HasColumnType("integer");
 
+                    b.Property<string>("CompanionPassportNumber")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
                     b.Property<string>("CompanionPhoneNumber")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
                     b.Property<string>("CompanionRelationship")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
-                    b.Property<int>("ContractedInstitutionId")
+                    b.Property<int?>("ContractedInstitutionId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("ContractedInstitutionStaffId")
+                    b.Property<int?>("ContractedInstitutionStaffId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("CreationTime")
@@ -916,13 +916,13 @@ namespace HTS.Data.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("LastModifierId");
 
-                    b.Property<int>("PatientAdmissionMethodId")
+                    b.Property<int?>("PatientAdmissionMethodId")
                         .HasColumnType("integer");
 
                     b.Property<int>("PatientTreatmentProcessId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("PhoneCountryCodeId")
+                    b.Property<int?>("PhoneCountryCodeId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -1604,7 +1604,7 @@ namespace HTS.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("HTS.Data.Entity.PatientTreatmentProcess", "PatientTreatmentProcess")
-                        .WithMany()
+                        .WithMany("HospitalConsultations")
                         .HasForeignKey("PatientTreatmentProcessId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1743,39 +1743,29 @@ namespace HTS.Data.Migrations
                 {
                     b.HasOne("HTS.Data.Entity.Nationality", "CompanionNationality")
                         .WithMany()
-                        .HasForeignKey("CompanionNationalityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CompanionNationalityId");
 
                     b.HasOne("HTS.Data.Entity.ContractedInstitution", "ContractedInstitution")
                         .WithMany()
-                        .HasForeignKey("ContractedInstitutionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ContractedInstitutionId");
 
                     b.HasOne("HTS.Data.Entity.ContractedInstitutionStaff", "ContractedInstitutionStaff")
                         .WithMany()
-                        .HasForeignKey("ContractedInstitutionStaffId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ContractedInstitutionStaffId");
 
                     b.HasOne("HTS.Data.Entity.PatientAdmissionMethod", "PatientAdmissionMethod")
                         .WithMany()
-                        .HasForeignKey("PatientAdmissionMethodId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PatientAdmissionMethodId");
 
                     b.HasOne("HTS.Data.Entity.PatientTreatmentProcess", "PatientTreatmentProcess")
-                        .WithMany("SalesMethodAndCompanionInfos")
+                        .WithMany()
                         .HasForeignKey("PatientTreatmentProcessId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("HTS.Data.Entity.Nationality", "PhoneCountryCode")
                         .WithMany()
-                        .HasForeignKey("PhoneCountryCodeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PhoneCountryCodeId");
 
                     b.Navigation("CompanionNationality");
 
@@ -1899,7 +1889,7 @@ namespace HTS.Data.Migrations
 
             modelBuilder.Entity("HTS.Data.Entity.PatientTreatmentProcess", b =>
                 {
-                    b.Navigation("SalesMethodAndCompanionInfos");
+                    b.Navigation("HospitalConsultations");
                 });
 
             modelBuilder.Entity("Volo.Abp.Identity.IdentityRole", b =>

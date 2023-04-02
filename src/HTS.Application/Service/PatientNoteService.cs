@@ -29,7 +29,8 @@ public class PatientNoteService : ApplicationService, IPatientNoteService
     public async Task<PagedResultDto<PatientNoteDto>> GetListAsync(int patientId)
     {
         //Get all entities
-        var query = (await _patientNoteRepository.GetQueryableAsync()).Where(p => p.PatientId == patientId);
+        var query = (await _patientNoteRepository.WithDetailsAsync(p => p.Creator))
+            .Where(p => p.PatientId == patientId);
         var responseList = ObjectMapper.Map<List<PatientNote>, List<PatientNoteDto>>(await AsyncExecuter.ToListAsync(query));
         var totalCount = await _patientNoteRepository.CountAsync();//item count
 

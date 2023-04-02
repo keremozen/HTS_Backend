@@ -567,7 +567,7 @@ namespace HTS.Data.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     Surname = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    PassportNumber = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    PassportNumber = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
                     BirthDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
                     PhoneNumber = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
@@ -802,16 +802,17 @@ namespace HTS.Data.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    CompanionNameSurname = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
-                    CompanionEmail = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    CompanionPhoneNumber = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
-                    CompanionRelationship = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    CompanionNameSurname = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    CompanionEmail = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    CompanionPhoneNumber = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
+                    CompanionRelationship = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
+                    CompanionPassportNumber = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
                     PatientTreatmentProcessId = table.Column<int>(type: "integer", nullable: false),
-                    PatientAdmissionMethodId = table.Column<int>(type: "integer", nullable: false),
-                    ContractedInstitutionId = table.Column<int>(type: "integer", nullable: false),
-                    ContractedInstitutionStaffId = table.Column<int>(type: "integer", nullable: false),
-                    PhoneCountryCodeId = table.Column<int>(type: "integer", nullable: false),
-                    CompanionNationalityId = table.Column<int>(type: "integer", nullable: false),
+                    PatientAdmissionMethodId = table.Column<int>(type: "integer", nullable: true),
+                    ContractedInstitutionId = table.Column<int>(type: "integer", nullable: true),
+                    ContractedInstitutionStaffId = table.Column<int>(type: "integer", nullable: true),
+                    PhoneCountryCodeId = table.Column<int>(type: "integer", nullable: true),
+                    CompanionNationalityId = table.Column<int>(type: "integer", nullable: true),
                     CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
                     LastModificationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
@@ -824,32 +825,27 @@ namespace HTS.Data.Migrations
                         name: "FK_SalesMethodAndCompanionInfos_ContractedInstitutionStaffs_Co~",
                         column: x => x.ContractedInstitutionStaffId,
                         principalTable: "ContractedInstitutionStaffs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_SalesMethodAndCompanionInfos_ContractedInstitutions_Contrac~",
                         column: x => x.ContractedInstitutionId,
                         principalTable: "ContractedInstitutions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_SalesMethodAndCompanionInfos_Nationalities_CompanionNationa~",
                         column: x => x.CompanionNationalityId,
                         principalTable: "Nationalities",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_SalesMethodAndCompanionInfos_Nationalities_PhoneCountryCode~",
                         column: x => x.PhoneCountryCodeId,
                         principalTable: "Nationalities",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_SalesMethodAndCompanionInfos_PatientAdmissionMethods_Patien~",
                         column: x => x.PatientAdmissionMethodId,
                         principalTable: "PatientAdmissionMethods",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_SalesMethodAndCompanionInfos_PatientTreatmentProcesses_Pati~",
                         column: x => x.PatientTreatmentProcessId,

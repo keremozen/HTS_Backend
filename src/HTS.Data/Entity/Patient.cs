@@ -12,7 +12,7 @@ namespace HTS.Data.Entity
         [Required, StringLength(100)]
         public string Surname { get; set; }
 
-        [StringLength(500)]
+        [StringLength(50)]
         public string? PassportNumber { get; set; }
 
         public DateTime? BirthDate { get; set; }

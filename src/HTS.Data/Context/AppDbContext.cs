@@ -2,14 +2,16 @@
 using HTS.Data.Entity;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.Data;
+using Volo.Abp.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.Identity;
 using Volo.Abp.Identity.EntityFrameworkCore;
 
 namespace HTS.Data
 {
+    [ReplaceDbContext(typeof(IIdentityDbContext))]
     [ConnectionStringName("Default")]
-    public class AppDbContext : AbpDbContext<AppDbContext>
+    public class AppDbContext : AbpDbContext<AppDbContext>, IIdentityDbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -35,9 +37,24 @@ namespace HTS.Data
         public DbSet<SalesMethodAndCompanionInfo> SalesMethodAndCompanionInfos { get; set; }
         public DbSet<TreatmentProcessStatus> TreatmentProcessStatuses { get; set; }
 
+        public DbSet<IdentityUser> Users { get; set; }
+
+        public DbSet<IdentityRole> Roles { get; set; }
+
+        public DbSet<IdentityClaimType> ClaimTypes { get; set; }
+
+        public DbSet<OrganizationUnit> OrganizationUnits { get; set; }
+
+        public DbSet<IdentitySecurityLog> SecurityLogs { get; set; }
+
+        public DbSet<IdentityLinkUser> LinkUsers { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ConfigureIdentity();
+
         }
     }
 }

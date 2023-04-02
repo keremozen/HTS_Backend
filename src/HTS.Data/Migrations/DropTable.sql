@@ -12,8 +12,6 @@ Drop Table  "PatientAdmissionMethods";
 Drop Table  "PatientTreatmentProcesses";
 Drop Table  "ContractedInstitutions";
 Drop Table  "Patients";
-
-
 Drop Table  "TreatmentProcessStatuses";
 Drop Table  "Genders";
 Drop Table  "Languages";

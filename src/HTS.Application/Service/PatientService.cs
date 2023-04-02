@@ -58,8 +58,8 @@ public class PatientService : ApplicationService, IPatientService
     public async Task<PatientDto> CreateAsync(SavePatientDto patient)
     {
         var entity = ObjectMapper.Map<SavePatientDto, Patient>(patient);
-        await _patientRepository.InsertAsync(entity);
-        return ObjectMapper.Map<Patient, PatientDto>(entity);
+        var createdEntity = await _patientRepository.InsertAsync(entity);
+        return ObjectMapper.Map<Patient, PatientDto>(createdEntity);
     }
 
     public async Task<PatientDto> UpdateAsync(int id, SavePatientDto patient)

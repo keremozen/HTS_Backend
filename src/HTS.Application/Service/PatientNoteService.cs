@@ -33,7 +33,7 @@ public class PatientNoteService : ApplicationService, IPatientNoteService
         var responseList = ObjectMapper.Map<List<PatientNote>, List<PatientNoteDto>>(await AsyncExecuter.ToListAsync(query));
         var totalCount = await _patientNoteRepository.CountAsync();//item count
 
-        Dictionary<Guid, IdentityUserDto> identityUsers = new Dictionary<Guid, IdentityUserDto>();
+        /*Dictionary<Guid, IdentityUserDto> identityUsers = new Dictionary<Guid, IdentityUserDto>();
         foreach (var dto in responseList)//Check every item if contains creator information
         {
             if (dto.CreatorId.HasValue)
@@ -49,7 +49,7 @@ public class PatientNoteService : ApplicationService, IPatientNoteService
                     identityUsers.Add(creatorUser.Id, creatorUser);
                 }
             }
-        }
+        }*/
         return new PagedResultDto<PatientNoteDto>(totalCount, responseList);
     }
 

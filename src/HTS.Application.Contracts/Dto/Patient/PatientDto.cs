@@ -1,6 +1,7 @@
 ﻿using HTS.Dto.Gender;
 using HTS.Dto.Language;
 using HTS.Dto.Nationality;
+using HTS.Dto.PatientTreatmentProcess;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -29,5 +30,6 @@ namespace HTS.Dto.Patient
         public GenderDto Gender { get; set; }
         public LanguageDto SecondTongue { get; set; }
         public LanguageDto MotherTongue { get; set; }
+        public PatientTreatmentProcessDto PatientTreatmentProcess { get; set; }
     }
 }

@@ -27,7 +27,7 @@ public class PatientTreatmentProcessService : ApplicationService, IPatientTreatm
         _userRepository = userRepository;
     }
 
-    
+
     public async Task<PatientTreatmentProcessDto> StartAsync(int patientId)
     {
         var entity = new PatientTreatmentProcess()
@@ -36,7 +36,8 @@ public class PatientTreatmentProcessService : ApplicationService, IPatientTreatm
             TreatmentProcessStatusId = PatientTreatmentStatusEnum.NewRecord.GetHashCode(),
             TreatmentCode = Guid.NewGuid().ToString()
         };
-        await _patientTreatmentProcessRepository.InsertAsync(entity,true);
-        return ObjectMapper.Map<PatientTreatmentProcess, PatientTreatmentProcessDto>(entity);
+        await _patientTreatmentProcessRepository.InsertAsync(entity, true);
+        var newEntityQuery = (await _patientTreatmentProcessRepository.WithDetailsAsync()).Where(p => p.Id == entity.Id);
+        return ObjectMapper.Map<PatientTreatmentProcess, PatientTreatmentProcessDto>(await AsyncExecuter.FirstOrDefaultAsync(newEntityQuery));
     }
 }

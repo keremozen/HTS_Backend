@@ -1,4 +1,5 @@
-﻿using HTS.Data.Entity;
+﻿using System.Linq;
+using HTS.Data.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
@@ -28,8 +29,15 @@ namespace HTS.Data
                                                                      .Include(p => p.MotherTongue)
                                                                      .Include(p => p.SecondTongue)
                                                                      .Include(p => p.Creator)
-                                                                     .Include(p => p.LastModifier);
+                                                                     .Include(p => p.LastModifier)
+                                                                     .Include(p => p.PatientTreatmentProcesses.OrderByDescending(t => t.Id).FirstOrDefault());
                 });
+
+                options.Entity<PatientTreatmentProcess>(orderOptions => 
+                {
+                     orderOptions.DefaultWithDetailsFunc = query => query.Include(o => o.Creator);
+                });
+
             });
         }
     }

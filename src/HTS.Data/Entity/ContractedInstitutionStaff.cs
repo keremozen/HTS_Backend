@@ -2,11 +2,12 @@
 using Volo.Abp.Domain.Entities.Auditing;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Volo.Abp.Identity;
 
 namespace HTS.Data.Entity
 {
 
-    public class ContractedInstitutionStaff : FullAuditedEntity<int>
+    public class ContractedInstitutionStaff : FullAuditedEntityWithUser<int, IdentityUser>
     {
         [Required, StringLength(500)]
         public string NameSurname { get; set; }

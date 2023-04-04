@@ -24,5 +24,8 @@ namespace HTS.Dto.Patient
         public int? GenderId { get; set; }
         public int? MotherTongueId { get; set; }
         public int? SecondTongueId { get; set; }
+        public GenderDto Gender { get; set; }
+        public LanguageDto SecondTongue { get; set; }
+        public LanguageDto MotherTongue { get; set; }
     }
 }

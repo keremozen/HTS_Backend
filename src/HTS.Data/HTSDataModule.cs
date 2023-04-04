@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using HTS.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
+using Volo.Abp.EntityFrameworkCore.DependencyInjection;
 using Volo.Abp.Modularity;
 
 namespace HTS.Data
@@ -14,6 +16,19 @@ namespace HTS.Data
             context.Services.AddAbpDbContext<AppDbContext>(options =>
             {
                 options.AddDefaultRepositories(includeAllEntities: true);
+            });
+
+            Configure<AbpEntityOptions>(options =>
+            {
+                options.Entity<Patient>(orderOptions =>
+                {
+                 orderOptions.DefaultWithDetailsFunc = query => query.Include(o => o.Nationality)
+                                                                     .Include(p => p.Gender)
+                                                                     .Include(p => p.MotherTongue)
+                                                                     .Include(p => p.SecondTongue)
+                                                                     .Include(p => p.Creator)
+                                                                     .Include(p => p.LastModifier);
+                });
             });
         }
     }

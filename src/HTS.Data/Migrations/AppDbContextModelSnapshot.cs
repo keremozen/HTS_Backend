@@ -77,6 +77,12 @@ namespace HTS.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatorId");
+
+                    b.HasIndex("DeleterId");
+
+                    b.HasIndex("LastModifierId");
+
                     b.ToTable("ContractedInstitutions");
                 });
 
@@ -146,6 +152,12 @@ namespace HTS.Data.Migrations
 
                     b.HasIndex("ContractedInstitutionId");
 
+                    b.HasIndex("CreatorId");
+
+                    b.HasIndex("DeleterId");
+
+                    b.HasIndex("LastModifierId");
+
                     b.HasIndex("PhoneCountryCodeId");
 
                     b.ToTable("ContractedInstitutionStaffs");
@@ -202,6 +214,12 @@ namespace HTS.Data.Migrations
                         .HasColumnType("character varying(50)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatorId");
+
+                    b.HasIndex("DeleterId");
+
+                    b.HasIndex("LastModifierId");
 
                     b.ToTable("DocumentTypes");
                 });
@@ -283,6 +301,12 @@ namespace HTS.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatorId");
+
+                    b.HasIndex("DeleterId");
+
+                    b.HasIndex("LastModifierId");
+
                     b.HasIndex("PhoneCountryCodeId");
 
                     b.ToTable("Hospitals");
@@ -344,9 +368,15 @@ namespace HTS.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatorId");
+
+                    b.HasIndex("DeleterId");
+
                     b.HasIndex("HospitalConsultationStatusId");
 
                     b.HasIndex("HospitalId");
+
+                    b.HasIndex("LastModifierId");
 
                     b.HasIndex("PatientTreatmentProcessId");
 
@@ -448,6 +478,12 @@ namespace HTS.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatorId");
+
+                    b.HasIndex("DeleterId");
+
+                    b.HasIndex("LastModifierId");
+
                     b.ToTable("Languages");
                 });
 
@@ -503,6 +539,12 @@ namespace HTS.Data.Migrations
                         .HasColumnType("character varying(10)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatorId");
+
+                    b.HasIndex("DeleterId");
+
+                    b.HasIndex("LastModifierId");
 
                     b.ToTable("Nationalities");
                 });
@@ -600,7 +642,13 @@ namespace HTS.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatorId");
+
+                    b.HasIndex("DeleterId");
+
                     b.HasIndex("GenderId");
+
+                    b.HasIndex("LastModifierId");
 
                     b.HasIndex("MotherTongueId");
 
@@ -666,6 +714,12 @@ namespace HTS.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatorId");
+
+                    b.HasIndex("DeleterId");
+
+                    b.HasIndex("LastModifierId");
+
                     b.ToTable("PatientAdmissionMethods");
                 });
 
@@ -717,7 +771,11 @@ namespace HTS.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatorId");
+
                     b.HasIndex("DocumentTypeId");
+
+                    b.HasIndex("LastModifierId");
 
                     b.HasIndex("PatientDocumentStatusId");
 
@@ -853,6 +911,12 @@ namespace HTS.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatorId");
+
+                    b.HasIndex("DeleterId");
+
+                    b.HasIndex("LastModifierId");
+
                     b.HasIndex("PatientId");
 
                     b.HasIndex("TreatmentProcessStatusId");
@@ -929,6 +993,10 @@ namespace HTS.Data.Migrations
                     b.HasIndex("ContractedInstitutionId");
 
                     b.HasIndex("ContractedInstitutionStaffId");
+
+                    b.HasIndex("CreatorId");
+
+                    b.HasIndex("LastModifierId");
 
                     b.HasIndex("PatientAdmissionMethodId");
 
@@ -1558,6 +1626,27 @@ namespace HTS.Data.Migrations
                     b.ToTable("AbpOrganizationUnitRoles", (string)null);
                 });
 
+            modelBuilder.Entity("HTS.Data.Entity.ContractedInstitution", b =>
+                {
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId");
+
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Deleter")
+                        .WithMany()
+                        .HasForeignKey("DeleterId");
+
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "LastModifier")
+                        .WithMany()
+                        .HasForeignKey("LastModifierId");
+
+                    b.Navigation("Creator");
+
+                    b.Navigation("Deleter");
+
+                    b.Navigation("LastModifier");
+                });
+
             modelBuilder.Entity("HTS.Data.Entity.ContractedInstitutionStaff", b =>
                 {
                     b.HasOne("HTS.Data.Entity.ContractedInstitution", "ContractedInstitution")
@@ -1565,6 +1654,18 @@ namespace HTS.Data.Migrations
                         .HasForeignKey("ContractedInstitutionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId");
+
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Deleter")
+                        .WithMany()
+                        .HasForeignKey("DeleterId");
+
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "LastModifier")
+                        .WithMany()
+                        .HasForeignKey("LastModifierId");
 
                     b.HasOne("HTS.Data.Entity.Nationality", "PhoneCountryCode")
                         .WithMany()
@@ -1574,20 +1675,73 @@ namespace HTS.Data.Migrations
 
                     b.Navigation("ContractedInstitution");
 
+                    b.Navigation("Creator");
+
+                    b.Navigation("Deleter");
+
+                    b.Navigation("LastModifier");
+
                     b.Navigation("PhoneCountryCode");
+                });
+
+            modelBuilder.Entity("HTS.Data.Entity.DocumentType", b =>
+                {
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId");
+
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Deleter")
+                        .WithMany()
+                        .HasForeignKey("DeleterId");
+
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "LastModifier")
+                        .WithMany()
+                        .HasForeignKey("LastModifierId");
+
+                    b.Navigation("Creator");
+
+                    b.Navigation("Deleter");
+
+                    b.Navigation("LastModifier");
                 });
 
             modelBuilder.Entity("HTS.Data.Entity.Hospital", b =>
                 {
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId");
+
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Deleter")
+                        .WithMany()
+                        .HasForeignKey("DeleterId");
+
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "LastModifier")
+                        .WithMany()
+                        .HasForeignKey("LastModifierId");
+
                     b.HasOne("HTS.Data.Entity.Nationality", "PhoneCountryCode")
                         .WithMany()
                         .HasForeignKey("PhoneCountryCodeId");
+
+                    b.Navigation("Creator");
+
+                    b.Navigation("Deleter");
+
+                    b.Navigation("LastModifier");
 
                     b.Navigation("PhoneCountryCode");
                 });
 
             modelBuilder.Entity("HTS.Data.Entity.HospitalConsultation", b =>
                 {
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId");
+
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Deleter")
+                        .WithMany()
+                        .HasForeignKey("DeleterId");
+
                     b.HasOne("HTS.Data.Entity.HospitalConsultationStatus", "HospitalConsultationStatus")
                         .WithMany()
                         .HasForeignKey("HospitalConsultationStatusId")
@@ -1600,15 +1754,25 @@ namespace HTS.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "LastModifier")
+                        .WithMany()
+                        .HasForeignKey("LastModifierId");
+
                     b.HasOne("HTS.Data.Entity.PatientTreatmentProcess", "PatientTreatmentProcess")
                         .WithMany("HospitalConsultations")
                         .HasForeignKey("PatientTreatmentProcessId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Creator");
+
+                    b.Navigation("Deleter");
+
                     b.Navigation("Hospital");
 
                     b.Navigation("HospitalConsultationStatus");
+
+                    b.Navigation("LastModifier");
 
                     b.Navigation("PatientTreatmentProcess");
                 });
@@ -1624,11 +1788,65 @@ namespace HTS.Data.Migrations
                     b.Navigation("Hospital");
                 });
 
+            modelBuilder.Entity("HTS.Data.Entity.Language", b =>
+                {
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId");
+
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Deleter")
+                        .WithMany()
+                        .HasForeignKey("DeleterId");
+
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "LastModifier")
+                        .WithMany()
+                        .HasForeignKey("LastModifierId");
+
+                    b.Navigation("Creator");
+
+                    b.Navigation("Deleter");
+
+                    b.Navigation("LastModifier");
+                });
+
+            modelBuilder.Entity("HTS.Data.Entity.Nationality", b =>
+                {
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId");
+
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Deleter")
+                        .WithMany()
+                        .HasForeignKey("DeleterId");
+
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "LastModifier")
+                        .WithMany()
+                        .HasForeignKey("LastModifierId");
+
+                    b.Navigation("Creator");
+
+                    b.Navigation("Deleter");
+
+                    b.Navigation("LastModifier");
+                });
+
             modelBuilder.Entity("HTS.Data.Entity.Patient", b =>
                 {
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId");
+
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Deleter")
+                        .WithMany()
+                        .HasForeignKey("DeleterId");
+
                     b.HasOne("HTS.Data.Entity.Gender", "Gender")
                         .WithMany()
                         .HasForeignKey("GenderId");
+
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "LastModifier")
+                        .WithMany()
+                        .HasForeignKey("LastModifierId");
 
                     b.HasOne("HTS.Data.Entity.Language", "MotherTongue")
                         .WithMany()
@@ -1648,7 +1866,13 @@ namespace HTS.Data.Migrations
                         .WithMany()
                         .HasForeignKey("SecondTongueId");
 
+                    b.Navigation("Creator");
+
+                    b.Navigation("Deleter");
+
                     b.Navigation("Gender");
+
+                    b.Navigation("LastModifier");
 
                     b.Navigation("MotherTongue");
 
@@ -1659,13 +1883,42 @@ namespace HTS.Data.Migrations
                     b.Navigation("SecondTongue");
                 });
 
+            modelBuilder.Entity("HTS.Data.Entity.PatientAdmissionMethod", b =>
+                {
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId");
+
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Deleter")
+                        .WithMany()
+                        .HasForeignKey("DeleterId");
+
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "LastModifier")
+                        .WithMany()
+                        .HasForeignKey("LastModifierId");
+
+                    b.Navigation("Creator");
+
+                    b.Navigation("Deleter");
+
+                    b.Navigation("LastModifier");
+                });
+
             modelBuilder.Entity("HTS.Data.Entity.PatientDocument", b =>
                 {
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId");
+
                     b.HasOne("HTS.Data.Entity.DocumentType", "DocumentType")
                         .WithMany()
                         .HasForeignKey("DocumentTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "LastModifier")
+                        .WithMany()
+                        .HasForeignKey("LastModifierId");
 
                     b.HasOne("HTS.Data.Entity.PatientDocumentStatus", "PatientDocumentStatus")
                         .WithMany()
@@ -1679,7 +1932,11 @@ namespace HTS.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Creator");
+
                     b.Navigation("DocumentType");
+
+                    b.Navigation("LastModifier");
 
                     b.Navigation("Patient");
 
@@ -1719,6 +1976,18 @@ namespace HTS.Data.Migrations
 
             modelBuilder.Entity("HTS.Data.Entity.PatientTreatmentProcess", b =>
                 {
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId");
+
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Deleter")
+                        .WithMany()
+                        .HasForeignKey("DeleterId");
+
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "LastModifier")
+                        .WithMany()
+                        .HasForeignKey("LastModifierId");
+
                     b.HasOne("HTS.Data.Entity.Patient", "Patient")
                         .WithMany("PatientTreatmentProcesses")
                         .HasForeignKey("PatientId")
@@ -1730,6 +1999,12 @@ namespace HTS.Data.Migrations
                         .HasForeignKey("TreatmentProcessStatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Creator");
+
+                    b.Navigation("Deleter");
+
+                    b.Navigation("LastModifier");
 
                     b.Navigation("Patient");
 
@@ -1750,6 +2025,14 @@ namespace HTS.Data.Migrations
                         .WithMany()
                         .HasForeignKey("ContractedInstitutionStaffId");
 
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId");
+
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "LastModifier")
+                        .WithMany()
+                        .HasForeignKey("LastModifierId");
+
                     b.HasOne("HTS.Data.Entity.PatientAdmissionMethod", "PatientAdmissionMethod")
                         .WithMany()
                         .HasForeignKey("PatientAdmissionMethodId");
@@ -1769,6 +2052,10 @@ namespace HTS.Data.Migrations
                     b.Navigation("ContractedInstitution");
 
                     b.Navigation("ContractedInstitutionStaff");
+
+                    b.Navigation("Creator");
+
+                    b.Navigation("LastModifier");
 
                     b.Navigation("PatientAdmissionMethod");
 

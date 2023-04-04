@@ -1,11 +1,12 @@
 ﻿using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Entities.Auditing;
 using System.ComponentModel.DataAnnotations;
+using Volo.Abp.Identity;
 
 namespace HTS.Data.Entity
 {
 
-    public class PatientDocument : AuditedEntity<int>
+    public class PatientDocument : AuditedEntityWithUser<int, IdentityUser>
     {
         [Required]
         public string Description { get; set; }

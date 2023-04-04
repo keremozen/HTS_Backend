@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using HTS.Data.Entity;
 using HTS.Dto.Language;
 using HTS.Dto.Nationality;
 using HTS.Dto.Patient;
 using HTS.Interface;
+using Microsoft.EntityFrameworkCore;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
@@ -26,39 +28,24 @@ public class PatientService : ApplicationService, IPatientService
 
     public async Task<PatientDto> GetAsync(int id)
     {
-        return ObjectMapper.Map<Patient, PatientDto>(await _patientRepository.GetAsync(id));
+        var query = (await _patientRepository.WithDetailsAsync()).Where(p => p.Id == id);
+        return ObjectMapper.Map<Patient, PatientDto>(await AsyncExecuter.FirstOrDefaultAsync(query));
     }
 
     public async Task<PagedResultDto<PatientDto>> GetListAsync()
     {
         //Get all entities
-        var responseList = ObjectMapper.Map<List<Patient>, List<PatientDto>>(await _patientRepository.GetListAsync());
+        var query = await _patientRepository.WithDetailsAsync();
+        var responseList = ObjectMapper.Map<List<Patient>, List<PatientDto>>(await AsyncExecuter.ToListAsync(query));
         var totalCount = await _patientRepository.CountAsync();//item count
-       
-        Dictionary<Guid, IdentityUserDto> identityUsers = new Dictionary<Guid, IdentityUserDto>();
-        foreach (var dto in responseList)//Check every item if contains creator information
-        {
-            if (dto.CreatorId.HasValue)
-            {//Set creator information
-                if (identityUsers.ContainsKey(dto.CreatorId.Value))//Already exist
-                {
-                    dto.Creator = identityUsers[dto.CreatorId.Value];
-                }
-                else
-                {//Get creator from db
-                    var creatorUser = ObjectMapper.Map<IdentityUser, IdentityUserDto>(await _userRepository.FindAsync(dto.CreatorId.Value));
-                    dto.Creator = creatorUser;
-                    identityUsers.Add(creatorUser.Id, creatorUser);
-                }
-            }
-        }
+        
         return new PagedResultDto<PatientDto>(totalCount, responseList);
     }
 
     public async Task<PatientDto> CreateAsync(SavePatientDto patient)
     {
         var entity = ObjectMapper.Map<SavePatientDto, Patient>(patient);
-        var createdEntity = await _patientRepository.InsertAsync(entity);
+        var createdEntity = await _patientRepository.InsertAsync(entity,true);
         return ObjectMapper.Map<Patient, PatientDto>(createdEntity);
     }
 

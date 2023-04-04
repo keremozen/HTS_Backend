@@ -2,11 +2,12 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Volo.Abp.Domain.Entities.Auditing;
+using Volo.Abp.Identity;
 
 namespace HTS.Data.Entity
 {
 
-    public class Hospital : FullAuditedEntity<int>
+    public class Hospital : FullAuditedEntityWithUser<int, IdentityUser>
     {
         [Required, StringLength(50)]
         public string Name { get; set; }

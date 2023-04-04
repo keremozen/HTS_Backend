@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Volo.Abp.Domain.Entities.Auditing;
+using Volo.Abp.Identity;
+
 namespace HTS.Data.Entity
 {
 
-    public class SalesMethodAndCompanionInfo : AuditedEntity<int>
+    public class SalesMethodAndCompanionInfo : AuditedEntityWithUser<int, IdentityUser>
     {
         [StringLength(500)]
         public string? CompanionNameSurname { get; set; }

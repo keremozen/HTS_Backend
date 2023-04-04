@@ -23,6 +23,7 @@ namespace HTS.Data
                 options.Entity<Patient>(orderOptions =>
                 {
                  orderOptions.DefaultWithDetailsFunc = query => query.Include(o => o.Nationality)
+                                                                     .Include(p => p.PhoneCountryCode)
                                                                      .Include(p => p.Gender)
                                                                      .Include(p => p.MotherTongue)
                                                                      .Include(p => p.SecondTongue)

@@ -13,3 +13,9 @@ INSERT INTO "Languages"("Name", "Code", "IsActive", "CreationTime", "IsDeleted")
 --Patient Note Status
 INSERT INTO "PatientNoteStatuses"("Id", "Name") VALUES (1, 'Yeni Kayıt');
 INSERT INTO "PatientNoteStatuses"("Id", "Name") VALUES (2, 'İptal');
+
+--Treatment Process Status
+INSERT INTO "TreatmentProcessStatuses"("Id", "Name") VALUES (1, 'Yeni Kayıt');
+INSERT INTO "TreatmentProcessStatuses"("Id", "Name") VALUES (2, 'Hastanelere Danışıldı - Cevap Bekleniyor');
+INSERT INTO "TreatmentProcessStatuses"("Id", "Name") VALUES (3, 'Hastanelere Danışıldı - Değerlendirme Bekliyor');
+INSERT INTO "TreatmentProcessStatuses"("Id", "Name") VALUES (4, 'Operasyon Onaylandı - Fiyatlandırma Bekliyor');

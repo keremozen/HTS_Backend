@@ -206,18 +206,18 @@
     "TreatmentProcess:Step:OperationalInformation": "Operasyonel Bilgiler",
     "TreatmentProcess:Step:ProcessQuotationRevenue": "İşlem, Fiyatlandırma, Tahsilat",
 
-    /*ATTENDANT INFORMATION*/
-    "AttendantInfo:Column:PatientAdmissionMethod": "Hasta Geliş Yönetimi",
-    "AttendantInfo:Column:ContractedInstitutionName": "Anlaşmalı Kurum Adı",
-    "AttendantInfo:Column:InstitutionOfficerName": "Kurum Yetkilisi",
-    "AttendantInfo:Column:InstitutionOfficerPhoneNumber": "Kurum Yetkilisi Telefon",
-    "AttendantInfo:Column:InstitutionOfficerEmail": "Kurum Yetkilisi E-Posta",
-    "AttendantInfo:Column:AttendantNameSurname": "Refakatçi Adı Soyadı",
-    "AttendantInfo:Column:AttendantNationality": "Refakatçi Uyruğu",
-    "AttendantInfo:Column:AttendantPassportNo": "Refakatçi Pasaport No",
-    "AttendantInfo:Column:AttendantEmail": "Refakatçi E-Posta",
-    "AttendantInfo:Column:AttendantPhoneNumber": "Refakatçi Telefon",
-    "AttendantInfo:Column:AttendantRelationship": "Yakınlık Derecesi",
+    /*SALES AND COMPANION INFORMATION*/
+    "SalesAndCompanionInfo:Column:PatientAdmissionMethod": "Hasta Geliş Yönetimi",
+    "SalesAndCompanionInfo:Column:ContractedInstitutionName": "Anlaşmalı Kurum Adı",
+    "SalesAndCompanionInfo:Column:InstitutionStaffName": "Kurum Yetkilisi",
+    "SalesAndCompanionInfo:Column:InstitutionStaffPhoneNumber": "Kurum Yetkilisi Telefon",
+    "SalesAndCompanionInfo:Column:InstitutionStaffEmail": "Kurum Yetkilisi E-Posta",
+    "SalesAndCompanionInfo:Column:CompanionNameSurname": "Refakatçi Adı Soyadı",
+    "SalesAndCompanionInfo:Column:CompanionNationality": "Refakatçi Uyruğu",
+    "SalesAndCompanionInfo:Column:CompanionPassportNo": "Refakatçi Pasaport No",
+    "SalesAndCompanionInfo:Column:CompanionEmail": "Refakatçi E-Posta",
+    "SalesAndCompanionInfo:Column:CompanionPhoneNumber": "Refakatçi Telefon",
+    "SalesAndCompanionInfo:Column:CompanionRelationship": "Yakınlık Derecesi",
 
     /*HOSPITAL CONSULTATION*/
     "HospitalConsultation:Title": "Hastane Danışma",

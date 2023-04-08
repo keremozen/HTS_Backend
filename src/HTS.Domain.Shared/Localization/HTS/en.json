@@ -207,18 +207,18 @@
     "TreatmentProcess:Step:OperationalInformation": "Operational Information",
     "TreatmentProcess:Step:ProcessQuotationRevenue": "Process, Quotation, Revenue",
 
-    /*ATTENDANT INFORMATION*/
-    "AttendantInfo:Column:PatientAdmissionMethod": "Patient Admission Method",
-    "AttendantInfo:Column:ContractedInstitutionName": "Contracted Institution Name",
-    "AttendantInfo:Column:InstitutionOfficerName": "Institution Officer",
-    "AttendantInfo:Column:InstitutionOfficerPhoneNumber": "Institution Officer Phone Number",
-    "AttendantInfo:Column:InstitutionOfficerEmail": "Institution Officer E-Mail",
-    "AttendantInfo:Column:AttendantNameSurname": "Attendant Name Surname",
-    "AttendantInfo:Column:AttendantNationality": "Attendant Nationality",
-    "AttendantInfo:Column:AttendantPassportNo": "Attendant Passport No",
-    "AttendantInfo:Column:AttendantEmail": "Attendant E-Mail",
-    "AttendantInfo:Column:AttendantPhoneNumber": "Attendant Phone Number",
-    "AttendantInfo:Column:AttendantRelationship": "Attendant Relationship",
+    /*SALES AND COMPANION INFORMATION*/
+    "SalesAndCompanionInfo:Column:PatientAdmissionMethod": "Patient Admission Method",
+    "SalesAndCompanionInfo:Column:ContractedInstitutionName": "Contracted Institution Name",
+    "SalesAndCompanionInfo:Column:InstitutionStaffName": "Institution Staff",
+    "SalesAndCompanionInfo:Column:InstitutionStaffPhoneNumber": "Institution Staff Phone Number",
+    "SalesAndCompanionInfo:Column:InstitutionStaffEmail": "Institution Staff E-Mail",
+    "SalesAndCompanionInfo:Column:CompanionNameSurname": "Companion Name Surname",
+    "SalesAndCompanionInfo:Column:CompanionNationality": "Companion Nationality",
+    "SalesAndCompanionInfo:Column:CompanionPassportNo": "Companion Passport No",
+    "SalesAndCompanionInfo:Column:CompanionEmail": "Companion E-Mail",
+    "SalesAndCompanionInfo:Column:CompanionPhoneNumber": "Companion Phone Number",
+    "SalesAndCompanionInfo:Column:CompanionRelationship": "Companion Relationship",
 
     /*HOSPITAL CONSULTATION*/
     "HospitalConsultation:Title": "Hospital Consultation",

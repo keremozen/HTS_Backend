@@ -29,6 +29,11 @@ using Volo.Abp.Swashbuckle;
 using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.VirtualFileSystem;
 using HTS.Data;
+using Microsoft.AspNetCore.Hosting;
+using System.Security.Cryptography.X509Certificates;
+using System.Security.Cryptography;
+using Microsoft.Extensions.Hosting.Internal;
+using Volo.Abp.OpenIddict;
 
 namespace HTS;
 
@@ -48,6 +53,25 @@ public class HTSHttpApiHostModule : AbpModule
 {
     public override void PreConfigureServices(ServiceConfigurationContext context)
     {
+        var hostingEnvironment = context.Services.GetHostingEnvironment();
+
+        if (!hostingEnvironment.IsDevelopment())
+        {
+            PreConfigure<AbpOpenIddictAspNetCoreOptions>(options =>
+            {
+                options.AddDevelopmentEncryptionAndSigningCertificate = false;
+            });
+            PreConfigure<OpenIddictServerBuilder>(builder =>
+            {
+                // In production, it is recommended to use two RSA certificates, 
+                // one for encryption, one for signing.
+                builder.AddEncryptionCertificate(
+                        GetEncryptionCertificate(hostingEnvironment, context.Services.GetConfiguration()));
+                builder.AddSigningCertificate(
+                        GetSigningCertificate(hostingEnvironment, context.Services.GetConfiguration()));
+            });
+        }
+
         PreConfigure<OpenIddictBuilder>(builder =>
         {
             builder.AddValidation(options =>
@@ -219,5 +243,63 @@ public class HTSHttpApiHostModule : AbpModule
         app.UseAuditing();
         app.UseAbpSerilogEnrichers();
         app.UseConfiguredEndpoints();
+    }
+
+    private X509Certificate2 GetSigningCertificate(IWebHostEnvironment hostingEnv,
+                            IConfiguration configuration)
+    {
+        var fileName = $"cert-signing.pfx";
+        var passPhrase = configuration["HTSCertificate:X590:PassPhrase"];
+        var file = Path.Combine(hostingEnv.ContentRootPath, fileName);
+        if (File.Exists(file))
+        {
+            var created = File.GetCreationTime(file);
+            var days = (DateTime.Now - created).TotalDays;
+            if (days > 180)
+                File.Delete(file);
+            else
+                return new X509Certificate2(file, passPhrase,
+                             X509KeyStorageFlags.MachineKeySet);
+        }
+        // file doesn't exist or was deleted because it expired
+        using var algorithm = RSA.Create(keySizeInBits: 2048);
+        var subject = new X500DistinguishedName("CN=HTS Signing Certificate");
+        var request = new CertificateRequest(subject, algorithm,
+                            HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
+        request.CertificateExtensions.Add(new X509KeyUsageExtension(
+                            X509KeyUsageFlags.DigitalSignature, critical: true));
+        var certificate = request.CreateSelfSigned(DateTimeOffset.UtcNow,
+                            DateTimeOffset.UtcNow.AddYears(2));
+        File.WriteAllBytes(file, certificate.Export(X509ContentType.Pfx, string.Empty));
+        return new X509Certificate2(file, passPhrase,
+                            X509KeyStorageFlags.MachineKeySet);
+    }
+    private X509Certificate2 GetEncryptionCertificate(IWebHostEnvironment hostingEnv,
+                                 IConfiguration configuration)
+    {
+        var fileName = $"cert-encryption.pfx";
+        var passPhrase = configuration["HTSCertificate:X590:PassPhrase"];
+        var file = Path.Combine(hostingEnv.ContentRootPath, fileName);
+        if (File.Exists(file))
+        {
+            var created = File.GetCreationTime(file);
+            var days = (DateTime.Now - created).TotalDays;
+            if (days > 180)
+                File.Delete(file);
+            else
+                return new X509Certificate2(file, passPhrase,
+                                X509KeyStorageFlags.MachineKeySet);
+        }
+        // file doesn't exist or was deleted because it expired
+        using var algorithm = RSA.Create(keySizeInBits: 2048);
+        var subject = new X500DistinguishedName("CN=HTS Encryption Certificate");
+        var request = new CertificateRequest(subject, algorithm,
+                            HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
+        request.CertificateExtensions.Add(new X509KeyUsageExtension(
+                            X509KeyUsageFlags.KeyEncipherment, critical: true));
+        var certificate = request.CreateSelfSigned(DateTimeOffset.UtcNow,
+                            DateTimeOffset.UtcNow.AddYears(2));
+        File.WriteAllBytes(file, certificate.Export(X509ContentType.Pfx, string.Empty));
+        return new X509Certificate2(file, passPhrase, X509KeyStorageFlags.MachineKeySet);
     }
 }

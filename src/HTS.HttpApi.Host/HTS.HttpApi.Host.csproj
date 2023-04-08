@@ -36,4 +36,9 @@
     <None Remove="Logs\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <_WebToolingArtifacts Remove="Properties\PublishProfiles\Production.pubxml" />
+    <_WebToolingArtifacts Remove="Properties\PublishProfiles\Staging.pubxml" />
+  </ItemGroup>
+
 </Project>

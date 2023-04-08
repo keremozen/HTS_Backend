@@ -13,6 +13,11 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="appsettings.Development.json;appsettings.Staging.json;appsettings.Production.json">
+      <DependentUpon>appsettings.json</DependentUpon>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Remove="appsettings.secrets.json" />
     <Content Include="appsettings.secrets.json">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
@@ -40,6 +45,10 @@
     <Content Remove="Logs\**" />
     <EmbeddedResource Remove="Logs\**" />
     <None Remove="Logs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
 
 </Project>

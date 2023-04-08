@@ -1,5 +1,8 @@
+using System;
 using System.IO;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+using Castle.Core.Configuration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -36,6 +39,13 @@ class Program
             .ConfigureLogging((context, logging) => logging.ClearProviders())
             .ConfigureServices((hostContext, services) =>
             {
+                var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+                var configuration = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetParent(AppContext.BaseDirectory).FullName)
+                    .AddJsonFile("appsettings.json")
+                    .AddJsonFile($"appsettings.{environmentName}.json")
+                    .AddEnvironmentVariables()
+                    .Build();
                 services.AddHostedService<DbMigratorHostedService>();
             });
 }

@@ -30,7 +30,7 @@ namespace HTS.Data
                                                                      .Include(p => p.SecondTongue)
                                                                      .Include(p => p.Creator)
                                                                      .Include(p => p.LastModifier)
-                                                                     .Include(p => p.PatientTreatmentProcesses.OrderByDescending(t => t.Id));
+                                                                     .Include(p => p.PatientTreatmentProcesses);
                 });
 
                 options.Entity<PatientTreatmentProcess>(orderOptions => 

@@ -23,7 +23,8 @@ namespace HTS.Enum
             NewRecord = 1,
             HospitalAsked = 2,
             AssessmentWaiting = 3,
-            QuotationWaiting = 4
+            QuotationWaiting = 4,
+            Discharged = 5
         }
     }
 }

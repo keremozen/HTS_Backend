@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HTS.Data.Entity;
+using HTS.Dto.Hospital;
 using HTS.Dto.Language;
 using HTS.Dto.Nationality;
 using HTS.Dto.PatientNote;
@@ -27,6 +28,15 @@ public class PatientTreatmentProcessService : ApplicationService, IPatientTreatm
         _userRepository = userRepository;
     }
 
+    public async Task<PagedResultDto<PatientTreatmentProcessDto>> GetListAsync()
+    {
+        //Get all entities
+        var query = await _patientTreatmentProcessRepository.WithDetailsAsync();
+        var responseList = ObjectMapper.Map<List<PatientTreatmentProcess>, List<PatientTreatmentProcessDto>>(await AsyncExecuter.ToListAsync(query));
+        var totalCount = await _patientTreatmentProcessRepository.CountAsync();//item count
+        //TODO:Hopsy Ask Kerem the isActive case 
+        return new PagedResultDto<PatientTreatmentProcessDto>(totalCount, responseList);
+    }
 
     public async Task<PatientTreatmentProcessDto> StartAsync(int patientId)
     {

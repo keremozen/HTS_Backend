@@ -30,12 +30,14 @@ namespace HTS.Data
                                                                      .Include(p => p.SecondTongue)
                                                                      .Include(p => p.Creator)
                                                                      .Include(p => p.LastModifier)
-                                                                     .Include(p => p.PatientTreatmentProcesses);
+                                                                     .Include(p => p.PatientTreatmentProcesses)
+                                                                     .ThenInclude(t => t.TreatmentProcessStatus);
                 });
 
                 options.Entity<PatientTreatmentProcess>(orderOptions => 
                 {
-                     orderOptions.DefaultWithDetailsFunc = query => query.Include(o => o.Creator);
+                     orderOptions.DefaultWithDetailsFunc = query => query.Include(t => t.Creator)
+                         .Include(t => t.TreatmentProcessStatus);
                 });
 
             });

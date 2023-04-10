@@ -16,6 +16,12 @@ namespace HTS.Interface
     public interface IPatientTreatmentProcessService : IApplicationService
     {
         /// <summary>
+        /// Patient's treatment process list
+        /// </summary>
+        /// <param name="patientId">Patient</param>
+        /// <returns>Patient's treatment process list</returns>
+        public Task<PagedResultDto<PatientTreatmentProcessDto>> GetListByPatientIdAsync(int patientId);
+        /// <summary>
         /// Starts patient treatment process
         /// </summary>
         /// <param name="patientId">Patient id to start treatment process</param>

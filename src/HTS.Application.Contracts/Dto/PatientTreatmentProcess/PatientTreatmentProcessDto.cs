@@ -1,3 +1,4 @@
+using HTS.Dto.TreatmentProcessStatus;
 using HTS.Enum;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Identity;
@@ -9,4 +10,5 @@ public class PatientTreatmentProcessDto  : AuditedEntityWithUserDto<int,Identity
 {
     public string TreatmentCode { get; set; }
     public PatientTreatmentStatusEnum TreatmentProcessStatusId { get; set; }
+    public TreatmentProcessStatusDto TreatmentProcessStatus { get; set; }
 }

@@ -28,13 +28,13 @@ public class PatientTreatmentProcessService : ApplicationService, IPatientTreatm
         _userRepository = userRepository;
     }
 
-    public async Task<PagedResultDto<PatientTreatmentProcessDto>> GetListAsync()
+    public async Task<PagedResultDto<PatientTreatmentProcessDto>> GetListByPatientIdAsync(int patientId)
     {
         //Get all entities
-        var query = await _patientTreatmentProcessRepository.WithDetailsAsync();
+        var query = (await _patientTreatmentProcessRepository.WithDetailsAsync())
+                                                .Where(t => t.PatientId == patientId);
         var responseList = ObjectMapper.Map<List<PatientTreatmentProcess>, List<PatientTreatmentProcessDto>>(await AsyncExecuter.ToListAsync(query));
         var totalCount = await _patientTreatmentProcessRepository.CountAsync();//item count
-        //TODO:Hopsy Ask Kerem the isActive case 
         return new PagedResultDto<PatientTreatmentProcessDto>(totalCount, responseList);
     }
 

@@ -30,6 +30,6 @@ namespace HTS.Dto.Patient
         public GenderDto Gender { get; set; }
         public LanguageDto SecondTongue { get; set; }
         public LanguageDto MotherTongue { get; set; }
-        public PatientTreatmentProcessDto PatientTreatmentProcess { get; set; }
+        public List<PatientTreatmentProcessDto> PatientTreatmentProcesses { get; set; }
     }
 }

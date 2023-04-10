@@ -15,6 +15,7 @@ using HTS.Dto.PatientNote;
 using HTS.Dto.PatientNoteStatus;
 using HTS.Dto.PatientTreatmentProcess;
 using HTS.Dto.SalesMethodAndCompanionInfo;
+using HTS.Dto.TreatmentProcessStatus;
 using static Volo.Abp.Identity.Settings.IdentitySettingNames;
 
 namespace HTS;
@@ -33,6 +34,7 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<SaveNationalityDto, Nationality>();
         CreateMap<DocumentType, DocumentTypeDto>();
         CreateMap<SaveDocumentTypeDto, DocumentType>();
+        CreateMap<TreatmentProcessStatus, TreatmentProcessStatusDto>();
 
         CreateMap<Patient, PatientDto>();
         CreateMap<SavePatientDto, Patient>();

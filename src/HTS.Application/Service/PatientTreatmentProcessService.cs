@@ -34,7 +34,7 @@ public class PatientTreatmentProcessService : ApplicationService, IPatientTreatm
         var query = (await _patientTreatmentProcessRepository.WithDetailsAsync())
                                                 .Where(t => t.PatientId == patientId);
         var responseList = ObjectMapper.Map<List<PatientTreatmentProcess>, List<PatientTreatmentProcessDto>>(await AsyncExecuter.ToListAsync(query));
-        var totalCount = await _patientTreatmentProcessRepository.CountAsync();//item count
+        var totalCount = responseList.Count();//item count
         return new PagedResultDto<PatientTreatmentProcessDto>(totalCount, responseList);
     }
 

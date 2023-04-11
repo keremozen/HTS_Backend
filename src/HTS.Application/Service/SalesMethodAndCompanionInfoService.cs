@@ -11,6 +11,7 @@ using HTS.Interface;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
+using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Identity;
 using static HTS.Enum.EntityEnum;
@@ -30,8 +31,15 @@ public class SalesMethodAndCompanionInfoService : ApplicationService, ISalesMeth
 
     public async Task<SalesMethodAndCompanionInfoDto> GetByPatientTreatmentProcessIdAsync(int ptpId)
     {
-        var response = await _salesMethodAndCompanionInfoRepository.GetAsync(i => i.PatientTreatmentProcessId == ptpId);
-        return ObjectMapper.Map<SalesMethodAndCompanionInfo, SalesMethodAndCompanionInfoDto>(response);
+        try
+        {
+            var response = await _salesMethodAndCompanionInfoRepository.GetAsync(i => i.PatientTreatmentProcessId == ptpId);
+            return ObjectMapper.Map<SalesMethodAndCompanionInfo, SalesMethodAndCompanionInfoDto>(response);
+        }
+        catch (EntityNotFoundException)
+        {
+            return null;
+        }
     }
 
     public async Task<SalesMethodAndCompanionInfoDto> SaveAsync(SaveSalesMethodAndCompanionInfoDto salesMethodAndCompanionInfo)

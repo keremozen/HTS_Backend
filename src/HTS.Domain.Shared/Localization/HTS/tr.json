@@ -207,6 +207,7 @@
     "TreatmentProcess:Step:ProcessQuotationRevenue": "İşlem, Fiyatlandırma, Tahsilat",
 
     /*SALES AND COMPANION INFORMATION*/
+    "SalesAndCompanionInfo:Name": "Satış Yöntemi ve Refakatçi Bilgileri",
     "SalesAndCompanionInfo:Column:PatientAdmissionMethod": "Hasta Geliş Yönetimi",
     "SalesAndCompanionInfo:Column:ContractedInstitutionName": "Anlaşmalı Kurum Adı",
     "SalesAndCompanionInfo:Column:InstitutionStaffName": "Kurum Yetkilisi",

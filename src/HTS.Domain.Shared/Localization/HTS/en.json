@@ -208,6 +208,7 @@
     "TreatmentProcess:Step:ProcessQuotationRevenue": "Process, Quotation, Revenue",
 
     /*SALES AND COMPANION INFORMATION*/
+    "SalesAndCompanionInfo:Name": "Sales and Companion Information",
     "SalesAndCompanionInfo:Column:PatientAdmissionMethod": "Patient Admission Method",
     "SalesAndCompanionInfo:Column:ContractedInstitutionName": "Contracted Institution Name",
     "SalesAndCompanionInfo:Column:InstitutionStaffName": "Institution Staff",

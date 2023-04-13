@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HTS.Data.Context
 {
@@ -22,9 +17,11 @@ namespace HTS.Data.Context
 
         private static IConfigurationRoot BuildConfiguration()
         {
+            var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../HTS.DbMigrator/"))
-                .AddJsonFile("appsettings.json", optional: false);
+                .AddJsonFile("appsettings.Development.json", optional: false)
+                .AddJsonFile($"appsettings.{environmentName}.json");
 
             return builder.Build();
         }

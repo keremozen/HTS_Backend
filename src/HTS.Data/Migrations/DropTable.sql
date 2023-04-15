@@ -16,3 +16,4 @@ Drop Table  "TreatmentProcessStatuses";
 Drop Table  "Genders";
 Drop Table  "Languages";
 Drop Table  "Nationalities";
+Drop Table  "Cities";

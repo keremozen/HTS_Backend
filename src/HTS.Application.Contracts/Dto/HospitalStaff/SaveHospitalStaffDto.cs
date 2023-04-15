@@ -10,5 +10,7 @@ public class SaveHospitalStaffDto
     [Required]
     public int HospitalId { get; set; }
     [Required]
+    public bool IsDefault { get; set; }
+    [Required]
     public bool IsActive { get; set; }
 }

@@ -40,6 +40,12 @@ namespace HTS.Data
                          .Include(t => t.TreatmentProcessStatus);
                 });
 
+                options.Entity<ContractedInstitution>(orderOptions =>
+                {
+                 orderOptions.DefaultWithDetailsFunc = query => query.Include(o => o.Nationality)
+                                                                     .Include(p => p.PhoneCountryCode);
+                });
+
             });
         }
     }

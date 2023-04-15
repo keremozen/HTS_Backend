@@ -9,6 +9,7 @@ public class ContractedInstitutionStaffDto: EntityDto<int>
     public string PhoneNumber { get; set; }
     public string Email { get; set; }
     public int ContractedInstitutionId { get; set; }
-    public int PhoneCountryCodeId { get; set; }
+    public int? PhoneCountryCodeId { get; set; }
+    public bool IsDefault { get; set; } 
     public bool IsActive { get; set; }
 }

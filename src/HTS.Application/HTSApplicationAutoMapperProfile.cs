@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HTS.Data.Entity;
 using HTS.Dto;
+using HTS.Dto.City;
 using HTS.Dto.ContractedInstitution;
 using HTS.Dto.ContractedInstitutionStaff;
 using HTS.Dto.DocumentType;
@@ -28,9 +29,10 @@ public class HTSApplicationAutoMapperProfile : Profile
          * Alternatively, you can split your mapping configurations
          * into multiple profile classes for a better organization. */
         CreateMap<Gender, GenderDto>();
-        CreateMap<Language,LanguageDto>();
+        CreateMap<City, CityDto>();
+        CreateMap<Language, LanguageDto>();
         CreateMap<SaveLanguageDto, Language>();
-        CreateMap<Nationality,NationalityDto>();
+        CreateMap<Nationality, NationalityDto>();
         CreateMap<SaveNationalityDto, Nationality>();
         CreateMap<DocumentType, DocumentTypeDto>();
         CreateMap<SaveDocumentTypeDto, DocumentType>();
@@ -40,7 +42,7 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<SavePatientDto, Patient>();
         CreateMap<PatientNote, PatientNoteDto>();
         CreateMap<SavePatientNoteDto, PatientNote>();
-        CreateMap<PatientNoteStatus, PatientNoteStatusDto>(); 
+        CreateMap<PatientNoteStatus, PatientNoteStatusDto>();
         CreateMap<SavePatientAdmissionMethodDto, PatientAdmissionMethod>();
         CreateMap<PatientAdmissionMethod, PatientAdmissionMethodDto>();
         CreateMap<SaveContractedInstitutionDto, ContractedInstitution>();

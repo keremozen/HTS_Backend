@@ -13,6 +13,8 @@ namespace HTS.Data.Entity
         [Required]
         public int HospitalId { get; set; }
         [Required]
+        public bool IsDefault { get; set; }
+        [Required]
         public bool IsActive { get; set; }
         [ForeignKey("HospitalId")]
         public Hospital Hospital { get; set; }

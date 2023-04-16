@@ -1,13 +1,16 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using HTS.Data.Entity;
 using HTS.Dto.ContractedInstitution;
 using HTS.Dto.Language;
 using HTS.Dto.Nationality;
+using HTS.Dto.Patient;
 using HTS.Interface;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
+using Volo.Abp.ObjectMapping;
 
 namespace HTS.Service;
 
@@ -21,13 +24,15 @@ public class ContractedInstitutionService : ApplicationService, IContractedInsti
     
     public async Task<ContractedInstitutionDto> GetAsync(int id)
     {
-        return ObjectMapper.Map<ContractedInstitution, ContractedInstitutionDto>(await _contractedInstitutionRepository.GetAsync(id));
+        var query = (await _contractedInstitutionRepository.WithDetailsAsync()).Where(p => p.Id == id);
+        return ObjectMapper.Map<ContractedInstitution, ContractedInstitutionDto>(await AsyncExecuter.FirstOrDefaultAsync(query));
     }
     
     public async Task<PagedResultDto<ContractedInstitutionDto>> GetListAsync()
     {
         //Get all entities
-        var responseList = ObjectMapper.Map<List<ContractedInstitution>, List<ContractedInstitutionDto>>(await _contractedInstitutionRepository.GetListAsync());
+        var query = await _contractedInstitutionRepository.WithDetailsAsync();
+        var responseList = ObjectMapper.Map<List<ContractedInstitution>, List<ContractedInstitutionDto>>(await AsyncExecuter.ToListAsync(query));
         var totalCount = await _contractedInstitutionRepository.CountAsync();//item count
         //TODO:Hopsy Ask Kerem the isActive case 
         return new PagedResultDto<ContractedInstitutionDto>(totalCount,responseList);

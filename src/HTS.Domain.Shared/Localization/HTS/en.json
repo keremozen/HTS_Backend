@@ -40,12 +40,22 @@
     "Message:SuccessfulRevokation": "{0} is successfully revoked.",
     "Message:SuccessfulMultipleRevokation": "{0} are successfully revoked.",
 
+    /*PERMISSIONS*/
+    "Permission:HospitalManagement": "Hospital Management",
+    "Permission:LanguageManagement": "Language Management",
+    "Permission:NationalityManagement": "Nationality Management",
+    "Permission:CityManagement": "City Management",
+    "Permission:DocumentTypeManagement": "Document Type Management",
+    "Permission:PatientAdmissionMethodManagement": "Patient Admission Method Management",
+    "Permission:ContractedInstitutionManagement": "Contracted Institution Management",
+
     /*MENU*/
     "Menu:Home": "Home",
     "Menu:Patients": "Patients",
     "Menu:Admin": "Admin",
     "Menu:Admin:Hospital": "Hospital Management",
-    "Menu:Admin:Nationality": "Nationality Management",
+    "Menu:Admin:Nationality": "Country Management",
+    "Menu:Admin:City": "City Management",
     "Menu:Admin:Language": "Language Management",
     "Menu:Admin:PatientNoteStatus": "Patient Note Status Management",
     "Menu:Admin:DocumentType": "Document Type Management",
@@ -54,14 +64,6 @@
     "Menu:Admin:PatientAdmissionMethod": "Patient Admission Method Management",
     "Menu:Admin:ContractedInstitution": "Contracted Institution Management",
     "Menu:Admin:HospitalConsultationStatus": "Hospital Consultation Status Management",
-
-    /*PERMISSIONS*/
-    "Permission:HospitalManagement": "Hospital Management",
-    "Permission:LanguageManagement": "Language Management",
-    "Permission:NationalityManagement": "Nationality Management",
-    "Permission:DocumentTypeManagement": "Document Type Management",
-    "Permission:PatientAdmissionMethodManagement": "Patient Admission Method Management",
-    "Permission:ContractedInstitutionManagement": "Contracted Institution Management",
 
     /*HOSPITAL MANAGEMENT*/
     "Admin:Hospital:Name": "Hospital",
@@ -83,13 +85,20 @@
     "Admin:HospitalStaff:HospitalStaffDetails": "Hospital Staff Detail",
 
     /*NATIONALITY MANAGEMENT*/
-    "Admin:Nationality:Name": "Nationality",
-    "Admin:Nationality:NationalityManagement": "Nationality Management",
-    "Admin:Nationality:NewNationality": "New Nationality",
+    "Admin:Nationality:Name": "Country",
+    "Admin:Nationality:NationalityManagement": "Country Management",
+    "Admin:Nationality:NewNationality": "New Country",
     "Admin:Nationality:Column:Name": "Name",
     "Admin:Nationality:Column:PhoneCode": "Phone Code",
     "Admin:Nationality:Column:IsActive": "Is Active?",
-    "Admin:Nationality:NationalityDetails": "Nationality Details",
+    "Admin:Nationality:NationalityDetails": "Country Details",
+
+    /*CITY MANAGEMENT*/
+    "Admin:City:Name": "City",
+    "Admin:City:CityManagement": "City Management",
+    "Admin:City:NewCity": "New City",
+    "Admin:City:Column:Name": "Name",
+    "Admin:City:CityDetails": "City Details",
 
     /*DOCUMENT TYPE MANAGEMENT*/
     "Admin:DocumentType:Name": "Document Type",
@@ -115,6 +124,11 @@
     "Admin:ContractedInstitution:NewContractedInstitution": "New Contracted Institution",
     "Admin:ContractedInstitution:Column:Name": "Name",
     "Admin:ContractedInstitution:Column:Description": "Description",
+    "Admin:ContractedInstitution:Column:PhoneNumber": "Phone Number",
+    "Admin:ContractedInstitution:Column:Email": "E-Mail Address",
+    "Admin:ContractedInstitution:Column:WebSite": "Web Site",
+    "Admin:ContractedInstitution:Column:Address": "Address",
+    "Admin:ContractedInstitution:Column:Country": "Country",
     "Admin:ContractedInstitution:Column:Staffs": "Staff List",
     "Admin:ContractedInstitution:Column:IsActive": "Is Active?",
     "Admin:ContractedInstitution:ContractedInstitutionDetails": "Contracted Institution Details",
@@ -123,10 +137,10 @@
     "Admin:ContractedInstitutionStaff:Column:NameSurname": "Name Surname",
     "Admin:ContractedInstitutionStaff:Column:PhoneNumber": "Phone Number",
     "Admin:ContractedInstitutionStaff:Column:EMail": "E-Mail",
+    "Admin:ContractedInstitutionStaff:Column:IsDefault": "Default",
     "Admin:ContractedInstitutionStaff:Column:IsActive": "Is Active?",
     "Admin:ContractedInstitutionStaff:NewContractedInstitutionStaff": "New Staff",
     "Admin:ContractedInstitutionStaff:ContractedInstitutionStaffDetails": "Contracted Institution Staff Details",
-
 
     /*HOSPITAL CONSULTATION MANAGEMENT*/
     "Admin:HospitalConsultationStatus:Name": "Hospital Consultation Status",
@@ -141,7 +155,6 @@
     "Admin:Language:LanguageManagement": "Language Management",
     "Admin:Language:NewLanguage": "New Language",
     "Admin:Language:Column:Name": "Name",
-    "Admin:Language:Column:Code": "Code",
     "Admin:Language:Column:IsActive": "Is Active?",
     "Admin:Language:LanguageDetails": "Language Details",
 

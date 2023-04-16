@@ -1,4 +1,5 @@
 ﻿using HTS.Dto;
+using HTS.Dto.City;
 using HTS.Dto.Language;
 using System;
 using System.Collections.Generic;

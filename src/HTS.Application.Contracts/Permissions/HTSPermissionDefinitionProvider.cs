@@ -12,6 +12,7 @@ public class HTSPermissionDefinitionProvider : PermissionDefinitionProvider
 
         htsGroup.AddPermission(HTSPermissions.HospitalManagement, L("Permission:HospitalManagement"));
         htsGroup.AddPermission(HTSPermissions.NationalityManagement, L("Permission:NationalityManagement"));
+        htsGroup.AddPermission(HTSPermissions.CityManagement, L("Permission:CityManagement"));
         htsGroup.AddPermission(HTSPermissions.LanguageManagement, L("Permission:LanguageManagement")); 
         htsGroup.AddPermission(HTSPermissions.DocumentTypeManagement, L("Permission:DocumentTypeManagement"));
         htsGroup.AddPermission(HTSPermissions.PatientAdmissionMethodManagement, L("Permission:PatientAdmissionMethodManagement"));

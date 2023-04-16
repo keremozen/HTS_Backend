@@ -37,7 +37,15 @@ namespace HTS.Data
         public DbSet<PatientTreatmentProcess> PatientTreatmentProcesses { get; set; }
         public DbSet<SalesMethodAndCompanionInfo> SalesMethodAndCompanionInfos { get; set; }
         public DbSet<TreatmentProcessStatus> TreatmentProcessStatuses { get; set; }
-
+        public DbSet<HospitalizationType> HospitalizationTypes { get; set; }
+        public DbSet<HospitalResponse> HospitalResponses { get; set; }
+        public DbSet<IncludingProcess> IncluedingProcesses { get; set; }
+        public DbSet<Major> Majors { get; set; }
+        public DbSet<Process> Processes { get; set; }
+        public DbSet<ProcessCost> ProcessCosts { get; set; }
+        public DbSet<ProcessType> ProcessTypes { get; set; }
+        public DbSet<TreatmentType> TreatmentTypes { get; set; }
+        
         public DbSet<IdentityUser> Users { get; set; }
 
         public DbSet<IdentityRole> Roles { get; set; }

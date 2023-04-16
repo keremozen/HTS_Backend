@@ -1,3 +1,4 @@
+using HTS.Dto.Nationality;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Identity;
 
@@ -12,4 +13,5 @@ public class ContractedInstitutionStaffDto: EntityDto<int>
     public int? PhoneCountryCodeId { get; set; }
     public bool IsDefault { get; set; } 
     public bool IsActive { get; set; }
+    public NationalityDto PhoneCountryCode { get; set; }
 }

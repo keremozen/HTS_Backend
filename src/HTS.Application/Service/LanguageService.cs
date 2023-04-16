@@ -7,6 +7,7 @@ using HTS.Dto;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
+using HTS.Dto.City;
 
 namespace HTS.Service
 {

@@ -30,6 +30,7 @@ public class HTSApplicationAutoMapperProfile : Profile
          * into multiple profile classes for a better organization. */
         CreateMap<Gender, GenderDto>();
         CreateMap<City, CityDto>();
+        CreateMap<SaveCityDto, City>();
         CreateMap<Language, LanguageDto>();
         CreateMap<SaveLanguageDto, Language>();
         CreateMap<Nationality, NationalityDto>();

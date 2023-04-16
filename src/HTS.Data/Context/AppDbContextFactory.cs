@@ -20,7 +20,7 @@ namespace HTS.Data.Context
             var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../HTS.DbMigrator/"))
-                .AddJsonFile("appsettings.Development.json", optional: false)
+                .AddJsonFile("appsettings.json", optional: false)
                 .AddJsonFile($"appsettings.{environmentName}.json");
 
             return builder.Build();

@@ -8,7 +8,7 @@ INSERT INTO "Genders"("Id", "Name", "IsActive") VALUES (1, 'Kadın', true);
 INSERT INTO "Genders"("Id", "Name", "IsActive") VALUES (2, 'Erkek', true);
 
 --Languages Table
-INSERT INTO "Languages"("Name", "Code", "IsActive", "CreationTime", "IsDeleted") VALUES ('Türkçe', 'TR', true,'"2023-03-26 22:49:04.678786+03"', false);
+INSERT INTO "Languages"("Name", "IsActive", "CreationTime", "IsDeleted") VALUES ('Türkçe', true,'"2023-03-26 22:49:04.678786+03"', false);
 
 --Patient Note Status
 INSERT INTO "PatientNoteStatuses"("Id", "Name") VALUES (1, 'Yeni Kayıt');
@@ -21,5 +21,5 @@ INSERT INTO "TreatmentProcessStatuses"("Id", "Name") VALUES (3, 'Hastanelere Dan
 INSERT INTO "TreatmentProcessStatuses"("Id", "Name") VALUES (4, 'Operasyon Onaylandı - Fiyatlandırma Bekliyor');
 
 --Cities Table
-INSERT INTO "Cities"("Name") VALUES ('Ankara');
-INSERT INTO "Cities"("Name") VALUES ('İstanbul');
+INSERT INTO "Cities"("Name","CreationTime") VALUES ('Ankara','"2023-03-26 22:49:04.678786+03"');
+INSERT INTO "Cities"("Name","CreationTime") VALUES ('İstanbul','"2023-03-26 22:49:04.678786+03"');

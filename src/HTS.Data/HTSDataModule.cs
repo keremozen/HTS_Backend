@@ -37,13 +37,18 @@ namespace HTS.Data
                 options.Entity<PatientTreatmentProcess>(orderOptions => 
                 {
                      orderOptions.DefaultWithDetailsFunc = query => query.Include(t => t.Creator)
-                         .Include(t => t.TreatmentProcessStatus);
+                                                                         .Include(t => t.TreatmentProcessStatus);
                 });
 
                 options.Entity<ContractedInstitution>(orderOptions =>
                 {
-                 orderOptions.DefaultWithDetailsFunc = query => query.Include(o => o.Nationality)
-                                                                     .Include(p => p.PhoneCountryCode);
+                    orderOptions.DefaultWithDetailsFunc = query => query.Include(o => o.Nationality)
+                                                                        .Include(p => p.PhoneCountryCode);
+                });
+
+                options.Entity<ContractedInstitutionStaff>(orderOptions =>
+                {
+                    orderOptions.DefaultWithDetailsFunc = query => query.Include(p => p.PhoneCountryCode);
                 });
 
             });

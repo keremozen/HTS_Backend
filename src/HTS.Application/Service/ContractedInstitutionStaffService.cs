@@ -16,7 +16,7 @@ namespace HTS.Service;
 public class ContractedInstitutionStaffService : ApplicationService, IContractedInstitutionStaffService
 {
     private readonly IRepository<ContractedInstitutionStaff, int> _contractedInstitutionStaffRepository;
-    public ContractedInstitutionStaffService(IRepository<ContractedInstitutionStaff, int> contractedInstitutionStaffRepository) 
+    public ContractedInstitutionStaffService(IRepository<ContractedInstitutionStaff, int> contractedInstitutionStaffRepository)
     {
         _contractedInstitutionStaffRepository = contractedInstitutionStaffRepository;
     }
@@ -24,15 +24,16 @@ public class ContractedInstitutionStaffService : ApplicationService, IContracted
     public async Task<PagedResultDto<ContractedInstitutionStaffDto>> GetByInstitutionListAsync(int institutionId)
     {
         //Get all entities
-         var query = (await _contractedInstitutionStaffRepository.GetQueryableAsync()).Where(p => p.ContractedInstitutionId == institutionId);
-         var responseList = ObjectMapper.Map<List<ContractedInstitutionStaff>, List<ContractedInstitutionStaffDto>>(await AsyncExecuter.ToListAsync(query));
+        var query = (await _contractedInstitutionStaffRepository.WithDetailsAsync()).Where(p => p.ContractedInstitutionId == institutionId);
+        var responseList = ObjectMapper.Map<List<ContractedInstitutionStaff>, List<ContractedInstitutionStaffDto>>(await AsyncExecuter.ToListAsync(query));
         var totalCount = await _contractedInstitutionStaffRepository.CountAsync();//item count
-        return new PagedResultDto<ContractedInstitutionStaffDto>(totalCount,responseList);
+        return new PagedResultDto<ContractedInstitutionStaffDto>(totalCount, responseList);
     }
 
     public async Task<ContractedInstitutionStaffDto> GetAsync(int id)
     {
-        return ObjectMapper.Map<ContractedInstitutionStaff, ContractedInstitutionStaffDto>(await _contractedInstitutionStaffRepository.GetAsync(id));
+        var query = (await _contractedInstitutionStaffRepository.WithDetailsAsync()).Where(p => p.Id == id);
+        return ObjectMapper.Map<ContractedInstitutionStaff, ContractedInstitutionStaffDto>(await AsyncExecuter.FirstOrDefaultAsync(query));
     }
 
     public async Task<ContractedInstitutionStaffDto> CreateAsync(SaveContractedInstitutionStaffDto contractedInstitutionStaff)

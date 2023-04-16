@@ -8,16 +8,23 @@ using HTS.Dto.DocumentType;
 using HTS.Dto.Gender;
 using HTS.Dto.Hospital;
 using HTS.Dto.HospitalizationType;
+using HTS.Dto.HospitalResponse;
 using HTS.Dto.HospitalStaff;
 using HTS.Dto.Language;
+using HTS.Dto.Major;
 using HTS.Dto.Nationality;
 using HTS.Dto.Patient;
 using HTS.Dto.PatientAdmissionMethod;
 using HTS.Dto.PatientNote;
 using HTS.Dto.PatientNoteStatus;
 using HTS.Dto.PatientTreatmentProcess;
+using HTS.Dto.Process;
+using HTS.Dto.ProcessCost;
+using HTS.Dto.ProcessRelation;
+using HTS.Dto.ProcessType;
 using HTS.Dto.SalesMethodAndCompanionInfo;
 using HTS.Dto.TreatmentProcessStatus;
+using HTS.Dto.TreatmentType;
 using static Volo.Abp.Identity.Settings.IdentitySettingNames;
 
 namespace HTS;
@@ -41,7 +48,15 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<TreatmentProcessStatus, TreatmentProcessStatusDto>();
         CreateMap<HospitalizationType, HospitalizationTypeDto>();
         CreateMap<HospitalizationTypeDto, HospitalizationType>();
-
+        CreateMap<HospitalResponse, HospitalResponseDto>();
+        CreateMap<SaveHospitalResponseDto, HospitalResponse>();
+        CreateMap<Major, MajorDto>();
+        CreateMap<SaveMajorDto, Major>();
+        CreateMap<ProcessType, ProcessTypeDto>();
+        CreateMap<SaveProcessTypeDto, ProcessType>();
+        CreateMap<TreatmentType, TreatmentTypeDto>();
+        CreateMap<SaveTreatmentTypeDto, TreatmentType>();
+        
         CreateMap<Patient, PatientDto>();
         CreateMap<SavePatientDto, Patient>();
         CreateMap<PatientNote, PatientNoteDto>();
@@ -60,5 +75,11 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<PatientTreatmentProcess, PatientTreatmentProcessDto>();
         CreateMap<SaveSalesMethodAndCompanionInfoDto, SalesMethodAndCompanionInfo>();
         CreateMap<SalesMethodAndCompanionInfo, SalesMethodAndCompanionInfoDto>();
+        CreateMap<Process, ProcessDto>();
+        CreateMap<SaveProcessDto, Process>();
+        CreateMap<ProcessCost, ProcessCostDto>();
+        CreateMap<SaveProcessCostDto, Process>();
+        CreateMap<ProcessRelation, ProcessRelationDto>();
+        CreateMap<SaveProcessRelationDto, ProcessRelation>();
     }
 }

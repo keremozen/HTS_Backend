@@ -1,9 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace HTS.Dto.IncludingProcess;
+namespace HTS.Dto.ProcessRelation;
 
-public class SaveIncludingProcessDto
+public class SaveProcessRelationDto
 {
     [Required]
     public int ProcessId { get; set; }

@@ -6,7 +6,7 @@ using Volo.Abp.Identity;
 namespace HTS.Data.Entity
 {
 
-    public class IncludingProcess : FullAuditedEntityWithUser<int, IdentityUser>
+    public class ProcessRelation : FullAuditedEntityWithUser<int, IdentityUser>
     {
         [Required]
         public int ProcessId { get; set; }

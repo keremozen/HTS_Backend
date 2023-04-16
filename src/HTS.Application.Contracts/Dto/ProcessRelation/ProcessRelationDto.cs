@@ -1,8 +1,8 @@
 using Volo.Abp.Application.Dtos;
 
-namespace HTS.Dto.IncludingProcess;
+namespace HTS.Dto.ProcessRelation;
 
-public class IncludingProcessDto : EntityDto<int>
+public class ProcessRelationDto : EntityDto<int>
 {
     public int ProcessId { get; set; }
     public int ChildProcessId { get; set; }

@@ -5,7 +5,7 @@ using Volo.Abp.Identity;
 namespace HTS.Data.Entity
 {
 
-    public class Major : FullAuditedEntityWithUser<int, IdentityUser>
+    public class Branch : FullAuditedEntityWithUser<int, IdentityUser>
     {
         [Required]
         public string Name { get; set; }

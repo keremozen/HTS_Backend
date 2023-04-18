@@ -51,6 +51,12 @@ namespace HTS.Data
                     orderOptions.DefaultWithDetailsFunc = query => query.Include(p => p.PhoneCountryCode);
                 });
 
+                options.Entity<Hospital>(orderOptions =>
+                {
+                    orderOptions.DefaultWithDetailsFunc = query => query.Include(o => o.City)
+                                                                        .Include(p => p.PhoneCountryCode);
+                });
+
             });
         }
     }

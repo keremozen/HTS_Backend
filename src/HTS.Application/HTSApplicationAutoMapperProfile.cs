@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HTS.Data.Entity;
 using HTS.Dto;
+using HTS.Dto.Branch;
 using HTS.Dto.City;
 using HTS.Dto.ContractedInstitution;
 using HTS.Dto.ContractedInstitutionStaff;
@@ -11,7 +12,6 @@ using HTS.Dto.HospitalizationType;
 using HTS.Dto.HospitalResponse;
 using HTS.Dto.HospitalStaff;
 using HTS.Dto.Language;
-using HTS.Dto.Major;
 using HTS.Dto.Nationality;
 using HTS.Dto.Patient;
 using HTS.Dto.PatientAdmissionMethod;
@@ -25,7 +25,6 @@ using HTS.Dto.ProcessType;
 using HTS.Dto.SalesMethodAndCompanionInfo;
 using HTS.Dto.TreatmentProcessStatus;
 using HTS.Dto.TreatmentType;
-using static Volo.Abp.Identity.Settings.IdentitySettingNames;
 
 namespace HTS;
 
@@ -47,11 +46,11 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<SaveDocumentTypeDto, DocumentType>();
         CreateMap<TreatmentProcessStatus, TreatmentProcessStatusDto>();
         CreateMap<HospitalizationType, HospitalizationTypeDto>();
-        CreateMap<HospitalizationTypeDto, HospitalizationType>();
+        CreateMap<SaveHospitalizationTypeDto, HospitalizationType>();
         CreateMap<HospitalResponse, HospitalResponseDto>();
         CreateMap<SaveHospitalResponseDto, HospitalResponse>();
-        CreateMap<Major, MajorDto>();
-        CreateMap<SaveMajorDto, Major>();
+        CreateMap<Branch, BranchDto>();
+        CreateMap<SaveBranchDto, Branch>();
         CreateMap<ProcessType, ProcessTypeDto>();
         CreateMap<SaveProcessTypeDto, ProcessType>();
         CreateMap<TreatmentType, TreatmentTypeDto>();

@@ -384,6 +384,42 @@ namespace HTS.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Branches",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    LastModifierId = table.Column<Guid>(type: "uuid", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
+                    DeleterId = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Branches", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Branches_AbpUsers_CreatorId",
+                        column: x => x.CreatorId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Branches_AbpUsers_DeleterId",
+                        column: x => x.DeleterId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Branches_AbpUsers_LastModifierId",
+                        column: x => x.LastModifierId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Cities",
                 columns: table => new
                 {
@@ -450,6 +486,79 @@ namespace HTS.Data.Migrations
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_DocumentTypes_AbpUsers_LastModifierId",
+                        column: x => x.LastModifierId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "HospitalizationTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    LastModifierId = table.Column<Guid>(type: "uuid", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
+                    DeleterId = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HospitalizationTypes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_HospitalizationTypes_AbpUsers_CreatorId",
+                        column: x => x.CreatorId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_HospitalizationTypes_AbpUsers_DeleterId",
+                        column: x => x.DeleterId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_HospitalizationTypes_AbpUsers_LastModifierId",
+                        column: x => x.LastModifierId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "HospitalResponses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Response = table.Column<string>(type: "text", nullable: false),
+                    IsAssessable = table.Column<bool>(type: "boolean", nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    LastModifierId = table.Column<Guid>(type: "uuid", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
+                    DeleterId = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HospitalResponses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_HospitalResponses_AbpUsers_CreatorId",
+                        column: x => x.CreatorId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_HospitalResponses_AbpUsers_DeleterId",
+                        column: x => x.DeleterId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_HospitalResponses_AbpUsers_LastModifierId",
                         column: x => x.LastModifierId,
                         principalTable: "AbpUsers",
                         principalColumn: "Id");
@@ -560,6 +669,78 @@ namespace HTS.Data.Migrations
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_PatientAdmissionMethods_AbpUsers_LastModifierId",
+                        column: x => x.LastModifierId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProcessTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    LastModifierId = table.Column<Guid>(type: "uuid", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
+                    DeleterId = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProcessTypes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProcessTypes_AbpUsers_CreatorId",
+                        column: x => x.CreatorId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_ProcessTypes_AbpUsers_DeleterId",
+                        column: x => x.DeleterId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_ProcessTypes_AbpUsers_LastModifierId",
+                        column: x => x.LastModifierId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TreatmentTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    LastModifierId = table.Column<Guid>(type: "uuid", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
+                    DeleterId = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TreatmentTypes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TreatmentTypes_AbpUsers_CreatorId",
+                        column: x => x.CreatorId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_TreatmentTypes_AbpUsers_DeleterId",
+                        column: x => x.DeleterId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_TreatmentTypes_AbpUsers_LastModifierId",
                         column: x => x.LastModifierId,
                         principalTable: "AbpUsers",
                         principalColumn: "Id");
@@ -743,6 +924,51 @@ namespace HTS.Data.Migrations
                         column: x => x.PhoneCountryCodeId,
                         principalTable: "Nationalities",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Processes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Code = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    ProcessTypeId = table.Column<int>(type: "integer", nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    LastModifierId = table.Column<Guid>(type: "uuid", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
+                    DeleterId = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Processes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Processes_AbpUsers_CreatorId",
+                        column: x => x.CreatorId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Processes_AbpUsers_DeleterId",
+                        column: x => x.DeleterId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Processes_AbpUsers_LastModifierId",
+                        column: x => x.LastModifierId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Processes_ProcessTypes_ProcessTypeId",
+                        column: x => x.ProcessTypeId,
+                        principalTable: "ProcessTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -956,6 +1182,100 @@ namespace HTS.Data.Migrations
                         name: "FK_PatientTreatmentProcesses_TreatmentProcessStatuses_Treatmen~",
                         column: x => x.TreatmentProcessStatusId,
                         principalTable: "TreatmentProcessStatuses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "IncluedingProcesses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    ProcessId = table.Column<int>(type: "integer", nullable: false),
+                    ChildProcessId = table.Column<int>(type: "integer", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    LastModifierId = table.Column<Guid>(type: "uuid", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
+                    DeleterId = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_IncluedingProcesses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_IncluedingProcesses_AbpUsers_CreatorId",
+                        column: x => x.CreatorId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_IncluedingProcesses_AbpUsers_DeleterId",
+                        column: x => x.DeleterId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_IncluedingProcesses_AbpUsers_LastModifierId",
+                        column: x => x.LastModifierId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_IncluedingProcesses_Processes_ChildProcessId",
+                        column: x => x.ChildProcessId,
+                        principalTable: "Processes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_IncluedingProcesses_Processes_ProcessId",
+                        column: x => x.ProcessId,
+                        principalTable: "Processes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProcessCosts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    ProcessId = table.Column<int>(type: "integer", nullable: false),
+                    ValidityStartDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ValidityEndDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    HospitalPrice = table.Column<int>(type: "integer", nullable: false),
+                    UshasPrice = table.Column<int>(type: "integer", nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    LastModifierId = table.Column<Guid>(type: "uuid", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
+                    DeleterId = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProcessCosts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProcessCosts_AbpUsers_CreatorId",
+                        column: x => x.CreatorId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_ProcessCosts_AbpUsers_DeleterId",
+                        column: x => x.DeleterId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_ProcessCosts_AbpUsers_LastModifierId",
+                        column: x => x.LastModifierId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_ProcessCosts_Processes_ProcessId",
+                        column: x => x.ProcessId,
+                        principalTable: "Processes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -1177,6 +1497,21 @@ namespace HTS.Data.Migrations
                 column: "UserName");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Branches_CreatorId",
+                table: "Branches",
+                column: "CreatorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Branches_DeleterId",
+                table: "Branches",
+                column: "DeleterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Branches_LastModifierId",
+                table: "Branches",
+                column: "LastModifierId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Cities_CreatorId",
                 table: "Cities",
                 column: "CreatorId");
@@ -1287,6 +1622,36 @@ namespace HTS.Data.Migrations
                 column: "PatientTreatmentProcessId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_HospitalizationTypes_CreatorId",
+                table: "HospitalizationTypes",
+                column: "CreatorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_HospitalizationTypes_DeleterId",
+                table: "HospitalizationTypes",
+                column: "DeleterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_HospitalizationTypes_LastModifierId",
+                table: "HospitalizationTypes",
+                column: "LastModifierId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_HospitalResponses_CreatorId",
+                table: "HospitalResponses",
+                column: "CreatorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_HospitalResponses_DeleterId",
+                table: "HospitalResponses",
+                column: "DeleterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_HospitalResponses_LastModifierId",
+                table: "HospitalResponses",
+                column: "LastModifierId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Hospitals_CityId",
                 table: "Hospitals",
                 column: "CityId");
@@ -1315,6 +1680,31 @@ namespace HTS.Data.Migrations
                 name: "IX_HospitalStaffs_HospitalId",
                 table: "HospitalStaffs",
                 column: "HospitalId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_IncluedingProcesses_ChildProcessId",
+                table: "IncluedingProcesses",
+                column: "ChildProcessId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_IncluedingProcesses_CreatorId",
+                table: "IncluedingProcesses",
+                column: "CreatorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_IncluedingProcesses_DeleterId",
+                table: "IncluedingProcesses",
+                column: "DeleterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_IncluedingProcesses_LastModifierId",
+                table: "IncluedingProcesses",
+                column: "LastModifierId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_IncluedingProcesses_ProcessId",
+                table: "IncluedingProcesses",
+                column: "ProcessId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Languages_CreatorId",
@@ -1472,6 +1862,61 @@ namespace HTS.Data.Migrations
                 column: "TreatmentProcessStatusId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProcessCosts_CreatorId",
+                table: "ProcessCosts",
+                column: "CreatorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProcessCosts_DeleterId",
+                table: "ProcessCosts",
+                column: "DeleterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProcessCosts_LastModifierId",
+                table: "ProcessCosts",
+                column: "LastModifierId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProcessCosts_ProcessId",
+                table: "ProcessCosts",
+                column: "ProcessId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Processes_CreatorId",
+                table: "Processes",
+                column: "CreatorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Processes_DeleterId",
+                table: "Processes",
+                column: "DeleterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Processes_LastModifierId",
+                table: "Processes",
+                column: "LastModifierId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Processes_ProcessTypeId",
+                table: "Processes",
+                column: "ProcessTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProcessTypes_CreatorId",
+                table: "ProcessTypes",
+                column: "CreatorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProcessTypes_DeleterId",
+                table: "ProcessTypes",
+                column: "DeleterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProcessTypes_LastModifierId",
+                table: "ProcessTypes",
+                column: "LastModifierId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SalesMethodAndCompanionInfos_CompanionNationalityId",
                 table: "SalesMethodAndCompanionInfos",
                 column: "CompanionNationalityId");
@@ -1510,6 +1955,21 @@ namespace HTS.Data.Migrations
                 name: "IX_SalesMethodAndCompanionInfos_PhoneCountryCodeId",
                 table: "SalesMethodAndCompanionInfos",
                 column: "PhoneCountryCodeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TreatmentTypes_CreatorId",
+                table: "TreatmentTypes",
+                column: "CreatorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TreatmentTypes_DeleterId",
+                table: "TreatmentTypes",
+                column: "DeleterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TreatmentTypes_LastModifierId",
+                table: "TreatmentTypes",
+                column: "LastModifierId");
         }
 
         /// <inheritdoc />
@@ -1546,10 +2006,22 @@ namespace HTS.Data.Migrations
                 name: "AbpUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Branches");
+
+            migrationBuilder.DropTable(
                 name: "HospitalConsultations");
 
             migrationBuilder.DropTable(
+                name: "HospitalizationTypes");
+
+            migrationBuilder.DropTable(
+                name: "HospitalResponses");
+
+            migrationBuilder.DropTable(
                 name: "HospitalStaffs");
+
+            migrationBuilder.DropTable(
+                name: "IncluedingProcesses");
 
             migrationBuilder.DropTable(
                 name: "PatientDocuments");
@@ -1558,7 +2030,13 @@ namespace HTS.Data.Migrations
                 name: "PatientNotes");
 
             migrationBuilder.DropTable(
+                name: "ProcessCosts");
+
+            migrationBuilder.DropTable(
                 name: "SalesMethodAndCompanionInfos");
+
+            migrationBuilder.DropTable(
+                name: "TreatmentTypes");
 
             migrationBuilder.DropTable(
                 name: "AbpOrganizationUnits");
@@ -1582,6 +2060,9 @@ namespace HTS.Data.Migrations
                 name: "PatientNoteStatuses");
 
             migrationBuilder.DropTable(
+                name: "Processes");
+
+            migrationBuilder.DropTable(
                 name: "ContractedInstitutionStaffs");
 
             migrationBuilder.DropTable(
@@ -1592,6 +2073,9 @@ namespace HTS.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Cities");
+
+            migrationBuilder.DropTable(
+                name: "ProcessTypes");
 
             migrationBuilder.DropTable(
                 name: "ContractedInstitutions");

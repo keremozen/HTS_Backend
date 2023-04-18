@@ -40,7 +40,7 @@ namespace HTS.Data
         public DbSet<HospitalizationType> HospitalizationTypes { get; set; }
         public DbSet<HospitalResponse> HospitalResponses { get; set; }
         public DbSet<ProcessRelation> IncluedingProcesses { get; set; }
-        public DbSet<Major> Majors { get; set; }
+        public DbSet<Branch> Branches { get; set; }
         public DbSet<Process> Processes { get; set; }
         public DbSet<ProcessCost> ProcessCosts { get; set; }
         public DbSet<ProcessType> ProcessTypes { get; set; }

@@ -10,7 +10,7 @@ namespace HTS.Data.Entity
         [Required]
         public string Response { get; set; }
         [Required]
-        public bool IsEvaluatable { get; set; }
+        public bool IsAssessable { get; set; }
         [Required]
         public bool IsActive { get; set; }
      

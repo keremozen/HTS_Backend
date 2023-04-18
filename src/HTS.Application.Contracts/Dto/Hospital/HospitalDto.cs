@@ -1,3 +1,5 @@
+using HTS.Dto.City;
+using HTS.Dto.Nationality;
 using Volo.Abp.Application.Dtos;
 
 namespace HTS.Dto.Hospital;
@@ -12,4 +14,6 @@ public class HospitalDto : EntityDto<int>
     public int? PhoneCountryCodeId { get; set; }
     public string Email { get; set; }
     public bool IsActive { get; set; }
+    public NationalityDto PhoneCountryCode { get; set; }
+    public CityDto City { get; set; }
 }

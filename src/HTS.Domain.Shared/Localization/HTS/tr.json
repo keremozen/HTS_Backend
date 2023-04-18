@@ -39,6 +39,7 @@
     "Message:RevokeMultipleConfirmation": "Seçili kayıtları iptal etmek istediğinize emin miiniz?",
     "Message:SuccessfulRevokation": "{0} başarıyla iptal edildi.",
     "Message:SuccessfulMultipleRevokation": "{0} başarıyla iptal edildi.",
+    "Message:WrongEmailFormat": "E-posta formatı hatalı",
 
     /*PERMISSIONS*/
     "Permission:HospitalManagement": "Hastane Yönetimi",
@@ -48,6 +49,14 @@
     "Permission:DocumentTypeManagement": "Doküman Tipi Yönetimi",
     "Permission:PatientAdmissionMethodManagement": "Hasta Geliş Yönetimi Yönetimi",
     "Permission:ContractedInstitutionManagement": "Anlaşmalı Kurum Yönetimi",
+    "Permission:BranchManagement": "Branş Yönetimi",
+    "Permission:TreatmentTypeManagement": "Tedavi Tipi Yönetimi",
+    "Permission:ProcessTypeManagement": "İşlem Tipi Yönetimi",
+    "Permission:HospitalizationTypeManagement": "Yatış Tipi Yönetimi",
+    "Permission:HospitalResponseManagement": "Hastane Cevabı Yönetimi",
+    "Permission:ProcessManagement": "İşlem Yönetimi",
+    "Permission:ProcessRelationManagement": "Dahil İşlem Yönetimi",
+    "Permission:ProcessCostManagement": "İşlem Fiyatı Yönetimi",
 
     /*MENU*/
     "Menu:Home": "Ana sayfa",
@@ -64,15 +73,27 @@
     "Menu:Admin:PatientAdmissionMethod": "Hasta Geliş Yöntemi Yönetimi",
     "Menu:Admin:ContractedInstitution": "Anlaşmalı Kurum Yönetimi",
     "Menu:Admin:HospitalConsultationStatus": "Hastane Danışma Durumu Yönetimi",
+    "Menu:Admin:Branch": "Branş Yönetimi",
+    "Menu:Admin:TreatmentType": "Tedavi Tipi Yönetimi",
+    "Menu:Admin:ProcessType": "İşlem Tipi Yönetimi",
+    "Menu:Admin:HospitalizationType": "Yatış Tipi Yönetimi",
+    "Menu:Admin:HospitalResponse": "Hastane Cevabı Yönetimi",
+    "Menu:Admin:Process": "İşlem Yönetimi",
+    "Menu:Admin:ProcessRelation": "Dahili İşlem Yönetimi",
+    "Menu:Admin:ProcessCost": "İşlem Fiyatı Yönetimi",
 
     /*HOSPITAL MANAGEMENT*/
     "Admin:Hospital:Name": "Hastane",
     "Admin:Hospital:HospitalManagement": "Hastane Yönetimi",
     "Admin:Hospital:NewHospital": "Yeni Hastane",
     "Admin:Hospital:Column:Name": "Hastane İsmi",
+    "Admin:Hospital:Column:Code": "Kısa Kod",
+    "Admin:Hospital:Column:Address": "Adres",
+    "Admin:Hospital:Column:City": "Şehir",
     "Admin:Hospital:Column:PhoneNumber": "Telefon Numarası",
     "Admin:Hospital:Column:EMail": "E-Posta Adresi",
     "Admin:Hospital:Column:Staffs": "Yetkili Kişiler",
+    "Admin:Hospital:Column:IsActive": "Aktif mi?",
     "Admin:Hospital:HospitalDetails": "Hastane Detayları",
     "Admin:Hospital:HospitalStaffManagement": "Hastane Yetkilisi Yönetimi",
     "Admin:HospitalStaff:Name": "Hastane Yetkilisi",
@@ -158,6 +179,47 @@
     "Admin:Language:Column:IsActive": "Aktif mi?",
     "Admin:Language:LanguageDetails": "Dil Detayları",
 
+    /*BRANCH MANAGEMENT*/
+    "Admin:Branch:Name": "Branş",
+    "Admin:Branch:BranchManagement": "Branş Yönetimi",
+    "Admin:Branch:NewBranch": "Yeni Branş",
+    "Admin:Branch:Column:Name": "İsim",
+    "Admin:Branch:Column:IsActive": "Aktif mi?",
+    "Admin:Branch:BranchDetails": "Branş Detayları",
+
+    /*TREATMENT TYPE MANAGEMENT*/
+    "Admin:TreatmentType:Name": "Tedavi Tipi",
+    "Admin:TreatmentType:TreatmentTypeManagement": "Tedavi Tipi Yönetimi",
+    "Admin:TreatmentType:NewTreatmentType": "Yeni Tedavi Tipi",
+    "Admin:TreatmentType:Column:Name": "İsim",
+    "Admin:TreatmentType:Column:IsActive": "Aktif mi?",
+    "Admin:TreatmentType:TreatmentTypeDetails": "Tedavi Tipi Detayları",
+
+    /*PROCESS TYPE MANAGEMENT*/
+    "Admin:ProcessType:Name": "İşlem Tipi",
+    "Admin:ProcessType:ProcessTypeManagement": "İşlem Tipi Yönetimi",
+    "Admin:ProcessType:NewProcessType": "Yeni İşlem Tipi",
+    "Admin:ProcessType:Column:Name": "İsim",
+    "Admin:ProcessType:Column:IsActive": "Aktif mi?",
+    "Admin:ProcessType:ProcessTypeDetails": "İşlem Tipi Detayları",
+
+    /*HOSPITALIZATION TYPE MANAGEMENT*/
+    "Admin:HospitalizationType:Name": "Yatış Tipi",
+    "Admin:HospitalizationType:HospitalizationTypeManagement": "Yatış Tipi Yönetimi",
+    "Admin:HospitalizationType:NewHospitalizationType": "Yeni Yatış Tipi",
+    "Admin:HospitalizationType:Column:Name": "İsim",
+    "Admin:HospitalizationType:Column:IsActive": "Aktif mi?",
+    "Admin:HospitalizationType:HospitalizationTypeDetails": "Yatış Tipi Detayları",
+
+    /*HOSPITAL RESPONSE MANAGEMENT*/
+    "Admin:HospitalResponse:Name": "Hastane Cevabı",
+    "Admin:HospitalResponse:HospitalResponseManagement": "Hastane Cevabı Yönetimi",
+    "Admin:HospitalResponse:NewHospitalResponse": "Yeni Hastane Cevabı",
+    "Admin:HospitalResponse:Column:Response": "Cevap",
+    "Admin:HospitalResponse:Column:IsAssessable": "Değerlendirilebilir",
+    "Admin:HospitalResponse:Column:IsActive": "Aktif mi?",
+    "Admin:HospitalResponse:HospitalResponseDetails": "Hastane Cevabı Detayları",
+
     /*PATIENTS*/
     "Patients:Title": "Hastalar",
     "Patients:NewPatient": "Yeni Hasta",
@@ -219,6 +281,8 @@
     "TreatmentProcess:Step:HospitalConsultation": "Hastane Danışma",
     "TreatmentProcess:Step:OperationalInformation": "Operasyonel Bilgiler",
     "TreatmentProcess:Step:ProcessQuotationRevenue": "İşlem, Fiyatlandırma, Tahsilat",
+    "TreatmentProcess:Message:StartConfirmation": "Tedavi süreci başlatmak istediğinizden emin misiniz?",
+    "TreatmentProcess:Message:SuccessfulStart": "Tedavi süreci başarıyla başlatılmıştır.",
 
     /*SALES AND COMPANION INFORMATION*/
     "SalesAndCompanionInfo:Name": "Satış Yöntemi ve Refakatçi Bilgileri",

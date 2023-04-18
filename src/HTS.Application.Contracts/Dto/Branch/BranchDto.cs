@@ -1,8 +1,8 @@
 using Volo.Abp.Application.Dtos;
 
-namespace HTS.Dto.Major;
+namespace HTS.Dto.Branch;
 
-public class MajorDto: EntityDto<int>
+public class BranchDto: EntityDto<int>
 {
     public string Name { get; set; }
     public bool IsActive { get; set; }

@@ -39,6 +39,7 @@
     "Message:RevokeMultipleConfirmation": "Are you sure you want to revoke selected records?",
     "Message:SuccessfulRevokation": "{0} is successfully revoked.",
     "Message:SuccessfulMultipleRevokation": "{0} are successfully revoked.",
+    "Message:WrongEmailFormat": "Incorrect mail format",
 
     /*PERMISSIONS*/
     "Permission:HospitalManagement": "Hospital Management",
@@ -48,6 +49,14 @@
     "Permission:DocumentTypeManagement": "Document Type Management",
     "Permission:PatientAdmissionMethodManagement": "Patient Admission Method Management",
     "Permission:ContractedInstitutionManagement": "Contracted Institution Management",
+    "Permission:BranchManagement": "Branch Management",
+    "Permission:TreatmentTypeManagement": "Treatment Type Management",
+    "Permission:ProcessTypeManagement": "Process Type Management",
+    "Permission:HospitalizationTypeManagement": "Hospitalization Type Management",
+    "Permission:HospitalResponseManagement": "Hospital Response Management",
+    "Permission:ProcessManagement": "Process Management",
+    "Permission:ProcessRelationManagement": "Process Relation Management",
+    "Permission:ProcessCostManagement": "Process Cost Management",
 
     /*MENU*/
     "Menu:Home": "Home",
@@ -64,15 +73,27 @@
     "Menu:Admin:PatientAdmissionMethod": "Patient Admission Method Management",
     "Menu:Admin:ContractedInstitution": "Contracted Institution Management",
     "Menu:Admin:HospitalConsultationStatus": "Hospital Consultation Status Management",
+    "Menu:Admin:Branch": "Branch Management",
+    "Menu:Admin:TreatmentType": "Treatment Type Management",
+    "Menu:Admin:ProcessType": "Process Type Management",
+    "Menu:Admin:HospitalizationType": "Hospitalization Type Management",
+    "Menu:Admin:HospitalResponse": "Hospital Response Management",
+    "Menu:Admin:Process": "Process Type Management",
+    "Menu:Admin:ProcessRelation": "Process Relation Management",
+    "Menu:Admin:ProcessCost": "Process Cost Management",
 
     /*HOSPITAL MANAGEMENT*/
     "Admin:Hospital:Name": "Hospital",
     "Admin:Hospital:HospitalManagement": "Hospital Management",
     "Admin:Hospital:NewHospital": "New Hospital",
     "Admin:Hospital:Column:Name": "Name",
+    "Admin:Hospital:Column:Code": "Code",
+    "Admin:Hospital:Column:Address": "Address",
+    "Admin:Hospital:Column:City": "City",
     "Admin:Hospital:Column:PhoneNumber": "Phone Number",
     "Admin:Hospital:Column:EMail": "E-Mail",
     "Admin:Hospital:Column:Staffs": "Staff List",
+    "Admin:Hospital:Column:IsActive": "Is Active?",
     "Admin:Hospital:HospitalDetails": "Hospital Details",
     "Admin:Hospital:HospitalStaffManagement": "Hospital Staff Management",
     "Admin:HospitalStaff:Name": "Hospital Staff",
@@ -158,6 +179,47 @@
     "Admin:Language:Column:IsActive": "Is Active?",
     "Admin:Language:LanguageDetails": "Language Details",
 
+    /*BRANCH MANAGEMENT*/
+    "Admin:Branch:Name": "Branch",
+    "Admin:Branch:BranchManagement": "Branch Management",
+    "Admin:Branch:NewBranch": "New Branch",
+    "Admin:Branch:Column:Name": "Name",
+    "Admin:Branch:Column:IsActive": "Is Active?",
+    "Admin:Branch:BranchDetails": "Branch Details",
+
+    /*TREATMENT TYPE MANAGEMENT*/
+    "Admin:TreatmentType:Name": "Treatment Type",
+    "Admin:TreatmentType:TreatmentTypeManagement": "Treatment Type Management",
+    "Admin:TreatmentType:NewTreatmentType": "New Treatment Type",
+    "Admin:TreatmentType:Column:Name": "Name",
+    "Admin:TreatmentType:Column:IsActive": "Is Active?",
+    "Admin:TreatmentType:TreatmentTypeDetails": "Treatment Type Details",
+
+    /*PROCESS TYPE MANAGEMENT*/
+    "Admin:ProcessType:Name": "Process Type",
+    "Admin:ProcessType:ProcessTypeManagement": "Process Type Management",
+    "Admin:ProcessType:NewProcessType": "New Process Type",
+    "Admin:ProcessType:Column:Name": "Name",
+    "Admin:ProcessType:Column:IsActive": "Is Active?",
+    "Admin:ProcessType:ProcessTypeDetails": "Process Type Details",
+
+    /*HOSPITALIZATION TYPE MANAGEMENT*/
+    "Admin:HospitalizationType:Name": "Hospitalization Type",
+    "Admin:HospitalizationType:HospitalizationTypeManagement": "Hospitalization Type Management",
+    "Admin:HospitalizationType:NewHospitalizationType": "New Hospitalization Type",
+    "Admin:HospitalizationType:Column:Name": "Name",
+    "Admin:HospitalizationType:Column:IsActive": "Is Active?",
+    "Admin:HospitalizationType:HospitalizationTypeDetails": "Hospitalization Type Details",
+
+    /*HOSPITAL RESPONSE MANAGEMENT*/
+    "Admin:HospitalResponse:Name": "Hospital Response",
+    "Admin:HospitalResponse:HospitalResponseManagement": "Hospital Response Management",
+    "Admin:HospitalResponse:NewHospitalResponse": "New Hospital Response",
+    "Admin:HospitalResponse:Column:Response": "Resposne",
+    "Admin:HospitalResponse:Column:IsAssessable": "Is Assessable?",
+    "Admin:HospitalResponse:Column:IsActive": "Is Active?",
+    "Admin:HospitalResponse:HospitalResponseDetails": "Hospital Response Details",
+
     /*PATIENTS*/
     "Patients:Title": "Patients",
     "Patients:NewPatient": "New Patient",
@@ -219,6 +281,8 @@
     "TreatmentProcess:Step:HospitalConsultation": "Hospital Consultation",
     "TreatmentProcess:Step:OperationalInformation": "Operational Information",
     "TreatmentProcess:Step:ProcessQuotationRevenue": "Process, Quotation, Revenue",
+    "TreatmentProcess:Message:StartConfirmation": "Are you sure you want to start treatment process?",
+    "TreatmentProcess:Message:SuccessfulStart": "Treatment process started successfully",
 
     /*SALES AND COMPANION INFORMATION*/
     "SalesAndCompanionInfo:Name": "Sales and Companion Information",

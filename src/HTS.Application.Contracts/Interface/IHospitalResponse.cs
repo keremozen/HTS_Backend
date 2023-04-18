@@ -1,16 +1,7 @@
-﻿using HTS.Dto;
-using HTS.Dto.Language;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using HTS.Dto.DocumentType;
+﻿using System.Threading.Tasks;
 using HTS.Dto.HospitalResponse;
-using HTS.Dto.Major;
-using HTS.Dto.Nationality;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
-using Volo.Abp.DependencyInjection;
 
 namespace HTS.Interface
 {

@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace HTS.Dto.Major;
+namespace HTS.Dto.Branch;
 
-public class SaveMajorDto
+public class SaveBranchDto
 {
     [Required]
     public string Name { get; set; }

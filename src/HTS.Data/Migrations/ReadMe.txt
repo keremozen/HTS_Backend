@@ -5,3 +5,6 @@ Update-Database -Args '--environment Production'
 
 For mac:
 dotnet ef migrations Add  Initial --context AppDbContext -o Migrations
+
+// To set environment in package manager console
+$env:ASPNETCORE_ENVIRONMENT='Development'

@@ -25,7 +25,8 @@ public class ProcessService : ApplicationService, IProcessService
     public async Task<PagedResultDto<ProcessDto>> GetListAsync()
     {
         //Get all entities
-        var responseList = ObjectMapper.Map<List<Process>, List<ProcessDto>>(await _processRepository.GetListAsync());
+        var query = await _processRepository.WithDetailsAsync();
+        var responseList = ObjectMapper.Map<List<Process>, List<ProcessDto>>(await AsyncExecuter.ToListAsync(query));
         var totalCount = await _processRepository.CountAsync();//item count
         return new PagedResultDto<ProcessDto>(totalCount,responseList);
     }

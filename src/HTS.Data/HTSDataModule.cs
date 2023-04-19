@@ -57,6 +57,11 @@ namespace HTS.Data
                                                                         .Include(p => p.PhoneCountryCode);
                 });
 
+                options.Entity<Process>(orderOptions =>
+                {
+                    orderOptions.DefaultWithDetailsFunc = query => query.Include(p => p.ProcessType);
+                });
+
             });
         }
     }

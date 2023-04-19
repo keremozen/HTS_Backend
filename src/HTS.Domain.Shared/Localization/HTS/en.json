@@ -55,8 +55,6 @@
     "Permission:HospitalizationTypeManagement": "Hospitalization Type Management",
     "Permission:HospitalResponseManagement": "Hospital Response Management",
     "Permission:ProcessManagement": "Process Management",
-    "Permission:ProcessRelationManagement": "Process Relation Management",
-    "Permission:ProcessCostManagement": "Process Cost Management",
 
     /*MENU*/
     "Menu:Home": "Home",
@@ -79,8 +77,6 @@
     "Menu:Admin:HospitalizationType": "Hospitalization Type Management",
     "Menu:Admin:HospitalResponse": "Hospital Response Management",
     "Menu:Admin:Process": "Process Type Management",
-    "Menu:Admin:ProcessRelation": "Process Relation Management",
-    "Menu:Admin:ProcessCost": "Process Cost Management",
 
     /*HOSPITAL MANAGEMENT*/
     "Admin:Hospital:Name": "Hospital",
@@ -101,6 +97,7 @@
     "Admin:HospitalStaff:Column:NameSurname": "Name Surname",
     "Admin:HospitalStaff:Column:PhoneNumber": "Phone Number",
     "Admin:HospitalStaff:Column:Email": "E-Mail",
+    "Admin:HospitalStaff:Column:IsDefault": "Is Default?",
     "Admin:HospitalStaff:Column:IsActive": "Is Active?",
     "Admin:HospitalStaff:NewHospitalStaff": "New Staff",
     "Admin:HospitalStaff:HospitalStaffDetails": "Hospital Staff Detail",
@@ -219,6 +216,25 @@
     "Admin:HospitalResponse:Column:IsAssessable": "Is Assessable?",
     "Admin:HospitalResponse:Column:IsActive": "Is Active?",
     "Admin:HospitalResponse:HospitalResponseDetails": "Hospital Response Details",
+
+    /*PROCESS MANAGEMENT*/
+    "Admin:Process:Name": "Process",
+    "Admin:Process:ProcessManagement": "Process Management",
+    "Admin:Process:NewProcess": "New Process",
+    "Admin:Process:Column:Code": "Code",
+    "Admin:Process:Column:Name": "Name",
+    "Admin:Process:Column:Description": "Description",
+    "Admin:Process:Column:Type": "Type",
+    "Admin:Process:Column:IsActive": "Is Active?",
+    "Admin:Process:ProcessDetails": "Process Details",
+    "Admin:Process:ProcessCost:Title": "Cost Details",
+    "Admin:Process:ProcessCost:NewCost": "New",
+    "Admin:Process:ProcessCost:Column:ValidityStart": "Validity Start",
+    "Admin:Process:ProcessCost:Column:ValidityEnd": "Validity End",
+    "Admin:Process:ProcessCost:Column:HospitalCost": "Hospital Cost",
+    "Admin:Process:ProcessCost:Column:UshasCost": "USHAŞ Cost",
+    "Admin:Process:ProcessRelation:Title": "Included Processes",
+    "Admin:Process:ProcessRelation:NewRelation": "New",
 
     /*PATIENTS*/
     "Patients:Title": "Patients",

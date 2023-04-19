@@ -55,8 +55,6 @@
     "Permission:HospitalizationTypeManagement": "Yatış Tipi Yönetimi",
     "Permission:HospitalResponseManagement": "Hastane Cevabı Yönetimi",
     "Permission:ProcessManagement": "İşlem Yönetimi",
-    "Permission:ProcessRelationManagement": "Dahil İşlem Yönetimi",
-    "Permission:ProcessCostManagement": "İşlem Fiyatı Yönetimi",
 
     /*MENU*/
     "Menu:Home": "Ana sayfa",
@@ -79,8 +77,6 @@
     "Menu:Admin:HospitalizationType": "Yatış Tipi Yönetimi",
     "Menu:Admin:HospitalResponse": "Hastane Cevabı Yönetimi",
     "Menu:Admin:Process": "İşlem Yönetimi",
-    "Menu:Admin:ProcessRelation": "Dahili İşlem Yönetimi",
-    "Menu:Admin:ProcessCost": "İşlem Fiyatı Yönetimi",
 
     /*HOSPITAL MANAGEMENT*/
     "Admin:Hospital:Name": "Hastane",
@@ -101,6 +97,7 @@
     "Admin:HospitalStaff:Column:NameSurname": "Ad Soyad",
     "Admin:HospitalStaff:Column:PhoneNumber": "Telefon Numarası",
     "Admin:HospitalStaff:Column:Email": "E-Posta",
+    "Admin:HospitalStaff:Column:IsDefault": "Varsayılan",
     "Admin:HospitalStaff:Column:IsActive": "Aktif mi?",
     "Admin:HospitalStaff:NewHospitalStaff": "Yeni Yetkili",
     "Admin:HospitalStaff:HospitalStaffDetails": "Hastane Yetkilisi Detayları",
@@ -219,6 +216,25 @@
     "Admin:HospitalResponse:Column:IsAssessable": "Değerlendirilebilir",
     "Admin:HospitalResponse:Column:IsActive": "Aktif mi?",
     "Admin:HospitalResponse:HospitalResponseDetails": "Hastane Cevabı Detayları",
+
+    /*PROCESS MANAGEMENT*/
+    "Admin:Process:Name": "İşlem",
+    "Admin:Process:ProcessManagement": "İşlem Yönetimi",
+    "Admin:Process:NewProcess": "Yeni İşlem",
+    "Admin:Process:Column:Code": "Kod",
+    "Admin:Process:Column:Name": "İsim",
+    "Admin:Process:Column:Description": "Açıklama",
+    "Admin:Process:Column:Type": "Tipi",
+    "Admin:Process:Column:IsActive": "Aktif mi?",
+    "Admin:Process:ProcessDetails": "İşlem Detayları",
+    "Admin:Process:ProcessCost:Title": "Fiyat Tablosu",
+    "Admin:Process:ProcessCost:NewCost": "Ekle",
+    "Admin:Process:ProcessCost:Column:ValidityStart": "Geçerlilik Başlangıcı",
+    "Admin:Process:ProcessCost:Column:ValidityEnd": "Geçerlilik Bitişi",
+    "Admin:Process:ProcessCost:Column:HospitalCost": "Hastane Fiyatı",
+    "Admin:Process:ProcessCost:Column:UshasCost": "USHAŞ Fiyatı",
+    "Admin:Process:ProcessRelation:Title": "Dahil İşlemler",
+    "Admin:Process:ProcessRelation:NewRelation": "Ekle",
 
     /*PATIENTS*/
     "Patients:Title": "Hastalar",

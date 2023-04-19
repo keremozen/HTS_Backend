@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using HTS.Data.Entity;
 using HTS.Dto.Hospital;
@@ -21,13 +22,15 @@ public class HospitalService : ApplicationService, IHospitalService
     
     public async Task<HospitalDto> GetAsync(int id)
     {
-        return ObjectMapper.Map<Hospital, HospitalDto>(await _hospitalRepository.GetAsync(id));
+        var query = (await _hospitalRepository.WithDetailsAsync()).Where(p => p.Id == id);
+        return ObjectMapper.Map<Hospital, HospitalDto>(await AsyncExecuter.FirstOrDefaultAsync(query));
     }
 
     public async Task<PagedResultDto<HospitalDto>> GetListAsync()
     {
         //Get all entities
-        var responseList = ObjectMapper.Map<List<Hospital>, List<HospitalDto>>(await _hospitalRepository.GetListAsync());
+        var query = await _hospitalRepository.WithDetailsAsync();
+        var responseList = ObjectMapper.Map<List<Hospital>, List<HospitalDto>>(await AsyncExecuter.ToListAsync(query));
         var totalCount = await _hospitalRepository.CountAsync();//item count
         //TODO:Hopsy Ask Kerem the isActive case 
         return new PagedResultDto<HospitalDto>(totalCount,responseList);

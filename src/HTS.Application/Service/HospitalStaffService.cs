@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HTS.BusinessException;
 using HTS.Data.Entity;
 using HTS.Dto.HospitalStaff;
 using HTS.Interface;
+using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
@@ -54,13 +56,7 @@ public class HospitalStaffService : ApplicationService, IHospitalStaffService
 
     public async Task CreateAsync(SaveHospitalStaffDto hospitalStaff)
     {
-        if(hospitalStaff.IsDefault)//Default staff
-        {
-             if((await _hospitalStaffRepository.GetQueryableAsync()).Any(s => s.IsActive && s.IsDefault))
-             {//There is already in db
-                //return BadRequest("");
-             }
-        }     
+        await CheckDefaultStaffValue(hospitalStaff);
         var entity = ObjectMapper.Map<SaveHospitalStaffDto, HospitalStaff>(hospitalStaff);
         entity.IsDefault = entity.IsActive && entity.IsDefault;//If record is passive, set as not default
         await _hospitalStaffRepository.InsertAsync(entity);
@@ -69,23 +65,36 @@ public class HospitalStaffService : ApplicationService, IHospitalStaffService
 
     public async Task UpdateAsync(int id, SaveHospitalStaffDto hospitalStaff)
     {
-        if(hospitalStaff.IsDefault)//Default staff
-        {
-            if((await _hospitalStaffRepository.GetQueryableAsync()).Any(s => s.IsActive && s.IsDefault && s.Id != id))
-            {//There is already in db
-                // return BadRequest("");
-                //return null;
-            }
-        }     
+        await CheckDefaultStaffValue(hospitalStaff, id);
         var entity = await _hospitalStaffRepository.GetAsync(id);
         entity.IsDefault = entity.IsActive && entity.IsDefault;//If record is passive, set as not default
         ObjectMapper.Map(hospitalStaff, entity);
         await _hospitalStaffRepository.UpdateAsync(entity);
     }
-    
+
 
     public async Task DeleteAsync(int id)
     {
         await _hospitalStaffRepository.DeleteAsync(id);
     }
+
+    /// <summary>
+    /// Checks default staff value. There should be only one default active staff in database
+    /// </summary>
+    /// <param name="hospitalStaff">Hospital staff to check default value</param>
+    /// <param name="id">If hospital staff is already in database, id field should be entered</param>
+    /// <exception cref="DefaultStaffAlreadyExistException"></exception>
+    private async Task CheckDefaultStaffValue(SaveHospitalStaffDto hospitalStaff, int? id = null)
+    {
+        if (hospitalStaff.IsDefault)//Default staff
+        {
+            if ((await _hospitalStaffRepository.GetQueryableAsync()).Any(s => s.IsActive
+                                                                             && s.IsDefault
+                                                                             && (!id.HasValue || s.Id != id)))
+            {//There is already in db
+                throw new DefaultStaffAlreadyExistException();
+            }
+        }
+    }
+
 }

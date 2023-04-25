@@ -10,21 +10,27 @@ public class HTSPermissionDefinitionProvider : PermissionDefinitionProvider
     {
         var htsGroup = context.AddGroup(HTSPermissions.GroupName);
 
-        htsGroup.AddPermission(HTSPermissions.HospitalManagement, L("Permission:HospitalManagement"));
-        htsGroup.AddPermission(HTSPermissions.NationalityManagement, L("Permission:NationalityManagement"));
-        htsGroup.AddPermission(HTSPermissions.CityManagement, L("Permission:CityManagement"));
-        htsGroup.AddPermission(HTSPermissions.LanguageManagement, L("Permission:LanguageManagement")); 
-        htsGroup.AddPermission(HTSPermissions.DocumentTypeManagement, L("Permission:DocumentTypeManagement"));
-        htsGroup.AddPermission(HTSPermissions.PatientAdmissionMethodManagement, L("Permission:PatientAdmissionMethodManagement"));
-        htsGroup.AddPermission(HTSPermissions.ContractedInstitutionManagement, L("Permission:ContractedInstitutionManagement"));
-        htsGroup.AddPermission(HTSPermissions.BranchManagement, L("Permission:BranchManagement"));
-        htsGroup.AddPermission(HTSPermissions.TreatmentTypeManagement, L("Permission:TreatmentTypeManagement"));
-        htsGroup.AddPermission(HTSPermissions.ProcessTypeManagement, L("Permission:ProcessTypeManagement"));
-        htsGroup.AddPermission(HTSPermissions.HospitalizationTypeManagement, L("Permission:HospitalizationTypeManagement"));
-        htsGroup.AddPermission(HTSPermissions.HospitalResponseManagement, L("Permission:HospitalResponseManagement"));
-        htsGroup.AddPermission(HTSPermissions.ProcessManagement, L("Permission:ProcessManagement"));
-        htsGroup.AddPermission(HTSPermissions.ProcessCostManagement, L("Permission:ProcessCostManagement"));
-        htsGroup.AddPermission(HTSPermissions.ProcessRelationManagement, L("Permission:ProcessRelationManagement"));
+        var managementPermission = htsGroup.AddPermission(HTSPermissions.Management, L("Permission:Management"));
+        managementPermission.AddChild(HTSPermissions.HospitalManagement, L("Permission:HospitalManagement"));
+        managementPermission.AddChild(HTSPermissions.NationalityManagement, L("Permission:NationalityManagement"));
+        managementPermission.AddChild(HTSPermissions.CityManagement, L("Permission:CityManagement"));
+        managementPermission.AddChild(HTSPermissions.LanguageManagement, L("Permission:LanguageManagement")); 
+        managementPermission.AddChild(HTSPermissions.DocumentTypeManagement, L("Permission:DocumentTypeManagement"));
+        managementPermission.AddChild(HTSPermissions.PatientAdmissionMethodManagement, L("Permission:PatientAdmissionMethodManagement"));
+        managementPermission.AddChild(HTSPermissions.ContractedInstitutionManagement, L("Permission:ContractedInstitutionManagement"));
+        managementPermission.AddChild(HTSPermissions.BranchManagement, L("Permission:BranchManagement"));
+        managementPermission.AddChild(HTSPermissions.TreatmentTypeManagement, L("Permission:TreatmentTypeManagement"));
+        managementPermission.AddChild(HTSPermissions.ProcessTypeManagement, L("Permission:ProcessTypeManagement"));
+        managementPermission.AddChild(HTSPermissions.HospitalizationTypeManagement, L("Permission:HospitalizationTypeManagement"));
+        managementPermission.AddChild(HTSPermissions.HospitalResponseManagement, L("Permission:HospitalResponseManagement"));
+        managementPermission.AddChild(HTSPermissions.ProcessManagement, L("Permission:ProcessManagement"));
+
+        var patientPermission = htsGroup.AddPermission(HTSPermissions.Patient, L("Permission:Patient"));
+        var patientAccessPermission = patientPermission.AddChild(HTSPermissions.PatientAccess, L("Permission:PatientAccess"));
+        patientAccessPermission.AddChild(HTSPermissions.PatientList, L("Permission:PatientList"));
+        patientAccessPermission.AddChild(HTSPermissions.PatientManagement, L("Permission:PatientManagement"));
+        patientAccessPermission.AddChild(HTSPermissions.PatientViewAll, L("Permission:PatientViewAll"));
+        
     }
 
     private static LocalizableString L(string name)

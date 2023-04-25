@@ -4,6 +4,7 @@ public static class HTSPermissions
 {
     public const string GroupName = "HTS";
 
+    public const string Management = GroupName + ".Management";
     public const string HospitalManagement = GroupName + ".HospitalManagement"; 
     public const string NationalityManagement = GroupName + ".NationalityManagement";
     public const string CityManagement = GroupName + ".CityManagement";
@@ -19,4 +20,10 @@ public static class HTSPermissions
     public const string ProcessManagement = GroupName + ".ProcessManagement";
     public const string ProcessRelationManagement = GroupName + ".ProcessRelationManagement";
     public const string ProcessCostManagement = GroupName + ".ProcessCostManagement";
+
+    public const string Patient = GroupName + ".Patient";
+    public const string PatientAccess = GroupName + ".PatientAccess";
+    public const string PatientList = GroupName + ".PatientList";
+    public const string PatientManagement = GroupName + ".PatientManagement";
+    public const string PatientViewAll = GroupName + ".PatientViewAll";
 }

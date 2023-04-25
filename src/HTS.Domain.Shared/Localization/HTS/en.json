@@ -21,6 +21,9 @@
     "Revoke": "Revoke",
     "Revoked": "Revoked",
     "Import": "Import",
+    "Send": "Send",
+    "ApproveResponse": "Approve",
+    "RejectResponse": "Reject",
     "ShowRevokedRecords": "Show revoked",
     "ChooseFile": "Choose File",
     "EmptyMessage": "No records found.",
@@ -42,6 +45,7 @@
     "Message:WrongEmailFormat": "Incorrect mail format",
 
     /*PERMISSIONS*/
+    "Permission:Management": "Management",
     "Permission:HospitalManagement": "Hospital Management",
     "Permission:LanguageManagement": "Language Management",
     "Permission:NationalityManagement": "Nationality Management",
@@ -55,6 +59,11 @@
     "Permission:HospitalizationTypeManagement": "Hospitalization Type Management",
     "Permission:HospitalResponseManagement": "Hospital Response Management",
     "Permission:ProcessManagement": "Process Management",
+    "Permission:Patient": "Patient",
+    "Permission:PatientAccess": "Access Patient Page",
+    "Permission:PatientList": "List Patient",
+    "Permission:PatientManagement": "Patient Add / Update",
+    "Permission:PatientViewAll": "View All Patients",
 
     /*MENU*/
     "Menu:Home": "Home",
@@ -277,7 +286,7 @@
     "Documents:NameSingular": "Document",
     "Documents:NamePlural": "Documents",
     "Documents:Title": "Documents",
-    "Documents:Column:FileName": "File Name",
+    "Documents:Column:FileName": "Document Name",
     "Documents:Column:Document": "Document",
     "Documents:Column:DocumentType": "Document Type",
     "Documents:Column:Description": "Description",
@@ -327,6 +336,27 @@
     "HospitalConsultation:FieldLegend:PatientComplaintAndDescription": "Patient Complaint and Descriptions",
     "HospitalConsultation:FieldLegend:Documents": "Documents",
     "HospitalConsultation:Button:Consultation": "Consultation",
-    "HospitalConsultation:Button:Answer": "Answer"
+    "HospitalConsultation:Button:Answer": "Answer",
+
+    /*HOSPITAL RESPONSE*/
+    "HospitalResponse:Title": "Hospital Response",
+    "HospitalResponse:FieldLegend:PatientComplaint": "Patient Complaint and Description",
+    "HospitalResponse:FieldLegend:PatientDocuments": "Patient Documents",
+    "HospitalResponse:FieldLegend:HospitalDescription": "Hospital Description",
+    "HospitalResponse:FieldLegend:AnticipatedProcesses": "Anticipated Processes",
+    "HospitalResponse:FieldLegend:AnticipatedSupplies": "Anticipated Supplies",
+    "HospitalResponse:Field:HospitalName": "Hospital",
+    "HospitalResponse:Field:PatientName": "Patient",
+    "HospitalResponse:Field:TreatmentCode": "Treatment Code",
+    "HospitalResponse:Field:HospitalResponse": "Hospital Response",
+    "HospitalResponse:Field:HospitalizationType": "Hospitalization Type",
+    "HospitalResponse:Field:Branch": "Branch",
+    "HospitalResponse:Field:EarliestTreatmentDate": "Earliest Treatment Date",
+    "HospitalResponse:Field:NumberOfHospitalizationDays": "Number of Hospitalization Days",
+    "HospitalResponse:Process:Column:Code": "SUT Code",
+    "HospitalResponse:Process:Column:Description": "Process Description",
+    "HospitalResponse:Process:Column:Amount": "Amount",
+    "HospitalResponse:Supply:Column:Name": "Supply Name",
+    "HospitalResponse:Supply:Column:Amount": "Amount"
   }
 }

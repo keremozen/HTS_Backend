@@ -21,6 +21,9 @@
     "Revoke": "İptal Et",
     "Revoked": "İptal",
     "Import": "Aktar",
+    "Send": "Gönder",
+    "ApproveResponse": "Onayla",
+    "RejectResponse": "Reddet",
     "ShowRevokedRecords": "İptal edilenleri göster",
     "ChooseFile": "Dosya Seç",
     "EmptyMessage": "Kayıt bulunamadı.",
@@ -42,6 +45,7 @@
     "Message:WrongEmailFormat": "E-posta formatı hatalı",
 
     /*PERMISSIONS*/
+    "Permission:Management": "Yönetim",
     "Permission:HospitalManagement": "Hastane Yönetimi",
     "Permission:LanguageManagement": "Dil Yönetimi",
     "Permission:NationalityManagement": "Uyruk Yönetimi",
@@ -55,6 +59,11 @@
     "Permission:HospitalizationTypeManagement": "Yatış Tipi Yönetimi",
     "Permission:HospitalResponseManagement": "Hastane Cevabı Yönetimi",
     "Permission:ProcessManagement": "İşlem Yönetimi",
+    "Permission:Patient": "Hasta",
+    "Permission:PatientAccess": "Hasta Sayfasına Erişim",
+    "Permission:PatientList": "Hasta Tablosu Listeleme",
+    "Permission:PatientManagement": "Hasta Ekleme / Güncelleme",
+    "Permission:PatientViewAll": "Tüm Hastaları Görebilme",
 
     /*MENU*/
     "Menu:Home": "Ana sayfa",
@@ -274,16 +283,16 @@
     "Notes:NoteDetails": "Not Detayları",
 
     /*DOCUMENTS*/
-    "Documents:NameSingular": "Belge",
-    "Documents:NamePlural": "Belgeler",
-    "Documents:Title": "Belgeler",
-    "Documents:Column:FileName": "Dosya Adı",
-    "Documents:Column:Document": "Belge",
-    "Documents:Column:DocumentType": "Belge Tipi",
+    "Documents:NameSingular": "Doküman",
+    "Documents:NamePlural": "Dokümanlar",
+    "Documents:Title": "Dokümanlar",
+    "Documents:Column:FileName": "Doküman Adı",
+    "Documents:Column:Document": "Doküman",
+    "Documents:Column:DocumentType": "Doküman Tipi",
     "Documents:Column:Description": "Açıklama",
     "Documents:Column:CreatedBy": "Ekleyen Kullanıcı",
     "Documents:Column:Created": "Eklenme Tarihi",
-    "Documents:DocumentDetails": "Belge Detayları",
+    "Documents:DocumentDetails": "Doküman Detayları",
 
     /*TREATMENT PROCESS*/
     "TreatmentProcess:Title": "Tedavi Süreci",
@@ -327,7 +336,28 @@
     "HospitalConsultation:FieldLegend:PatientComplaintAndDescription": "Hasta Şikayeti ve Açıklamalar",
     "HospitalConsultation:FieldLegend:Documents": "Dokümanlar",
     "HospitalConsultation:Button:Consultation": "Danışma",
-    "HospitalConsultation:Button:Answer": "Cevap"
+    "HospitalConsultation:Button:Answer": "Cevap",
+
+    /*HOSPITAL RESPONSE*/
+    "HospitalResponse:Title": "Hastane Cevabı",
+    "HospitalResponse:FieldLegend:PatientComplaint": "Hasta Şikayeti ve Açıklamalar",
+    "HospitalResponse:FieldLegend:PatientDocuments": "Hasta Dokümanları",
+    "HospitalResponse:FieldLegend:HospitalDescription": "Hastane Açıklaması",
+    "HospitalResponse:FieldLegend:AnticipatedProcesses": "Öngörülen İşlemler",
+    "HospitalResponse:FieldLegend:AnticipatedSupplies": "Öngörülen Sarf Malzemeleri",
+    "HospitalResponse:Field:HospitalName": "Hastane",
+    "HospitalResponse:Field:PatientName": "Hasta Adı Soyadı",
+    "HospitalResponse:Field:TreatmentCode": "Tedavi Kodu",
+    "HospitalResponse:Field:HospitalResponse": "Hastane Cevabı",
+    "HospitalResponse:Field:HospitalizationType": "Yatış Tipi",
+    "HospitalResponse:Field:Branch": "Branş",
+    "HospitalResponse:Field:EarliestTreatmentDate": "En Erken Tedavi Tarihi",
+    "HospitalResponse:Field:NumberOfHospitalizationDays": "Yatış Gün Sayısı",
+    "HospitalResponse:Process:Column:Code": "SUT Kodu",
+    "HospitalResponse:Process:Column:Description": "İşlem Açıklama",
+    "HospitalResponse:Process:Column:Amount": "Adet",
+    "HospitalResponse:Supply:Column:Name": "Malzeme Adı",
+    "HospitalResponse:Supply:Column:Amount": "Adet"
 
   }
 }

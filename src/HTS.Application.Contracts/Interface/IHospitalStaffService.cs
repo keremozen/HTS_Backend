@@ -1,18 +1,7 @@
-﻿using HTS.Dto;
-using HTS.Dto.Language;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using HTS.Dto.Nationality;
+﻿using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
-using Volo.Abp.DependencyInjection;
-using HTS.Dto.ContractedInstitution;
-using HTS.Dto.ContractedInstitutionStaff;
-using HTS.Dto.Hospital;
 using HTS.Dto.HospitalStaff;
-using Microsoft.AspNetCore.Mvc;
 
 namespace HTS.Interface
 {
@@ -30,7 +19,7 @@ namespace HTS.Interface
         /// </summary>
         /// <param name="hospitalStaff">Hospital staff information to be insert</param>
         /// <returns>Action response of insert</returns>
-        Task<IActionResult> CreateAsync(SaveHospitalStaffDto hospitalStaff);
+        Task CreateAsync(SaveHospitalStaffDto hospitalStaff);
         
         /// <summary>
         /// Updates hospital staff
@@ -38,7 +27,7 @@ namespace HTS.Interface
         /// <param name="id">To be updated hospital id</param>
         /// <param name="hospitalStaff">To be updated information</param>
         /// <returns>Action response of update</returns>
-        Task<IActionResult> UpdateAsync(int id, SaveHospitalStaffDto hospitalStaff);
+        Task UpdateAsync(int id, SaveHospitalStaffDto hospitalStaff);
         
 
         /// <summary>

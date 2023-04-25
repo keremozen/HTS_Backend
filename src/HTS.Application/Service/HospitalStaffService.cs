@@ -4,14 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using HTS.Data.Entity;
 using HTS.Dto.HospitalStaff;
-using HTS.Dto.Patient;
 using HTS.Interface;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Identity;
-using Volo.Abp.Users;
-using Microsoft.AspNetCore.Mvc;
 
 namespace HTS.Service;
 
@@ -55,38 +52,35 @@ public class HospitalStaffService : ApplicationService, IHospitalStaffService
         return new PagedResultDto<HospitalStaffDto>(totalCount, result);
     }
 
-    public async Task<IActionResult> CreateAsync(SaveHospitalStaffDto hospitalStaff)
+    public async Task CreateAsync(SaveHospitalStaffDto hospitalStaff)
     {
         if(hospitalStaff.IsDefault)//Default staff
         {
              if((await _hospitalStaffRepository.GetQueryableAsync()).Any(s => s.IsActive && s.IsDefault))
              {//There is already in db
-                // return BadRequest("");
-                return null;
+                //return BadRequest("");
              }
         }     
         var entity = ObjectMapper.Map<SaveHospitalStaffDto, HospitalStaff>(hospitalStaff);
         entity.IsDefault = entity.IsActive && entity.IsDefault;//If record is passive, set as not default
-        var createdEntity = await _hospitalStaffRepository.InsertAsync(entity);
-        // return Ok();
-        return null;
+        await _hospitalStaffRepository.InsertAsync(entity);
+
     }
 
-    public async Task<IActionResult> UpdateAsync(int id, SaveHospitalStaffDto hospitalStaff)
+    public async Task UpdateAsync(int id, SaveHospitalStaffDto hospitalStaff)
     {
         if(hospitalStaff.IsDefault)//Default staff
         {
             if((await _hospitalStaffRepository.GetQueryableAsync()).Any(s => s.IsActive && s.IsDefault && s.Id != id))
             {//There is already in db
                 // return BadRequest("");
-                return null;
+                //return null;
             }
         }     
         var entity = await _hospitalStaffRepository.GetAsync(id);
         entity.IsDefault = entity.IsActive && entity.IsDefault;//If record is passive, set as not default
         ObjectMapper.Map(hospitalStaff, entity);
         await _hospitalStaffRepository.UpdateAsync(entity);
-        return null;
     }
     
 

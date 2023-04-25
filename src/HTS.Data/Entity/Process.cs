@@ -19,6 +19,9 @@ namespace HTS.Data.Entity
 
         [ForeignKey("ProcessTypeId")]
         public ProcessType ProcessType { get; set; }
-     
+
+        public virtual ICollection<ProcessCost> ProcessCosts { get; set; }
+        [InverseProperty("Process")]
+        public virtual ICollection<ProcessRelation> ProcessRelations { get; set; }
     }
 }

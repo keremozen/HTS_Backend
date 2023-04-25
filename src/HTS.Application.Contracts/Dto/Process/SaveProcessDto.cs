@@ -1,5 +1,8 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using HTS.Dto.ProcessCost;
+using HTS.Dto.ProcessRelation;
 
 namespace HTS.Dto.Process;
 
@@ -13,4 +16,6 @@ public class SaveProcessDto
     public int ProcessTypeId { get; set; }
     [Required]
     public bool IsActive { get; set; }
+    public List<ProcessCostDto> ProcessCosts { get; set; }
+    public List<ProcessRelationDto> ProcessRelations { get; set; }
 }

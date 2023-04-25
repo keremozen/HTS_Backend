@@ -23,5 +23,7 @@ namespace HTS.Data.Entity
         public virtual ICollection<ProcessCost> ProcessCosts { get; set; }
         [InverseProperty("Process")]
         public virtual ICollection<ProcessRelation> ProcessRelations { get; set; }
+        [InverseProperty("ChildProcess")]
+        public virtual ICollection<ProcessRelation> ProcessRelationChildren { get; set; }
     }
 }

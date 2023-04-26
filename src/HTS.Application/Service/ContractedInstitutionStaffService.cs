@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HTS.BusinessException;
 using HTS.Data.Entity;
 using HTS.Dto.ContractedInstitution;
 using HTS.Dto.ContractedInstitutionStaff;
@@ -32,28 +33,52 @@ public class ContractedInstitutionStaffService : ApplicationService, IContracted
 
     public async Task<ContractedInstitutionStaffDto> GetAsync(int id)
     {
-        var query = (await _contractedInstitutionStaffRepository.WithDetailsAsync()).Where(p => p.Id == id);
+        var query = (await _contractedInstitutionStaffRepository.WithDetailsAsync())
+                                                    .Where(p => p.Id == id);
         return ObjectMapper.Map<ContractedInstitutionStaff, ContractedInstitutionStaffDto>(await AsyncExecuter.FirstOrDefaultAsync(query));
     }
 
-    public async Task<ContractedInstitutionStaffDto> CreateAsync(SaveContractedInstitutionStaffDto contractedInstitutionStaff)
+    public async Task CreateAsync(SaveContractedInstitutionStaffDto contractedInstitutionStaff)
     {
+        await IsDataValidToSave(contractedInstitutionStaff);
         var entity = ObjectMapper.Map<SaveContractedInstitutionStaffDto, ContractedInstitutionStaff>(contractedInstitutionStaff);
+        entity.IsDefault = entity.IsActive && entity.IsDefault;//If record is passive, set as not default
         await _contractedInstitutionStaffRepository.InsertAsync(entity);
-        return ObjectMapper.Map<ContractedInstitutionStaff, ContractedInstitutionStaffDto>(entity);
     }
 
-    public async Task<ContractedInstitutionStaffDto> UpdateAsync(int id,
+    public async Task UpdateAsync(int id,
         SaveContractedInstitutionStaffDto contractedInstitutionStaff)
     {
+        await IsDataValidToSave(contractedInstitutionStaff, id);
         var entity = await _contractedInstitutionStaffRepository.GetAsync(id);
         ObjectMapper.Map(contractedInstitutionStaff, entity);
-        return ObjectMapper.Map<ContractedInstitutionStaff, ContractedInstitutionStaffDto>(
-            await _contractedInstitutionStaffRepository.UpdateAsync(entity));
+        entity.IsDefault = entity.IsActive && entity.IsDefault;//If record is passive, set as not default
+        await _contractedInstitutionStaffRepository.UpdateAsync(entity);
     }
 
     public async Task DeleteAsync(int id)
     {
         await _contractedInstitutionStaffRepository.DeleteAsync(id);
     }
+    
+    /// <summary>
+    /// Checks if data is valid to save
+    /// </summary>
+    /// <param name="ciStaff">To be saved object</param>
+    /// <param name="id">Id in updated entity</param>
+    /// <exception cref="HTSBusinessException">Check response exceptions</exception>
+    private async Task IsDataValidToSave(SaveContractedInstitutionStaffDto ciStaff, int? id = null)
+    {
+        if (ciStaff.IsDefault)//Default staff
+        {
+            if ((await _contractedInstitutionStaffRepository.GetQueryableAsync()).Any(s => s.IsActive
+                                                                              && s.IsDefault
+                                                                              && !s.IsDeleted
+                                                                              && (!id.HasValue || s.Id != id)))
+            {//There is already default staff in db
+                throw new HTSBusinessException(ErrorCode.DefaultStaffAlreadyExist);
+            }
+        }
+    }
+
 }

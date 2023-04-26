@@ -56,7 +56,7 @@ public class HospitalStaffService : ApplicationService, IHospitalStaffService
 
     public async Task CreateAsync(SaveHospitalStaffDto hospitalStaff)
     {
-        await CheckDefaultStaffValue(hospitalStaff);
+        await IsDataValidToSave(hospitalStaff);
         var entity = ObjectMapper.Map<SaveHospitalStaffDto, HospitalStaff>(hospitalStaff);
         entity.IsDefault = entity.IsActive && entity.IsDefault;//If record is passive, set as not default
         await _hospitalStaffRepository.InsertAsync(entity);
@@ -65,10 +65,10 @@ public class HospitalStaffService : ApplicationService, IHospitalStaffService
 
     public async Task UpdateAsync(int id, SaveHospitalStaffDto hospitalStaff)
     {
-        await CheckDefaultStaffValue(hospitalStaff, id);
+        await IsDataValidToSave(hospitalStaff, id);
         var entity = await _hospitalStaffRepository.GetAsync(id);
-        entity.IsDefault = entity.IsActive && entity.IsDefault;//If record is passive, set as not default
         ObjectMapper.Map(hospitalStaff, entity);
+        entity.IsDefault = entity.IsActive && entity.IsDefault;//If record is passive, set as not default
         await _hospitalStaffRepository.UpdateAsync(entity);
     }
 
@@ -78,17 +78,20 @@ public class HospitalStaffService : ApplicationService, IHospitalStaffService
         await _hospitalStaffRepository.DeleteAsync(id);
     }
 
+
+
     /// <summary>
-    /// Checks default staff value. There should be only one default active staff in database
+    /// Checks if data is valid to save
     /// </summary>
-    /// <param name="hospitalStaff">Hospital staff to check default value</param>
-    /// <param name="id">If hospital staff is already in database, id field should be entered</param>
-    /// <exception cref="DefaultStaffAlreadyExistException"></exception>
-    private async Task CheckDefaultStaffValue(SaveHospitalStaffDto hospitalStaff, int? id = null)
+    /// <param name="hospitalStaff">To be saved object</param>
+    /// <param name="id">Id in updated entity</param>
+    /// <exception cref="HTSBusinessException">Check response exceptions</exception>
+    private async Task IsDataValidToSave(SaveHospitalStaffDto hospitalStaff, int? id = null)
     {
-        //check whether user exists even if it is active or not, default or not
-        if (!id.HasValue && (await _hospitalStaffRepository.GetQueryableAsync()).Any(s=>s.UserId == hospitalStaff.UserId))
-        {
+
+        if (!id.HasValue //Insert
+            && (await _hospitalStaffRepository.GetQueryableAsync()).Any(s => s.UserId == hospitalStaff.UserId))
+        {//UserId already added
             throw new HTSBusinessException(ErrorCode.StaffAlreadyExist);
         }
         if (hospitalStaff.IsDefault)//Default staff
@@ -96,7 +99,7 @@ public class HospitalStaffService : ApplicationService, IHospitalStaffService
             if ((await _hospitalStaffRepository.GetQueryableAsync()).Any(s => s.IsActive
                                                                              && s.IsDefault
                                                                              && (!id.HasValue || s.Id != id)))
-            {//There is already in db
+            {//There is already default staff in db
                 throw new HTSBusinessException(ErrorCode.DefaultStaffAlreadyExist);
             }
         }

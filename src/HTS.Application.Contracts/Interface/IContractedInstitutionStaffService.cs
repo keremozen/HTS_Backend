@@ -33,16 +33,16 @@ namespace HTS.Interface
         /// Creates contracted institution staff
         /// </summary>
         /// <param name="contractedInstitutionStaff">contracted institution staff information to insert</param>
-        /// <returns>Inserted object</returns>
-        Task<ContractedInstitutionStaffDto> CreateAsync(SaveContractedInstitutionStaffDto contractedInstitutionStaff);
+        /// <returns></returns>
+        Task CreateAsync(SaveContractedInstitutionStaffDto contractedInstitutionStaff);
         
         /// <summary>
         /// Creates contracted institution staff of institution
         /// </summary>
         /// <param name="id">To be updated contracted institution staff id</param>
         /// <param name="contractedInstitutionStaff">contracted institution staff information to be updated</param>
-        /// <returns>Updated object</returns>
-        Task<ContractedInstitutionStaffDto> UpdateAsync(int id, SaveContractedInstitutionStaffDto contractedInstitutionStaff);
+        /// <returns></returns>
+        Task UpdateAsync(int id, SaveContractedInstitutionStaffDto contractedInstitutionStaff);
         
 
         /// <summary>

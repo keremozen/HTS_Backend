@@ -29,6 +29,10 @@
     "EmptyMessage": "Kayıt bulunamadı.",
     "EmptyFilterMessage": "Kayıt bulunamadı.",
 
+    /*ERROR MESSAGES*/
+    "HTS:00001": "Eklenmeye çalışılan kişi mevcuttur.",
+    "HTS:00002": "Varsayılan bir kişi mevcuttur. Birden çok varsayılan kişi eklenemez.",
+
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Başarılı",
     "ToastTitle:Info": "Bilgi",

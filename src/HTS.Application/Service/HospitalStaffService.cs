@@ -86,13 +86,18 @@ public class HospitalStaffService : ApplicationService, IHospitalStaffService
     /// <exception cref="DefaultStaffAlreadyExistException"></exception>
     private async Task CheckDefaultStaffValue(SaveHospitalStaffDto hospitalStaff, int? id = null)
     {
+        //check whether user exists even if it is active or not, default or not
+        if (!id.HasValue && (await _hospitalStaffRepository.GetQueryableAsync()).Any(s=>s.UserId == hospitalStaff.UserId))
+        {
+            throw new HTSBusinessException(ErrorCode.StaffAlreadyExist);
+        }
         if (hospitalStaff.IsDefault)//Default staff
         {
             if ((await _hospitalStaffRepository.GetQueryableAsync()).Any(s => s.IsActive
                                                                              && s.IsDefault
                                                                              && (!id.HasValue || s.Id != id)))
             {//There is already in db
-                throw new DefaultStaffAlreadyExistException();
+                throw new HTSBusinessException(ErrorCode.DefaultStaffAlreadyExist);
             }
         }
     }

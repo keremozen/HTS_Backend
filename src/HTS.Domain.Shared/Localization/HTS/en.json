@@ -29,6 +29,10 @@
     "EmptyMessage": "No records found.",
     "EmptyFilterMessage": "No records found.",
 
+    /*ERROR MESSAGES*/
+    "HTS:00001": "The user already exists.",
+    "HTS:00002": "One default user already exits. Multiple default users are not allowed.",
+
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Successful",
     "ToastTitle:Info": "Information",

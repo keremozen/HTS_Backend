@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using HTS.Dto.City;
+using HTS.Dto.HospitalStaff;
 using HTS.Dto.Nationality;
 using Volo.Abp.Application.Dtos;
 
@@ -16,4 +18,5 @@ public class HospitalDto : EntityDto<int>
     public bool IsActive { get; set; }
     public NationalityDto PhoneCountryCode { get; set; }
     public CityDto City { get; set; }
+    public List<HospitalStaffDto> HospitalStaffs { get; set; }
 }

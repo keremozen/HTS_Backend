@@ -42,19 +42,20 @@ namespace HTS.Data
 
                 options.Entity<ContractedInstitution>(orderOptions =>
                 {
-                    orderOptions.DefaultWithDetailsFunc = query => query.Include(o => o.Nationality)
-                                                                        .Include(p => p.PhoneCountryCode);
+                    orderOptions.DefaultWithDetailsFunc = query => query.Include(i => i.Nationality)
+                                                                        .Include(i => i.PhoneCountryCode);
                 });
 
                 options.Entity<ContractedInstitutionStaff>(orderOptions =>
                 {
-                    orderOptions.DefaultWithDetailsFunc = query => query.Include(p => p.PhoneCountryCode);
+                    orderOptions.DefaultWithDetailsFunc = query => query.Include(s => s.PhoneCountryCode);
                 });
 
                 options.Entity<Hospital>(orderOptions =>
                 {
                     orderOptions.DefaultWithDetailsFunc = query => query.Include(o => o.City)
-                                                                        .Include(p => p.PhoneCountryCode);
+                                                                        .Include(p => p.PhoneCountryCode)
+                                                                        .Include(h => h.HospitalStaffs);
                 });
 
                 options.Entity<Process>(orderOptions =>

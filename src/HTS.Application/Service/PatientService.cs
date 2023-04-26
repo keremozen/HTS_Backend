@@ -53,6 +53,66 @@ public class PatientService : ApplicationService, IPatientService
         return new PagedResultDto<PatientDto>(totalCount, responseList);
     }
 
+    public async Task<PagedResultDto<PatientDto>> FilterListAsync(FilterPatientDto filter)
+    {
+        var query = await _patientRepository.WithDetailsAsync();
+        if (!string.IsNullOrEmpty(filter.Name))
+        {
+            query = query.Where(p => p.Name.Contains(filter.Name));
+        }
+        if (!string.IsNullOrEmpty(filter.Surname))
+        {
+            query = query.Where(p => p.Surname.Contains(filter.Surname));
+        }
+        if (!string.IsNullOrEmpty(filter.PassportNumber))
+        {
+            query = query.Where(p => p.PassportNumber.Contains(filter.PassportNumber));
+        }
+        if (filter.PhoneCountryCodeIds?.Any() ?? false)
+        {
+            query = query.Where(p => p.PhoneCountryCodeId.HasValue && filter.PhoneCountryCodeIds.Contains(p.PhoneCountryCodeId.Value));
+        }
+        if (filter.NationalityIds?.Any() ?? false)
+        {
+            query = query.Where(p => filter.NationalityIds.Contains(p.NationalityId));
+        }
+        if (filter.GenderIds?.Any() ?? false)
+        {
+            query = query.Where(p => p.GenderId.HasValue && filter.GenderIds.Contains(p.GenderId.Value));
+        }
+        if (filter.MotherTongueIds?.Any() ?? false)
+        {
+            query = query.Where(p => p.MotherTongueId.HasValue && filter.MotherTongueIds.Contains(p.MotherTongueId.Value));
+        }
+        if (filter.SecondTongueIds?.Any() ?? false)
+        {
+            query = query.Where(p => p.SecondTongueId.HasValue && filter.SecondTongueIds.Contains(p.SecondTongueId.Value));
+        }
+        if (filter.PatientTreatmentProcessIds?.Any() ?? false)
+        {
+            query = query.Where(p => p.PatientTreatmentProcesses.Any(ptp => filter.PatientTreatmentProcessIds.Contains(ptp.Id)));
+        }
+        
+        var patientList = await AsyncExecuter.ToListAsync(query);
+        patientList = patientList.Select(p =>
+            {
+                if (filter.PatientTreatmentProcessIds?.Any() ?? false)
+                {
+                    p.PatientTreatmentProcesses =
+                        p.PatientTreatmentProcesses.Where(t => filter.PatientTreatmentProcessIds.Contains(t.Id)).ToList();
+                }
+                else
+                {
+                    p.PatientTreatmentProcesses =  p.PatientTreatmentProcesses.OrderByDescending(t => t.Id).Take(1).ToList();
+                }
+                return p;
+            })
+            .ToList();
+        var responseList = ObjectMapper.Map<List<Patient>, List<PatientDto>>(patientList);
+        var totalCount = await _patientRepository.CountAsync();//item count
+
+        return new PagedResultDto<PatientDto>(totalCount, responseList);
+    }
     public async Task<PatientDto> CreateAsync(SavePatientDto patient)
     {
         await IsDataValidToSave(patient);

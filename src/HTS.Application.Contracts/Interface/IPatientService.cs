@@ -25,6 +25,14 @@ namespace HTS.Interface
         /// </summary>
         /// <returns>Patient list</returns>
         Task<PagedResultDto<PatientDto>> GetListAsync();
+
+        /// <summary>
+        /// List patients by filter values
+        /// </summary>
+        /// <param name="filter">Filter values</param>
+        /// <returns>Patient list</returns>
+        Task<PagedResultDto<PatientDto>> FilterListAsync(FilterPatientDto filter);
+        
         /// <summary>
         /// Creates patient
         /// </summary>

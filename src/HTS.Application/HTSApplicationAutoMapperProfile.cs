@@ -15,6 +15,8 @@ using HTS.Dto.Language;
 using HTS.Dto.Nationality;
 using HTS.Dto.Patient;
 using HTS.Dto.PatientAdmissionMethod;
+using HTS.Dto.PatientDocument;
+using HTS.Dto.PatientDocumentStatus;
 using HTS.Dto.PatientNote;
 using HTS.Dto.PatientNoteStatus;
 using HTS.Dto.PatientTreatmentProcess;
@@ -61,6 +63,9 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<PatientNote, PatientNoteDto>();
         CreateMap<SavePatientNoteDto, PatientNote>();
         CreateMap<PatientNoteStatus, PatientNoteStatusDto>();
+        CreateMap<PatientDocument, PatientDocumentDto>();
+        CreateMap<SavePatientDocumentDto, PatientDocument>();
+        CreateMap<PatientDocumentStatus, PatientDocumentStatusDto>();
         CreateMap<SavePatientAdmissionMethodDto, PatientAdmissionMethod>();
         CreateMap<PatientAdmissionMethod, PatientAdmissionMethodDto>();
         CreateMap<SaveContractedInstitutionDto, ContractedInstitution>();

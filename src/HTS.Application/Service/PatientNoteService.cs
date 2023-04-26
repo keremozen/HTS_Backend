@@ -55,6 +55,4 @@ public class PatientNoteService : ApplicationService, IPatientNoteService
     {
         await _patientNoteRepository.DeleteAsync(id);
     }
-
-
 }

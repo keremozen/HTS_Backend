@@ -1,16 +1,14 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HTS.BusinessException;
 using HTS.Data.Entity;
-using HTS.Dto.Language;
-using HTS.Dto.Nationality;
 using HTS.Dto.PatientNote;
 using HTS.Interface;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
-using Volo.Abp.Identity;
+using Volo.Abp.Users;
 using static HTS.Enum.EntityEnum;
 
 namespace HTS.Service;
@@ -18,12 +16,12 @@ namespace HTS.Service;
 public class PatientNoteService : ApplicationService, IPatientNoteService
 {
     private readonly IRepository<PatientNote, int> _patientNoteRepository;
-    private readonly IIdentityUserRepository _userRepository;
+    private readonly ICurrentUser _currentUser;
     public PatientNoteService(IRepository<PatientNote, int> nationalityRepository,
-        IIdentityUserRepository userRepository)
+        ICurrentUser currentUser)
     {
         _patientNoteRepository = nationalityRepository;
-        _userRepository = userRepository;
+        _currentUser = currentUser;
     }
 
     public async Task<PagedResultDto<PatientNoteDto>> GetListAsync(int patientId)
@@ -47,8 +45,25 @@ public class PatientNoteService : ApplicationService, IPatientNoteService
     public async Task<PatientNoteDto> UpdateStatus(int id, int statusId)
     {
         var entity = await _patientNoteRepository.GetAsync(id);
+        IsDataValidToUpdateStatus(entity, statusId);
         entity.PatientNoteStatusId = statusId;
         return ObjectMapper.Map<PatientNote, PatientNoteDto>(await _patientNoteRepository.UpdateAsync(entity));
+    }
+    
+    /// <summary>
+    /// Check if everything is ok to change status
+    /// </summary>
+    /// <param name="patientNote">To be updated entity</param>
+    /// <param name="statusId">New status</param>
+    /// <exception cref="HTSBusinessException"></exception>
+    private void IsDataValidToUpdateStatus(PatientNote patientNote, int statusId)
+    {
+        //Only created user can cancel note
+        if (statusId == PatientNoteStatusEnum.Revoked.GetHashCode()
+            &&  patientNote.CreatorId != _currentUser.Id)
+        {
+            throw new HTSBusinessException(ErrorCode.CreatorCanRevokePatientNote);
+        }
     }
 
     public async Task DeleteAsync(int id)

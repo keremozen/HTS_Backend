@@ -1,17 +1,14 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HTS.BusinessException;
 using HTS.Data.Entity;
-using HTS.Dto.Language;
-using HTS.Dto.Nationality;
 using HTS.Dto.PatientDocument;
-using HTS.Dto.PatientNote;
 using HTS.Interface;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
-using Volo.Abp.Identity;
+using Volo.Abp.Users;
 using static HTS.Enum.EntityEnum;
 
 namespace HTS.Service;
@@ -19,12 +16,12 @@ namespace HTS.Service;
 public class PatientDocumentService : ApplicationService, IPatientDocumentService
 {
     private readonly IRepository<PatientDocument, int> _patientDocumentRepository;
-    private readonly IIdentityUserRepository _userRepository;
-    public PatientDocumentService(IRepository<PatientDocument, int> nationalityRepository,
-        IIdentityUserRepository userRepository)
+    private readonly ICurrentUser _currentUser;
+    public PatientDocumentService(IRepository<PatientDocument, int> patientDocumentRepository,
+        ICurrentUser currentUser)
     {
-        _patientDocumentRepository = nationalityRepository;
-        _userRepository = userRepository;
+        _patientDocumentRepository = patientDocumentRepository;
+        _currentUser = currentUser;
     }
 
     public async Task<PagedResultDto<PatientDocumentDto>> GetListAsync(int patientId)
@@ -48,6 +45,7 @@ public class PatientDocumentService : ApplicationService, IPatientDocumentServic
     public async Task<PatientDocumentDto> UpdateStatus(int id, int statusId)
     {
         var entity = await _patientDocumentRepository.GetAsync(id);
+        IsDataValidToUpdateStatus(entity, statusId);
         entity.PatientDocumentStatusId = statusId;
         return ObjectMapper.Map<PatientDocument, PatientDocumentDto>(await _patientDocumentRepository.UpdateAsync(entity));
     }
@@ -55,6 +53,22 @@ public class PatientDocumentService : ApplicationService, IPatientDocumentServic
     public async Task DeleteAsync(int id)
     {
         await _patientDocumentRepository.DeleteAsync(id);
+    }
+    
+    /// <summary>
+    /// Check if everything is ok to change status
+    /// </summary>
+    /// <param name="patientDocument">To be updated entity</param>
+    /// <param name="statusId">New status</param>
+    /// <exception cref="HTSBusinessException"></exception>
+    private void IsDataValidToUpdateStatus(PatientDocument patientDocument, int statusId)
+    {
+        //Only created user can cancel note
+        if (statusId == PatientNoteStatusEnum.Revoked.GetHashCode()
+            &&  patientDocument.CreatorId != _currentUser.Id)
+        {
+            throw new HTSBusinessException(ErrorCode.CreatorCanRevokePatientDocument);
+        }
     }
 
 

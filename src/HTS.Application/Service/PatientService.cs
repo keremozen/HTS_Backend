@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HTS.BusinessException;
 using HTS.Data.Entity;
 using HTS.Dto.Language;
 using HTS.Dto.Nationality;
@@ -54,6 +55,7 @@ public class PatientService : ApplicationService, IPatientService
 
     public async Task<PatientDto> CreateAsync(SavePatientDto patient)
     {
+        await IsDataValidToSave(patient);
         var entity = ObjectMapper.Map<SavePatientDto, Patient>(patient);
         var createdEntity = await _patientRepository.InsertAsync(entity, true);
         return ObjectMapper.Map<Patient, PatientDto>(createdEntity);
@@ -61,6 +63,7 @@ public class PatientService : ApplicationService, IPatientService
 
     public async Task<PatientDto> UpdateAsync(int id, SavePatientDto patient)
     {
+        await  IsDataValidToSave(patient,id);
         var entity = await _patientRepository.GetAsync(id);
         ObjectMapper.Map(patient, entity);
         return ObjectMapper.Map<Patient, PatientDto>(await _patientRepository.UpdateAsync(entity));
@@ -70,6 +73,27 @@ public class PatientService : ApplicationService, IPatientService
     {
         await _patientRepository.DeleteAsync(id);
     }
-    //TODO:Hopsy check nationality and passportnumber unique
+    
+    /// <summary>
+    /// Checks if data is valid to save
+    /// </summary>
+    /// <param name="patient">To be saved object</param>
+    /// <param name="id">Id in updated entity</param>
+    /// <exception cref="HTSBusinessException">Check response exceptions</exception>
+    private async Task IsDataValidToSave(SavePatientDto patient, int? id = null)
+    {
+        //Check nationality and passportnumber is unique
+        var query = await _patientRepository.GetQueryableAsync();
+        query = query.Where(p => p.NationalityId == patient.NationalityId
+                                 && !string.IsNullOrEmpty(p.PassportNumber)
+                                 && p.PassportNumber == patient.PassportNumber)
+            .WhereIf(id.HasValue,
+                p => p.Id != id);
+        if (await query.AnyAsync())
+        {
+            throw new HTSBusinessException(ErrorCode.NationalityAndPassportNumberMustBeUnique);
+        }
+    }
+   
 
 }

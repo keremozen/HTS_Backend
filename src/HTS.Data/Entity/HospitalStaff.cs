@@ -2,6 +2,7 @@
 using Volo.Abp.Domain.Entities.Auditing;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Volo.Abp.Identity;
 
 namespace HTS.Data.Entity
 {
@@ -18,5 +19,8 @@ namespace HTS.Data.Entity
         public bool IsActive { get; set; }
         [ForeignKey("HospitalId")]
         public Hospital Hospital { get; set; }
+
+        [ForeignKey("UserId")]
+        public IdentityUser User { get; set; }
     }
 }

@@ -55,7 +55,8 @@ namespace HTS.Data
                 {
                     orderOptions.DefaultWithDetailsFunc = query => query.Include(o => o.City)
                                                                         .Include(p => p.PhoneCountryCode)
-                                                                        .Include(h => h.HospitalStaffs);
+                                                                        .Include(h => h.HospitalStaffs)
+                                                                        .ThenInclude(s => s.User);
                 });
 
                 options.Entity<Process>(orderOptions =>

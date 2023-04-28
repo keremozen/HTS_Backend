@@ -35,6 +35,6 @@ namespace HTS.Data.Entity
 
         [ForeignKey("NationalityId")]
         public Nationality? Nationality { get; set; }
-        public virtual ICollection<ContractedInstitutionStaff>? ContractedInstitutionStaff { get; set; }
+        public virtual ICollection<ContractedInstitutionStaff>? ContractedInstitutionStaffs { get; set; }
     }
 }

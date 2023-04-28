@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using HTS.Dto.ContractedInstitutionStaff;
 using HTS.Dto.Nationality;
 using Volo.Abp.Application.Dtos;
 
@@ -16,4 +18,5 @@ public class ContractedInstitutionDto : EntityDto<int>
     public bool IsActive { get; set; }
     public NationalityDto PhoneCountryCode { get; set; }
     public NationalityDto Nationality { get; set; }
+    public List<ContractedInstitutionStaffDto> ContractedInstitutionStaffs { get; set; }
 }

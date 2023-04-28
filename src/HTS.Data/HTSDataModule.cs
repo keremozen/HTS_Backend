@@ -43,7 +43,8 @@ namespace HTS.Data
                 options.Entity<ContractedInstitution>(orderOptions =>
                 {
                     orderOptions.DefaultWithDetailsFunc = query => query.Include(i => i.Nationality)
-                                                                        .Include(i => i.PhoneCountryCode);
+                                                                        .Include(i => i.PhoneCountryCode)
+                                                                        .Include(i => i.ContractedInstitutionStaffs);
                 });
 
                 options.Entity<ContractedInstitutionStaff>(orderOptions =>

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using HTS.Data.Entity;
 using HTS.Dto.Branch;
@@ -22,10 +23,14 @@ public class BranchService : ApplicationService, IBranchService
         return ObjectMapper.Map<Branch, BranchDto>(await _branchRepository.GetAsync(id));
     }
 
-    public async Task<PagedResultDto<BranchDto>> GetListAsync()
+    public async Task<PagedResultDto<BranchDto>> GetListAsync(bool? isActive=null)
     {
         //Get all entities
-        var responseList = ObjectMapper.Map<List<Branch>, List<BranchDto>>(await _branchRepository.GetListAsync());
+        var query = await _branchRepository.GetQueryableAsync();
+        query = query.WhereIf(isActive.HasValue,
+            b => b.IsActive == isActive.Value);
+        
+        var responseList = ObjectMapper.Map<List<Branch>, List<BranchDto>>(await AsyncExecuter.ToListAsync(query));
         var totalCount = await _branchRepository.CountAsync();//item count
         return new PagedResultDto<BranchDto>(totalCount,responseList);
     }

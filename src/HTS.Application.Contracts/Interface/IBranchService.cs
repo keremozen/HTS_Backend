@@ -16,8 +16,9 @@ namespace HTS.Interface
         /// <summary>
         /// Get all majors
         /// </summary>
+        /// <param name="isActive">IsActive value of branch. Default parameter with null value</param>
         /// <returns>Major list</returns>
-        Task<PagedResultDto<BranchDto>> GetListAsync();
+        Task<PagedResultDto<BranchDto>> GetListAsync(bool? isActive=null);
         /// <summary>
         /// Creates major
         /// </summary>

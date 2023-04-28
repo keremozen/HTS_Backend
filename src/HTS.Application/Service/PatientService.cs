@@ -58,15 +58,15 @@ public class PatientService : ApplicationService, IPatientService
         var query = await _patientRepository.WithDetailsAsync();
         if (!string.IsNullOrEmpty(filter.Name))
         {
-            query = query.Where(p => p.Name.Contains(filter.Name));
+            query = query.Where(p => p.Name.Contains(filter.Name,StringComparison.OrdinalIgnoreCase));
         }
         if (!string.IsNullOrEmpty(filter.Surname))
         {
-            query = query.Where(p => p.Surname.Contains(filter.Surname));
+            query = query.Where(p => p.Surname.Contains(filter.Surname,StringComparison.OrdinalIgnoreCase));
         }
         if (!string.IsNullOrEmpty(filter.PassportNumber))
         {
-            query = query.Where(p => p.PassportNumber.Contains(filter.PassportNumber));
+            query = query.Where(p => p.PassportNumber.Contains(filter.PassportNumber,StringComparison.OrdinalIgnoreCase));
         }
         if (filter.PhoneCountryCodeIds?.Any() ?? false)
         {

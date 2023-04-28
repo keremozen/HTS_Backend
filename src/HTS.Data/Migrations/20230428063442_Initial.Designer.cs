@@ -13,7 +13,7 @@ using Volo.Abp.EntityFrameworkCore;
 namespace HTS.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230425211129_Initial")]
+    [Migration("20230428063442_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -636,6 +636,8 @@ namespace HTS.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("HospitalId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("HospitalStaffs");
                 });
@@ -2442,7 +2444,15 @@ namespace HTS.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Hospital");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("HTS.Data.Entity.HospitalizationType", b =>

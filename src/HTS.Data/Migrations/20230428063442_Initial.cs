@@ -1039,6 +1039,12 @@ namespace HTS.Data.Migrations
                 {
                     table.PrimaryKey("PK_HospitalStaffs", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_HospitalStaffs_AbpUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_HospitalStaffs_Hospitals_HospitalId",
                         column: x => x.HospitalId,
                         principalTable: "Hospitals",
@@ -1052,12 +1058,12 @@ namespace HTS.Data.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Description = table.Column<string>(type: "text", nullable: false),
-                    FileName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    FilePath = table.Column<string>(type: "text", nullable: false),
                     PatientId = table.Column<int>(type: "integer", nullable: false),
                     DocumentTypeId = table.Column<int>(type: "integer", nullable: false),
                     PatientDocumentStatusId = table.Column<int>(type: "integer", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
+                    FileName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    FilePath = table.Column<string>(type: "text", nullable: false),
                     CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
                     LastModificationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
@@ -1680,6 +1686,11 @@ namespace HTS.Data.Migrations
                 name: "IX_HospitalStaffs_HospitalId",
                 table: "HospitalStaffs",
                 column: "HospitalId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_HospitalStaffs_UserId",
+                table: "HospitalStaffs",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_IncluedingProcesses_ChildProcessId",

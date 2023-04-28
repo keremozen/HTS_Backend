@@ -30,7 +30,7 @@ public class PatientNoteService : ApplicationService, IPatientNoteService
         var query = (await _patientNoteRepository.WithDetailsAsync(p => p.Creator))
             .Where(p => p.PatientId == patientId);
         var responseList = ObjectMapper.Map<List<PatientNote>, List<PatientNoteDto>>(await AsyncExecuter.ToListAsync(query));
-        var totalCount = await _patientNoteRepository.CountAsync();//item count
+        var totalCount = responseList.Count;//item count
         return new PagedResultDto<PatientNoteDto>(totalCount, responseList);
     }
 

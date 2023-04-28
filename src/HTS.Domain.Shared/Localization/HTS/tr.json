@@ -30,8 +30,11 @@
     "EmptyFilterMessage": "Kayıt bulunamadı.",
 
     /*ERROR MESSAGES*/
-    "HTS:00001": "Eklenmeye çalışılan kişi mevcuttur.",
-    "HTS:00002": "Varsayılan bir kişi mevcuttur. Birden çok varsayılan kişi eklenemez.",
+    "HTS:1": "Eklenmeye çalışılan kişi mevcuttur.",
+    "HTS:2": "Varsayılan bir kişi mevcuttur. Birden çok varsayılan kişi eklenemez.",
+    "HTS:3": "Aynı uyruk ve pasaport numarasına sahip başka bir hasta bulunmaktadır.",
+    "HTS:4": "Bir notu sadece oluşturan kişi iptal edebilir.",
+    "HTS:5": "Bir dokümanı sadece oluşturan kişi iptal edebilir.",
 
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Başarılı",

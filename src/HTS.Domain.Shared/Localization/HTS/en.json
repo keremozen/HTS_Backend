@@ -30,8 +30,11 @@
     "EmptyFilterMessage": "No records found.",
 
     /*ERROR MESSAGES*/
-    "HTS:00001": "The user already exists.",
-    "HTS:00002": "One default user already exits. Multiple default users are not allowed.",
+    "HTS:1": "The user already exists.",
+    "HTS:2": "One default user already exits. Multiple default users are not allowed.",
+    "HTS:3": "There is already a patient with the same nationality and passport number.",
+    "HTS:4": "Note can be revoked only by the creator of that note.",
+    "HTS:5": "Document can be revoked only by the creator of that document.",
 
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Successful",

@@ -9,6 +9,13 @@ INSERT INTO "Genders"("Id", "Name", "IsActive") VALUES (2, 'Erkek', true);
 
 --Languages Table
 INSERT INTO "Languages"("Name", "IsActive", "CreationTime", "IsDeleted") VALUES ('Türkçe', true,'"2023-03-26 22:49:04.678786+03"', false);
+INSERT INTO "Languages"("Name", "IsActive", "CreationTime", "IsDeleted") VALUES ('İngilizce', true,'"2023-03-26 22:49:04.678786+03"', false);
+INSERT INTO "Languages"("Name", "IsActive", "CreationTime", "IsDeleted") VALUES ('Almanca', true,'"2023-03-26 22:49:04.678786+03"', false);
+INSERT INTO "Languages"("Name", "IsActive", "CreationTime", "IsDeleted") VALUES ('Arapça', true,'"2023-03-26 22:49:04.678786+03"', false);
+
+--Document Types
+INSERT INTO "DocumentTypes"("Name", "Description", "IsActive", "CreationTime") VALUES ('Radyoloji Görüntüleri', 'MR, Röntgen, Tomografi vb görüntüleri', true, '2023-03-26 22:49:04.678786+03');
+INSERT INTO "DocumentTypes"("Name", "Description", "IsActive", "CreationTime") VALUES ('Kan Tahlilleri', 'Kan tahlilleri', true, '2023-03-26 22:49:04.678786+03');
 
 --Patient Note Status
 INSERT INTO "PatientNoteStatuses"("Id", "Name") VALUES (1, 'Yeni Kayıt');

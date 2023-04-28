@@ -634,6 +634,8 @@ namespace HTS.Data.Migrations
 
                     b.HasIndex("HospitalId");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("HospitalStaffs");
                 });
 
@@ -2439,7 +2441,15 @@ namespace HTS.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Hospital");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("HTS.Data.Entity.HospitalizationType", b =>

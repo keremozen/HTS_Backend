@@ -16,8 +16,9 @@ namespace HTS.Interface
         /// <summary>
         /// Get all hospital responses
         /// </summary>
+        /// <param name="isActive">IsActive value of data. Default parameter with null value</param>
         /// <returns>Hospital response list</returns>
-        Task<PagedResultDto<HospitalResponseDto>> GetListAsync();
+        Task<PagedResultDto<HospitalResponseDto>> GetListAsync(bool? isActive=null);
         /// <summary>
         /// Creates entity
         /// </summary>

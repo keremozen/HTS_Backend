@@ -1,13 +1,7 @@
-﻿using HTS.Dto;
-using HTS.Dto.Language;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using HTS.Dto.Nationality;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
-using Volo.Abp.DependencyInjection;
 
 namespace HTS.Interface
 {
@@ -22,8 +16,9 @@ namespace HTS.Interface
         /// <summary>
         /// Get all nationalities
         /// </summary>
+        /// <param name="isActive">IsActive value of data. Default parameter with null value</param>
         /// <returns>Nationality list</returns>
-        Task<PagedResultDto<NationalityDto>> GetListAsync();
+        Task<PagedResultDto<NationalityDto>> GetListAsync(bool? isActive=null);
         /// <summary>
         /// Creates nationality
         /// </summary>

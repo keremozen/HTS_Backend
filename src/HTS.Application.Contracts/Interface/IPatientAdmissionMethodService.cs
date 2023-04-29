@@ -1,14 +1,6 @@
-﻿using HTS.Dto;
-using HTS.Dto.Language;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using HTS.Dto.Nationality;
+﻿using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
-using Volo.Abp.DependencyInjection;
-using HTS.Dto.Patient;
 using HTS.Dto.PatientAdmissionMethod;
 
 namespace HTS.Interface
@@ -24,8 +16,9 @@ namespace HTS.Interface
         /// <summary>
         /// Get all patient admission methods
         /// </summary>
+        /// <param name="isActive">IsActive value of data. Default parameter with null value</param>
         /// <returns>Patient admission method list</returns>
-        Task<PagedResultDto<PatientAdmissionMethodDto>> GetListAsync();
+        Task<PagedResultDto<PatientAdmissionMethodDto>> GetListAsync(bool? isActive=null);
         /// <summary>
         /// Creates patient admission method
         /// </summary>

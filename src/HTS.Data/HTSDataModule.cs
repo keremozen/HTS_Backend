@@ -59,6 +59,11 @@ namespace HTS.Data
                                                                         .Include(h => h.HospitalStaffs)
                                                                         .ThenInclude(s => s.User);
                 });
+                
+                options.Entity<HospitalStaff>( entityOptions =>
+                { 
+                    entityOptions.DefaultWithDetailsFunc = query => query.Include(s => s.User);
+                });
 
                 options.Entity<Process>(orderOptions =>
                 {

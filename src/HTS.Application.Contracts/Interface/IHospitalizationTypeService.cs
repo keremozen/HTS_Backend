@@ -14,10 +14,11 @@ public interface IHospitalizationTypeService : IApplicationService
     /// <returns>Desired hospitalization type</returns>
     Task<HospitalizationTypeDto> GetAsync(int id);
     /// <summary>
-    /// Get all hospitalization types
+    /// Get all hospitalization types by optional is active status
     /// </summary>
+    /// <param name="isActive">IsActive value of data. Default parameter with null value</param>
     /// <returns>Hospitalization type list</returns>
-    Task<PagedResultDto<HospitalizationTypeDto>> GetListAsync();
+    Task<PagedResultDto<HospitalizationTypeDto>> GetListAsync(bool? isActive=null);
     /// <summary>
     /// Creates hospitalization type
     /// </summary>

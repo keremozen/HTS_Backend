@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using HTS.Data.Entity;
 using HTS.Dto.ProcessCost;
@@ -22,10 +23,13 @@ public class ProcessCostService : ApplicationService, IProcessCostService
         return ObjectMapper.Map<ProcessCost, ProcessCostDto>(await _processCostRepository.GetAsync(id));
     }
 
-    public async Task<PagedResultDto<ProcessCostDto>> GetListAsync()
+    public async Task<PagedResultDto<ProcessCostDto>> GetListAsync(bool? isActive=null)
     {
         //Get all entities
-        var responseList = ObjectMapper.Map<List<ProcessCost>, List<ProcessCostDto>>(await _processCostRepository.GetListAsync());
+        var query = await _processCostRepository.GetQueryableAsync();
+        query = query.WhereIf(isActive.HasValue,
+            b => b.IsActive == isActive.Value);
+        var responseList = ObjectMapper.Map<List<ProcessCost>, List<ProcessCostDto>>(await AsyncExecuter.ToListAsync(query));
         var totalCount = await _processCostRepository.CountAsync();//item count
         return new PagedResultDto<ProcessCostDto>(totalCount,responseList);
     }

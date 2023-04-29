@@ -16,8 +16,9 @@ namespace HTS.Interface
         /// <summary>
         /// Get all processes
         /// </summary>
+        /// <param name="isActive">IsActive value of data. Default parameter with null value</param>
         /// <returns>Object list</returns>
-        Task<PagedResultDto<ProcessDto>> GetListAsync();
+        Task<PagedResultDto<ProcessDto>> GetListAsync(bool? isActive=null);
         /// <summary>
         /// Creates entity
         /// </summary>

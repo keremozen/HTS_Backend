@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using HTS.Data.Entity;
 using HTS.Dto.TreatmentType;
@@ -22,10 +23,12 @@ public class TreatmentTypeService : ApplicationService, ITreatmentTypeService
         return ObjectMapper.Map<TreatmentType, TreatmentTypeDto>(await _treatmentTypeRepository.GetAsync(id));
     }
 
-    public async Task<PagedResultDto<TreatmentTypeDto>> GetListAsync()
+    public async Task<PagedResultDto<TreatmentTypeDto>> GetListAsync(bool? isActive=null)
     {
-        //Get all entities
-        var responseList = ObjectMapper.Map<List<TreatmentType>, List<TreatmentTypeDto>>(await _treatmentTypeRepository.GetListAsync());
+        var query = await _treatmentTypeRepository.GetQueryableAsync();
+        query = query.WhereIf(isActive.HasValue,
+            b => b.IsActive == isActive.Value);
+        var responseList = ObjectMapper.Map<List<TreatmentType>, List<TreatmentTypeDto>>(await AsyncExecuter.ToListAsync(query));
         var totalCount = await _treatmentTypeRepository.CountAsync();//item count
         return new PagedResultDto<TreatmentTypeDto>(totalCount,responseList);
     }

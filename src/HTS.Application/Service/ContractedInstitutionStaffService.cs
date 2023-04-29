@@ -3,10 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using HTS.BusinessException;
 using HTS.Data.Entity;
-using HTS.Dto.ContractedInstitution;
 using HTS.Dto.ContractedInstitutionStaff;
-using HTS.Dto.Language;
-using HTS.Dto.Nationality;
 using HTS.Interface;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
@@ -22,10 +19,13 @@ public class ContractedInstitutionStaffService : ApplicationService, IContracted
         _contractedInstitutionStaffRepository = contractedInstitutionStaffRepository;
     }
 
-    public async Task<PagedResultDto<ContractedInstitutionStaffDto>> GetByInstitutionListAsync(int institutionId)
+    public async Task<PagedResultDto<ContractedInstitutionStaffDto>> GetByInstitutionListAsync(int institutionId, bool? isActive=null)
     {
         //Get all entities
-        var query = (await _contractedInstitutionStaffRepository.WithDetailsAsync()).Where(p => p.ContractedInstitutionId == institutionId);
+        var query = (await _contractedInstitutionStaffRepository.WithDetailsAsync())
+            .Where(s => s.ContractedInstitutionId == institutionId)
+            .WhereIf(isActive.HasValue,
+                i => i.IsActive == isActive.Value);;
         var responseList = ObjectMapper.Map<List<ContractedInstitutionStaff>, List<ContractedInstitutionStaffDto>>(await AsyncExecuter.ToListAsync(query));
         var totalCount = await _contractedInstitutionStaffRepository.CountAsync();//item count
         return new PagedResultDto<ContractedInstitutionStaffDto>(totalCount, responseList);

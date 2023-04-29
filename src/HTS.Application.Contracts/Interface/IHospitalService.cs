@@ -15,16 +15,17 @@ namespace HTS.Interface
     public interface IHospitalService : IApplicationService
     {
         /// <summary>
-        /// Get nationality by id
+        /// Get entity by id
         /// </summary>
         /// <param name="id">Desired hospital id</param>
-        /// <returns>Desired nationality</returns>
+        /// <returns>Desired hospital</returns>
         Task<HospitalDto> GetAsync(int id);
         /// <summary>
-        /// Get all nationalities
+        /// Get all hospitals by is active optional
         /// </summary>
-        /// <returns>Nationality list</returns>
-        Task<PagedResultDto<HospitalDto>> GetListAsync();
+        /// <param name="isActive">IsActive value of data. Default parameter with null value</param>
+        /// <returns>Hospital list</returns>
+        Task<PagedResultDto<HospitalDto>> GetListAsync(bool? isActive=null);
         /// <summary>
         /// Creates hospital
         /// </summary>

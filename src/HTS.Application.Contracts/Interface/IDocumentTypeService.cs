@@ -23,8 +23,9 @@ namespace HTS.Interface
         /// <summary>
         /// Get all document types
         /// </summary>
+        /// <param name="isActive">IsActive value of data. Default parameter with null value</param>
         /// <returns>document type list</returns>
-        Task<PagedResultDto<DocumentTypeDto>> GetListAsync();
+        Task<PagedResultDto<DocumentTypeDto>> GetListAsync(bool? isActive=null);
         /// <summary>
         /// Creates document type
         /// </summary>

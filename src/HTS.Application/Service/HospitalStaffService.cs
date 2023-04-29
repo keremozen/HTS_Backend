@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,7 +5,6 @@ using HTS.BusinessException;
 using HTS.Data.Entity;
 using HTS.Dto.HospitalStaff;
 using HTS.Interface;
-using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
@@ -24,34 +22,16 @@ public class HospitalStaffService : ApplicationService, IHospitalStaffService
         _userRepository = userRepository;
     }
 
-    public async Task<PagedResultDto<HospitalStaffDto>> GetByInstitutionListAsync(int hospitalId)
+    public async Task<PagedResultDto<HospitalStaffDto>> GetByHospitalListAsync(int hospitalId,bool? isActive=null)
     {
         //Get all entities
-        var query = (await _hospitalStaffRepository.GetQueryableAsync()).Where(s => s.HospitalId == hospitalId);
+        var query = (await _hospitalStaffRepository.GetQueryableAsync())
+            .Where(s => s.HospitalId == hospitalId)
+            .WhereIf(isActive.HasValue,
+                s => s.IsActive == isActive.Value);;
         var totalCount = await _hospitalStaffRepository.CountAsync();//item count
-
-        var staffList = await AsyncExecuter.ToListAsync(query);
-
-        Dictionary<Guid, IdentityUserDto> identityUsers = new Dictionary<Guid, IdentityUserDto>();
-        List<HospitalStaffDto> result = new List<HospitalStaffDto>();
-        foreach (var staff in staffList)
-        {
-            HospitalStaffDto staffDto = ObjectMapper.Map<HospitalStaff, HospitalStaffDto>(staff);
-            //Set user information
-            if (identityUsers.ContainsKey(staff.UserId))//Already exist
-            {
-                staffDto.User = identityUsers[staff.UserId];
-            }
-            else
-            {//Get creator from db
-                var user = ObjectMapper.Map<IdentityUser, IdentityUserDto>(await _userRepository.FindAsync(staff.UserId));
-                staffDto.User = user;
-                identityUsers.Add(staff.UserId, staffDto.User);
-            }
-            result.Add(staffDto);
-        }
-
-        return new PagedResultDto<HospitalStaffDto>(totalCount, result);
+        var responseList = ObjectMapper.Map<List<HospitalStaff>, List<HospitalStaffDto>>(await AsyncExecuter.ToListAsync(query));
+        return new PagedResultDto<HospitalStaffDto>(totalCount, responseList);
     }
 
     public async Task CreateAsync(SaveHospitalStaffDto hospitalStaff)

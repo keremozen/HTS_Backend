@@ -1,7 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using HTS.Data.Entity;
-using HTS.Dto.Language;
 using HTS.Dto.Nationality;
 using HTS.Interface;
 using Volo.Abp.Application.Dtos;
@@ -23,12 +23,13 @@ public class NationalityService : ApplicationService, INationalityService
         return ObjectMapper.Map<Nationality, NationalityDto>(await _nationalityRepository.GetAsync(id));
     }
 
-    public async Task<PagedResultDto<NationalityDto>> GetListAsync()
+    public async Task<PagedResultDto<NationalityDto>> GetListAsync(bool? isActive=null)
     {
-        //Get all entities
-        var responseList = ObjectMapper.Map<List<Nationality>, List<NationalityDto>>(await _nationalityRepository.GetListAsync());
+        var query = await _nationalityRepository.GetQueryableAsync();
+        query = query.WhereIf(isActive.HasValue,
+            n => n.IsActive == isActive.Value);
+        var responseList = ObjectMapper.Map<List<Nationality>, List<NationalityDto>>(await AsyncExecuter.ToListAsync(query));
         var totalCount = await _nationalityRepository.CountAsync();//item count
-        //TODO:Hopsy Ask Kerem the isActive case 
         return new PagedResultDto<NationalityDto>(totalCount,responseList);
     }
 

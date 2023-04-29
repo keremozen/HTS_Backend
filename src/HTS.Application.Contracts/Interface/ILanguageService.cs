@@ -1,13 +1,7 @@
-﻿using HTS.Dto;
-using HTS.Dto.City;
-using HTS.Dto.Language;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using HTS.Dto.Language;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
-using Volo.Abp.DependencyInjection;
 
 namespace HTS.Interface
 {
@@ -22,8 +16,9 @@ namespace HTS.Interface
         /// <summary>
         /// Get all languages
         /// </summary>
+        /// <param name="isActive">IsActive value of data. Default parameter with null value</param>
         /// <returns>Language list</returns>
-        Task<PagedResultDto<LanguageDto>> GetListAsync();
+        Task<PagedResultDto<LanguageDto>> GetListAsync(bool? isActive=null);
         /// <summary>
         /// Creates language
         /// </summary>

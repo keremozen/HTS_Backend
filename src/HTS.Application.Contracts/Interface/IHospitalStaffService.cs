@@ -8,11 +8,12 @@ namespace HTS.Interface
     public interface IHospitalStaffService : IApplicationService
     {
         /// <summary>
-        /// Get all hospital staffs by institution
+        /// Get all hospital staffs by hospital
         /// </summary>
         /// <param name="hospitalId">Hospital id to get staffs</param>
+        /// <param name="isActive">IsActive value of data. Default parameter with null value</param>
         /// <returns>Hospital staff list</returns>
-        Task<PagedResultDto<HospitalStaffDto>> GetByInstitutionListAsync(int hospitalId);
+        Task<PagedResultDto<HospitalStaffDto>> GetByHospitalListAsync(int hospitalId, bool? isActive = null);
         
         /// <summary>
         /// Creates hospital staff

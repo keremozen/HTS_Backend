@@ -1,9 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using HTS.Data.Entity;
-using HTS.Dto.Language;
-using HTS.Dto.Nationality;
-using HTS.Dto.Patient;
 using HTS.Dto.PatientAdmissionMethod;
 using HTS.Interface;
 using Volo.Abp.Application.Dtos;
@@ -25,12 +23,13 @@ public class PatientAdmissionMethodService : ApplicationService, IPatientAdmissi
         return ObjectMapper.Map<PatientAdmissionMethod, PatientAdmissionMethodDto>(await _patientAdmissionMethodRepository.GetAsync(id));
     }
 
-    public async Task<PagedResultDto<PatientAdmissionMethodDto>> GetListAsync()
+    public async Task<PagedResultDto<PatientAdmissionMethodDto>> GetListAsync(bool? isActive=null)
     {
-        //Get all entities
-        var responseList = ObjectMapper.Map<List<PatientAdmissionMethod>, List<PatientAdmissionMethodDto>>(await _patientAdmissionMethodRepository.GetListAsync());
+        var query = await _patientAdmissionMethodRepository.GetQueryableAsync();
+        query = query.WhereIf(isActive.HasValue,
+            b => b.IsActive == isActive.Value);
+        var responseList = ObjectMapper.Map<List<PatientAdmissionMethod>, List<PatientAdmissionMethodDto>>(await AsyncExecuter.ToListAsync(query));
         var totalCount = await _patientAdmissionMethodRepository.CountAsync();//item count
-        //TODO:Hopsy Ask Kerem the isActive case 
         return new PagedResultDto<PatientAdmissionMethodDto>(totalCount,responseList);
     }
 

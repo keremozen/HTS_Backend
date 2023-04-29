@@ -3,14 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using HTS.Data.Entity;
 using HTS.Dto.ContractedInstitution;
-using HTS.Dto.Language;
-using HTS.Dto.Nationality;
-using HTS.Dto.Patient;
 using HTS.Interface;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
-using Volo.Abp.ObjectMapping;
 
 namespace HTS.Service;
 
@@ -28,13 +24,14 @@ public class ContractedInstitutionService : ApplicationService, IContractedInsti
         return ObjectMapper.Map<ContractedInstitution, ContractedInstitutionDto>(await AsyncExecuter.FirstOrDefaultAsync(query));
     }
     
-    public async Task<PagedResultDto<ContractedInstitutionDto>> GetListAsync()
+    public async Task<PagedResultDto<ContractedInstitutionDto>> GetListAsync(bool? isActive=null)
     {
         //Get all entities
         var query = await _contractedInstitutionRepository.WithDetailsAsync();
+        query = query.WhereIf(isActive.HasValue,
+            i => i.IsActive == isActive.Value);
         var responseList = ObjectMapper.Map<List<ContractedInstitution>, List<ContractedInstitutionDto>>(await AsyncExecuter.ToListAsync(query));
         var totalCount = await _contractedInstitutionRepository.CountAsync();//item count
-        //TODO:Hopsy Ask Kerem the isActive case 
         return new PagedResultDto<ContractedInstitutionDto>(totalCount,responseList);
     }
 

@@ -16,8 +16,9 @@ namespace HTS.Interface
         /// <summary>
         /// Get all treatment types
         /// </summary>
+        /// <param name="isActive">IsActive value of data. Default parameter with null value</param>
         /// <returns>Treatment type list</returns>
-        Task<PagedResultDto<TreatmentTypeDto>> GetListAsync();
+        Task<PagedResultDto<TreatmentTypeDto>> GetListAsync(bool? isActive=null);
         /// <summary>
         /// Creates entity
         /// </summary>

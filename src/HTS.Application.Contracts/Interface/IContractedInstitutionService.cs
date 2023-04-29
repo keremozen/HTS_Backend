@@ -1,13 +1,6 @@
-﻿using HTS.Dto;
-using HTS.Dto.Language;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using HTS.Dto.Nationality;
+﻿using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
-using Volo.Abp.DependencyInjection;
 using HTS.Dto.ContractedInstitution;
 
 namespace HTS.Interface
@@ -23,8 +16,9 @@ namespace HTS.Interface
         /// <summary>
         /// Get all contracted institutions
         /// </summary>
+        /// <param name="isActive">IsActive value of data. Default parameter with null value</param>
         /// <returns>Contracted institution list</returns>
-        Task<PagedResultDto<ContractedInstitutionDto>> GetListAsync();
+        Task<PagedResultDto<ContractedInstitutionDto>> GetListAsync(bool? isActive=null);
         /// <summary>
         /// Creates contracted institution
         /// </summary>

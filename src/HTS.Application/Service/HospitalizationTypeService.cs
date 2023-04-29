@@ -1,8 +1,8 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using HTS.Data.Entity;
 using HTS.Dto.HospitalizationType;
-using HTS.Dto.HospitalStaff;
 using HTS.Interface;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
@@ -23,10 +23,13 @@ public class HospitalizationTypeService : ApplicationService, IHospitalizationTy
         return ObjectMapper.Map<HospitalizationType, HospitalizationTypeDto>(await _hospitalizationTypeRepository.GetAsync(id));
     }
 
-    public async Task<PagedResultDto<HospitalizationTypeDto>> GetListAsync()
+    public async Task<PagedResultDto<HospitalizationTypeDto>> GetListAsync(bool? isActive=null)
     {
         //Get all entities
-        var responseList = ObjectMapper.Map<List<HospitalizationType>, List<HospitalizationTypeDto>>(await _hospitalizationTypeRepository.GetListAsync());
+        var query = await _hospitalizationTypeRepository.GetQueryableAsync();
+        query = query.WhereIf(isActive.HasValue,
+            b => b.IsActive == isActive.Value);
+        var responseList = ObjectMapper.Map<List<HospitalizationType>, List<HospitalizationTypeDto>>(await AsyncExecuter.ToListAsync(query));
         var totalCount = await _hospitalizationTypeRepository.CountAsync();//item count
         return new PagedResultDto<HospitalizationTypeDto>(totalCount,responseList);
     }

@@ -3,8 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using HTS.Data.Entity;
 using HTS.Dto.Hospital;
-using HTS.Dto.Language;
-using HTS.Dto.Nationality;
 using HTS.Interface;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
@@ -26,13 +24,14 @@ public class HospitalService : ApplicationService, IHospitalService
         return ObjectMapper.Map<Hospital, HospitalDto>(await AsyncExecuter.FirstOrDefaultAsync(query));
     }
 
-    public async Task<PagedResultDto<HospitalDto>> GetListAsync()
+    public async Task<PagedResultDto<HospitalDto>> GetListAsync(bool? isActive=null)
     {
         //Get all entities
         var query = await _hospitalRepository.WithDetailsAsync();
+        query = query.WhereIf(isActive.HasValue,
+            b => b.IsActive == isActive.Value);
         var responseList = ObjectMapper.Map<List<Hospital>, List<HospitalDto>>(await AsyncExecuter.ToListAsync(query));
         var totalCount = await _hospitalRepository.CountAsync();//item count
-        //TODO:Hopsy Ask Kerem the isActive case 
         return new PagedResultDto<HospitalDto>(totalCount,responseList);
     }
 

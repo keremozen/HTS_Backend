@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using HTS.Data.Entity;
 using HTS.Dto.Language;
 using HTS.Interface;
 using System.Threading.Tasks;
-using HTS.Dto;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
-using HTS.Dto.City;
 
 namespace HTS.Service
 {
@@ -25,12 +24,13 @@ namespace HTS.Service
             return ObjectMapper.Map<Language, LanguageDto>(await _languageRepository.GetAsync(id));
         }
 
-        public async Task<PagedResultDto<LanguageDto>> GetListAsync()
+        public async Task<PagedResultDto<LanguageDto>> GetListAsync(bool? isActive=null)
         {
-            //Get all entities
-            var responseList = ObjectMapper.Map<List<Language>, List<LanguageDto>>(await _languageRepository.GetListAsync());
+            var query = await _languageRepository.GetQueryableAsync();
+            query = query.WhereIf(isActive.HasValue,
+                b => b.IsActive == isActive.Value);
+            var responseList = ObjectMapper.Map<List<Language>, List<LanguageDto>>(await AsyncExecuter.ToListAsync(query));
             var totalCount = await _languageRepository.CountAsync();//item count
-            //TODO:Hopsy Ask Kerem the isActive case 
             return new PagedResultDto<LanguageDto>(totalCount, responseList);
         }
 

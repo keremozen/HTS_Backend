@@ -1,9 +1,8 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using HTS.Data.Entity;
 using HTS.Dto.DocumentType;
-using HTS.Dto.Language;
-using HTS.Dto.Nationality;
 using HTS.Interface;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
@@ -24,12 +23,14 @@ public class DocumentTypeService : ApplicationService, IDocumentTypeService
         return ObjectMapper.Map<DocumentType, DocumentTypeDto>(await _documentTypeRepository.GetAsync(id));
     }
 
-    public async Task<PagedResultDto<DocumentTypeDto>> GetListAsync()
+    public async Task<PagedResultDto<DocumentTypeDto>> GetListAsync(bool? isActive=null)
     {
         //Get all entities
-        var responseList = ObjectMapper.Map<List<DocumentType>, List<DocumentTypeDto>>(await _documentTypeRepository.GetListAsync());
+        var query = await _documentTypeRepository.GetQueryableAsync();
+        query = query.WhereIf(isActive.HasValue,
+            d => d.IsActive == isActive.Value);
+        var responseList = ObjectMapper.Map<List<DocumentType>, List<DocumentTypeDto>>(await AsyncExecuter.ToListAsync(query));
         var totalCount = await _documentTypeRepository.CountAsync();//item count
-        //TODO:Hopsy Ask Kerem the isActive case 
         return new PagedResultDto<DocumentTypeDto>(totalCount,responseList);
     }
 

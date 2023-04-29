@@ -32,5 +32,10 @@ namespace HTS.Enum
             QuotationWaiting = 4,
             Discharged = 5
         }
+
+        public enum HospitalConsultationStatusEnum
+        {
+            HospitalResponseWaiting = 1
+        }
     }
 }

@@ -25,6 +25,7 @@ namespace HTS.Data
         public DbSet<Hospital> Hospitals { get; set; }
         public DbSet<HospitalStaff> HospitalStaffs { get; set; }
         public DbSet<HospitalConsultation> HospitalConsultations { get; set; }
+        public DbSet<HospitalConsultationDocument> HospitalConsultationDocuments { get; set; }
         public DbSet<HospitalConsultationStatus> HospitalConsultationStatuses { get; set; }
         public DbSet<Language> Languages { get; set; }
         public DbSet<Nationality> Nationalities { get; set; }     

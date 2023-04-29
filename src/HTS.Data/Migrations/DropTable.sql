@@ -2,6 +2,7 @@
 Drop Table "PatientDocuments";
 Drop Table  "PatientNotes";
 Drop Table  "SalesMethodAndCompanionInfos";
+Drop Table  "HospitalConsultationDocuments";
 Drop Table  "HospitalConsultationStatuses";
 Drop Table  "Hospitals";
 Drop Table  "DocumentTypes";

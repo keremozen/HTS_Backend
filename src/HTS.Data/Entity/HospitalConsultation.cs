@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Volo.Abp.Domain.Entities.Auditing;
 using Volo.Abp.Identity;
 
@@ -7,12 +8,20 @@ namespace HTS.Data.Entity
 
     public class HospitalConsultation : FullAuditedEntityWithUser<int, IdentityUser>
     {
+
         [Required]
         public string Note { get; set; }
         [Required]
-        public bool IsActive { get; set; }    
+        public int PatientTreatmentProcessId { get; set; }
+        [Required]
+        public int HospitalId { get; set; }
+        [Required]
+        public int HospitalConsultationStatusId { get; set; }
+        [ForeignKey("HospitalId")]
         public Hospital Hospital { get; set; }
+        [ForeignKey("HospitalConsultationStatusId")]
         public HospitalConsultationStatus HospitalConsultationStatus { get; set; }
+        [ForeignKey("PatientTreatmentProcessId")]
         public PatientTreatmentProcess PatientTreatmentProcess { get; set; }
 
     }

@@ -30,3 +30,6 @@ INSERT INTO "TreatmentProcessStatuses"("Id", "Name") VALUES (4, 'Operasyon Onayl
 --Cities Table
 INSERT INTO "Cities"("Name","CreationTime") VALUES ('Ankara','"2023-03-26 22:49:04.678786+03"');
 INSERT INTO "Cities"("Name","CreationTime") VALUES ('İstanbul','"2023-03-26 22:49:04.678786+03"');
+
+--Hospital Consultations Status
+INSERT INTO "HospitalConsultationStatuses"("Id", "Name") VALUES (1, 'Cevap Bekleniyor');

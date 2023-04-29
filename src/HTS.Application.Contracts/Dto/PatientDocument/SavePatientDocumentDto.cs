@@ -12,9 +12,8 @@ public class SavePatientDocumentDto
     public int PatientDocumentStatusId { get; set; }
     [Required]
     public string Description { get; set; }
-
     [Required, StringLength(100)]
     public string FileName { get; set; }
     [Required]
-    public string FilePath { get; set; }
+    public byte[] File { get; set; }
 }

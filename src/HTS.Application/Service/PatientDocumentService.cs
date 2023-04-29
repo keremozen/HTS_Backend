@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using HTS.BusinessException;
@@ -34,12 +35,19 @@ public class PatientDocumentService : ApplicationService, IPatientDocumentServic
         return new PagedResultDto<PatientDocumentDto>(totalCount, responseList);
     }
 
-    public async Task<PatientDocumentDto> CreateAsync(SavePatientDocumentDto patientNote)
+    public async Task<PatientDocumentDto> CreateAsync(SavePatientDocumentDto patientDocument)
     {
-        var entity = ObjectMapper.Map<SavePatientDocumentDto, PatientDocument>(patientNote);
+        var entity = ObjectMapper.Map<SavePatientDocumentDto, PatientDocument>(patientDocument);
         entity.PatientDocumentStatusId = PatientDocumentStatusEnum.NewRecord.GetHashCode();
+        entity.FilePath = "";
+        SaveByteArrayToFileWithStaticMethod(patientDocument.File, entity.FilePath);
         await _patientDocumentRepository.InsertAsync(entity);
         return ObjectMapper.Map<PatientDocument, PatientDocumentDto>(entity);
+    }
+
+    private static void SaveByteArrayToFileWithStaticMethod(byte[] data, string filePath)
+    {
+        File.WriteAllBytes(filePath, data);
     }
 
     public async Task<PatientDocumentDto> UpdateStatus(int id, int statusId)

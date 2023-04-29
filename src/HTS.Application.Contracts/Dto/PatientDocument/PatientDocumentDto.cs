@@ -9,9 +9,8 @@ public class PatientDocumentDto: AuditedEntityWithUserDto<int, IdentityUserDto>
 {
     public string Description { get; set; }
     public string FileName { get; set; }
-    public string FilePath { get; set; }
     public int PatientId { get; set; }
+    public byte[] File { get; set; }
     public DocumentTypeDto DocumentType { get; set; }
     public PatientDocumentStatusEnum PatientDocumentStatus { get; set; }
-
 }

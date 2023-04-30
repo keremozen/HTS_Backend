@@ -24,6 +24,7 @@ namespace HTS.Data.Entity
         public HospitalConsultation HospitalConsultation { get; set; }
 
         public virtual ICollection<HospitalResponseBranch> HospitalResponseBranches { get; set; }
+        public virtual ICollection<HospitalResponseProcess> HospitalResponseProcesses { get; set; }
      
     }
 }

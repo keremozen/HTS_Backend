@@ -66,6 +66,7 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<PatientNote, PatientNoteDto>();
         CreateMap<SavePatientNoteDto, PatientNote>();
         CreateMap<PatientNoteStatus, PatientNoteStatusDto>();
+        CreateMap<PatientDocument, HospitalConsultationDocumentDto>();
         CreateMap<PatientDocument, PatientDocumentDto>();
         CreateMap<SavePatientDocumentDto, PatientDocument>();
         CreateMap<PatientDocumentStatus, PatientDocumentStatusDto>();
@@ -94,5 +95,6 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<HospitalConsultationDocument, HospitalConsultationDocumentDto>();
         CreateMap<SaveHospitalConsultationDocumentDto, HospitalConsultationDocument>();
         CreateMap<HospitalConsultationStatus, HospitalConsultationStatusDto>();
+       
     }
 }

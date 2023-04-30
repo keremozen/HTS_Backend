@@ -37,5 +37,12 @@ namespace HTS.Enum
         {
             HospitalResponseWaiting = 1
         }
+        
+        public enum HospitalResponseTypeEnum
+        {
+            SuitableForTreatment = 1,
+            NotSuitableForTreatment = 2 ,
+            ExaminationsIsRequiredForDiagnosis = 3
+        }
     }
 }

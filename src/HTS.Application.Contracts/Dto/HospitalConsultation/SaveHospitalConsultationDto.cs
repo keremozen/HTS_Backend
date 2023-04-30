@@ -11,6 +11,6 @@ public class SaveHospitalConsultationDto
     [Required]
     public int PatientTreatmentProcessId { get; set; }
     [Required]
-    public int HospitalId { get; set; }
+    public List<int> HospitalIds { get; set; }
     public List<SaveHospitalConsultationDocumentDto> HospitalConsultationDocuments { get; set; }
 }

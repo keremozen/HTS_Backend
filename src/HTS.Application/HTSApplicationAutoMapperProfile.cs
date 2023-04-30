@@ -8,6 +8,9 @@ using HTS.Dto.ContractedInstitutionStaff;
 using HTS.Dto.DocumentType;
 using HTS.Dto.Gender;
 using HTS.Dto.Hospital;
+using HTS.Dto.HospitalConsultation;
+using HTS.Dto.HospitalConsultationDocument;
+using HTS.Dto.HospitalConsultationStatus;
 using HTS.Dto.HospitalizationType;
 using HTS.Dto.HospitalResponse;
 using HTS.Dto.HospitalStaff;
@@ -85,5 +88,11 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<SaveProcessCostDto, Process>();
         CreateMap<ProcessRelation, ProcessRelationDto>();
         CreateMap<SaveProcessRelationDto, ProcessRelation>();
+        
+        CreateMap<HospitalConsultation, HospitalConsultationDto>();
+        CreateMap<SaveHospitalConsultationDto, HospitalConsultation>();
+        CreateMap<HospitalConsultationDocument, HospitalConsultationDocumentDto>();
+        CreateMap<SaveHospitalConsultationDocumentDto, HospitalConsultationDocument>();
+        CreateMap<HospitalConsultationStatus, HospitalConsultationStatusDto>();
     }
 }

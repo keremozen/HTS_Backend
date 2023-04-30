@@ -23,6 +23,7 @@ namespace HTS.Data.Entity
         public HospitalConsultationStatus HospitalConsultationStatus { get; set; }
         [ForeignKey("PatientTreatmentProcessId")]
         public PatientTreatmentProcess PatientTreatmentProcess { get; set; }
+        public virtual ICollection<HospitalConsultationDocument> HospitalConsultationDocuments { get; set; }
 
     }
 }

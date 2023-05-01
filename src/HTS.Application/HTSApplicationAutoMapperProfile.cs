@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using HTS.Data.Entity;
-using HTS.Dto;
 using HTS.Dto.Branch;
 using HTS.Dto.City;
 using HTS.Dto.ContractedInstitution;
@@ -13,6 +12,8 @@ using HTS.Dto.HospitalConsultationDocument;
 using HTS.Dto.HospitalConsultationStatus;
 using HTS.Dto.HospitalizationType;
 using HTS.Dto.HospitalResponse;
+using HTS.Dto.HospitalResponseBranch;
+using HTS.Dto.HospitalResponseProcess;
 using HTS.Dto.HospitalResponseType;
 using HTS.Dto.HospitalStaff;
 using HTS.Dto.Language;
@@ -53,9 +54,7 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<TreatmentProcessStatus, TreatmentProcessStatusDto>();
         CreateMap<HospitalizationType, HospitalizationTypeDto>();
         CreateMap<SaveHospitalizationTypeDto, HospitalizationType>();
-        CreateMap<HospitalResponse, HospitalResponseDto>();
-        CreateMap<SaveHospitalResponseDto, HospitalResponse>();
-        CreateMap<HospitalResponseType, HospitalResponseTypeDto>();
+     
         CreateMap<Branch, BranchDto>();
         CreateMap<SaveBranchDto, Branch>();
         CreateMap<ProcessType, ProcessTypeDto>();
@@ -97,6 +96,15 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<HospitalConsultationDocument, HospitalConsultationDocumentDto>();
         CreateMap<SaveHospitalConsultationDocumentDto, HospitalConsultationDocument>();
         CreateMap<HospitalConsultationStatus, HospitalConsultationStatusDto>();
-       
+        
+        CreateMap<HospitalResponse, HospitalResponseDto>();
+        CreateMap<SaveHospitalResponseDto, HospitalResponse>();
+        CreateMap<HospitalResponseType, HospitalResponseTypeDto>();
+        CreateMap<HospitalResponseBranch, HospitalResponseBranchDto>();
+        CreateMap<SaveHospitalResponseBranchDto, HospitalResponseBranch>();
+        CreateMap<HospitalResponseProcess, HospitalResponseProcessDto>();
+        CreateMap<SaveHospitalResponseProcessDto, HospitalResponseProcess>();
+        
+
     }
 }

@@ -364,7 +364,22 @@
     "HospitalResponse:Process:Column:Description": "İşlem Açıklama",
     "HospitalResponse:Process:Column:Amount": "Adet",
     "HospitalResponse:Supply:Column:Name": "Malzeme Adı",
-    "HospitalResponse:Supply:Column:Amount": "Adet"
+    "HospitalResponse:Supply:Column:Amount": "Adet",
+
+    /*OPERATIONAL INFO*/
+    "OperationalInfo:NewOperation": "Yeni Operasyon",
+    "OperationalInfo:Column:TreatmentCode": "Tedavi Kodu",
+    "OperationalInfo:Column:OperationOrderNo": "Operasyon Sıra No",
+    "OperationalInfo:Column:Hospital": "Hastane",
+    "OperationalInfo:Column:Creator": "Ekleyen",
+    "OperationalInfo:Column:CreationTime": "Eklenme Tarihi",
+    "OperationalInfo:Column:OperationType": "Operasyon Tipi",
+    "OperationalInfo:Column:Status": "Durum",
+    "OperationalInfo:Column:DetailsAndActions": "Detaylar ve İşlemler",
+
+    /*QUOTATION*/
+    "Quotation:FieldLegend:HBYSProcesses": "HBYS İşlemleri",
+    "Quotation:FieldLegend:Quotation": "Fiyatlandırma"
 
   }
 }

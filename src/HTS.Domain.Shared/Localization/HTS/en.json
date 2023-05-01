@@ -364,6 +364,21 @@
     "HospitalResponse:Process:Column:Description": "Process Description",
     "HospitalResponse:Process:Column:Amount": "Amount",
     "HospitalResponse:Supply:Column:Name": "Supply Name",
-    "HospitalResponse:Supply:Column:Amount": "Amount"
+    "HospitalResponse:Supply:Column:Amount": "Amount",
+
+    /*OPERATIONAL INFO*/
+    "OperationalInfo:NewOperation": "New Operation",
+    "OperationalInfo:Column:TreatmentCode": "Treatment Code",
+    "OperationalInfo:Column:OperationOrderNo": "Operation Order No",
+    "OperationalInfo:Column:Hospital": "Hospital",
+    "OperationalInfo:Column:Creator": "Creator",
+    "OperationalInfo:Column:CreationTime": "Creation Time",
+    "OperationalInfo:Column:OperationType": "Operation Type",
+    "OperationalInfo:Column:Status": "Status",
+    "OperationalInfo:Column:DetailsAndActions": "Details and Actions",
+
+    /*QUOTATION*/
+    "Quotation:FieldLegend:HBYSProcesses": "HBYS Processes",
+    "Quotation:FieldLegend:Quotation": "Quotation"
   }
 }

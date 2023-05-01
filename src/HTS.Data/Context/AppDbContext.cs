@@ -46,6 +46,7 @@ namespace HTS.Data
 
         public DbSet<ProcessRelation> IncluedingProcesses { get; set; }
         public DbSet<Branch> Branches { get; set; }
+        public DbSet<Material> Materials { get; set; }
         public DbSet<Process> Processes { get; set; }
         public DbSet<ProcessCost> ProcessCosts { get; set; }
         public DbSet<ProcessType> ProcessTypes { get; set; }

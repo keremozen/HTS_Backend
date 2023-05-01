@@ -17,6 +17,7 @@ using HTS.Dto.HospitalResponseProcess;
 using HTS.Dto.HospitalResponseType;
 using HTS.Dto.HospitalStaff;
 using HTS.Dto.Language;
+using HTS.Dto.Material;
 using HTS.Dto.Nationality;
 using HTS.Dto.Patient;
 using HTS.Dto.PatientAdmissionMethod;
@@ -61,6 +62,8 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<SaveProcessTypeDto, ProcessType>();
         CreateMap<TreatmentType, TreatmentTypeDto>();
         CreateMap<SaveTreatmentTypeDto, TreatmentType>();
+        CreateMap<Material, MaterialDto>();
+        CreateMap<SaveMaterialDto, Material>();
         
         CreateMap<Patient, PatientDto>();
         CreateMap<SavePatientDto, Patient>();

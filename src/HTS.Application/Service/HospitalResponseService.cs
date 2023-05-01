@@ -26,8 +26,6 @@ public class HospitalResponseService : ApplicationService, IHospitalResponseServ
     public async Task<PagedResultDto<HospitalResponseDto>> GetListAsync(bool? isActive=null)
     {
         var query = await _hospitalResponseRepository.GetQueryableAsync();
-        query = query.WhereIf(isActive.HasValue,
-            b => b.IsActive == isActive.Value);
         var responseList = ObjectMapper.Map<List<HospitalResponse>, List<HospitalResponseDto>>(await AsyncExecuter.ToListAsync(query));
         var totalCount = await _hospitalResponseRepository.CountAsync();//item count
         return new PagedResultDto<HospitalResponseDto>(totalCount,responseList);

@@ -21,9 +21,9 @@ namespace HTS.Data
 
             Configure<AbpEntityOptions>(options =>
             {
-                options.Entity<Patient>(orderOptions =>
+                options.Entity<Patient>(entityOptions =>
                 {
-                 orderOptions.DefaultWithDetailsFunc = query => query.Include(o => o.Nationality)
+                 entityOptions.DefaultWithDetailsFunc = query => query.Include(o => o.Nationality)
                                                                      .Include(p => p.PhoneCountryCode)
                                                                      .Include(p => p.Gender)
                                                                      .Include(p => p.MotherTongue)
@@ -34,27 +34,27 @@ namespace HTS.Data
                                                                      .ThenInclude(t => t.TreatmentProcessStatus);
                 });
 
-                options.Entity<PatientTreatmentProcess>(orderOptions => 
+                options.Entity<PatientTreatmentProcess>(entityOptions => 
                 {
-                     orderOptions.DefaultWithDetailsFunc = query => query.Include(t => t.Creator)
+                     entityOptions.DefaultWithDetailsFunc = query => query.Include(t => t.Creator)
                                                                          .Include(t => t.TreatmentProcessStatus);
                 });
 
-                options.Entity<ContractedInstitution>(orderOptions =>
+                options.Entity<ContractedInstitution>(entityOptions =>
                 {
-                    orderOptions.DefaultWithDetailsFunc = query => query.Include(i => i.Nationality)
+                    entityOptions.DefaultWithDetailsFunc = query => query.Include(i => i.Nationality)
                                                                         .Include(i => i.PhoneCountryCode)
                                                                         .Include(i => i.ContractedInstitutionStaffs);
                 });
 
-                options.Entity<ContractedInstitutionStaff>(orderOptions =>
+                options.Entity<ContractedInstitutionStaff>(entityOptions =>
                 {
-                    orderOptions.DefaultWithDetailsFunc = query => query.Include(s => s.PhoneCountryCode);
+                    entityOptions.DefaultWithDetailsFunc = query => query.Include(s => s.PhoneCountryCode);
                 });
 
-                options.Entity<Hospital>(orderOptions =>
+                options.Entity<Hospital>(entityOptions =>
                 {
-                    orderOptions.DefaultWithDetailsFunc = query => query.Include(o => o.City)
+                    entityOptions.DefaultWithDetailsFunc = query => query.Include(o => o.City)
                                                                         .Include(p => p.PhoneCountryCode)
                                                                         .Include(h => h.HospitalStaffs)
                                                                         .ThenInclude(s => s.User);
@@ -65,9 +65,15 @@ namespace HTS.Data
                     entityOptions.DefaultWithDetailsFunc = query => query.Include(s => s.User);
                 });
 
-                options.Entity<Process>(orderOptions =>
+                options.Entity<Process>(entityOptions =>
                 {
-                    orderOptions.DefaultWithDetailsFunc = query => query.Include(p => p.ProcessType);
+                    entityOptions.DefaultWithDetailsFunc = query => query.Include(p => p.ProcessType);
+                });
+                
+                options.Entity<HospitalConsultation>(entityOptions => 
+                {
+                    entityOptions.DefaultWithDetailsFunc = query => query.Include(hc => hc.Creator)
+                        .Include(hc => hc.HospitalConsultationStatus);
                 });
 
             });

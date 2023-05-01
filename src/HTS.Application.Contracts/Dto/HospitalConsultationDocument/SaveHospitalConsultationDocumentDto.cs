@@ -13,4 +13,6 @@ public class SaveHospitalConsultationDocumentDto
     public string Description { get; set; }
     [Required, StringLength(100)]
     public string FileName { get; set; }
+    [Required]
+    public byte[] File { get; set; }
 }

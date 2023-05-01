@@ -13,6 +13,7 @@ using HTS.Dto.HospitalConsultationStatus;
 using HTS.Dto.HospitalizationType;
 using HTS.Dto.HospitalResponse;
 using HTS.Dto.HospitalResponseBranch;
+using HTS.Dto.HospitalResponseMaterial;
 using HTS.Dto.HospitalResponseProcess;
 using HTS.Dto.HospitalResponseType;
 using HTS.Dto.HospitalStaff;
@@ -107,6 +108,8 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<SaveHospitalResponseBranchDto, HospitalResponseBranch>();
         CreateMap<HospitalResponseProcess, HospitalResponseProcessDto>();
         CreateMap<SaveHospitalResponseProcessDto, HospitalResponseProcess>();
+        CreateMap<HospitalResponseMaterial, HospitalResponseMaterialDto>();
+        CreateMap<SaveHospitalResponseMaterialDto, HospitalResponseMaterial>();
         
 
     }

@@ -44,6 +44,7 @@ public class HospitalResponseService : ApplicationService, IHospitalResponseServ
             hospitalResponse.PossibleTreatmentDate = null;
             hospitalResponse.HospitalResponseBranches = null;
             hospitalResponse.HospitalResponseProcesses = null;
+            hospitalResponse.HospitalResponseMaterials = null;
         }
         await _hospitalResponseRepository.InsertAsync(entity);
     }
@@ -74,6 +75,7 @@ public class HospitalResponseService : ApplicationService, IHospitalResponseServ
         {
             if (!(hospitalResponse.HospitalResponseBranches?.Any() ?? false)
                  ||  !(hospitalResponse.HospitalResponseProcesses?.Any() ?? false)
+                 ||  !(hospitalResponse.HospitalResponseMaterials?.Any() ?? false)
                 || hospitalResponse.PossibleTreatmentDate == DateTime.MinValue
                 || hospitalResponse.PossibleTreatmentDate == null
                 || hospitalResponse.HospitalizationNumber == null)

@@ -12,7 +12,7 @@ public class HospitalConsultationDocumentDto: AuditedEntityWithUserDto<int, Iden
     public int PatientDocumentStatusId { get; set; }
     public string Description { get; set; }
     public string FileName { get; set; }
-    public byte[] File { get; set; }
+    public string File { get; set; }
     public DocumentTypeDto DocumentType { get; set; }
     public EntityEnum.PatientDocumentStatusEnum PatientDocumentStatus { get; set; }
     

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -45,9 +46,9 @@ public class PatientDocumentService : ApplicationService, IPatientDocumentServic
         return ObjectMapper.Map<PatientDocument, PatientDocumentDto>(entity);
     }
 
-    private static void SaveByteArrayToFileWithStaticMethod(byte[] data, string filePath)
+    private static void SaveByteArrayToFileWithStaticMethod(string data, string filePath)
     {
-        File.WriteAllBytes(filePath, data);
+        File.WriteAllBytes(filePath, Convert.FromBase64String(data));
     }
 
     public async Task<PatientDocumentDto> UpdateStatus(int id, int statusId)

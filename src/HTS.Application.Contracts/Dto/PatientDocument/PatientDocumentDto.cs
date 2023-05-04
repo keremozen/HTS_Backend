@@ -1,3 +1,4 @@
+using System.Buffers.Text;
 using HTS.Dto.DocumentType;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Identity;
@@ -10,7 +11,7 @@ public class PatientDocumentDto: AuditedEntityWithUserDto<int, IdentityUserDto>
     public string Description { get; set; }
     public string FileName { get; set; }
     public int PatientId { get; set; }
-    public byte[] File { get; set; }
+    public string File { get; set; }
     public DocumentTypeDto DocumentType { get; set; }
     public PatientDocumentStatusEnum PatientDocumentStatus { get; set; }
 }

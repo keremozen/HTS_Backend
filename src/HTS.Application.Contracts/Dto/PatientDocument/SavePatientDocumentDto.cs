@@ -15,5 +15,5 @@ public class SavePatientDocumentDto
     [Required, StringLength(100)]
     public string FileName { get; set; }
     [Required]
-    public byte[] File { get; set; }
+    public string File { get; set; }
 }

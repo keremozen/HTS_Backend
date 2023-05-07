@@ -34,7 +34,12 @@ INSERT INTO "Cities"("Name","CreationTime") VALUES ('İstanbul','"2023-03-26 22:
 --Hospital Consultations Status
 INSERT INTO "HospitalConsultationStatuses"("Id", "Name") VALUES (1, 'Cevap Bekleniyor');
 
---Hospital response tye Table
+--Hospital response type Table
 INSERT INTO "HospitalResponseTypes"("Id", "Name") VALUES (1, 'Tedaviye Uygundur');
 INSERT INTO "HospitalResponseTypes"("Id", "Name") VALUES (2, 'Tedaviye Uygun Değildir');
 INSERT INTO "HospitalResponseTypes"("Id", "Name") VALUES (3, 'Tanı İçin Muayene Gerekli');
+
+--Hospitalization type Table
+INSERT INTO "HospitalizationTypes"("Id", "Name") VALUES (1, 'Medikal Tedavi');
+INSERT INTO "HospitalizationTypes"("Id", "Name") VALUES (2, 'Yatış');
+INSERT INTO "HospitalizationTypes"("Id", "Name") VALUES (3, 'Cerrahi Yatış');

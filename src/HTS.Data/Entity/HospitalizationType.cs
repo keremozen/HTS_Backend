@@ -1,16 +1,18 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Volo.Abp.Domain.Entities.Auditing;
-using Volo.Abp.Identity;
+using System.ComponentModel.DataAnnotations.Schema;
+using Volo.Abp.Domain.Entities;
 
 namespace HTS.Data.Entity
 {
-
-    public class HospitalizationType : FullAuditedEntityWithUser<int, IdentityUser>
+    public class HospitalizationType : IEntity<int>
     {
-        [Required]
+        [Key, Required, DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int Id { get; set; }
+        [Required, StringLength(50)]
         public string Name { get; set; }
-        [Required]
-        public bool IsActive { get; set; }
-     
+        public object[] GetKeys()
+        {
+            return new object[] { Id };
+        }
     }
 }

@@ -55,7 +55,6 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<SaveDocumentTypeDto, DocumentType>();
         CreateMap<TreatmentProcessStatus, TreatmentProcessStatusDto>();
         CreateMap<HospitalizationType, HospitalizationTypeDto>();
-        CreateMap<SaveHospitalizationTypeDto, HospitalizationType>();
      
         CreateMap<Branch, BranchDto>();
         CreateMap<SaveBranchDto, Branch>();

@@ -44,5 +44,12 @@ namespace HTS.Enum
             NotSuitableForTreatment = 2 ,
             ExaminationsIsRequiredForDiagnosis = 3
         }
+
+        public enum HospitalizationTypeEnum
+        {
+            MedicalTreatment = 1,
+            Hospitalization = 2,
+            SurgicalHospitalization = 3
+        }
     }
 }

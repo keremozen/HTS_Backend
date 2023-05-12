@@ -9,8 +9,6 @@ public class SavePatientDocumentDto
     [Required]
     public int DocumentTypeId { get; set; }
     [Required]
-    public int PatientDocumentStatusId { get; set; }
-    [Required]
     public string Description { get; set; }
     [Required, StringLength(100)]
     public string FileName { get; set; }

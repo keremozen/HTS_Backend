@@ -70,7 +70,7 @@ public class HospitalStaffService : ApplicationService, IHospitalStaffService
     {
 
         if (!id.HasValue //Insert
-            && (await _hospitalStaffRepository.GetQueryableAsync()).Any(s => s.UserId == hospitalStaff.UserId))
+            && (await _hospitalStaffRepository.GetQueryableAsync()).Any(s => s.UserId == hospitalStaff.UserId && s.HospitalId == hospitalStaff.HospitalId))
         {//UserId already added
             throw new HTSBusinessException(ErrorCode.StaffAlreadyExist);
         }
@@ -78,7 +78,8 @@ public class HospitalStaffService : ApplicationService, IHospitalStaffService
         {
             if ((await _hospitalStaffRepository.GetQueryableAsync()).Any(s => s.IsActive
                                                                              && s.IsDefault
-                                                                             && (!id.HasValue || s.Id != id)))
+                                                                             && (!id.HasValue || s.Id != id)
+                                                                             && s.HospitalId == hospitalStaff.HospitalId))
             {//There is already default staff in db
                 throw new HTSBusinessException(ErrorCode.DefaultStaffAlreadyExist);
             }

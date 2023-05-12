@@ -50,6 +50,7 @@
     "Message:SuccessfulRevokation": "{0} is successfully revoked.",
     "Message:SuccessfulMultipleRevokation": "{0} are successfully revoked.",
     "Message:WrongEmailFormat": "Incorrect mail format",
+    "Message:ImportDocumentConfirmation": "Are you sure you want to remove existing documents and import patient documents?",
 
     /*PERMISSIONS*/
     "Permission:Management": "Management",
@@ -64,8 +65,9 @@
     "Permission:TreatmentTypeManagement": "Treatment Type Management",
     "Permission:ProcessTypeManagement": "Process Type Management",
     "Permission:HospitalizationTypeManagement": "Hospitalization Type Management",
-    "Permission:HospitalResponseManagement": "Hospital Response Management",
+    "Permission:HospitalResponseTypeManagement": "Hospital Response Management",
     "Permission:ProcessManagement": "Process Management",
+    "Permission:MaterialManagement": "Material Management",
     "Permission:Patient": "Patient",
     "Permission:PatientAccess": "Access Patient Page",
     "Permission:PatientList": "List Patient",
@@ -91,8 +93,9 @@
     "Menu:Admin:TreatmentType": "Treatment Type Management",
     "Menu:Admin:ProcessType": "Process Type Management",
     "Menu:Admin:HospitalizationType": "Hospitalization Type Management",
-    "Menu:Admin:HospitalResponse": "Hospital Response Management",
+    "Menu:Admin:HospitalResponseType": "Hospital Response Management",
     "Menu:Admin:Process": "Process Type Management",
+    "Menu:Admin:Material": "Material Management",
 
     /*HOSPITAL MANAGEMENT*/
     "Admin:Hospital:Name": "Hospital",
@@ -224,14 +227,14 @@
     "Admin:HospitalizationType:Column:IsActive": "Is Active?",
     "Admin:HospitalizationType:HospitalizationTypeDetails": "Hospitalization Type Details",
 
-    /*HOSPITAL RESPONSE MANAGEMENT*/
-    "Admin:HospitalResponse:Name": "Hospital Response",
-    "Admin:HospitalResponse:HospitalResponseManagement": "Hospital Response Management",
-    "Admin:HospitalResponse:NewHospitalResponse": "New Hospital Response",
-    "Admin:HospitalResponse:Column:Response": "Resposne",
-    "Admin:HospitalResponse:Column:IsAssessable": "Is Assessable?",
-    "Admin:HospitalResponse:Column:IsActive": "Is Active?",
-    "Admin:HospitalResponse:HospitalResponseDetails": "Hospital Response Details",
+    /*HOSPITAL RESPONSE TYPE MANAGEMENT*/
+    "Admin:HospitalResponseType:Name": "Hospital Response",
+    "Admin:HospitalResponseType:HospitalResponseTypeManagement": "Hospital Response Management",
+    "Admin:HospitalResponseType:NewHospitalResponseType": "New Hospital Response",
+    "Admin:HospitalResponseType:Column:Response": "Resposne",
+    "Admin:HospitalResponseType:Column:IsAssessable": "Is Assessable?",
+    "Admin:HospitalResponseType:Column:IsActive": "Is Active?",
+    "Admin:HospitalResponseType:HospitalResponseTypeDetails": "Hospital Response Details",
 
     /*PROCESS MANAGEMENT*/
     "Admin:Process:Name": "Process",
@@ -251,6 +254,14 @@
     "Admin:Process:ProcessCost:Column:UshasCost": "USHAŞ Cost",
     "Admin:Process:ProcessRelation:Title": "Included Processes",
     "Admin:Process:ProcessRelation:NewRelation": "New",
+
+    /*MATERIAL MANAGEMENT*/
+    "Admin:Material:Name": "Material",
+    "Admin:Material:MaterialManagement": "Material Management",
+    "Admin:Material:NewMaterial": "New Material",
+    "Admin:Material:Column:Name": "Name",
+    "Admin:Material:Column:IsActive": "Is Active?",
+    "Admin:Material:MaterialDetails": "Material Details",
 
     /*PATIENTS*/
     "Patients:Title": "Patients",

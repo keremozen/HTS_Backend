@@ -23,21 +23,21 @@ namespace HTS.Data
             {
                 options.Entity<Patient>(entityOptions =>
                 {
-                 entityOptions.DefaultWithDetailsFunc = query => query.Include(o => o.Nationality)
-                                                                     .Include(p => p.PhoneCountryCode)
-                                                                     .Include(p => p.Gender)
-                                                                     .Include(p => p.MotherTongue)
-                                                                     .Include(p => p.SecondTongue)
-                                                                     .Include(p => p.Creator)
-                                                                     .Include(p => p.LastModifier)
-                                                                     .Include(p => p.PatientTreatmentProcesses)
-                                                                     .ThenInclude(t => t.TreatmentProcessStatus);
+                    entityOptions.DefaultWithDetailsFunc = query => query.Include(o => o.Nationality)
+                                                                        .Include(p => p.PhoneCountryCode)
+                                                                        .Include(p => p.Gender)
+                                                                        .Include(p => p.MotherTongue)
+                                                                        .Include(p => p.SecondTongue)
+                                                                        .Include(p => p.Creator)
+                                                                        .Include(p => p.LastModifier)
+                                                                        .Include(p => p.PatientTreatmentProcesses)
+                                                                        .ThenInclude(t => t.TreatmentProcessStatus);
                 });
 
-                options.Entity<PatientTreatmentProcess>(entityOptions => 
+                options.Entity<PatientTreatmentProcess>(entityOptions =>
                 {
-                     entityOptions.DefaultWithDetailsFunc = query => query.Include(t => t.Creator)
-                                                                         .Include(t => t.TreatmentProcessStatus);
+                    entityOptions.DefaultWithDetailsFunc = query => query.Include(t => t.Creator)
+                                                                        .Include(t => t.TreatmentProcessStatus);
                 });
 
                 options.Entity<ContractedInstitution>(entityOptions =>
@@ -59,9 +59,9 @@ namespace HTS.Data
                                                                         .Include(h => h.HospitalStaffs)
                                                                         .ThenInclude(s => s.User);
                 });
-                
-                options.Entity<HospitalStaff>( entityOptions =>
-                { 
+
+                options.Entity<HospitalStaff>(entityOptions =>
+                {
                     entityOptions.DefaultWithDetailsFunc = query => query.Include(s => s.User);
                 });
 
@@ -69,14 +69,14 @@ namespace HTS.Data
                 {
                     entityOptions.DefaultWithDetailsFunc = query => query.Include(p => p.ProcessType);
                 });
-                
-                options.Entity<HospitalConsultation>(entityOptions => 
+
+                options.Entity<HospitalConsultation>(entityOptions =>
                 {
                     entityOptions.DefaultWithDetailsFunc = query => query.Include(hc => hc.Creator)
                         .Include(hc => hc.HospitalConsultationStatus);
                 });
-                
-                options.Entity<HospitalResponse>(entityOptions => 
+
+                options.Entity<HospitalResponse>(entityOptions =>
                 {
                     entityOptions.DefaultWithDetailsFunc = query => query.Include(hr => hr.HospitalResponseBranches)
                         .Include(hr => hr.HospitalResponseProcesses)

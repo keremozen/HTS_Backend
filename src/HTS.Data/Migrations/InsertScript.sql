@@ -21,6 +21,10 @@ INSERT INTO "DocumentTypes"("Name", "Description", "IsActive", "CreationTime") V
 INSERT INTO "PatientNoteStatuses"("Id", "Name") VALUES (1, 'Yeni Kayıt');
 INSERT INTO "PatientNoteStatuses"("Id", "Name") VALUES (2, 'İptal');
 
+--Patient Document Status
+INSERT INTO "PatientDocumentStatuses"("Id", "Name") VALUES (1, 'Yeni Kayıt');
+INSERT INTO "PatientDcoumentStatuses"("Id", "Name") VALUES (2, 'İptal');
+
 --Treatment Process Status
 INSERT INTO "TreatmentProcessStatuses"("Id", "Name") VALUES (1, 'Yeni Kayıt');
 INSERT INTO "TreatmentProcessStatuses"("Id", "Name") VALUES (2, 'Hastanelere Danışıldı - Cevap Bekleniyor');

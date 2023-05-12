@@ -22,8 +22,9 @@ public class HTSPermissionDefinitionProvider : PermissionDefinitionProvider
         managementPermission.AddChild(HTSPermissions.TreatmentTypeManagement, L("Permission:TreatmentTypeManagement"));
         managementPermission.AddChild(HTSPermissions.ProcessTypeManagement, L("Permission:ProcessTypeManagement"));
         managementPermission.AddChild(HTSPermissions.HospitalizationTypeManagement, L("Permission:HospitalizationTypeManagement"));
-        managementPermission.AddChild(HTSPermissions.HospitalResponseManagement, L("Permission:HospitalResponseManagement"));
+        managementPermission.AddChild(HTSPermissions.HospitalResponseTypeManagement, L("Permission:HospitalResponseTypeManagement"));
         managementPermission.AddChild(HTSPermissions.ProcessManagement, L("Permission:ProcessManagement"));
+        managementPermission.AddChild(HTSPermissions.MaterialManagement, L("Permission:MaterialManagement"));
 
         var patientPermission = htsGroup.AddPermission(HTSPermissions.Patient, L("Permission:Patient"));
         var patientAccessPermission = patientPermission.AddChild(HTSPermissions.PatientAccess, L("Permission:PatientAccess"));

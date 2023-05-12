@@ -16,10 +16,11 @@ public static class HTSPermissions
     public const string TreatmentTypeManagement = GroupName + ".TreatmentTypeManagement";
     public const string ProcessTypeManagement = GroupName + ".ProcessTypeManagement";
     public const string HospitalizationTypeManagement = GroupName + ".HospitalizationTypeManagement";
-    public const string HospitalResponseManagement = GroupName + ".HospitalResponseManagement";
+    public const string HospitalResponseTypeManagement = GroupName + ".HospitalResponseTypeManagement";
     public const string ProcessManagement = GroupName + ".ProcessManagement";
     public const string ProcessRelationManagement = GroupName + ".ProcessRelationManagement";
     public const string ProcessCostManagement = GroupName + ".ProcessCostManagement";
+    public const string MaterialManagement = GroupName + ".MaterialManagement";
 
     public const string Patient = GroupName + ".Patient";
     public const string PatientAccess = GroupName + ".PatientAccess";

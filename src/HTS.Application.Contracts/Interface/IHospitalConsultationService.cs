@@ -10,11 +10,19 @@ using HTS.Dto.Nationality;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.DependencyInjection;
+using HTS.Dto.Patient;
 
 namespace HTS.Interface
 {
     public interface IHospitalConsultationService : IApplicationService
     {
+        /// <summary>
+        /// Get hospital consultation by id
+        /// </summary>
+        /// <param name="id">Desired hospital consultation id</param>
+        /// <returns>Desired hospital consultation</returns>
+        Task<HospitalConsultationDto> GetAsync(int id);
+
         /// <summary>
         /// Get entity list by patient treatment process
         /// </summary>

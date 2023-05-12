@@ -9,6 +9,6 @@ namespace HTS.Dto.HospitalResponseProcess
         [Required]
         public int ProcessId { get; set; }
         [Required]
-        public int Count { get; set; }
+        public int Amount { get; set; }
     }
 }

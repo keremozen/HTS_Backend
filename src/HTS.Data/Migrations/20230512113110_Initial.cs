@@ -1529,7 +1529,8 @@ namespace HTS.Data.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     HospitalResponseId = table.Column<int>(type: "integer", nullable: false),
-                    MaterialId = table.Column<int>(type: "integer", nullable: false)
+                    MaterialId = table.Column<int>(type: "integer", nullable: false),
+                    Amount = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1556,7 +1557,7 @@ namespace HTS.Data.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     HospitalResponseId = table.Column<int>(type: "integer", nullable: false),
                     ProcessId = table.Column<int>(type: "integer", nullable: false),
-                    Count = table.Column<int>(type: "integer", nullable: false)
+                    Amount = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {

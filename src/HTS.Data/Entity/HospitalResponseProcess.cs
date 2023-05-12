@@ -13,13 +13,10 @@ namespace HTS.Data.Entity
         public int HospitalResponseId { get; set; }
         [Required]
         public int ProcessId { get; set; }
-
         [Required]
-        public int Count { get; set; }
-
+        public int Amount { get; set; }
         [ForeignKey("HospitalResponseId")]
         public HospitalResponse HospitalResponse { get; set; }
-
         [ForeignKey("ProcessId")]
         public Process Process { get; set; }
      

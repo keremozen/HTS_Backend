@@ -8,5 +8,7 @@ namespace HTS.Dto.HospitalResponseMaterial
         public int HospitalResponseId { get; set; }
         [Required]
         public int MaterialId { get; set; }
+        [Required]
+        public int Amount { get; set; }
     }
 }

@@ -13,7 +13,7 @@ using Volo.Abp.EntityFrameworkCore;
 namespace HTS.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230507181416_Initial")]
+    [Migration("20230512113110_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -706,6 +706,9 @@ namespace HTS.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("Amount")
+                        .HasColumnType("integer");
+
                     b.Property<int>("HospitalResponseId")
                         .HasColumnType("integer");
 
@@ -729,7 +732,7 @@ namespace HTS.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Count")
+                    b.Property<int>("Amount")
                         .HasColumnType("integer");
 
                     b.Property<int>("HospitalResponseId")

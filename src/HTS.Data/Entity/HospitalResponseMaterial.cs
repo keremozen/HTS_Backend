@@ -13,12 +13,11 @@ namespace HTS.Data.Entity
         public int HospitalResponseId { get; set; }
         [Required]
         public int MaterialId { get; set; }
-
+        [Required]
+        public int Amount { get; set; }
         [ForeignKey("HospitalResponseId")]
         public HospitalResponse HospitalResponse { get; set; }
-
         [ForeignKey("MaterialId")]
         public Material Material { get; set; }
-     
     }
 }

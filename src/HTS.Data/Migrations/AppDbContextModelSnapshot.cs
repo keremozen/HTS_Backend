@@ -703,6 +703,9 @@ namespace HTS.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("Amount")
+                        .HasColumnType("integer");
+
                     b.Property<int>("HospitalResponseId")
                         .HasColumnType("integer");
 
@@ -726,7 +729,7 @@ namespace HTS.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Count")
+                    b.Property<int>("Amount")
                         .HasColumnType("integer");
 
                     b.Property<int>("HospitalResponseId")

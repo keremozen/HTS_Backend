@@ -81,7 +81,8 @@ namespace HTS.Data
                     entityOptions.DefaultWithDetailsFunc = query => query.Include(hr => hr.HospitalResponseBranches)
                         .Include(hr => hr.HospitalResponseProcesses)
                         .Include(hr => hr.HospitalResponseType)
-                        .Include(hr => hr.HospitalResponseMaterials);
+                        .Include(hr => hr.HospitalResponseMaterials)
+                        .Include(hr => hr.HospitalizationType);
                 });
 
             });

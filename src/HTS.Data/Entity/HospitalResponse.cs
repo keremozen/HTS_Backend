@@ -10,10 +10,11 @@ namespace HTS.Data.Entity
     {
         [Required]
         public int HospitalConsultationId { get; set; }
-        [Required]
-        public string Description { get; set; }
+        public string? Description { get; set; }
         [Required]
         public int HospitalResponseTypeId { get; set; }
+
+        public int? HospitalizationTypeId { get; set; }
 
         public DateTime? PossibleTreatmentDate { get; set; }
         public int? HospitalizationNumber { get; set; }
@@ -23,6 +24,8 @@ namespace HTS.Data.Entity
         [ForeignKey("HospitalConsultationId")]
         public HospitalConsultation HospitalConsultation { get; set; }
 
+        [ForeignKey("HospitalizationTypeId")]
+        public HospitalizationType HospitalizationType { get; set; }
         public virtual ICollection<HospitalResponseBranch> HospitalResponseBranches { get; set; }
         public virtual ICollection<HospitalResponseProcess> HospitalResponseProcesses { get; set; }
         public virtual ICollection<HospitalResponseMaterial> HospitalResponseMaterials { get; set; }

@@ -73,9 +73,10 @@ public class HospitalResponseService : ApplicationService, IHospitalResponseServ
         //If status is ok, check data
         if (hospitalResponse.HospitalResponseTypeId == EntityEnum.HospitalResponseTypeEnum.SuitableForTreatment.GetHashCode())
         {
-            if (!(hospitalResponse.HospitalResponseBranches?.Any() ?? false)
-                 ||  !(hospitalResponse.HospitalResponseProcesses?.Any() ?? false)
-                 ||  !(hospitalResponse.HospitalResponseMaterials?.Any() ?? false)
+            if (!hospitalResponse.HospitalizationTypeId.HasValue
+                 || !(hospitalResponse.HospitalResponseBranches?.Any() ?? false)
+                || ( hospitalResponse.HospitalizationTypeId == EntityEnum.HospitalizationTypeEnum.SurgicalHospitalization.GetHashCode() && !(hospitalResponse.HospitalResponseProcesses?.Any() ?? false))
+                ||  !(hospitalResponse.HospitalResponseMaterials?.Any() ?? false)
                 || hospitalResponse.PossibleTreatmentDate == DateTime.MinValue
                 || hospitalResponse.PossibleTreatmentDate == null
                 || hospitalResponse.HospitalizationNumber == null)

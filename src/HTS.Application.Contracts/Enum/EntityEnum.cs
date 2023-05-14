@@ -40,15 +40,33 @@ namespace HTS.Enum
         
         public enum HospitalResponseTypeEnum
         {
+            /// <summary>
+            /// Tedaviye Uygundur
+            /// </summary>
             SuitableForTreatment = 1,
+            /// <summary>
+            /// Tedaviye Uygun Değildir
+            /// </summary>
             NotSuitableForTreatment = 2 ,
+            /// <summary>
+            /// Tanı İçin Muayene Gerekli
+            /// </summary>
             ExaminationsIsRequiredForDiagnosis = 3
         }
 
         public enum HospitalizationTypeEnum
         {
+            /// <summary>
+            /// Medikal Tedavi
+            /// </summary>
             MedicalTreatment = 1,
+            /// <summary>
+            /// Yatış
+            /// </summary>
             Hospitalization = 2,
+            /// <summary>
+            /// Cerrahi Yatış
+            /// </summary>
             SurgicalHospitalization = 3
         }
     }

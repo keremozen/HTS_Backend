@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using HTS.BusinessException;
@@ -60,9 +61,26 @@ public class HospitalConsultationService : ApplicationService, IHospitalConsulta
             entity = ObjectMapper.Map<SaveHospitalConsultationDto, HospitalConsultation>(hospitalConsultation);
             entity.HospitalId = hospital;
             entity.HospitalConsultationStatusId = HospitalConsultationStatusEnum.HospitalResponseWaiting.GetHashCode();
+            ProcessHospitalConsultationDocuments(entity,hospitalConsultation);
             entityList.Add(entity);
         }
         await _hcRepository.InsertManyAsync(entityList);
+    }
+
+    private void ProcessHospitalConsultationDocuments(HospitalConsultation entity,SaveHospitalConsultationDto hospitalConsultation)
+    {
+        //TODO:Hopsy update this method
+        foreach (var document in entity.HospitalConsultationDocuments)
+        {
+            document.FilePath = "";
+           var userDocument= hospitalConsultation.HospitalConsultationDocuments.FirstOrDefault(d => d.FileName == document.FileName);
+            SaveByteArrayToFileWithStaticMethod(userDocument.File, document.FilePath);
+        }
+    }
+    
+    private static void SaveByteArrayToFileWithStaticMethod(string data, string filePath)
+    {
+        File.WriteAllBytes(filePath, Convert.FromBase64String(data));
     }
 
 

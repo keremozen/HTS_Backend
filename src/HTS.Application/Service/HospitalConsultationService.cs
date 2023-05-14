@@ -88,6 +88,7 @@ public class HospitalConsultationService : ApplicationService, IHospitalConsulta
     {
         await _hcRepository.DeleteAsync(id);
     }
+    
 
     /// <summary>
     /// Checks if data is valid to save

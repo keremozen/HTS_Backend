@@ -48,6 +48,52 @@ public class HospitalResponseService : ApplicationService, IHospitalResponseServ
         }
         await _hospitalResponseRepository.InsertAsync(entity);
     }
+
+    public async Task ApproveAsync(int hospitalResponseId)
+    {
+        var hr = (await _hospitalResponseRepository.WithDetailsAsync(hr => hr.HospitalConsultation))
+            .Where(hr => hr.Id == hospitalResponseId);
+       var entity = await AsyncExecuter.FirstOrDefaultAsync(hr);
+       await IsDataValidToApprove(entity);
+       entity.HospitalConsultation.HospitalConsultationStatusId =
+           EntityEnum.HospitalConsultationStatusEnum.OperationApproved.GetHashCode();
+      await _hospitalResponseRepository.UpdateAsync(entity);
+    }
+    
+    public async Task RejectAsync(int hospitalResponseId)
+    {
+        var hr = (await _hospitalResponseRepository.WithDetailsAsync(hr => hr.HospitalConsultation))
+            .Where(hr => hr.Id == hospitalResponseId);
+        var entity = await AsyncExecuter.FirstOrDefaultAsync(hr);
+        await IsDataValidToReject(entity);
+        entity.HospitalConsultation.HospitalConsultationStatusId =
+            EntityEnum.HospitalConsultationStatusEnum.OperationRejected.GetHashCode();
+        await _hospitalResponseRepository.UpdateAsync(entity);
+    }
+
+    /// <summary>
+    /// Checks if entity valid to approve
+    /// </summary>
+    /// <param name="hospitalResponse">Hospital response entity</param>
+    private async Task IsDataValidToApprove(HospitalResponse hospitalResponse)
+    {
+        if (hospitalResponse.HospitalResponseTypeId != EntityEnum.HospitalResponseTypeEnum.SuitableForTreatment.GetHashCode())
+        {
+            throw new HTSBusinessException(ErrorCode.HospitalResponseTypeNotValidToApprove);
+        }
+    }
+    
+    /// <summary>
+    /// Checks if entity valid to reject
+    /// </summary>
+    /// <param name="hospitalResponse">Hospital response entity</param>
+    private async Task IsDataValidToReject(HospitalResponse hospitalResponse)
+    {
+        if (hospitalResponse.HospitalResponseTypeId != EntityEnum.HospitalResponseTypeEnum.SuitableForTreatment.GetHashCode())
+        {
+            throw new HTSBusinessException(ErrorCode.HospitalResponseTypeNotValidToReject);
+        }
+    }
     
         
     /// <summary>

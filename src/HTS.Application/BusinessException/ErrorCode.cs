@@ -10,5 +10,7 @@ public static class  ErrorCode
     public const string RelationalDataIsMissing = "HTS:7";
     public const string HospitalAlreadyResponsed = "HTS:8";
     public const string RequiredFieldsMissingForSuitableForTreatment = "HTS:9";
+    public const string HospitalResponseTypeNotValidToApprove = "HTS:10";
+    public const string HospitalResponseTypeNotValidToReject = "HTS:11";
 
 }

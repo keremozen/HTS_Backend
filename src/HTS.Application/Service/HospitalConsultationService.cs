@@ -72,7 +72,7 @@ public class HospitalConsultationService : ApplicationService, IHospitalConsulta
         //TODO:Hopsy update this method
         foreach (var document in entity.HospitalConsultationDocuments)
         {
-            document.FilePath = "";
+            document.FilePath = "To Be Removed";
            var userDocument= hospitalConsultation.HospitalConsultationDocuments.FirstOrDefault(d => d.FileName == document.FileName);
             SaveByteArrayToFileWithStaticMethod(userDocument.File, document.FilePath);
         }

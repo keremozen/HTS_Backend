@@ -16,6 +16,6 @@ public class SaveProcessDto
     public int ProcessTypeId { get; set; }
     [Required]
     public bool IsActive { get; set; }
-    public List<ProcessCostDto> ProcessCosts { get; set; }
-    public List<ProcessRelationDto> ProcessRelations { get; set; }
+    public List<SaveProcessCostDto> ProcessCosts { get; set; }
+    public List<SaveProcessRelationDto> ProcessRelations { get; set; }
 }

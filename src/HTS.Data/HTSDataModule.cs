@@ -67,7 +67,9 @@ namespace HTS.Data
 
                 options.Entity<Process>(entityOptions =>
                 {
-                    entityOptions.DefaultWithDetailsFunc = query => query.Include(p => p.ProcessType);
+                    entityOptions.DefaultWithDetailsFunc = query => query.Include(p => p.ProcessType)
+                                                                        .Include(p=>p.ProcessCosts)
+                                                                        .Include(p=>p.ProcessRelations);
                 });
 
                 options.Entity<HospitalConsultation>(entityOptions =>

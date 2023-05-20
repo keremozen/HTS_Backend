@@ -23,7 +23,7 @@ INSERT INTO "PatientNoteStatuses"("Id", "Name") VALUES (2, 'İptal');
 
 --Patient Document Status
 INSERT INTO "PatientDocumentStatuses"("Id", "Name") VALUES (1, 'Yeni Kayıt');
-INSERT INTO "PatientDcoumentStatuses"("Id", "Name") VALUES (2, 'İptal');
+INSERT INTO "PatientDocumentStatuses"("Id", "Name") VALUES (2, 'İptal');
 
 --Treatment Process Status
 INSERT INTO "TreatmentProcessStatuses"("Id", "Name") VALUES (1, 'Yeni Kayıt');

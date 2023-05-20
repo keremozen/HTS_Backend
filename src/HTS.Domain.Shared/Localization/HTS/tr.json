@@ -43,6 +43,7 @@
 
     /*GENERIC MESSAGES*/
     "Message:DeleteConfirmation": "{0} isimli kaydı silmek istediğinize emin misiniz?",
+    "Message:GenericDeleteConfirmation": "Kaydı silmek istediğinize emin misiniz?",
     "Message:SuccessfulDeletion": "{0} başarıyla silindi.",
     "Message:SuccessfulSave": "{0} başarıyla kaydedildi.",
     "Message:RevokeConfirmation": "Kaydı iptal etmek istediğinize emin misiniz?",
@@ -51,6 +52,7 @@
     "Message:SuccessfulMultipleRevokation": "{0} başarıyla iptal edildi.",
     "Message:WrongEmailFormat": "E-posta formatı hatalı",
     "Message:ImportDocumentConfirmation": "Var olan dokümanların kaldırılıp hasta dokümanlarının aktarılmasını onaylıyor musunuz?",
+    "Message:EndDateBeforeStartDate": "Bitiş tarihi başlangıç tarihinden önce olamaz.",
 
     /*PERMISSIONS*/
     "Permission:Management": "Yönetim",
@@ -252,8 +254,12 @@
     "Admin:Process:ProcessCost:Column:ValidityEnd": "Geçerlilik Bitişi",
     "Admin:Process:ProcessCost:Column:HospitalCost": "Hastane Fiyatı",
     "Admin:Process:ProcessCost:Column:UshasCost": "USHAŞ Fiyatı",
+    "Admin:Process:ProcessCostDetails": "Fiyat Tablosu Detayları",
     "Admin:Process:ProcessRelation:Title": "Dahil İşlemler",
     "Admin:Process:ProcessRelation:NewRelation": "Ekle",
+    "Admin:Process:ProcessRelationDetails": "Dahil İşlem Detayları",
+    "Admin:Process:ProcessRelation:Process": "İşlem",
+
 
     /*MATERIAL MANAGEMENT*/
     "Admin:Material:Name": "Sarf Malzeme",
@@ -362,7 +368,7 @@
     "HospitalResponse:FieldLegend:PatientDocuments": "Hasta Dokümanları",
     "HospitalResponse:FieldLegend:HospitalDescription": "Hastane Açıklaması",
     "HospitalResponse:FieldLegend:AnticipatedProcesses": "Öngörülen İşlemler",
-    "HospitalResponse:FieldLegend:AnticipatedSupplies": "Öngörülen Sarf Malzemeleri",
+    "HospitalResponse:FieldLegend:AnticipatedMaterials": "Öngörülen Sarf Malzemeleri",
     "HospitalResponse:Field:HospitalName": "Hastane",
     "HospitalResponse:Field:PatientName": "Hasta Adı Soyadı",
     "HospitalResponse:Field:TreatmentCode": "Tedavi Kodu",
@@ -371,11 +377,15 @@
     "HospitalResponse:Field:Branch": "Branş",
     "HospitalResponse:Field:EarliestTreatmentDate": "En Erken Tedavi Tarihi",
     "HospitalResponse:Field:NumberOfHospitalizationDays": "Yatış Gün Sayısı",
+    "HospitalResponse:Process:Title": "İşlem Detayları",
     "HospitalResponse:Process:Column:Code": "SUT Kodu",
     "HospitalResponse:Process:Column:Description": "İşlem Açıklama",
     "HospitalResponse:Process:Column:Amount": "Adet",
-    "HospitalResponse:Supply:Column:Name": "Malzeme Adı",
-    "HospitalResponse:Supply:Column:Amount": "Adet",
+    "HospitalResponse:Material:Title": "Malzeme Detayları",
+    "HospitalResponse:Material:Column:Name": "Malzeme Adı",
+    "HospitalResponse:Material:Column:Amount": "Adet",
+    "HospitalResponse:AnticipatedMaterials:NewMaterial": "Yeni Malzeme",
+    "HospitalResponse:AnticipatedProcesses:NewProcess": "Yeni İşlem",
 
     /*OPERATIONAL INFO*/
     "OperationalInfo:NewOperation": "Yeni Operasyon",

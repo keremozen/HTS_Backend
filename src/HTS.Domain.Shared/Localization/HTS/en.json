@@ -43,6 +43,7 @@
 
     /*GENERIC MESSAGES*/
     "Message:DeleteConfirmation": "Are you sure you want to delete {0}?",
+    "Message:GenericDeleteConfirmation": "Are you sure you want to delete the record?",
     "Message:SuccessfulDeletion": "{0} is successfully deleted.",
     "Message:SuccessfulSave": "{0} is successfully saved.",
     "Message:RevokeConfirmation": "Are you sure you want to revoke this record?",
@@ -51,6 +52,7 @@
     "Message:SuccessfulMultipleRevokation": "{0} are successfully revoked.",
     "Message:WrongEmailFormat": "Incorrect mail format",
     "Message:ImportDocumentConfirmation": "Are you sure you want to remove existing documents and import patient documents?",
+    "Message:EndDateBeforeStartDate": "End date cannot be before start date.",
 
     /*PERMISSIONS*/
     "Permission:Management": "Management",
@@ -246,14 +248,17 @@
     "Admin:Process:Column:Type": "Type",
     "Admin:Process:Column:IsActive": "Is Active?",
     "Admin:Process:ProcessDetails": "Process Details",
-    "Admin:Process:ProcessCost:Title": "Cost Details",
+    "Admin:Process:ProcessCost:Title": "Process Cost List",
     "Admin:Process:ProcessCost:NewCost": "New",
     "Admin:Process:ProcessCost:Column:ValidityStart": "Validity Start",
     "Admin:Process:ProcessCost:Column:ValidityEnd": "Validity End",
     "Admin:Process:ProcessCost:Column:HospitalCost": "Hospital Cost",
     "Admin:Process:ProcessCost:Column:UshasCost": "USHAŞ Cost",
+    "Admin:Process:ProcessCostDetails": "Cost Details",
     "Admin:Process:ProcessRelation:Title": "Included Processes",
     "Admin:Process:ProcessRelation:NewRelation": "New",
+    "Admin:Process:ProcessRelationDetails": "Included Process Details",
+    "Admin:Process:ProcessRelation:Process": "Process",
 
     /*MATERIAL MANAGEMENT*/
     "Admin:Material:Name": "Material",
@@ -362,7 +367,7 @@
     "HospitalResponse:FieldLegend:PatientDocuments": "Patient Documents",
     "HospitalResponse:FieldLegend:HospitalDescription": "Hospital Description",
     "HospitalResponse:FieldLegend:AnticipatedProcesses": "Anticipated Processes",
-    "HospitalResponse:FieldLegend:AnticipatedSupplies": "Anticipated Supplies",
+    "HospitalResponse:FieldLegend:AnticipatedMaterials": "Anticipated Materials",
     "HospitalResponse:Field:HospitalName": "Hospital",
     "HospitalResponse:Field:PatientName": "Patient",
     "HospitalResponse:Field:TreatmentCode": "Treatment Code",
@@ -371,11 +376,15 @@
     "HospitalResponse:Field:Branch": "Branch",
     "HospitalResponse:Field:EarliestTreatmentDate": "Earliest Treatment Date",
     "HospitalResponse:Field:NumberOfHospitalizationDays": "Number of Hospitalization Days",
+    "HospitalResponse:Process:Title": "Process Details",
     "HospitalResponse:Process:Column:Code": "SUT Code",
     "HospitalResponse:Process:Column:Description": "Process Description",
     "HospitalResponse:Process:Column:Amount": "Amount",
-    "HospitalResponse:Supply:Column:Name": "Supply Name",
-    "HospitalResponse:Supply:Column:Amount": "Amount",
+    "HospitalResponse:Material:Title": "Material Details",
+    "HospitalResponse:Material:Column:Name": "Material Name",
+    "HospitalResponse:Material:Column:Amount": "Amount",
+    "HospitalResponse:AnticipatedMaterials:NewMaterial": "New Material",
+    "HospitalResponse:AnticipatedProcesses:NewProcess": "New Process",
 
     /*OPERATIONAL INFO*/
     "OperationalInfo:NewOperation": "New Operation",

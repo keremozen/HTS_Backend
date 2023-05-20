@@ -90,7 +90,7 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<Process, ProcessDto>();
         CreateMap<SaveProcessDto, Process>();
         CreateMap<ProcessCost, ProcessCostDto>();
-        CreateMap<SaveProcessCostDto, Process>();
+        CreateMap<SaveProcessCostDto, ProcessCost>();
         CreateMap<ProcessRelation, ProcessRelationDto>();
         CreateMap<SaveProcessRelationDto, ProcessRelation>();
         

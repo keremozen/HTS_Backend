@@ -104,7 +104,7 @@ public class HospitalResponseService : ApplicationService, IHospitalResponseServ
     private async Task IsDataValidToSave(SaveHospitalResponseDto hospitalResponse)
     {
         //Check hospital consultation is valid
-        if (await _hcRepository.AnyAsync(c => c.Id == hospitalResponse.HospitalConsultationId))
+        if (!await _hcRepository.AnyAsync(c => c.Id == hospitalResponse.HospitalConsultationId))
         {
             throw new HTSBusinessException(ErrorCode.RelationalDataIsMissing);
         }

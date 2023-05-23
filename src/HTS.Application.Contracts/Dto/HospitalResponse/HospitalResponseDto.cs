@@ -7,6 +7,7 @@ using HTS.Dto.HospitalResponseMaterial;
 using HTS.Dto.HospitalResponseProcess;
 using HTS.Dto.HospitalResponseType;
 using Volo.Abp.Application.Dtos;
+using static HTS.Enum.EntityEnum;
 
 namespace HTS.Dto.HospitalResponse;
 
@@ -14,8 +15,8 @@ public class HospitalResponseDto : EntityDto<int>
 {
     public int HospitalConsultationId { get; set; }
     public string Description { get; set; }
-    public int HospitalResponseTypeId { get; set; }
-    public int? HospitalizationTypeId { get; set; }
+    public HospitalResponseTypeEnum HospitalResponseTypeId { get; set; }
+    public HospitalizationTypeEnum? HospitalizationTypeId { get; set; }
     public DateTime PossibleTreatmentDate { get; set; }
     public int? HospitalizationNumber { get; set; }
     

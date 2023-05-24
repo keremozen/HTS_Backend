@@ -14,4 +14,5 @@ public class HospitalConsultationDto : AuditedEntityWithUserDto<int, IdentityUse
     public int HospitalId { get; set; }
     public HospitalConsultationStatusEnum HospitalConsultationStatusId { get; set; }
     public HospitalConsultationStatusDto HospitalConsultationStatus { get; set; }
+    public List<SaveHospitalConsultationDocumentDto> HospitalConsultationDocuments { get; set; }
 }

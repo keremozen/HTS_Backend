@@ -41,15 +41,22 @@ namespace HTS.Enum
 
         public enum HospitalConsultationStatusEnum
         {
+            /// <summary>
+            /// Hastane Cevabı Bekleniyor
+            /// </summary>
             HospitalResponseWaiting = 1,
+            /// <summary>
+            /// Tedaviye Uygun
+            /// </summary>
+            SuitableForTreatment = 2,
             /// <summary>
             /// Operasyon onaylandı
             /// </summary>
-            OperationApproved = 2,
+            OperationApproved = 3,
             /// <summary>
             /// Operasyon reddedildi
             /// </summary>
-            OperationRejected = 3
+            OperationRejected = 4
         }
         
         public enum HospitalResponseTypeEnum

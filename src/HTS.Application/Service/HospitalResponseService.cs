@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -37,7 +37,7 @@ public class HospitalResponseService : ApplicationService, IHospitalResponseServ
         var entity = ObjectMapper.Map<SaveHospitalResponseDto, HospitalResponse>(hospitalResponse);
         if (hospitalResponse.HospitalResponseTypeId == EntityEnum.HospitalResponseTypeEnum.SuitableForTreatment.GetHashCode())
         {
-            
+            //TODO: Özlem ... hospital consultation durumu da suitable for treatment yapılacak.
         }
         else
         {

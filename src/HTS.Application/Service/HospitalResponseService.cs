@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using HTS.BusinessException;
 using HTS.Data.Entity;
+using HTS.Dto.HospitalConsultation;
 using HTS.Dto.HospitalResponse;
 using HTS.Enum;
 using HTS.Interface;
@@ -29,7 +30,13 @@ public class HospitalResponseService : ApplicationService, IHospitalResponseServ
         var query = (await _hospitalResponseRepository.WithDetailsAsync()).Where(r => r.Id == id);
         return ObjectMapper.Map<HospitalResponse, HospitalResponseDto>(await AsyncExecuter.FirstOrDefaultAsync(query));
     }
-    
+
+    public async Task<HospitalResponseDto> GetByHospitalConsultationAsync(int consultationId)
+    {
+        var query = (await _hospitalResponseRepository.WithDetailsAsync()).Where(hr => hr.HospitalConsultationId == consultationId);
+        return ObjectMapper.Map<HospitalResponse, HospitalResponseDto>(await AsyncExecuter.FirstOrDefaultAsync(query));
+    }
+
 
     public async Task CreateAsync(SaveHospitalResponseDto hospitalResponse)
     {

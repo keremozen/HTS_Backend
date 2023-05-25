@@ -12,6 +12,12 @@ namespace HTS.Enum
             Men = 2            
         }
 
+        public enum CurrencyEnum
+        {
+            TL = 1,
+            USD =2
+        }
+
         public enum PatientNoteStatusEnum
         {
             NewRecord = 1,
@@ -76,6 +82,46 @@ namespace HTS.Enum
             /// Cerrahi Yatış
             /// </summary>
             SurgicalHospitalization = 3
+        }
+
+        public enum AdditionalServiceEnum
+        {
+            /// <summary>
+            /// Transfer hizmeti
+            /// </summary>
+            TransferService = 1,
+            /// <summary>
+            /// Medikal İkinci Muayene
+            /// </summary>
+            MedicalSecondExamination = 2,
+            /// <summary>
+            /// Tercümanlık
+            /// </summary>
+            Interpreting = 3,  
+            /// <summary>
+            /// Koordinasyon Hizmeti
+            /// </summary>
+            CoordinationService = 4,
+            /// <summary>
+            /// Servis Yatışı
+            /// </summary>
+            ServiceAdmission = 5,  
+            /// <summary>
+            /// Yoğun bakım
+            /// </summary>
+            IntensiveCare = 6,  
+            /// <summary>
+            /// Konaklama
+            /// </summary>
+            Accomodation = 7,
+            /// <summary>
+            /// Seyahat
+            /// </summary>
+            Trip = 8,
+            /// <summary>
+            /// Fiziki Muayene
+            /// </summary>
+            PhysicalExamination = 9
         }
     }
 }

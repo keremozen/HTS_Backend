@@ -49,3 +49,18 @@ INSERT INTO "HospitalResponseTypes"("Id", "Name") VALUES (3, 'Tanı İçin Muaye
 INSERT INTO "HospitalizationTypes"("Id", "Name") VALUES (1, 'Medikal Tedavi');
 INSERT INTO "HospitalizationTypes"("Id", "Name") VALUES (2, 'Yatış');
 INSERT INTO "HospitalizationTypes"("Id", "Name") VALUES (3, 'Cerrahi Yatış');
+
+--Currency Table
+INSERT INTO "Currencies"("Id", "Name") VALUES (1, 'TL');
+INSERT INTO "Currencies"("Id", "Name") VALUES (2, 'USD');
+
+--AdditionalService Table
+INSERT INTO "AdditionalService"("Id", "Name", "Day","Piece","RoomType","Companion") VALUES (1, 'Transfer hizmeti',false,false,false,false);
+INSERT INTO "AdditionalService"("Id", "Name", "Day","Piece","RoomType","Companion") VALUES (2, 'Medikal İkinci Muayene',false,false,false,false);
+INSERT INTO "AdditionalService"("Id", "Name", "Day","Piece","RoomType","Companion") VALUES (3, 'Tercümanlık',false,false,false,false);
+INSERT INTO "AdditionalService"("Id", "Name", "Day","Piece","RoomType","Companion") VALUES (4, 'Koordinasyon Hizmeti',false,false,false,false);
+INSERT INTO "AdditionalService"("Id", "Name", "Day","Piece","RoomType","Companion") VALUES (5, 'Servis Yatışı',true,false,true,false);
+INSERT INTO "AdditionalService"("Id", "Name", "Day","Piece","RoomType","Companion") VALUES (6, 'Yoğun Bakım',true,false,false,false);
+INSERT INTO "AdditionalService"("Id", "Name", "Day","Piece","RoomType","Companion") VALUES (7, 'Konaklama',true,false,false,true);
+INSERT INTO "AdditionalService"("Id", "Name", "Day","Piece","RoomType","Companion") VALUES (8, 'Seyahat',false,false,false,true);
+INSERT INTO "AdditionalService"("Id", "Name", "Day","Piece","RoomType","Companion") VALUES (9, 'Fiziki Muayene',false,true,false,false);

@@ -19,6 +19,7 @@ public class HospitalResponseDto : EntityDto<int>
     public HospitalizationTypeEnum? HospitalizationTypeId { get; set; }
     public DateTime PossibleTreatmentDate { get; set; }
     public int? HospitalizationNumber { get; set; }
+     public bool IsManuallyAdded { get; set; }
     
     public HospitalResponseTypeDto HospitalResponseType { get; set; }
     public HospitalizationTypeDto HospitalizationType { get; set; }

@@ -1,3 +1,4 @@
+using HTS.Dto.Patient;
 using HTS.Dto.TreatmentProcessStatus;
 using HTS.Enum;
 using Volo.Abp.Application.Dtos;

@@ -68,8 +68,8 @@ namespace HTS.Data
                 options.Entity<Process>(entityOptions =>
                 {
                     entityOptions.DefaultWithDetailsFunc = query => query.Include(p => p.ProcessType)
-                                                                        .Include(p=>p.ProcessCosts)
-                                                                        .Include(p=>p.ProcessRelations);
+                                                                        .Include(p => p.ProcessCosts)
+                                                                        .Include(p => p.ProcessRelations);
                 });
 
                 options.Entity<HospitalConsultation>(entityOptions =>
@@ -83,9 +83,16 @@ namespace HTS.Data
                 {
                     entityOptions.DefaultWithDetailsFunc = query => query.Include(hr => hr.HospitalResponseBranches)
                         .Include(hr => hr.HospitalResponseProcesses)
+                        .ThenInclude(hrp => hrp.Process)
                         .Include(hr => hr.HospitalResponseType)
                         .Include(hr => hr.HospitalResponseMaterials)
-                        .Include(hr => hr.HospitalizationType);
+                        .ThenInclude(hrm => hrm.Material)
+                        .Include(hr => hr.HospitalizationType)
+                        .Include(hr => hr.HospitalConsultation)
+                        .ThenInclude(hc => hc.Hospital)
+                        .Include(hr => hr.HospitalConsultation)
+                        .ThenInclude(hc => hc.PatientTreatmentProcess)
+                        .ThenInclude(ptp => ptp.Patient);
                 });
 
             });

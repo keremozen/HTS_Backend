@@ -379,6 +379,7 @@
     "HospitalResponse:Field:NumberOfHospitalizationDays": "Yatış Gün Sayısı",
     "HospitalResponse:Process:Title": "İşlem Detayları",
     "HospitalResponse:Process:Column:Code": "SUT Kodu",
+    "HospitalResponse:Process:Column:Name": "İşlem Adı",
     "HospitalResponse:Process:Column:Description": "İşlem Açıklama",
     "HospitalResponse:Process:Column:Amount": "Adet",
     "HospitalResponse:Material:Title": "Malzeme Detayları",

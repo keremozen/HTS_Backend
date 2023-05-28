@@ -378,6 +378,7 @@
     "HospitalResponse:Field:NumberOfHospitalizationDays": "Number of Hospitalization Days",
     "HospitalResponse:Process:Title": "Process Details",
     "HospitalResponse:Process:Column:Code": "SUT Code",
+    "HospitalResponse:Process:Column:Name": "Process Name",
     "HospitalResponse:Process:Column:Description": "Process Description",
     "HospitalResponse:Process:Column:Amount": "Amount",
     "HospitalResponse:Material:Title": "Material Details",

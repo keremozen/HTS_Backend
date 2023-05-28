@@ -1,3 +1,4 @@
+using HTS.Dto.Process;
 using Volo.Abp.Application.Dtos;
 
 namespace HTS.Dto.HospitalResponseProcess
@@ -7,5 +8,6 @@ namespace HTS.Dto.HospitalResponseProcess
         public int HospitalResponseId { get; set; }
         public int ProcessId { get; set; }
         public int Amount { get; set; }
+        public ProcessDto Process { get; set; }
     }
 }

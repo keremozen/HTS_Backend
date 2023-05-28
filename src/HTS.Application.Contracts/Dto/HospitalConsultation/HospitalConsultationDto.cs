@@ -1,5 +1,7 @@
+using HTS.Dto.Hospital;
 using HTS.Dto.HospitalConsultationDocument;
 using HTS.Dto.HospitalConsultationStatus;
+using HTS.Dto.PatientTreatmentProcess;
 using System.Collections.Generic;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Identity;
@@ -15,4 +17,6 @@ public class HospitalConsultationDto : AuditedEntityWithUserDto<int, IdentityUse
     public HospitalConsultationStatusEnum HospitalConsultationStatusId { get; set; }
     public HospitalConsultationStatusDto HospitalConsultationStatus { get; set; }
     public List<HospitalConsultationDocumentDto> HospitalConsultationDocuments { get; set; }
+    public HospitalDto Hospital { get; set; }
+    public PatientTreatmentProcessDto PatientTreatmentProcess { get; set; }
 }

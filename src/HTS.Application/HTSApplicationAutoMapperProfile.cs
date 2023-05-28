@@ -22,6 +22,9 @@ using HTS.Dto.HospitalStaff;
 using HTS.Dto.Language;
 using HTS.Dto.Material;
 using HTS.Dto.Nationality;
+using HTS.Dto.Operation;
+using HTS.Dto.OperationStatus;
+using HTS.Dto.OperationType;
 using HTS.Dto.Patient;
 using HTS.Dto.PatientAdmissionMethod;
 using HTS.Dto.PatientDocument;
@@ -49,6 +52,8 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<Gender, GenderDto>();
         CreateMap<Currency, CurrencyDto>();
         CreateMap<AdditionalService, AdditionalServiceDto>();
+        CreateMap<OperationType, OperationTypeDto>();
+        CreateMap<OperationStatus, OperationStatusDto>();
         CreateMap<City, CityDto>();
         CreateMap<SaveCityDto, City>();
         CreateMap<Language, LanguageDto>();
@@ -113,7 +118,9 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<SaveHospitalResponseProcessDto, HospitalResponseProcess>();
         CreateMap<HospitalResponseMaterial, HospitalResponseMaterialDto>();
         CreateMap<SaveHospitalResponseMaterialDto, HospitalResponseMaterial>();
-        
+        CreateMap<Operation, OperationDto>();
+        CreateMap<SaveOperationDto, Operation>();
+
 
     }
 }

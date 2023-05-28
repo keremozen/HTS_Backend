@@ -32,10 +32,22 @@ namespace HTS.Enum
 
         public enum PatientTreatmentStatusEnum
         {
+            /// <summary>
+            /// Yeni Kayıt
+            /// </summary>
             NewRecord = 1,
-            HospitalAsked = 2,
-            AssessmentWaiting = 3,
-            QuotationWaiting = 4,
+            /// <summary>
+            /// Hastanelere Danışıldı - Cevap Bekleniyor
+            /// </summary>
+            HospitalAskedWaitingResponse = 2,
+            /// <summary>
+            /// Hastanelere Danışıldı - Değerlendirme Bekliyor
+            /// </summary>
+            HospitalAskedWaitingAssessment = 3,
+            /// <summary>
+            /// Operasyon Onaylandı - Fiyatlandırma Bekliyor
+            /// </summary>
+            OperationApprovedWaitingPricing = 4,
             Discharged = 5
         }
 
@@ -129,6 +141,30 @@ namespace HTS.Enum
             /// Fiziki Muayene
             /// </summary>
             PhysicalExamination = 9
+        }
+
+        public enum OperationTypeEnum
+        {
+            /// <summary>
+            /// Hastane danışma
+            /// </summary>
+            HospitalConsultation = 1,
+            /// <summary>
+            /// Elle giriş
+            /// </summary>
+            Manual = 2
+        }
+        
+        public enum OperationStatusEnum
+        {
+            /// <summary>
+            /// Fiyatlandırma Bekleniyor
+            /// </summary>
+            PriceExpecting = 1,
+            /// <summary>
+            /// Proforma Oluşturuldu
+            /// </summary>
+            ProformaCreated = 2
         }
     }
 }

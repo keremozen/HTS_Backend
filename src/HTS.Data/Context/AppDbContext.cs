@@ -23,6 +23,8 @@ namespace HTS.Data
         public DbSet<Gender> Genders { get; set; }
         public DbSet<Currency> Currencies { get; set; }
         public DbSet<AdditionalService> AdditionalServices { get; set; }
+        public DbSet<OperationType> OperationTypes { get; set; }
+        public DbSet<OperationStatus> OperationStatuses { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<Hospital> Hospitals { get; set; }
         public DbSet<HospitalStaff> HospitalStaffs { get; set; }
@@ -46,6 +48,7 @@ namespace HTS.Data
         public DbSet<HospitalResponseBranch> HospitalResponseBranches { get; set; }
         public DbSet<HospitalResponseProcess> HospitalResponseProcesses { get; set; }
         public DbSet<HospitalResponseMaterial> HospitalResponseMaterials { get; set; }
+        public DbSet<Operation> Operations { get; set; }
 
         public DbSet<ProcessRelation> IncludingProcesses { get; set; }
         public DbSet<Branch> Branches { get; set; }

@@ -22,11 +22,15 @@ public class HospitalResponseService : ApplicationService, IHospitalResponseServ
 {
     private readonly IRepository<HospitalResponse, int> _hospitalResponseRepository;
     private readonly IRepository<HospitalConsultation, int> _hcRepository;
+    private readonly IRepository<Operation, int> _operationRepository;
+
     public HospitalResponseService(IRepository<HospitalResponse, int> hospitalResponseRepository,
-        IRepository<HospitalConsultation, int> hcRepository)
+        IRepository<HospitalConsultation, int> hcRepository,
+        IRepository<Operation, int> operationRepository)
     {
         _hospitalResponseRepository = hospitalResponseRepository;
         _hcRepository = hcRepository;
+        _operationRepository = operationRepository;
     }
 
     public async Task<HospitalResponseDto> GetAsync(int id)
@@ -68,13 +72,25 @@ public class HospitalResponseService : ApplicationService, IHospitalResponseServ
 
     public async Task ApproveAsync(int hospitalResponseId)
     {
-        var hr = (await _hospitalResponseRepository.WithDetailsAsync(hr => hr.HospitalConsultation))
+        var hr = (await _hospitalResponseRepository.WithDetailsAsync((hr => hr.HospitalConsultation), (hr => hr.HospitalConsultation.PatientTreatmentProcess)))
             .Where(hr => hr.Id == hospitalResponseId);
         var entity = await AsyncExecuter.FirstOrDefaultAsync(hr);
         await IsDataValidToApprove(entity);
         entity.HospitalConsultation.HospitalConsultationStatusId =
             EntityEnum.HospitalConsultationStatusEnum.OperationApproved.GetHashCode();
+        //Update patient treatment process entity status clm - Operasyon Onaylandı Fiyatlandırma bekliyor
+        entity.HospitalConsultation.PatientTreatmentProcess.TreatmentProcessStatusId =
+            PatientTreatmentStatusEnum.OperationApprovedWaitingPricing.GetHashCode();
         await _hospitalResponseRepository.UpdateAsync(entity);
+        
+        //Insert operation record
+        Operation operation = new Operation()
+        {
+            HospitalResponseId = hospitalResponseId,
+            OperationTypeId = OperationTypeEnum.HospitalConsultation.GetHashCode(),
+            OperationStatusId = OperationStatusEnum.PriceExpecting.GetHashCode()
+        };
+        await _operationRepository.InsertAsync(operation);
     }
 
     public async Task RejectAsync(int hospitalResponseId)

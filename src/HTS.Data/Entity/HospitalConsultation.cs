@@ -8,6 +8,10 @@ namespace HTS.Data.Entity
 
     public class HospitalConsultation : FullAuditedEntityWithUser<int, IdentityUser>
     {
+        public HospitalConsultation()
+        {
+            HospitalResponses = new HashSet<HospitalResponse>();
+        }
 
         [Required]
         public string Note { get; set; }
@@ -24,6 +28,7 @@ namespace HTS.Data.Entity
         [ForeignKey("PatientTreatmentProcessId")]
         public PatientTreatmentProcess PatientTreatmentProcess { get; set; }
         public virtual ICollection<HospitalConsultationDocument> HospitalConsultationDocuments { get; set; }
+        public virtual ICollection<HospitalResponse> HospitalResponses { get; set; }
 
     }
 }

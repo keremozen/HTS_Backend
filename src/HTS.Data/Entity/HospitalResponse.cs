@@ -18,6 +18,8 @@ namespace HTS.Data.Entity
 
         public DateTime? PossibleTreatmentDate { get; set; }
         public int? HospitalizationNumber { get; set; }
+        public bool IsManuallyAdded { get; set; }
+
         [ForeignKey("HospitalResponseTypeId")]
         public HospitalResponseType HospitalResponseType { get; set; }
 

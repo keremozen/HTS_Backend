@@ -65,3 +65,11 @@ INSERT INTO "AdditionalService"("Id", "Name", "Day","Piece","RoomType","Companio
 INSERT INTO "AdditionalService"("Id", "Name", "Day","Piece","RoomType","Companion") VALUES (7, 'Konaklama',true,false,false,true);
 INSERT INTO "AdditionalService"("Id", "Name", "Day","Piece","RoomType","Companion") VALUES (8, 'Seyahat',false,false,false,true);
 INSERT INTO "AdditionalService"("Id", "Name", "Day","Piece","RoomType","Companion") VALUES (9, 'Fiziki Muayene',false,true,false,false);
+
+--Operation type Table
+INSERT INTO "OperationTypes"("Id", "Name") VALUES (1, 'Hastane danışma');
+INSERT INTO "OperationTypes"("Id", "Name") VALUES (2, 'Elle giriş');
+
+--Operation status Table
+INSERT INTO "OperationStatuses"("Id", "Name") VALUES (1, 'Fiyatlandırma Bekleniyor');
+INSERT INTO "OperationStatuses"("Id", "Name") VALUES (2, 'Proforma Oluşturuldu');

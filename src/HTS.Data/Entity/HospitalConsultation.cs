@@ -18,6 +18,8 @@ namespace HTS.Data.Entity
         [Required]
         public int PatientTreatmentProcessId { get; set; }
         [Required]
+        public int RowNumber { get; set; }
+        [Required]
         public int HospitalId { get; set; }
         [Required]
         public int HospitalConsultationStatusId { get; set; }

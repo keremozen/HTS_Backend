@@ -114,6 +114,16 @@ public class HospitalResponseService : ApplicationService, IHospitalResponseServ
         {
             throw new HTSBusinessException(ErrorCode.HospitalResponseTypeNotValidToApprove);
         }
+        //Check if any hospital consultation is approved in the same row number
+        int rowNumber = hospitalResponse.HospitalConsultation.RowNumber;
+        bool anyApprovedInGroup = await _hcRepository.AnyAsync(hc =>
+            hc.PatientTreatmentProcessId == hospitalResponse.HospitalConsultation.PatientTreatmentProcessId
+            && hc.RowNumber == rowNumber
+            && hc.HospitalConsultationStatusId == HospitalConsultationStatusEnum.OperationApproved.GetHashCode());
+        if (anyApprovedInGroup)//Approved before
+        {
+            throw new HTSBusinessException(ErrorCode.AnotherHospitalResponseIsApprovedInSameRowNumber);
+        }
     }
 
     /// <summary>

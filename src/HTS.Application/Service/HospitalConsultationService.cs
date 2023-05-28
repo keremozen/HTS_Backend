@@ -54,17 +54,26 @@ public class HospitalConsultationService : ApplicationService, IHospitalConsulta
     public async Task CreateAsync(SaveHospitalConsultationDto hospitalConsultation)
     {
         await IsDataValidToSave(hospitalConsultation);
+        int rowNumber = await GetRowNumber(hospitalConsultation.PatientTreatmentProcessId);
         List<HospitalConsultation> entityList = new List<HospitalConsultation>();
         HospitalConsultation entity;
         foreach (var hospital in hospitalConsultation.HospitalIds)
         {
             entity = ObjectMapper.Map<SaveHospitalConsultationDto, HospitalConsultation>(hospitalConsultation);
+            entity.RowNumber = rowNumber;
             entity.HospitalId = hospital;
             entity.HospitalConsultationStatusId = HospitalConsultationStatusEnum.HospitalResponseWaiting.GetHashCode();
             ProcessHospitalConsultationDocuments(entity,hospitalConsultation);
             entityList.Add(entity);
         }
         await _hcRepository.InsertManyAsync(entityList);
+    }
+
+    private async Task<int> GetRowNumber(int ptProcessId)
+    {
+       var query = await _hcRepository.GetQueryableAsync();
+       int rowNumber= query.Where(hc => hc.PatientTreatmentProcessId == ptProcessId).Max(hc => (int?)hc.RowNumber) ?? 0;
+       return ++rowNumber;
     }
 
     private void ProcessHospitalConsultationDocuments(HospitalConsultation entity,SaveHospitalConsultationDto hospitalConsultation)
@@ -101,7 +110,7 @@ public class HospitalConsultationService : ApplicationService, IHospitalConsulta
         if (!(await _ptpRepository.AnyAsync(p => p.Id == hospitalConsultation.PatientTreatmentProcessId
                                                  && p.TreatmentProcessStatusId == PatientTreatmentStatusEnum.NewRecord.GetHashCode())))
         {
-            throw new HTSBusinessException(ErrorCode.PTPStatusNotValidToHospitalConsultation);
+            throw new HTSBusinessException(ErrorCode.PtpStatusNotValidToHospitalConsultation);
         }
     }
 

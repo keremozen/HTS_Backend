@@ -57,6 +57,7 @@ namespace HTS.Data
         public DbSet<ProcessCost> ProcessCosts { get; set; }
         public DbSet<ProcessType> ProcessTypes { get; set; }
         public DbSet<TreatmentType> TreatmentTypes { get; set; }
+        public DbSet<RejectReason> RejectReasons { get; set; }
         
         public DbSet<IdentityUser> Users { get; set; }
 

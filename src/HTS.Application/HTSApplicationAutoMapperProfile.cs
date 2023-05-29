@@ -36,6 +36,7 @@ using HTS.Dto.Process;
 using HTS.Dto.ProcessCost;
 using HTS.Dto.ProcessRelation;
 using HTS.Dto.ProcessType;
+using HTS.Dto.RejectReason;
 using HTS.Dto.SalesMethodAndCompanionInfo;
 using HTS.Dto.TreatmentProcessStatus;
 using HTS.Dto.TreatmentType;
@@ -73,6 +74,8 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<SaveTreatmentTypeDto, TreatmentType>();
         CreateMap<Material, MaterialDto>();
         CreateMap<SaveMaterialDto, Material>();
+        CreateMap<RejectReason, RejectReasonDto>();
+        CreateMap<SaveRejectReasonDto, RejectReason>();
         
         CreateMap<Patient, PatientDto>();
         CreateMap<SavePatientDto, Patient>();

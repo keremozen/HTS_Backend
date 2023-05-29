@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -67,6 +67,7 @@ public class HospitalConsultationService : ApplicationService, IHospitalConsulta
             entityList.Add(entity);
         }
         await _hcRepository.InsertManyAsync(entityList);
+        //TODO: Her hospital'ın sorumlusuna (sorumlularına olabilir?) mail atılacak. 
     }
 
     private async Task<int> GetRowNumber(int ptProcessId)
@@ -106,6 +107,7 @@ public class HospitalConsultationService : ApplicationService, IHospitalConsulta
     /// <exception cref="HTSBusinessException">Check response exceptions</exception>
     private async Task IsDataValidToSave(SaveHospitalConsultationDto hospitalConsultation)
     {
+        //TODO: SalesMethodAndCompanionInfo olması gerekiyor.
         //Check patient treatment process status
         if (!(await _ptpRepository.AnyAsync(p => p.Id == hospitalConsultation.PatientTreatmentProcessId
                                                  && p.TreatmentProcessStatusId == PatientTreatmentStatusEnum.NewRecord.GetHashCode())))

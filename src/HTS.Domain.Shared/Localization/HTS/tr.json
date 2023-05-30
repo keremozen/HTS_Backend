@@ -70,6 +70,7 @@
     "Permission:HospitalResponseTypeManagement": "Hastane Cevabı Yönetimi",
     "Permission:ProcessManagement": "İşlem Yönetimi",
     "Permission:MaterialManagement": "Sarf Malzeme Yönetimi",
+    "Permission:RejectReasonManagement": "Ret Nedeni Yönetimi",
     "Permission:Patient": "Hasta",
     "Permission:PatientAccess": "Hasta Sayfasına Erişim",
     "Permission:PatientList": "Hasta Tablosu Listeleme",
@@ -98,6 +99,7 @@
     "Menu:Admin:HospitalResponseType": "Hastane Cevabı Yönetimi",
     "Menu:Admin:Process": "İşlem Yönetimi",
     "Menu:Admin:Material": "Sarf Malzeme Yönetimi",
+    "Menu:Admin:RejectReason": "Ret Nedeni Yönetimi",
 
     /*HOSPITAL MANAGEMENT*/
     "Admin:Hospital:Name": "Hastane",
@@ -244,6 +246,7 @@
     "Admin:Process:NewProcess": "Yeni İşlem",
     "Admin:Process:Column:Code": "Kod",
     "Admin:Process:Column:Name": "İsim",
+    "Admin:Process:Column:EnglishName": "İngilizce İsim",
     "Admin:Process:Column:Description": "Açıklama",
     "Admin:Process:Column:Type": "Tipi",
     "Admin:Process:Column:IsActive": "Aktif mi?",
@@ -268,6 +271,14 @@
     "Admin:Material:Column:Name": "İsim",
     "Admin:Material:Column:IsActive": "Aktif mi?",
     "Admin:Material:MaterialDetails": "Sarf Malzeme Detayları",
+
+    /*REJECT REASON MANAGEMENT*/
+    "Admin:RejectReason:Name": "Ret Nedeni",
+    "Admin:RejectReason:RejectReasonManagement": "Ret Nedeni Yönetimi",
+    "Admin:RejectReason:NewRejectReason": "Yeni Ret Nedeni",
+    "Admin:RejectReason:Column:Reason": "Neden",
+    "Admin:RejectReason:Column:IsActive": "Aktif mi?",
+    "Admin:RejectReason:RejectReasonDetails": "Ret Nedeni Detayları",
 
     /*PATIENTS*/
     "Patients:Title": "Hastalar",

@@ -21,6 +21,7 @@ public static class HTSPermissions
     public const string ProcessRelationManagement = GroupName + ".ProcessRelationManagement";
     public const string ProcessCostManagement = GroupName + ".ProcessCostManagement";
     public const string MaterialManagement = GroupName + ".MaterialManagement";
+    public const string RejectReasonManagement = GroupName + ".RejectReasonManagement";
 
     public const string Patient = GroupName + ".Patient";
     public const string PatientAccess = GroupName + ".PatientAccess";

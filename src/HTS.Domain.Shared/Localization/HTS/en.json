@@ -70,6 +70,7 @@
     "Permission:HospitalResponseTypeManagement": "Hospital Response Management",
     "Permission:ProcessManagement": "Process Management",
     "Permission:MaterialManagement": "Material Management",
+    "Permission:RejectReasonManagement": "Reject Reason Management",
     "Permission:Patient": "Patient",
     "Permission:PatientAccess": "Access Patient Page",
     "Permission:PatientList": "List Patient",
@@ -98,6 +99,7 @@
     "Menu:Admin:HospitalResponseType": "Hospital Response Management",
     "Menu:Admin:Process": "Process Type Management",
     "Menu:Admin:Material": "Material Management",
+    "Menu:Admin:RejectReason": "Reject Reason Management",
 
     /*HOSPITAL MANAGEMENT*/
     "Admin:Hospital:Name": "Hospital",
@@ -244,6 +246,7 @@
     "Admin:Process:NewProcess": "New Process",
     "Admin:Process:Column:Code": "Code",
     "Admin:Process:Column:Name": "Name",
+    "Admin:Process:Column:EnglishName": "English Name",
     "Admin:Process:Column:Description": "Description",
     "Admin:Process:Column:Type": "Type",
     "Admin:Process:Column:IsActive": "Is Active?",
@@ -267,6 +270,14 @@
     "Admin:Material:Column:Name": "Name",
     "Admin:Material:Column:IsActive": "Is Active?",
     "Admin:Material:MaterialDetails": "Material Details",
+
+    /*REJECT REASON MANAGEMENT*/
+    "Admin:RejectReason:Name": "Reject Reason",
+    "Admin:RejectReason:RejectReasonManagement": "Reject Reason Management",
+    "Admin:RejectReason:NewRejectReason": "New Reject Reason",
+    "Admin:RejectReason:Column:Reason": "Reason",
+    "Admin:RejectReason:Column:IsActive": "Is Active?",
+    "Admin:RejectReason:RejectReasonDetails": "Reject Reason Details",
 
     /*PATIENTS*/
     "Patients:Title": "Patients",

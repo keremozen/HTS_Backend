@@ -1,57 +1,57 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HTS.BusinessException;
 using HTS.Data.Entity;
-using HTS.Dto.HospitalConsultation;
-using HTS.Dto.HospitalResponse;
-using HTS.Dto.HospitalResponseBranch;
-using HTS.Dto.HospitalResponseMaterial;
-using HTS.Dto.HospitalResponseProcess;
 using HTS.Dto.Operation;
 using HTS.Enum;
 using HTS.Interface;
-using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 using static HTS.Enum.EntityEnum;
-
 namespace HTS.Service;
 
-public class OperationService : ApplicationService
+public class OperationService : ApplicationService, IOperationService
 {
-    //TODO: Interface ekle
-    private readonly IRepository<HospitalResponse, int> _hospitalResponseRepository;
-    private readonly IRepository<HospitalConsultation, int> _hcRepository;
     private readonly IRepository<Operation, int> _operationRepository;
 
-    public OperationService(IRepository<HospitalResponse, int> hospitalResponseRepository,
-        IRepository<HospitalConsultation, int> hcRepository,
-        IRepository<Operation, int> operationRepository)
+    public OperationService(IRepository<Operation, int> operationRepository)
     {
-        _hospitalResponseRepository = hospitalResponseRepository;
-        _hcRepository = hcRepository;
         _operationRepository = operationRepository;
     }
     
 
     public async Task CreateAsync(SaveOperationDto operation)
     {
-        //TODO: IsDataValid ekle
+        await IsDataValidToSave(operation);
         var entity = ObjectMapper.Map<SaveOperationDto, Operation>(operation);
-        var hospitalResponse = entity.HospitalResponse;
-        if (hospitalResponse.HospitalResponseTypeId == EntityEnum.HospitalResponseTypeEnum.SuitableForTreatment.GetHashCode())
-        {
-        }
-        else
-        {
-            entity.HospitalResponse.PossibleTreatmentDate = null;
-            entity.HospitalResponse.HospitalResponseBranches = null;
-            entity.HospitalResponse.HospitalResponseProcesses = null;
-            entity.HospitalResponse.HospitalResponseMaterials = null;
-        }
+        entity.OperationTypeId = OperationTypeEnum.Manual.GetHashCode();
         await _operationRepository.InsertAsync(entity);
     }
+    
+    /// <summary>
+    /// Checks if data is valid to save
+    /// </summary>
+    /// <param name="operation">To be saved object</param>
+    /// <exception cref="HTSBusinessException">Check response exceptions</exception>
+    private async Task IsDataValidToSave(SaveOperationDto operation)
+    {
+        
+        //If status is ok, check data
+        if (operation.HospitalResponse.HospitalResponseTypeId == EntityEnum.HospitalResponseTypeEnum.SuitableForTreatment.GetHashCode())
+        {
+            if (!operation.HospitalResponse.HospitalizationTypeId.HasValue
+                || !(operation.HospitalResponse.HospitalResponseBranches?.Any() ?? false)
+                || (operation.HospitalResponse.HospitalizationTypeId == EntityEnum.HospitalizationTypeEnum.SurgicalHospitalization.GetHashCode() && !(operation.HospitalResponse.HospitalResponseProcesses?.Any() ?? false))
+                || !(operation.HospitalResponse.HospitalResponseMaterials?.Any() ?? false)
+                || operation.HospitalResponse.PossibleTreatmentDate == DateTime.MinValue
+                || operation.HospitalResponse.PossibleTreatmentDate == null
+                || operation.HospitalResponse.HospitalizationNumber == null)
+            {
+                throw new HTSBusinessException(ErrorCode.RequiredFieldsMissingForSuitableForTreatment);
+            }
+        }
+    }
+
 
 }

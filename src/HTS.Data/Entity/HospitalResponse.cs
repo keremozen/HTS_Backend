@@ -8,8 +8,7 @@ namespace HTS.Data.Entity
 
     public class HospitalResponse : FullAuditedEntityWithUser<int, IdentityUser>
     {
-        [Required]
-        public int HospitalConsultationId { get; set; }
+        public int? HospitalConsultationId { get; set; }
         public string? Description { get; set; }
         [Required]
         public int HospitalResponseTypeId { get; set; }
@@ -18,13 +17,12 @@ namespace HTS.Data.Entity
 
         public DateTime? PossibleTreatmentDate { get; set; }
         public int? HospitalizationNumber { get; set; }
-        public bool IsManuallyAdded { get; set; }
 
         [ForeignKey("HospitalResponseTypeId")]
         public HospitalResponseType HospitalResponseType { get; set; }
 
         [ForeignKey("HospitalConsultationId")]
-        public HospitalConsultation HospitalConsultation { get; set; }
+        public HospitalConsultation? HospitalConsultation { get; set; }
 
         [ForeignKey("HospitalizationTypeId")]
         public HospitalizationType HospitalizationType { get; set; }

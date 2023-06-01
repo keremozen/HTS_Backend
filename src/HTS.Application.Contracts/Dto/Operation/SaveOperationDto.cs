@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using HTS.Dto.HospitalResponse;
 
 namespace HTS.Dto.Operation;
 
@@ -13,4 +14,7 @@ public class SaveOperationDto
     public int? TreatmentTypeId { get; set; }
     public bool? AnyInvitationLetter { get; set; }
     public Guid? AppointedInterpreterId { get; set; }
+    public int? PatientTreatmentProcessId { get; set; }
+    public int? HospitalId { get; set; }
+    public SaveHospitalResponseDto HospitalResponse { get; set; }
 }

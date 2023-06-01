@@ -16,6 +16,8 @@ namespace HTS.Data.Entity
         public int? TreatmentTypeId { get; set; }
         public bool? AnyInvitationLetter { get; set; }
         public int OperationTypeId { get; set; }
+        public int? PatientTreatmentProcessId { get; set; }
+        public int? HospitalId { get; set; }
         public int OperationStatusId { get; set; }
         public Guid? AppointedInterpreterId { get; set; }
 
@@ -29,5 +31,11 @@ namespace HTS.Data.Entity
         public OperationType OperationStatus { get; set; }
         [ForeignKey("AppointedInterpreterId")]
         public IdentityUser? AppointedInterpreter { get; set; }
+        
+        [ForeignKey("HospitalId")]
+        public Hospital? Hospital { get; set; }
+        [ForeignKey("PatientTreatmentProcessId")]
+        public PatientTreatmentProcess? PatientTreatmentProcess { get; set; }
+        
     }
 }

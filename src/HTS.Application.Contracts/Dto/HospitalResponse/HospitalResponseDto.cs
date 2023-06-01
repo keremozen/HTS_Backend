@@ -13,13 +13,12 @@ namespace HTS.Dto.HospitalResponse;
 
 public class HospitalResponseDto : EntityDto<int>
 {
-    public int HospitalConsultationId { get; set; }
+    public int? HospitalConsultationId { get; set; }
     public string Description { get; set; }
     public HospitalResponseTypeEnum HospitalResponseTypeId { get; set; }
     public HospitalizationTypeEnum? HospitalizationTypeId { get; set; }
     public DateTime PossibleTreatmentDate { get; set; }
     public int? HospitalizationNumber { get; set; }
-     public bool IsManuallyAdded { get; set; }
     public HospitalResponseTypeDto HospitalResponseType { get; set; }
     public HospitalizationTypeDto HospitalizationType { get; set; }
     public ICollection<HospitalResponseBranchDto> HospitalResponseBranches { get; set; }

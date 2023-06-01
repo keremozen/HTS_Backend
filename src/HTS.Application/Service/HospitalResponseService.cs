@@ -50,10 +50,14 @@ public class HospitalResponseService : ApplicationService, IHospitalResponseServ
     {
         await IsDataValidToSave(hospitalResponse);
         var entity = ObjectMapper.Map<SaveHospitalResponseDto, HospitalResponse>(hospitalResponse);
-        var hConsultation = await _hcRepository.GetAsync(hospitalResponse.HospitalConsultationId);
+        
+        var hConsultation = hospitalResponse.HospitalConsultationId.HasValue ? await _hcRepository.GetAsync(hospitalResponse.HospitalConsultationId.Value) : null;
         if (hospitalResponse.HospitalResponseTypeId == EntityEnum.HospitalResponseTypeEnum.SuitableForTreatment.GetHashCode())
         {
-            hConsultation.HospitalConsultationStatusId = HospitalConsultationStatusEnum.SuitableForTreatment.GetHashCode();
+            if (hConsultation != null)
+            {
+                hConsultation.HospitalConsultationStatusId = HospitalConsultationStatusEnum.SuitableForTreatment.GetHashCode();
+            }
             entity.PossibleTreatmentDate = hospitalResponse.PossibleTreatmentDate;
             entity.HospitalResponseBranches = ObjectMapper.Map<List<SaveHospitalResponseBranchDto>, List<HospitalResponseBranch>>(hospitalResponse.HospitalResponseBranches.ToList());
             entity.HospitalResponseProcesses = ObjectMapper.Map<List<SaveHospitalResponseProcessDto>, List<HospitalResponseProcess>>(hospitalResponse.HospitalResponseProcesses.ToList());
@@ -66,8 +70,16 @@ public class HospitalResponseService : ApplicationService, IHospitalResponseServ
             entity.HospitalResponseProcesses = null;
             entity.HospitalResponseMaterials = null;
         }
+        if(hConsultation != null)
+        {
         hConsultation.HospitalResponses.Add(entity);
         await _hcRepository.UpdateAsync(hConsultation);
+        
+        }
+        else
+        {
+            await _hospitalResponseRepository.InsertAsync(entity);
+        }
     }
 
     public async Task ApproveAsync(int hospitalResponseId)
@@ -99,8 +111,7 @@ public class HospitalResponseService : ApplicationService, IHospitalResponseServ
             .Where(hr => hr.Id == hospitalResponseId);
         var entity = await AsyncExecuter.FirstOrDefaultAsync(hr);
         await IsDataValidToReject(entity);
-        entity.HospitalConsultation.HospitalConsultationStatusId =
-            EntityEnum.HospitalConsultationStatusEnum.OperationRejected.GetHashCode();
+        entity.HospitalConsultation.HospitalConsultationStatusId = HospitalConsultationStatusEnum.OperationRejected.GetHashCode();
         await _hospitalResponseRepository.UpdateAsync(entity);
     }
 

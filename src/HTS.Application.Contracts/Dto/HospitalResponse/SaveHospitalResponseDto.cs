@@ -10,8 +10,7 @@ namespace HTS.Dto.HospitalResponse;
 
 public class SaveHospitalResponseDto
 {
-    [Required]
-    public int HospitalConsultationId { get; set; }
+    public int? HospitalConsultationId { get; set; }
     public string Description { get; set; }
     [Required]
     public int HospitalResponseTypeId { get; set; }
@@ -19,7 +18,6 @@ public class SaveHospitalResponseDto
 
     public DateTime? PossibleTreatmentDate { get; set; }
     public int? HospitalizationNumber { get; set; }
-     public bool IsManuallyAdded { get; set; }
     public virtual ICollection<SaveHospitalResponseBranchDto> HospitalResponseBranches { get; set; }
     public virtual ICollection<SaveHospitalResponseProcessDto> HospitalResponseProcesses { get; set; }
     public virtual ICollection<SaveHospitalResponseMaterialDto> HospitalResponseMaterials { get; set; }

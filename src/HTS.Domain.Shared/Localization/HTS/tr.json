@@ -398,6 +398,7 @@
     "HospitalResponse:Material:Column:Amount": "Adet",
     "HospitalResponse:AnticipatedMaterials:NewMaterial": "Yeni Malzeme",
     "HospitalResponse:AnticipatedProcesses:NewProcess": "Yeni İşlem",
+    "HospitalResponse:Message:SaveConfirm": "Hastane cevabını kaydetmek istediğinizden emin misiniz?",
 
     /*OPERATIONAL INFO*/
     "OperationalInfo:NewOperation": "Yeni Operasyon",

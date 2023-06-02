@@ -75,6 +75,7 @@ namespace HTS.Data
                 options.Entity<HospitalConsultation>(entityOptions =>
                 {
                     entityOptions.DefaultWithDetailsFunc = query => query.Include(hc => hc.Creator)
+                        .Include(hc => hc.PatientTreatmentProcess)
                         .Include(hc => hc.HospitalConsultationStatus)
                         .Include(hc => hc.HospitalConsultationDocuments);
                 });

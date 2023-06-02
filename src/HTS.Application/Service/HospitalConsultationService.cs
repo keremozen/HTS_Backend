@@ -63,31 +63,40 @@ public class HospitalConsultationService : ApplicationService, IHospitalConsulta
             entity.RowNumber = rowNumber;
             entity.HospitalId = hospital;
             entity.HospitalConsultationStatusId = HospitalConsultationStatusEnum.HospitalResponseWaiting.GetHashCode();
-            ProcessHospitalConsultationDocuments(entity,hospitalConsultation);
+            ProcessHospitalConsultationDocuments(entity, hospitalConsultation);
             entityList.Add(entity);
         }
+
+        //Update patient treatment process entity status clm - "Hastanelere Danışıldı - Cevap Bekleniyor"
+        var ptpEntity = (await _ptpRepository.GetQueryableAsync()).FirstOrDefault(ptp => ptp.Id == hospitalConsultation.PatientTreatmentProcessId);
+        if (ptpEntity != null)
+        {
+            ptpEntity.TreatmentProcessStatusId = PatientTreatmentStatusEnum.HospitalAskedWaitingResponse.GetHashCode();
+            await _ptpRepository.UpdateAsync(ptpEntity);
+        }
+
         await _hcRepository.InsertManyAsync(entityList);
         //TODO: Her hospital'ın sorumlusuna (sorumlularına olabilir?) mail atılacak. 
     }
 
     private async Task<int> GetRowNumber(int ptProcessId)
     {
-       var query = await _hcRepository.GetQueryableAsync();
-       int rowNumber= query.Where(hc => hc.PatientTreatmentProcessId == ptProcessId).Max(hc => (int?)hc.RowNumber) ?? 0;
-       return ++rowNumber;
+        var query = await _hcRepository.GetQueryableAsync();
+        int rowNumber = query.Where(hc => hc.PatientTreatmentProcessId == ptProcessId).Max(hc => (int?)hc.RowNumber) ?? 0;
+        return ++rowNumber;
     }
 
-    private void ProcessHospitalConsultationDocuments(HospitalConsultation entity,SaveHospitalConsultationDto hospitalConsultation)
+    private void ProcessHospitalConsultationDocuments(HospitalConsultation entity, SaveHospitalConsultationDto hospitalConsultation)
     {
         //TODO:Hopsy update this method
         foreach (var document in entity.HospitalConsultationDocuments)
         {
             document.FilePath = "To Be Removed";
-           var userDocument= hospitalConsultation.HospitalConsultationDocuments.FirstOrDefault(d => d.FileName == document.FileName);
+            var userDocument = hospitalConsultation.HospitalConsultationDocuments.FirstOrDefault(d => d.FileName == document.FileName);
             SaveByteArrayToFileWithStaticMethod(userDocument.File, document.FilePath);
         }
     }
-    
+
     private static void SaveByteArrayToFileWithStaticMethod(string data, string filePath)
     {
         File.WriteAllBytes(filePath, Convert.FromBase64String(data));
@@ -98,7 +107,7 @@ public class HospitalConsultationService : ApplicationService, IHospitalConsulta
     {
         await _hcRepository.DeleteAsync(id);
     }
-    
+
 
     /// <summary>
     /// Checks if data is valid to save

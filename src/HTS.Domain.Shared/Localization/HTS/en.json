@@ -397,6 +397,7 @@
     "HospitalResponse:Material:Column:Amount": "Amount",
     "HospitalResponse:AnticipatedMaterials:NewMaterial": "New Material",
     "HospitalResponse:AnticipatedProcesses:NewProcess": "New Process",
+    "HospitalResponse:Message:SaveConfirm": "Are you sure you want to save hospital response?",
 
     /*OPERATIONAL INFO*/
     "OperationalInfo:NewOperation": "New Operation",

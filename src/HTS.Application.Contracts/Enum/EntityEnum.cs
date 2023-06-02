@@ -62,13 +62,21 @@ namespace HTS.Enum
             /// </summary>
             SuitableForTreatment = 2,
             /// <summary>
+            /// Tedaviye Uygun Değildir
+            /// </summary>
+            NotSuitableForTreatment = 3,
+            /// <summary>
+            /// Tanı İçin Muayene Gerekli
+            /// </summary>
+            ExaminationsIsRequiredForDiagnosis = 4,
+            /// <summary>
             /// Operasyon onaylandı
             /// </summary>
-            OperationApproved = 3,
+            OperationApproved = 5,
             /// <summary>
             /// Operasyon reddedildi
             /// </summary>
-            OperationRejected = 4
+            OperationRejected = 6
         }
         
         public enum HospitalResponseTypeEnum

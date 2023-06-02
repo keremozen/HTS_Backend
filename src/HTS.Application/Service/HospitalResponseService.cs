@@ -56,6 +56,18 @@ public class HospitalResponseService : ApplicationService, IHospitalResponseServ
         {
             hConsultation.HospitalConsultationStatusId = HospitalConsultationStatusEnum.SuitableForTreatment.GetHashCode();
         }
+        else if (hospitalResponse.HospitalResponseTypeId == EntityEnum.HospitalResponseTypeEnum.NotSuitableForTreatment.GetHashCode())
+        {
+            hConsultation.HospitalConsultationStatusId = HospitalConsultationStatusEnum.NotSuitableForTreatment.GetHashCode();
+        }
+        else if (hospitalResponse.HospitalResponseTypeId == EntityEnum.HospitalResponseTypeEnum.ExaminationsIsRequiredForDiagnosis.GetHashCode())
+        {
+            hConsultation.HospitalConsultationStatusId = HospitalConsultationStatusEnum.ExaminationsIsRequiredForDiagnosis.GetHashCode();
+        }
+        //Update patient treatment process entity status clm - "Hastanelere Danışıldı - Değerlendirme Bekliyor"
+        hConsultation.PatientTreatmentProcess.TreatmentProcessStatusId =
+           PatientTreatmentStatusEnum.HospitalAskedWaitingAssessment.GetHashCode();
+
         hConsultation.HospitalResponses.Add(entity);
         await _hcRepository.UpdateAsync(hConsultation);
     }

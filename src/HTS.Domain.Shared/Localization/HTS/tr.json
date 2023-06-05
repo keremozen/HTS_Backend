@@ -372,6 +372,8 @@
     "HospitalConsultation:FieldLegend:Documents": "Dokümanlar",
     "HospitalConsultation:Button:Consultation": "Danışma",
     "HospitalConsultation:Button:Answer": "Cevap",
+    "HospitalConsultation:Message:ConfirmApprove": "Hastane cevabını onaylamak istediğinizden emin misiniz?",
+    "HospitalConsultation:Message:ConfirmReject": "Hastane cevabını reddetmek istediğinizden emin misiniz?",
 
     /*HOSPITAL RESPONSE*/
     "HospitalResponse:Title": "Hastane Cevabı",
@@ -399,6 +401,8 @@
     "HospitalResponse:AnticipatedMaterials:NewMaterial": "Yeni Malzeme",
     "HospitalResponse:AnticipatedProcesses:NewProcess": "Yeni İşlem",
     "HospitalResponse:Message:SaveConfirm": "Hastane cevabını kaydetmek istediğinizden emin misiniz?",
+    "HospitalResponse:Message:SuccessfulApprove": "Hastane cevabı başarıyla onaylanmıştır.",
+    "HospitalResponse:Message:SuccessfulReject": "Hastane cevabı başarıyla reddedilmiştir.",
 
     /*OPERATIONAL INFO*/
     "OperationalInfo:NewOperation": "Yeni Operasyon",

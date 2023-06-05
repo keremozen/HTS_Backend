@@ -1,13 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Volo.Abp.Domain.Entities.Auditing;
-using Volo.Abp.Identity;
+using Volo.Abp.Domain.Entities;
 
 namespace HTS.Data.Entity
 {
 
-    public class ProcessCost : FullAuditedEntityWithUser<int, IdentityUser>
+    public class ProcessCost : IEntity<int>
     {
+        [Key, Required, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
         [Required]
         public int ProcessId { get; set; }
         [Required]
@@ -23,8 +24,10 @@ namespace HTS.Data.Entity
         
         [ForeignKey("ProcessId")]
         public Process Process { get; set; }
-     
-     
-     
+
+        public object[] GetKeys()
+        {
+            return new object[] { Id };
+        }
     }
 }

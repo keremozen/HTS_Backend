@@ -371,6 +371,8 @@
     "HospitalConsultation:FieldLegend:Documents": "Documents",
     "HospitalConsultation:Button:Consultation": "Consultation",
     "HospitalConsultation:Button:Answer": "Answer",
+    "HospitalConsultation:Message:ConfirmApprove": "Are you sure you want to approve hospital response?",
+    "HospitalConsultation:Message:ConfirmReject": "Are you sure you want to reject hospital response?",
 
     /*HOSPITAL RESPONSE*/
     "HospitalResponse:Title": "Hospital Response",
@@ -398,6 +400,8 @@
     "HospitalResponse:AnticipatedMaterials:NewMaterial": "New Material",
     "HospitalResponse:AnticipatedProcesses:NewProcess": "New Process",
     "HospitalResponse:Message:SaveConfirm": "Are you sure you want to save hospital response?",
+    "HospitalResponse:Message:SuccessfulApprove": "Hospital response is successfully approved.",
+    "HospitalResponse:Message:SuccessfulReject": "Hospital response is successfully rejected.",
 
     /*OPERATIONAL INFO*/
     "OperationalInfo:NewOperation": "New Operation",

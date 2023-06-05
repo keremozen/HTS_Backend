@@ -32,7 +32,6 @@ public class PatientService : ApplicationService, IPatientService
     {
         var query = (await _patientRepository.WithDetailsAsync()).Where(p => p.Id == id);
         var patient = await AsyncExecuter.FirstOrDefaultAsync(query);
-        patient.PatientTreatmentProcesses = patient.PatientTreatmentProcesses.OrderByDescending(t => t.Id).Take(1).ToList();
         return ObjectMapper.Map<Patient, PatientDto>(patient);
     }
 

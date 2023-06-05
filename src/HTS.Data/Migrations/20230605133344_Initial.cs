@@ -1273,33 +1273,11 @@ namespace HTS.Data.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     ProcessId = table.Column<int>(type: "integer", nullable: false),
-                    ChildProcessId = table.Column<int>(type: "integer", nullable: false),
-                    CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
-                    LastModificationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    LastModifierId = table.Column<Guid>(type: "uuid", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
-                    DeleterId = table.Column<Guid>(type: "uuid", nullable: true),
-                    DeletionTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    ChildProcessId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_IncludingProcesses", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_IncludingProcesses_AbpUsers_CreatorId",
-                        column: x => x.CreatorId,
-                        principalTable: "AbpUsers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_IncludingProcesses_AbpUsers_DeleterId",
-                        column: x => x.DeleterId,
-                        principalTable: "AbpUsers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_IncludingProcesses_AbpUsers_LastModifierId",
-                        column: x => x.LastModifierId,
-                        principalTable: "AbpUsers",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_IncludingProcesses_Processes_ChildProcessId",
                         column: x => x.ChildProcessId,
@@ -1325,33 +1303,11 @@ namespace HTS.Data.Migrations
                     ValidityEndDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     HospitalPrice = table.Column<int>(type: "integer", nullable: false),
                     UshasPrice = table.Column<int>(type: "integer", nullable: false),
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
-                    CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
-                    LastModificationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    LastModifierId = table.Column<Guid>(type: "uuid", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
-                    DeleterId = table.Column<Guid>(type: "uuid", nullable: true),
-                    DeletionTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ProcessCosts", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ProcessCosts_AbpUsers_CreatorId",
-                        column: x => x.CreatorId,
-                        principalTable: "AbpUsers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_ProcessCosts_AbpUsers_DeleterId",
-                        column: x => x.DeleterId,
-                        principalTable: "AbpUsers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_ProcessCosts_AbpUsers_LastModifierId",
-                        column: x => x.LastModifierId,
-                        principalTable: "AbpUsers",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_ProcessCosts_Processes_ProcessId",
                         column: x => x.ProcessId,
@@ -2096,21 +2052,6 @@ namespace HTS.Data.Migrations
                 column: "ChildProcessId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_IncludingProcesses_CreatorId",
-                table: "IncludingProcesses",
-                column: "CreatorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_IncludingProcesses_DeleterId",
-                table: "IncludingProcesses",
-                column: "DeleterId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_IncludingProcesses_LastModifierId",
-                table: "IncludingProcesses",
-                column: "LastModifierId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_IncludingProcesses_ProcessId",
                 table: "IncludingProcesses",
                 column: "ProcessId");
@@ -2334,21 +2275,6 @@ namespace HTS.Data.Migrations
                 name: "IX_PatientTreatmentProcesses_TreatmentProcessStatusId",
                 table: "PatientTreatmentProcesses",
                 column: "TreatmentProcessStatusId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProcessCosts_CreatorId",
-                table: "ProcessCosts",
-                column: "CreatorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProcessCosts_DeleterId",
-                table: "ProcessCosts",
-                column: "DeleterId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProcessCosts_LastModifierId",
-                table: "ProcessCosts",
-                column: "LastModifierId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProcessCosts_ProcessId",

@@ -1609,41 +1609,11 @@ namespace HTS.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("CreationTime");
-
-                    b.Property<Guid?>("CreatorId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("CreatorId");
-
-                    b.Property<Guid?>("DeleterId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("DeleterId");
-
-                    b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("DeletionTime");
-
                     b.Property<int>("HospitalPrice")
                         .HasColumnType("integer");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IsDeleted");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("LastModificationTime");
-
-                    b.Property<Guid?>("LastModifierId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("LastModifierId");
 
                     b.Property<int>("ProcessId")
                         .HasColumnType("integer");
@@ -1658,12 +1628,6 @@ namespace HTS.Data.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CreatorId");
-
-                    b.HasIndex("DeleterId");
-
-                    b.HasIndex("LastModifierId");
 
                     b.HasIndex("ProcessId");
 
@@ -1681,48 +1645,12 @@ namespace HTS.Data.Migrations
                     b.Property<int>("ChildProcessId")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("CreationTime");
-
-                    b.Property<Guid?>("CreatorId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("CreatorId");
-
-                    b.Property<Guid?>("DeleterId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("DeleterId");
-
-                    b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("DeletionTime");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IsDeleted");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("LastModificationTime");
-
-                    b.Property<Guid?>("LastModifierId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("LastModifierId");
-
                     b.Property<int>("ProcessId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ChildProcessId");
-
-                    b.HasIndex("CreatorId");
-
-                    b.HasIndex("DeleterId");
-
-                    b.HasIndex("LastModifierId");
 
                     b.HasIndex("ProcessId");
 
@@ -3314,29 +3242,11 @@ namespace HTS.Data.Migrations
 
             modelBuilder.Entity("HTS.Data.Entity.ProcessCost", b =>
                 {
-                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Creator")
-                        .WithMany()
-                        .HasForeignKey("CreatorId");
-
-                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Deleter")
-                        .WithMany()
-                        .HasForeignKey("DeleterId");
-
-                    b.HasOne("Volo.Abp.Identity.IdentityUser", "LastModifier")
-                        .WithMany()
-                        .HasForeignKey("LastModifierId");
-
                     b.HasOne("HTS.Data.Entity.Process", "Process")
                         .WithMany("ProcessCosts")
                         .HasForeignKey("ProcessId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Creator");
-
-                    b.Navigation("Deleter");
-
-                    b.Navigation("LastModifier");
 
                     b.Navigation("Process");
                 });
@@ -3349,18 +3259,6 @@ namespace HTS.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Creator")
-                        .WithMany()
-                        .HasForeignKey("CreatorId");
-
-                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Deleter")
-                        .WithMany()
-                        .HasForeignKey("DeleterId");
-
-                    b.HasOne("Volo.Abp.Identity.IdentityUser", "LastModifier")
-                        .WithMany()
-                        .HasForeignKey("LastModifierId");
-
                     b.HasOne("HTS.Data.Entity.Process", "Process")
                         .WithMany("ProcessRelations")
                         .HasForeignKey("ProcessId")
@@ -3368,12 +3266,6 @@ namespace HTS.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("ChildProcess");
-
-                    b.Navigation("Creator");
-
-                    b.Navigation("Deleter");
-
-                    b.Navigation("LastModifier");
 
                     b.Navigation("Process");
                 });

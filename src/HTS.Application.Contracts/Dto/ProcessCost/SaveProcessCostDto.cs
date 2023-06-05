@@ -6,6 +6,7 @@ namespace HTS.Dto.ProcessCost;
 
 public class SaveProcessCostDto
 {
+    public int? Id { get; set; }
     [Required]
     public int ProcessId { get; set; }
     [Required]

@@ -19,24 +19,24 @@ public class OperationService : ApplicationService, IOperationService
     {
         _operationRepository = operationRepository;
     }
-    
+
 
     public async Task CreateAsync(SaveOperationDto operation)
     {
-        await IsDataValidToSave(operation);
+        IsDataValidToSave(operation);
         var entity = ObjectMapper.Map<SaveOperationDto, Operation>(operation);
         entity.OperationTypeId = OperationTypeEnum.Manual.GetHashCode();
         await _operationRepository.InsertAsync(entity);
     }
-    
+
     /// <summary>
     /// Checks if data is valid to save
     /// </summary>
     /// <param name="operation">To be saved object</param>
     /// <exception cref="HTSBusinessException">Check response exceptions</exception>
-    private async Task IsDataValidToSave(SaveOperationDto operation)
+    private void IsDataValidToSave(SaveOperationDto operation)
     {
-        
+
         //If status is ok, check data
         if (operation.HospitalResponse.HospitalResponseTypeId == EntityEnum.HospitalResponseTypeEnum.SuitableForTreatment.GetHashCode())
         {

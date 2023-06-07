@@ -89,6 +89,7 @@ public class HospitalResponseService : ApplicationService, IHospitalResponseServ
         Operation operation = new Operation()
         {
             HospitalResponseId = hospitalResponseId,
+            PatientTreatmentProcessId = entity.HospitalConsultation.PatientTreatmentProcess.Id,
             OperationTypeId = OperationTypeEnum.HospitalConsultation.GetHashCode(),
             OperationStatusId = OperationStatusEnum.PriceExpecting.GetHashCode()
         };

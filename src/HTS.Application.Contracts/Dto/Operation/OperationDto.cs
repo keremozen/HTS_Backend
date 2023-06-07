@@ -1,8 +1,10 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using HTS.Dto.Hospital;
+using HTS.Dto.HospitalResponse;
 using HTS.Dto.OperationStatus;
 using HTS.Dto.OperationType;
+using HTS.Dto.PatientTreatmentProcess;
 using HTS.Dto.TreatmentType;
 using HTS.Enum;
 using Volo.Abp.Application.Dtos;
@@ -11,7 +13,7 @@ using static HTS.Enum.EntityEnum;
 
 namespace HTS.Dto.Operation;
 
-public class OperationDto: EntityDto<int>
+public class OperationDto: AuditedEntityWithUserDto<int, IdentityUserDto>
 {
     public int HospitalResponseId { get; set; }
     public DateTime TravelDateToTurkey { get; set; }
@@ -28,4 +30,6 @@ public class OperationDto: EntityDto<int>
     public OperationStatusDto OperationStatus { get; set; }
     public IdentityUserDto AppointedInterpreter { get; set; }
     public HospitalDto Hospital { get; set; }
+    public PatientTreatmentProcessDto PatientTreatmentProcess { get; set; }
+    public HospitalResponseDto HospitalResponse { get; set; }
 }

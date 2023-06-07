@@ -35,6 +35,13 @@
     "HTS:3": "Aynı uyruk ve pasaport numarasına sahip başka bir hasta bulunmaktadır.",
     "HTS:4": "Bir notu sadece oluşturan kişi iptal edebilir.",
     "HTS:5": "Bir dokümanı sadece oluşturan kişi iptal edebilir.",
+    "HTS:6": "Tedavi süreci durumu uygun olmadığı için hastanelere danışılamaz.",
+    "HTS:7": "İlişkili veride eksiklik mevcut.",
+    "HTS:8": "Hastane daha önce cevap verdiği için tekrar cevap verilemez.",
+    "HTS:9": "Tedaviye uygun olabilmesi için gerekli alanlarda eksikler bulunuyor.",
+    "HTS:10": "Hastane cevabının onaylanabilmesi için durumunun tedaviye uygun olması gerekmektedir.",
+    "HTS:11": "Hastane cevabının reddedilebilmesi için durumunun tedaviye uygun olması gerekmektedir.",
+    "HTS:12": "Tedavi süreci için başka bir hastane cevabı onaylanmış.",
 
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Başarılı",
@@ -361,6 +368,7 @@
     /*HOSPITAL CONSULTATION*/
     "HospitalConsultation:Title": "Hastane Danışma",
     "HospitalConsultation:NewConsultation": "Hastanelere Danış",
+    "HospitalConsultation:Column:RowNumber": "Sıra No",
     "HospitalConsultation:Column:ConsultationNo": "Danışma No",
     "HospitalConsultation:Column:CreatedBy": "Ekleyen Kullanıcı",
     "HospitalConsultation:Column:Created": "Eklenme Tarihi",
@@ -414,6 +422,7 @@
     "OperationalInfo:Column:OperationType": "Operasyon Tipi",
     "OperationalInfo:Column:Status": "Durum",
     "OperationalInfo:Column:DetailsAndActions": "Detaylar ve İşlemler",
+    "OperationalInfo:Button:CreateProforma": "Fiyatlandır",
 
     /*QUOTATION*/
     "Quotation:FieldLegend:HBYSProcesses": "HBYS İşlemleri",

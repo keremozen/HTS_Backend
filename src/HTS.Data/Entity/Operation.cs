@@ -28,7 +28,7 @@ namespace HTS.Data.Entity
         [ForeignKey("OperationTypeId")]
         public OperationType OperationType { get; set; }
         [ForeignKey("OperationStatusId")]
-        public OperationType OperationStatus { get; set; }
+        public OperationStatus OperationStatus { get; set; }
         [ForeignKey("AppointedInterpreterId")]
         public IdentityUser? AppointedInterpreter { get; set; }
         

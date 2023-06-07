@@ -35,6 +35,13 @@
     "HTS:3": "There is already a patient with the same nationality and passport number.",
     "HTS:4": "Note can be revoked only by the creator of that note.",
     "HTS:5": "Document can be revoked only by the creator of that document.",
+    "HTS:6": "Hospital consultation cannot be completed since the treatment process status is invalid.",
+    "HTS:7": "Relational data is missing.",
+    "HTS:8": "Hospital has already responded to the consultation.",
+    "HTS:9": "There are some missing fields for suitable for treatment status.",
+    "HTS:10": "In order to approve hospital response it has to be set to sutiable for treatment.",
+    "HTS:11": "In order to reject hospital response it has to be set to sutiable for treatment.",
+    "HTS:12": "Another hospital response is approved for this treatment process.",
 
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Successful",
@@ -360,6 +367,7 @@
     /*HOSPITAL CONSULTATION*/
     "HospitalConsultation:Title": "Hospital Consultation",
     "HospitalConsultation:NewConsultation": "Consult Hospitals",
+    "HospitalConsultation:Column:RowNumber": "Row No",
     "HospitalConsultation:Column:ConsultationNo": "Consultation No",
     "HospitalConsultation:Column:CreatedBy": "Created By",
     "HospitalConsultation:Column:Created": "Creation Date",
@@ -413,6 +421,7 @@
     "OperationalInfo:Column:OperationType": "Operation Type",
     "OperationalInfo:Column:Status": "Status",
     "OperationalInfo:Column:DetailsAndActions": "Details and Actions",
+    "OperationalInfo:Button:CreateProforma": "Create Proforma",
 
     /*QUOTATION*/
     "Quotation:FieldLegend:HBYSProcesses": "HBYS Processes",

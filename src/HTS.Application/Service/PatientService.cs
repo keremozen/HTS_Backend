@@ -40,12 +40,12 @@ public class PatientService : ApplicationService, IPatientService
         //Get all entities
         var query = await _patientRepository.WithDetailsAsync();
         var patientList = await AsyncExecuter.ToListAsync(query);
-        patientList = patientList.Select(p =>
+       /* patientList = patientList.Select(p =>
         {
             p.PatientTreatmentProcesses =  p.PatientTreatmentProcesses.OrderByDescending(t => t.Id).Take(1).ToList();
             return p;
         })
-        .ToList();
+        .ToList();*/
         var responseList = ObjectMapper.Map<List<Patient>, List<PatientDto>>(patientList);
         var totalCount = await _patientRepository.CountAsync();//item count
 

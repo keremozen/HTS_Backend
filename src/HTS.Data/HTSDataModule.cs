@@ -40,6 +40,18 @@ namespace HTS.Data
                                                                         .Include(t => t.TreatmentProcessStatus);
                 });
 
+                options.Entity<Operation>(entityOptions =>
+                {
+                    entityOptions.DefaultWithDetailsFunc = query => query.Include(o => o.Creator)
+                                                                         .Include(o => o.HospitalResponse)
+                                                                         .ThenInclude(hr => hr.HospitalConsultation)
+                                                                         .ThenInclude(hc => hc.Hospital)
+                                                                         .Include(o => o.Hospital)
+                                                                         .Include(o => o.PatientTreatmentProcess)
+                                                                         .Include(o => o.OperationType)
+                                                                         .Include(o => o.OperationStatus);
+                });
+
                 options.Entity<ContractedInstitution>(entityOptions =>
                 {
                     entityOptions.DefaultWithDetailsFunc = query => query.Include(i => i.Nationality)

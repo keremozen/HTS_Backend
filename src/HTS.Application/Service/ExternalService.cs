@@ -23,10 +23,27 @@ namespace HTS.Service
                 Result = new List<SutCodeResult>()
             };
             int i = 0;
+
             foreach (var sutCode in sutCodesRequest.SutCodes)
             {
-                result.Result.Add(new SutCodeResult(){ IsIncluded = (++i % 2 == 0), SutCode = sutCode});
+                ((List<SutCodeResult>)result.Result).Add(new SutCodeResult(){ IsIncluded = (++i % 2 == 0), SutCode = sutCode});
             }
+            return result;
+        }
+
+        public async Task<ExternalApiResult> GetPatientInfo(string htsCode)
+        {
+            ExternalApiResult result = new ExternalApiResult()
+            {
+                ResultCode = 200,
+                Result = new PatientInfo(){
+                    Gender = "Erkek",
+                    Name = "Yeager",
+                    Surname = "Jacobsen",
+                    Nationality = "Almanya",
+                    Passport = "UP1234EY"
+                }
+            };
             return result;
         }
     }

@@ -98,8 +98,6 @@ namespace HTS.Data
                         .Include(hr => hr.HospitalResponseProcesses)
                         .ThenInclude(hrp => hrp.Process)
                         .Include(hr => hr.HospitalResponseType)
-                        .Include(hr => hr.HospitalResponseMaterials)
-                        .ThenInclude(hrm => hrm.Material)
                         .Include(hr => hr.HospitalizationType)
                         .Include(hr => hr.HospitalConsultation)
                         .ThenInclude(hc => hc.Hospital)

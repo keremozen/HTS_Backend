@@ -75,3 +75,7 @@ INSERT INTO "OperationTypes"("Id", "Name") VALUES (2, 'Elle giriş');
 --Operation status Table
 INSERT INTO "OperationStatuses"("Id", "Name") VALUES (1, 'Fiyatlandırma Bekleniyor');
 INSERT INTO "OperationStatuses"("Id", "Name") VALUES (2, 'Proforma Oluşturuldu');
+
+--Process type Table
+INSERT INTO "ProcessTypes"("Id", "Name","IsActive") VALUES (1, 'Sut Kodu',1);
+INSERT INTO "ProcessTypes"("Id", "Name","IsActive") VALUES (2, 'Sarf Malzeme',1);

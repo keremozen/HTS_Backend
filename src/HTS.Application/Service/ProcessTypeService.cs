@@ -33,22 +33,4 @@ public class ProcessTypeService : ApplicationService, IProcessTypeService
         return new PagedResultDto<ProcessTypeDto>(totalCount,responseList);
     }
 
-    public async Task<ProcessTypeDto> CreateAsync(SaveProcessTypeDto processType)
-    {
-        var entity = ObjectMapper.Map<SaveProcessTypeDto, ProcessType>(processType);
-        await _processTypeRepository.InsertAsync(entity);
-        return ObjectMapper.Map<ProcessType, ProcessTypeDto>(entity);
-    }
-
-    public async Task<ProcessTypeDto> UpdateAsync(int id, SaveProcessTypeDto processType)
-    {
-        var entity = await _processTypeRepository.GetAsync(id);
-        ObjectMapper.Map(processType, entity);
-        return ObjectMapper.Map<ProcessType,ProcessTypeDto>( await _processTypeRepository.UpdateAsync(entity));
-    }
-        
-    public async Task DeleteAsync(int id)
-    {
-        await _processTypeRepository.DeleteAsync(id);
-    }
 }

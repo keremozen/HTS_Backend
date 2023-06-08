@@ -64,7 +64,6 @@ public class OperationService : ApplicationService, IOperationService
             if (!operation.HospitalResponse.HospitalizationTypeId.HasValue
                 || !(operation.HospitalResponse.HospitalResponseBranches?.Any() ?? false)
                 || (operation.HospitalResponse.HospitalizationTypeId == EntityEnum.HospitalizationTypeEnum.SurgicalHospitalization.GetHashCode() && !(operation.HospitalResponse.HospitalResponseProcesses?.Any() ?? false))
-                || !(operation.HospitalResponse.HospitalResponseMaterials?.Any() ?? false)
                 || operation.HospitalResponse.PossibleTreatmentDate == DateTime.MinValue
                 || operation.HospitalResponse.PossibleTreatmentDate == null
                 || operation.HospitalResponse.HospitalizationNumber == null)

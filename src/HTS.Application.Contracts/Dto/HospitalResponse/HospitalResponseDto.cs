@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using HTS.Dto.HospitalConsultation;
 using HTS.Dto.HospitalizationType;
 using HTS.Dto.HospitalResponseBranch;
-using HTS.Dto.HospitalResponseMaterial;
 using HTS.Dto.HospitalResponseProcess;
 using HTS.Dto.HospitalResponseType;
 using Volo.Abp.Application.Dtos;
@@ -23,6 +22,5 @@ public class HospitalResponseDto : EntityDto<int>
     public HospitalizationTypeDto HospitalizationType { get; set; }
     public ICollection<HospitalResponseBranchDto> HospitalResponseBranches { get; set; }
     public ICollection<HospitalResponseProcessDto> HospitalResponseProcesses { get; set; }
-    public ICollection<HospitalResponseMaterialDto> HospitalResponseMaterials { get; set; }
     public HospitalConsultationDto  HospitalConsultation { get; set; }
 }

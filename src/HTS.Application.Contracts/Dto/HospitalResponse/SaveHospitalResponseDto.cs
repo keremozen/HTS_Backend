@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using HTS.Dto.HospitalResponseBranch;
-using HTS.Dto.HospitalResponseMaterial;
 using HTS.Dto.HospitalResponseProcess;
 using static HTS.Enum.EntityEnum;
 
@@ -20,7 +19,5 @@ public class SaveHospitalResponseDto
     public int? HospitalizationNumber { get; set; }
     public virtual ICollection<SaveHospitalResponseBranchDto> HospitalResponseBranches { get; set; }
     public virtual ICollection<SaveHospitalResponseProcessDto> HospitalResponseProcesses { get; set; }
-    public virtual ICollection<SaveHospitalResponseMaterialDto> HospitalResponseMaterials { get; set; }
-
 
 }

@@ -174,5 +174,17 @@ namespace HTS.Enum
             /// </summary>
             ProformaCreated = 2
         }
+
+        public enum ProcessTypeEnum
+        {
+            /// <summary>
+            /// Sutcodes
+            /// </summary>
+            SutCode = 1,
+            /// <summary>
+            /// Materials
+            /// </summary>
+            Material = 2
+        }
     }
 }

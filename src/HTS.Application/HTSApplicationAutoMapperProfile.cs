@@ -15,12 +15,10 @@ using HTS.Dto.HospitalConsultationStatus;
 using HTS.Dto.HospitalizationType;
 using HTS.Dto.HospitalResponse;
 using HTS.Dto.HospitalResponseBranch;
-using HTS.Dto.HospitalResponseMaterial;
 using HTS.Dto.HospitalResponseProcess;
 using HTS.Dto.HospitalResponseType;
 using HTS.Dto.HospitalStaff;
 using HTS.Dto.Language;
-using HTS.Dto.Material;
 using HTS.Dto.Nationality;
 using HTS.Dto.Operation;
 using HTS.Dto.OperationStatus;
@@ -69,11 +67,8 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<Branch, BranchDto>();
         CreateMap<SaveBranchDto, Branch>();
         CreateMap<ProcessType, ProcessTypeDto>();
-        CreateMap<SaveProcessTypeDto, ProcessType>();
         CreateMap<TreatmentType, TreatmentTypeDto>();
         CreateMap<SaveTreatmentTypeDto, TreatmentType>();
-        CreateMap<Material, MaterialDto>();
-        CreateMap<SaveMaterialDto, Material>();
         CreateMap<RejectReason, RejectReasonDto>();
         CreateMap<SaveRejectReasonDto, RejectReason>();
         
@@ -119,8 +114,6 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<SaveHospitalResponseBranchDto, HospitalResponseBranch>();
         CreateMap<HospitalResponseProcess, HospitalResponseProcessDto>();
         CreateMap<SaveHospitalResponseProcessDto, HospitalResponseProcess>();
-        CreateMap<HospitalResponseMaterial, HospitalResponseMaterialDto>();
-        CreateMap<SaveHospitalResponseMaterialDto, HospitalResponseMaterial>();
         CreateMap<Operation, OperationDto>();
         CreateMap<SaveOperationDto, Operation>();
 

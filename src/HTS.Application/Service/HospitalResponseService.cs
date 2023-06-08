@@ -7,7 +7,6 @@ using HTS.Data.Entity;
 using HTS.Dto.HospitalConsultation;
 using HTS.Dto.HospitalResponse;
 using HTS.Dto.HospitalResponseBranch;
-using HTS.Dto.HospitalResponseMaterial;
 using HTS.Dto.HospitalResponseProcess;
 using HTS.Enum;
 using HTS.Interface;
@@ -167,7 +166,6 @@ public class HospitalResponseService : ApplicationService, IHospitalResponseServ
             if (!hospitalResponse.HospitalizationTypeId.HasValue
                  || !(hospitalResponse.HospitalResponseBranches?.Any() ?? false)
                 || (hospitalResponse.HospitalizationTypeId == EntityEnum.HospitalizationTypeEnum.SurgicalHospitalization.GetHashCode() && !(hospitalResponse.HospitalResponseProcesses?.Any() ?? false))
-                || !(hospitalResponse.HospitalResponseMaterials?.Any() ?? false)
                 || hospitalResponse.PossibleTreatmentDate == DateTime.MinValue
                 || hospitalResponse.PossibleTreatmentDate == null
                 || hospitalResponse.HospitalizationNumber == null)

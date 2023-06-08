@@ -16,9 +16,9 @@ namespace HTS.Data.Entity
         [Required]
         public DateTime ValidityEndDate { get; set; }
         [Required]
-        public int HospitalPrice { get; set; }
+        public decimal HospitalPrice { get; set; }
         [Required]
-        public int UshasPrice { get; set; }
+        public decimal UshasPrice { get; set; }
         [Required]
         public bool IsActive { get; set; }
         

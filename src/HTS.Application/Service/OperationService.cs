@@ -50,6 +50,16 @@ public class OperationService : ApplicationService, IOperationService
         await _operationRepository.InsertAsync(entity);
     }
 
+    public async Task UpdateAsync(SaveOperationDto operation)
+    {
+        operation.HospitalId = null;
+        operation.PatientTreatmentProcessId = null;
+        operation.HospitalResponse = null;
+        var entity = ObjectMapper.Map<SaveOperationDto, Operation>(operation);
+        entity.OperationTypeId = OperationTypeEnum.HospitalConsultation.GetHashCode();
+        await _operationRepository.UpdateAsync(entity);
+    }
+
     /// <summary>
     /// Checks if data is valid to save
     /// </summary>

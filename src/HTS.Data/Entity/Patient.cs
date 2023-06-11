@@ -5,7 +5,7 @@ using Volo.Abp.Identity;
 
 namespace HTS.Data.Entity
 {
-    public class Patient : FullAuditedAggregateRootWithUser<int, IdentityUser>
+    public class Patient : FullAuditedEntityWithUser<int, IdentityUser>
     {
         [Required, StringLength(50)]
         public string Name { get; set; }

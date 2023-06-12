@@ -28,7 +28,13 @@ namespace HTS.Interface
         /// <param name="operation">Operation data to be insert</param>
         /// <returns></returns>
         Task CreateAsync(SaveOperationDto operation);
+        /// <summary>
+        /// Hospital consultation type operation data update
+        /// </summary>
+        /// <param name="operation">Operation data to be updated</param>
+        /// <returns></returns>
+        Task UpdateAsync(SaveOperationDto operation);
 
-     
+
     }
 }

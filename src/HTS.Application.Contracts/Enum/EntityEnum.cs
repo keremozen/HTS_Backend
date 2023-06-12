@@ -8,8 +8,8 @@ namespace HTS.Enum
     {
         public enum GenderEnum
         {
-            Women = 1,
-            Men = 2            
+            Men = 1,
+            Women = 2         
         }
 
         public enum CurrencyEnum

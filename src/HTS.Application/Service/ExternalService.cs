@@ -17,34 +17,95 @@ namespace HTS.Service
 
         public async Task<ExternalApiResult> CheckSutCodes(SutCodesRequestDto sutCodesRequest)
         {
-            ExternalApiResult result = new ExternalApiResult()
+            ExternalApiResult result;
+            if (sutCodesRequest.HTSCode == "U100000000")
             {
-                ResultCode = 200,
-                Result = new List<SutCodeResult>()
-            };
-            int i = 0;
-
-            foreach (var sutCode in sutCodesRequest.SutCodes)
+                result = new ExternalApiResult()
+                {
+                    ResultCode = 200,
+                    Result = new List<SutCodeResult>()
+                };
+                foreach (var sutCode in sutCodesRequest.SutCodes)
+                {
+                    ((List<SutCodeResult>)result.Result).Add(new SutCodeResult()
+                    {
+                        IsIncluded = (sutCode == "GR1000" || sutCode == "GR1001") ? true : false
+                    ,
+                        SutCode = sutCode
+                    });
+                }
+            }
+            else if (sutCodesRequest.HTSCode == "U100000001")
             {
-                ((List<SutCodeResult>)result.Result).Add(new SutCodeResult(){ IsIncluded = (++i % 2 == 0), SutCode = sutCode});
+                result = new ExternalApiResult()
+                {
+                    ResultCode = 200,
+                    Result = new List<SutCodeResult>()
+                };
+                foreach (var sutCode in sutCodesRequest.SutCodes)
+                {
+                    ((List<SutCodeResult>)result.Result).Add(new SutCodeResult()
+                    {
+                        IsIncluded = (sutCode == "GR2000" || sutCode == "GR2001") ? true : false
+                    ,
+                        SutCode = sutCode
+                    });
+                }
+            }
+            else
+            {
+                result = new ExternalApiResult()
+                {
+                    ResultCode = 201,
+                    Result = null
+                };
             }
             return result;
         }
 
         public async Task<ExternalApiResult> GetPatientInfo(string htsCode)
         {
-            ExternalApiResult result = new ExternalApiResult()
+            ExternalApiResult result;
+            if (htsCode == "U100000000")
             {
-                ResultCode = 200,
-                Result = new PatientInfo(){
-                    Gender = "Erkek",
-                    Name = "Yeager",
-                    Surname = "Jacobsen",
-                    Nationality = "Almanya",
-                    Passport = "UP1234EY"
-                }
-            };
+                result = new ExternalApiResult()
+                {
+                    ResultCode = 200,
+                    Result = new PatientInfo()
+                    {
+                        Gender = "1",
+                        Name = "Yeager",
+                        Surname = "Jacobsen",
+                        Nationality = "DE",
+                        Passport = "UP1234EY"
+                    }
+                };
+            }
+            else if (htsCode == "U100000001")
+            {
+                result = new ExternalApiResult()
+                {
+                    ResultCode = 200,
+                    Result = new PatientInfo()
+                    {
+                        Gender = "2",
+                        Name = "Aerır",
+                        Surname = "Jacobsen",
+                        Nationality = "DE",
+                        Passport = "UP1234EZ"
+                    }
+                };
+            }
+            else
+            {
+                result = new ExternalApiResult()
+                {
+                    ResultCode = 201,
+                    Result = null
+                };
+            }
             return result;
+
         }
     }
 }

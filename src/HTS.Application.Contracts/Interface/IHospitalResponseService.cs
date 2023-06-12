@@ -13,7 +13,7 @@ namespace HTS.Interface
         /// <param name="id">Desired entity id</param>
         /// <returns>Desired entity</returns>
         Task<HospitalResponseDto> GetAsync(int id);
-   
+
         /// <summary>
         /// Creates entity
         /// </summary>

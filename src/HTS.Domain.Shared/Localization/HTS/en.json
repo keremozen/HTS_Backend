@@ -412,7 +412,9 @@
     "HospitalResponse:Message:SuccessfulReject": "Hospital response is successfully rejected.",
 
     /*OPERATIONAL INFO*/
+    "OperationalInfo:Title": "Operation",
     "OperationalInfo:NewOperation": "New Operation",
+    "OperationalInfo:OperationEdit": "Operation Edit",
     "OperationalInfo:Column:TreatmentCode": "Treatment Code",
     "OperationalInfo:Column:OperationOrderNo": "Operation Order No",
     "OperationalInfo:Column:Hospital": "Hospital",
@@ -421,6 +423,11 @@
     "OperationalInfo:Column:OperationType": "Operation Type",
     "OperationalInfo:Column:Status": "Status",
     "OperationalInfo:Column:DetailsAndActions": "Details and Actions",
+    "OperationalInfo:Field:TravelDateToTurkey": "Travel Date To Turkey",
+    "OperationalInfo:Field:TreatmentDate": "Treatment Date",
+    "OperationalInfo:Field:AppointedInterpreter": "Appointed Interpreter",
+    "OperationalInfo:Field:TreatmentType": "Treatment Type",
+    "OperationalInfo:Field:AnyInvitationLetter": "Is there an invitation letter request?",
     "OperationalInfo:Button:CreateProforma": "Create Proforma",
 
     /*QUOTATION*/

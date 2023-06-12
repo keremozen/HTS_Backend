@@ -413,7 +413,9 @@
     "HospitalResponse:Message:SuccessfulReject": "Hastane cevabı başarıyla reddedilmiştir.",
 
     /*OPERATIONAL INFO*/
+    "OperationalInfo:Title": "Operasyon", 
     "OperationalInfo:NewOperation": "Yeni Operasyon",
+    "OperationalInfo:OperationEdit": "Operasyon Güncelleme",
     "OperationalInfo:Column:TreatmentCode": "Tedavi Kodu",
     "OperationalInfo:Column:OperationOrderNo": "Operasyon Sıra No",
     "OperationalInfo:Column:Hospital": "Hastane",
@@ -422,6 +424,11 @@
     "OperationalInfo:Column:OperationType": "Operasyon Tipi",
     "OperationalInfo:Column:Status": "Durum",
     "OperationalInfo:Column:DetailsAndActions": "Detaylar ve İşlemler",
+    "OperationalInfo:Field:TravelDateToTurkey": "Türkiye'ye Seyahat Tarihi",
+    "OperationalInfo:Field:TreatmentDate": "Tedavi Tarihi",
+    "OperationalInfo:Field:AppointedInterpreter": "Atanan Tercüman",
+    "OperationalInfo:Field:TreatmentType": "Tedavi Tipi",
+    "OperationalInfo:Field:AnyInvitationLetter": "Davet mektubu talebi var mı?",
     "OperationalInfo:Button:CreateProforma": "Fiyatlandır",
 
     /*QUOTATION*/

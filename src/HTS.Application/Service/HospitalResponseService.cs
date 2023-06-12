@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using HTS.BusinessException;
 using HTS.Data.Entity;
+using HTS.Dto.Branch;
 using HTS.Dto.HospitalConsultation;
 using HTS.Dto.HospitalResponse;
 using HTS.Dto.HospitalResponseBranch;
@@ -13,6 +14,7 @@ using HTS.Interface;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
+using Volo.Abp.ObjectMapping;
 using static HTS.Enum.EntityEnum;
 
 namespace HTS.Service;

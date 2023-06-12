@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using HTS.BusinessException;
 using HTS.Data.Entity;
 using HTS.Dto.HospitalConsultation;
@@ -51,13 +52,11 @@ public class OperationService : ApplicationService, IOperationService
         await _operationRepository.InsertAsync(entity);
     }
 
-    public async Task UpdateAsync(SaveOperationDto operation)
+    public async Task UpdateAsync(int id, SaveOperationDto operation)
     {
-        operation.HospitalId = null;
-        operation.PatientTreatmentProcessId = null;
         operation.HospitalResponse = null;
-        var entity = ObjectMapper.Map<SaveOperationDto, Operation>(operation);
-        entity.OperationTypeId = OperationTypeEnum.HospitalConsultation.GetHashCode();
+        var entity = await _operationRepository.GetAsync(id);
+        ObjectMapper.Map(operation, entity);
         await _operationRepository.UpdateAsync(entity);
     }
 

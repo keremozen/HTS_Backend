@@ -21,11 +21,9 @@ namespace HTS.Service;
 public class PatientService : ApplicationService, IPatientService
 {
     private readonly IRepository<Patient, int> _patientRepository;
-    private readonly IIdentityUserRepository _userRepository;
-    public PatientService(IRepository<Patient, int> patientRepository, IIdentityUserRepository userRepository)
+    public PatientService(IRepository<Patient, int> patientRepository)
     {
         _patientRepository = patientRepository;
-        _userRepository = userRepository;
     }
 
     public async Task<PatientDto> GetAsync(int id)
@@ -38,18 +36,14 @@ public class PatientService : ApplicationService, IPatientService
     public async Task<PagedResultDto<PatientDto>> GetListAsync()
     {
         //Get all entities
-        var query = await _patientRepository.WithDetailsAsync();
-        var patientList = await AsyncExecuter.ToListAsync(query);
-       /* patientList = patientList.Select(p =>
+        var patientList = (await _patientRepository.WithDetailsAsync()).ToList();
+        var patientDtoList = ObjectMapper.Map<List<Patient>, List<PatientDto>>(patientList);
+        patientDtoList = patientDtoList.Select(p =>
         {
-            p.PatientTreatmentProcesses =  p.PatientTreatmentProcesses.OrderByDescending(t => t.Id).Take(1).ToList();
+            p.PatientTreatmentProcesses = p.PatientTreatmentProcesses.OrderByDescending(t => t.Id).Take(1).ToList();
             return p;
-        })
-        .ToList();*/
-        var responseList = ObjectMapper.Map<List<Patient>, List<PatientDto>>(patientList);
-        var totalCount = await _patientRepository.CountAsync();//item count
-
-        return new PagedResultDto<PatientDto>(totalCount, responseList);
+        }).ToList();
+        return new PagedResultDto<PatientDto>(patientDtoList.Count(),patientDtoList);
     }
 
     public async Task<PagedResultDto<PatientDto>> FilterListAsync(FilterPatientDto filter)
@@ -57,15 +51,15 @@ public class PatientService : ApplicationService, IPatientService
         var query = await _patientRepository.WithDetailsAsync();
         if (!string.IsNullOrEmpty(filter.Name))
         {
-            query = query.Where(p => EF.Functions.ILike(p.Name,filter.Name));
+            query = query.Where(p => EF.Functions.ILike(p.Name, filter.Name));
         }
         if (!string.IsNullOrEmpty(filter.Surname))
         {
-            query = query.Where(p => EF.Functions.ILike(p.Surname,filter.Surname));
+            query = query.Where(p => EF.Functions.ILike(p.Surname, filter.Surname));
         }
         if (!string.IsNullOrEmpty(filter.PassportNumber))
         {
-            query = query.Where(p => EF.Functions.ILike( p.PassportNumber,filter.PassportNumber));
+            query = query.Where(p => EF.Functions.ILike(p.PassportNumber, filter.PassportNumber));
         }
         if (filter.PhoneCountryCodeIds?.Any() ?? false)
         {
@@ -91,7 +85,7 @@ public class PatientService : ApplicationService, IPatientService
         {
             query = query.Where(p => p.PatientTreatmentProcesses.Any(ptp => filter.PatientTreatmentProcessIds.Contains(ptp.Id)));
         }
-        
+
         var patientList = await AsyncExecuter.ToListAsync(query);
         patientList = patientList.Select(p =>
             {
@@ -102,7 +96,7 @@ public class PatientService : ApplicationService, IPatientService
                 }
                 else
                 {
-                    p.PatientTreatmentProcesses =  p.PatientTreatmentProcesses.OrderByDescending(t => t.Id).Take(1).ToList();
+                    p.PatientTreatmentProcesses = p.PatientTreatmentProcesses.OrderByDescending(t => t.Id).Take(1).ToList();
                 }
                 return p;
             })
@@ -122,7 +116,7 @@ public class PatientService : ApplicationService, IPatientService
 
     public async Task<PatientDto> UpdateAsync(int id, SavePatientDto patient)
     {
-        await  IsDataValidToSave(patient,id);
+        await IsDataValidToSave(patient, id);
         var entity = await _patientRepository.GetAsync(id);
         ObjectMapper.Map(patient, entity);
         return ObjectMapper.Map<Patient, PatientDto>(await _patientRepository.UpdateAsync(entity));
@@ -132,7 +126,7 @@ public class PatientService : ApplicationService, IPatientService
     {
         await _patientRepository.DeleteAsync(id);
     }
-    
+
     /// <summary>
     /// Checks if data is valid to save
     /// </summary>
@@ -153,6 +147,6 @@ public class PatientService : ApplicationService, IPatientService
             throw new HTSBusinessException(ErrorCode.NationalityAndPassportNumberMustBeUnique);
         }
     }
-   
+
 
 }

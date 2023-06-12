@@ -13,7 +13,7 @@ using static HTS.Enum.EntityEnum;
 
 namespace HTS.Dto.Operation;
 
-public class OperationDto: AuditedEntityWithUserDto<int, IdentityUserDto>
+public class OperationDto: FullAuditedEntityWithUserDto<int, IdentityUserDto>
 {
     public int HospitalResponseId { get; set; }
     public DateTime TravelDateToTurkey { get; set; }

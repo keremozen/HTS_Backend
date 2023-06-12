@@ -33,7 +33,7 @@ namespace HTS.Interface
         /// </summary>
         /// <param name="operation">Operation data to be updated</param>
         /// <returns></returns>
-        Task UpdateAsync(SaveOperationDto operation);
+        Task UpdateAsync(int id, SaveOperationDto operation);
 
 
     }

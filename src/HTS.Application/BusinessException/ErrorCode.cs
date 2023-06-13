@@ -13,5 +13,6 @@ public static class  ErrorCode
     public const string HospitalResponseTypeNotValidToApprove = "HTS:10";
     public const string HospitalResponseTypeNotValidToReject = "HTS:11";
     public const string AnotherHospitalResponseIsApprovedInSameRowNumber = "HTS:12";
+    public const string TreatmentNumberCouldNotBeGenerated = "HTS:13";
 
 }

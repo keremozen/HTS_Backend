@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using HTS.BusinessException;
 using HTS.Data.Entity;
 using HTS.Dto.Hospital;
 using HTS.Dto.Language;
@@ -45,10 +47,36 @@ public class PatientTreatmentProcessService : ApplicationService, IPatientTreatm
         {
             PatientId = patientId,
             TreatmentProcessStatusId = PatientTreatmentStatusEnum.NewRecord.GetHashCode(),
-            TreatmentCode = Guid.NewGuid().ToString()
+            TreatmentCode = await  GenerateTreatmentNumber()
         };
         await _patientTreatmentProcessRepository.InsertAsync(entity, true);
         var newEntityQuery = (await _patientTreatmentProcessRepository.WithDetailsAsync()).Where(p => p.Id == entity.Id);
         return ObjectMapper.Map<PatientTreatmentProcess, PatientTreatmentProcessDto>(await AsyncExecuter.FirstOrDefaultAsync(newEntityQuery));
+    }
+
+    /// <summary>
+    /// Try to generate unique 10 character treatment code in UNNNNNNNNN format
+    /// </summary>
+    /// <returns>Generated treatment code</returns>
+    /// <exception cref="HTSBusinessException"></exception>
+    private async Task<string> GenerateTreatmentNumber()
+    {
+        Random rnd = new Random();
+        int generateCount = 0;
+        while (generateCount++ < 11)
+        {
+            var treatmentNumberBuilder = new StringBuilder(10);
+            treatmentNumberBuilder.Append("U");
+            for (int i = 0; i < 9; i++)
+            {
+                treatmentNumberBuilder.Append(rnd.Next(0, 9));
+            }
+            bool isUnique = !(await _patientTreatmentProcessRepository.AnyAsync(t => t.TreatmentCode == treatmentNumberBuilder.ToString()));
+            if (isUnique)
+            {
+                return treatmentNumberBuilder.ToString();
+            }
+        }
+        throw new HTSBusinessException(ErrorCode.TreatmentNumberCouldNotBeGenerated);
     }
 }

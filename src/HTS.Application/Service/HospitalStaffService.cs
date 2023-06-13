@@ -5,13 +5,14 @@ using HTS.BusinessException;
 using HTS.Data.Entity;
 using HTS.Dto.HospitalStaff;
 using HTS.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Identity;
 
 namespace HTS.Service;
-
+[Authorize]
 public class HospitalStaffService : ApplicationService, IHospitalStaffService
 {
     private readonly IRepository<HospitalStaff, int> _hospitalStaffRepository;

@@ -9,13 +9,14 @@ using HTS.Dto.HospitalConsultation;
 using HTS.Dto.Operation;
 using HTS.Enum;
 using HTS.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.ObjectMapping;
 using static HTS.Enum.EntityEnum;
 namespace HTS.Service;
-
+[Authorize]
 public class OperationService : ApplicationService, IOperationService
 {
     private readonly IRepository<Operation, int> _operationRepository;

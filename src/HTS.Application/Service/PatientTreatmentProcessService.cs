@@ -9,6 +9,7 @@ using HTS.Dto.Nationality;
 using HTS.Dto.PatientNote;
 using HTS.Dto.PatientTreatmentProcess;
 using HTS.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
@@ -16,7 +17,7 @@ using Volo.Abp.Identity;
 using static HTS.Enum.EntityEnum;
 
 namespace HTS.Service;
-
+[Authorize]
 public class PatientTreatmentProcessService : ApplicationService, IPatientTreatmentProcessService
 {
     private readonly IRepository<PatientTreatmentProcess, int> _patientTreatmentProcessRepository;

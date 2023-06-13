@@ -4,12 +4,14 @@ using System.Threading.Tasks;
 using HTS.Data.Entity;
 using HTS.Dto.DocumentType;
 using HTS.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
 namespace HTS.Service;
 
+[Authorize]
 public class DocumentTypeService : ApplicationService, IDocumentTypeService
 {
     private readonly IRepository<DocumentType, int> _documentTypeRepository;

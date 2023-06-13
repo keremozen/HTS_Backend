@@ -4,12 +4,14 @@ using HTS.Data.Entity;
 using HTS.Dto.Language;
 using HTS.Interface;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
 namespace HTS.Service
 {
+    [Authorize]
     public class LanguageService : ApplicationService, ILanguageService
     {
 

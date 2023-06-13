@@ -3,12 +3,14 @@ using HTS.Interface;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using HTS.Dto.AdditionalService;
+using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
 namespace HTS.Service
 {
+    [Authorize]
     public class AdditionalServiceService : ApplicationService, IAdditionalServiceService
     {
         private readonly IRepository<AdditionalService, int> _additionalServiceRepository;

@@ -8,6 +8,7 @@ using HTS.Dto.Nationality;
 using HTS.Dto.PatientNote;
 using HTS.Dto.SalesMethodAndCompanionInfo;
 using HTS.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
@@ -17,7 +18,7 @@ using Volo.Abp.Identity;
 using static HTS.Enum.EntityEnum;
 
 namespace HTS.Service;
-
+[Authorize]
 public class SalesMethodAndCompanionInfoService : ApplicationService, ISalesMethodAndCompanionInfoService
 {
     private readonly IRepository<SalesMethodAndCompanionInfo, int> _salesMethodAndCompanionInfoRepository;

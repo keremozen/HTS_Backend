@@ -4,12 +4,14 @@ using System.Threading.Tasks;
 using HTS.Data.Entity;
 using HTS.Dto.Branch;
 using HTS.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
 namespace HTS.Service;
 
+[Authorize]
 public class BranchService : ApplicationService, IBranchService
 {
     private readonly IRepository<Branch, int> _branchRepository;

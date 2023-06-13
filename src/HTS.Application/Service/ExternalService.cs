@@ -6,12 +6,14 @@ using HTS.Interface;
 using System.Threading.Tasks;
 using HTS.Dto;
 using HTS.Dto.External;
+using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
 namespace HTS.Service
 {
+    [Authorize]
     public class ExternalService : ApplicationService, IExternalService
     {
 

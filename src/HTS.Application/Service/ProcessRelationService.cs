@@ -3,12 +3,13 @@ using System.Threading.Tasks;
 using HTS.Data.Entity;
 using HTS.Dto.ProcessRelation;
 using HTS.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
 namespace HTS.Service;
-
+[Authorize]
 public class ProcessRelationService : ApplicationService, IProcessRelationService
 {
     private readonly IRepository<ProcessRelation, int> _processRelationRepository;

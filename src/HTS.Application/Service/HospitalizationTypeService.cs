@@ -4,12 +4,14 @@ using System.Threading.Tasks;
 using HTS.Data.Entity;
 using HTS.Dto.HospitalizationType;
 using HTS.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
 namespace HTS.Service;
 
+[Authorize]
 public class HospitalizationTypeService : ApplicationService, IHospitalizationTypeService
 {
     private readonly IRepository<HospitalizationType, int> _hospitalizationTypeRepository;

@@ -11,6 +11,7 @@ using HTS.Dto.HospitalResponseBranch;
 using HTS.Dto.HospitalResponseProcess;
 using HTS.Enum;
 using HTS.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
@@ -18,7 +19,7 @@ using Volo.Abp.ObjectMapping;
 using static HTS.Enum.EntityEnum;
 
 namespace HTS.Service;
-
+[Authorize]
 public class HospitalResponseService : ApplicationService, IHospitalResponseService
 {
     private readonly IRepository<HospitalResponse, int> _hospitalResponseRepository;

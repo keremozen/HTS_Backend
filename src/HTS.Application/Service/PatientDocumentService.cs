@@ -7,6 +7,7 @@ using HTS.BusinessException;
 using HTS.Data.Entity;
 using HTS.Dto.PatientDocument;
 using HTS.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
@@ -14,7 +15,7 @@ using Volo.Abp.Users;
 using static HTS.Enum.EntityEnum;
 
 namespace HTS.Service;
-
+[Authorize]
 public class PatientDocumentService : ApplicationService, IPatientDocumentService
 {
     private readonly IRepository<PatientDocument, int> _patientDocumentRepository;

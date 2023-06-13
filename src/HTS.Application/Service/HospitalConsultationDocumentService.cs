@@ -10,6 +10,7 @@ using HTS.Dto.Language;
 using HTS.Dto.Nationality;
 using HTS.Dto.Patient;
 using HTS.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
@@ -20,6 +21,7 @@ using static HTS.Enum.EntityEnum;
 
 namespace HTS.Service;
 
+[Authorize]
 public class HospitalConsultationDocumentService : ApplicationService,IHospitalConsultationDocumentService
 {
     private readonly IRepository<PatientDocument, int> _patientDocumentRepository;

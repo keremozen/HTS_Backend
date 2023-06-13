@@ -4,12 +4,13 @@ using System.Threading.Tasks;
 using HTS.Data.Entity;
 using HTS.Dto.Nationality;
 using HTS.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
 namespace HTS.Service;
-
+[Authorize]
 public class NationalityService : ApplicationService, INationalityService
 {
     private readonly IRepository<Nationality, int> _nationalityRepository;

@@ -5,12 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Identity;
 using Volo.Abp.ObjectMapping;
 
 namespace HTS.Service
 {
+    [Authorize]
     public class UserService : ApplicationService, IUserService
     {
         private IdentityUserManager _userManager;

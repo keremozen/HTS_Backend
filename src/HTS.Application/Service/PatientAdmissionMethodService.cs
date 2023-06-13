@@ -4,12 +4,13 @@ using System.Threading.Tasks;
 using HTS.Data.Entity;
 using HTS.Dto.PatientAdmissionMethod;
 using HTS.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
 namespace HTS.Service;
-
+[Authorize]
 public class PatientAdmissionMethodService : ApplicationService, IPatientAdmissionMethodService
 {
     private readonly IRepository<PatientAdmissionMethod, int> _patientAdmissionMethodRepository;

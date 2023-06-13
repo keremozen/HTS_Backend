@@ -5,12 +5,13 @@ using HTS.Data.Entity;
 using HTS.Dto.ProcessType;
 using HTS.Dto.RejectReason;
 using HTS.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
 namespace HTS.Service;
-
+[Authorize]
 public class RejectReasonService : ApplicationService, IRejectReasonService
 {
     private readonly IRepository<RejectReason, int> _rejectReasonRepository;

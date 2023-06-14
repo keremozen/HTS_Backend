@@ -54,8 +54,8 @@ INSERT INTO "HospitalizationTypes"("Id", "Name") VALUES (2, 'Yatış');
 INSERT INTO "HospitalizationTypes"("Id", "Name") VALUES (3, 'Cerrahi Yatış');
 
 --Currency Table
-INSERT INTO "Currencies"("Id", "Name") VALUES (1, 'TL');
-INSERT INTO "Currencies"("Id", "Name") VALUES (2, 'USD');
+INSERT INTO "Currencies"("Id", "Name","IsDefault") VALUES (1, 'TL',true);
+INSERT INTO "Currencies"("Id", "Name","IsDefault") VALUES (2, 'USD',false);
 
 --AdditionalService Table
 INSERT INTO "AdditionalServices"("Id", "Name", "Day","Piece","RoomType","Companion") VALUES (1, 'Transfer hizmeti',false,false,false,false);

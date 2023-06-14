@@ -5,4 +5,5 @@ namespace HTS.Dto.Currency;
 public class CurrencyDto : EntityDto<int>
 {
     public string Name { get; set; }
+    public bool IsDefault { get; set; }
 }

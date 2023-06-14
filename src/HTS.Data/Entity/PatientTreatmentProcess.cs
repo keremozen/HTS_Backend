@@ -7,7 +7,7 @@ using Volo.Abp.Identity;
 namespace HTS.Data.Entity
 {
 
-    public class PatientTreatmentProcess : FullAuditedEntityWithUser<int,IdentityUser>
+    public class PatientTreatmentProcess : AuditedEntityWithUser<int,IdentityUser>
     {
         [Required]
         public string TreatmentCode { get; set; }

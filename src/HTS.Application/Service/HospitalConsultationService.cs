@@ -68,8 +68,7 @@ public class HospitalConsultationService : ApplicationService, IHospitalConsulta
             ProcessHospitalConsultationDocuments(entity, hospitalConsultation);
             entityList.Add(entity);
         }
-
-        //Update patient treatment process entity status clm - "Hastanelere Danışıldı - Cevap Bekleniyor"
+        
         var ptpEntity = (await _ptpRepository.GetQueryableAsync()).FirstOrDefault(ptp => ptp.Id == hospitalConsultation.PatientTreatmentProcessId);
         if (ptpEntity != null)
         {

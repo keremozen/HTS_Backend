@@ -20,10 +20,13 @@ namespace HTS.Service;
 public class OperationService : ApplicationService, IOperationService
 {
     private readonly IRepository<Operation, int> _operationRepository;
+    private readonly IRepository<PatientTreatmentProcess, int> _patientTreatmentProcessRepository;
 
-    public OperationService(IRepository<Operation, int> operationRepository)
+    public OperationService(IRepository<Operation, int> operationRepository,
+        IRepository<PatientTreatmentProcess, int> patientTreatmentProcessRepository)
     {
         _operationRepository = operationRepository;
+        _patientTreatmentProcessRepository = patientTreatmentProcessRepository;
     }
 
     public async Task<OperationDto> GetAsync(int id)
@@ -51,6 +54,10 @@ public class OperationService : ApplicationService, IOperationService
         entity.OperationStatusId = OperationStatusEnum.PriceExpecting.GetHashCode();
         entity.OperationTypeId = OperationTypeEnum.Manual.GetHashCode();
         await _operationRepository.InsertAsync(entity);
+        //Tedavi sürecini, operasyon onaylandı fiyatlandırma bekliyor olarak güncelle
+        var ptp = await _patientTreatmentProcessRepository.GetAsync(operation.PatientTreatmentProcessId.Value);
+        ptp.TreatmentProcessStatusId =PatientTreatmentStatusEnum.OperationApprovedWaitingPricing.GetHashCode();
+        await _patientTreatmentProcessRepository.UpdateAsync(ptp);
     }
 
     public async Task UpdateAsync(int id, SaveOperationDto operation)

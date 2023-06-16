@@ -34,6 +34,10 @@ using HTS.Dto.Process;
 using HTS.Dto.ProcessCost;
 using HTS.Dto.ProcessRelation;
 using HTS.Dto.ProcessType;
+using HTS.Dto.Proforma;
+using HTS.Dto.ProformaAdditionalService;
+using HTS.Dto.ProformaNotIncludingService;
+using HTS.Dto.ProformaProcess;
 using HTS.Dto.RejectReason;
 using HTS.Dto.SalesMethodAndCompanionInfo;
 using HTS.Dto.TreatmentProcessStatus;
@@ -117,6 +121,14 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<Operation, OperationDto>();
         CreateMap<SaveOperationDto, Operation>();
 
+        CreateMap<Proforma, ProformaDto>();
+        CreateMap<SaveProformaDto, Proforma>();
+        CreateMap<ProformaProcess, ProformaProcessDto>();
+        CreateMap<SaveProformaProcessDto, ProformaProcess>();
+        CreateMap<ProformaAdditionalService, ProformaAdditionalServiceDto>();
+        CreateMap<SaveProformaAdditionalServiceDto, ProformaAdditionalService>();
+        CreateMap<ProformaNotIncludingService, ProformaNotIncludingServiceDto>();
+        CreateMap<SaveProformaNotIncludingServiceDto, ProformaNotIncludingService>();
 
     }
 }

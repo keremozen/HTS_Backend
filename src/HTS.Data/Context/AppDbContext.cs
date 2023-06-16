@@ -57,6 +57,11 @@ namespace HTS.Data
         public DbSet<TreatmentType> TreatmentTypes { get; set; }
         public DbSet<RejectReason> RejectReasons { get; set; }
         
+        public DbSet<Proforma>  Proformas { get; set; }
+        public DbSet<ProformaProcess>  ProformaProcesses { get; set; }
+        public DbSet<ProformaAdditionalService>  ProformaAdditionalServices { get; set; }
+        public DbSet<ProformaNotIncludingService>  ProformaNotIncludingServices { get; set; }
+
         public DbSet<IdentityUser> Users { get; set; }
 
         public DbSet<IdentityRole> Roles { get; set; }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using HTS.Dto.Currency;
+using HTS.Dto.Operation;
 using HTS.Dto.ProformaAdditionalService;
 using HTS.Dto.ProformaNotIncludingService;
 using HTS.Dto.ProformaProcess;
@@ -23,6 +24,7 @@ public class ProformaDto  : AuditedEntityWithUserDto<int,IdentityUserDto>
     public decimal TotalProformaAmount { get; set; }
         
     public CurrencyDto Currency { get; set; }
+    public OperationDto Operation { get; set; }
     public virtual ICollection<ProformaProcessDto> ProformaProcesses { get; set; }
     public virtual ICollection<ProformaAdditionalServiceDto> ProformaAdditionalServices { get; set; }
     public virtual ICollection<ProformaNotIncludingServiceDto> ProformaNotIncludingServices { get; set; }

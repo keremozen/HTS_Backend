@@ -20,12 +20,14 @@ public class SaveProformaDto
     public int CurrencyId { get; set; }
     [Required]
     public decimal ExchangeRate { get; set; }
+    [Required]
+    public string ProformaCode { get; set; }
     public string Description { get; set; }
     public string TPDescription { get; set; }
     public int Version { get; set; }
-        
+
     public virtual ICollection<SaveProformaProcessDto> ProformaProcesses { get; set; }
     public virtual ICollection<SaveProformaAdditionalServiceDto> ProformaAdditionalServices { get; set; }
     public virtual ICollection<SaveProformaNotIncludingServiceDto> ProformaNotIncludingServices { get; set; }
-    
+
 }

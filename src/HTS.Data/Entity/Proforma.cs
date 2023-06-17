@@ -8,7 +8,7 @@ using Volo.Abp.Identity;
 namespace HTS.Data.Entity
 {
 
-    public class Proforma : AuditedEntityWithUser<int,IdentityUser>
+    public class Proforma : AuditedEntityWithUser<int, IdentityUser>
     {
         [Required]
         public int OperationId { get; set; }
@@ -21,10 +21,12 @@ namespace HTS.Data.Entity
         public string Description { get; set; }
         public string TPDescription { get; set; }
         [Required]
+        public string ProformaCode { get; set; }
+        [Required]
         public int Version { get; set; }
         [Required]
         public decimal TotalProformaPrice { get; set; }
-        
+
         [ForeignKey("OperationId")]
         public Operation Operation { get; set; }
         [ForeignKey("CurrencyId")]

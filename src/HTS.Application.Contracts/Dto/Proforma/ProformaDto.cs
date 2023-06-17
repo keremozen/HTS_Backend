@@ -12,21 +12,22 @@ using Volo.Abp.Identity;
 
 namespace HTS.Dto.Proforma;
 
-public class ProformaDto  : AuditedEntityWithUserDto<int,IdentityUserDto>
+public class ProformaDto : AuditedEntityWithUserDto<int, IdentityUserDto>
 {
     public int OperationId { get; set; }
     public int CurrencyId { get; set; }
-    public decimal CurrencyPrice { get; set; }
+    public decimal ExchangeRate { get; set; }
+    public string ProformaCode { get; set; }
     public DateTime CreationDate { get; set; }
     public string Description { get; set; }
     public string TPDescription { get; set; }
     public int Version { get; set; }
     public decimal TotalProformaPrice { get; set; }
-        
+
     public CurrencyDto Currency { get; set; }
     public OperationDto Operation { get; set; }
     public virtual ICollection<ProformaProcessDto> ProformaProcesses { get; set; }
     public virtual ICollection<ProformaAdditionalServiceDto> ProformaAdditionalServices { get; set; }
     public virtual ICollection<ProformaNotIncludingServiceDto> ProformaNotIncludingServices { get; set; }
-    
+
 }

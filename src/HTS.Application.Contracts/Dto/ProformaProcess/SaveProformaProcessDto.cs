@@ -14,13 +14,13 @@ public class SaveProformaProcessDto
     [Required]
     public int TreatmentCount { get; set; }
     [Required]
-    public decimal PieceAmount { get; set; }
+    public decimal UnitPrice { get; set; }
     [Required]
-    public decimal TotalAmount { get; set; }
+    public decimal TotalPrice { get; set; }
     [Required]
-    public decimal ProformaAmount { get; set; }
+    public decimal ProformaPrice { get; set; }
     [Required]
     public int Change { get; set; }
     [Required]
-    public decimal ProformaFinalAmount { get; set; }
+    public decimal ProformaFinalPrice { get; set; }
 }

@@ -19,7 +19,7 @@ public class SaveProformaDto
     [Required]
     public int CurrencyId { get; set; }
     [Required]
-    public decimal CurrencyAmount { get; set; }
+    public decimal ExchangeRate { get; set; }
     public string Description { get; set; }
     public string TPDescription { get; set; }
     public int Version { get; set; }

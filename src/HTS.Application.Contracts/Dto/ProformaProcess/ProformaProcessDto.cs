@@ -8,10 +8,10 @@ public class ProformaProcessDto: EntityDto<int>
     public int ProformaId { get; set; }
     public int ProcessId { get; set; }
     public int TreatmentCount { get; set; }
-    public decimal PieceAmount { get; set; }
-    public decimal TotalAmount { get; set; }
-    public decimal ProformaAmount { get; set; }
+    public decimal UnitPrice { get; set; }
+    public decimal TotalPrice { get; set; }
+    public decimal ProformaPrice { get; set; }
     public int Change { get; set; }
-    public decimal ProformaFinalAmount { get; set; }
+    public decimal ProformaFinalPrice { get; set; }
     public ProcessDto Process { get; set; }
 }

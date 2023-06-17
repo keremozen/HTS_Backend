@@ -16,12 +16,12 @@ public class ProformaDto  : AuditedEntityWithUserDto<int,IdentityUserDto>
 {
     public int OperationId { get; set; }
     public int CurrencyId { get; set; }
-    public decimal CurrencyAmount { get; set; }
+    public decimal CurrencyPrice { get; set; }
     public DateTime CreationDate { get; set; }
     public string Description { get; set; }
     public string TPDescription { get; set; }
     public int Version { get; set; }
-    public decimal TotalProformaAmount { get; set; }
+    public decimal TotalProformaPrice { get; set; }
         
     public CurrencyDto Currency { get; set; }
     public OperationDto Operation { get; set; }

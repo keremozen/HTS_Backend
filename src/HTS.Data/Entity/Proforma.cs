@@ -15,7 +15,7 @@ namespace HTS.Data.Entity
         [Required]
         public int CurrencyId { get; set; }
         [Required]
-        public decimal CurrencyAmount { get; set; }
+        public decimal ExchangeRate { get; set; }
         [Required]
         public DateTime CreationDate { get; set; }
         public string Description { get; set; }
@@ -23,7 +23,7 @@ namespace HTS.Data.Entity
         [Required]
         public int Version { get; set; }
         [Required]
-        public decimal TotalProformaAmount { get; set; }
+        public decimal TotalProformaPrice { get; set; }
         
         [ForeignKey("OperationId")]
         public Operation Operation { get; set; }

@@ -9,6 +9,7 @@ using HTS.Dto.ProformaNotIncludingService;
 using HTS.Dto.ProformaProcess;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Identity;
+using static HTS.Enum.EntityEnum;
 
 namespace HTS.Dto.Proforma;
 
@@ -16,6 +17,7 @@ public class ProformaDto : AuditedEntityWithUserDto<int, IdentityUserDto>
 {
     public int OperationId { get; set; }
     public int CurrencyId { get; set; }
+    public ProformaStatusEnum ProformaStatusId { get; set; }
     public decimal ExchangeRate { get; set; }
     public string ProformaCode { get; set; }
     public DateTime CreationDate { get; set; }

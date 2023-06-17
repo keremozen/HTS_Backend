@@ -15,6 +15,8 @@ namespace HTS.Data.Entity
         [Required]
         public int CurrencyId { get; set; }
         [Required]
+        public int ProformaStatusId { get; set; }
+        [Required]
         public decimal ExchangeRate { get; set; }
         [Required]
         public DateTime CreationDate { get; set; }
@@ -31,6 +33,8 @@ namespace HTS.Data.Entity
         public Operation Operation { get; set; }
         [ForeignKey("CurrencyId")]
         public Currency Currency { get; set; }
+        [ForeignKey("ProformaStatusId")]
+        public ProformaStatus ProformaStatus { get; set; }
         public virtual ICollection<ProformaProcess> ProformaProcesses { get; set; }
         public virtual ICollection<ProformaAdditionalService> ProformaAdditionalServices { get; set; }
         public virtual ICollection<ProformaNotIncludingService> ProformaNotIncludingServices { get; set; }

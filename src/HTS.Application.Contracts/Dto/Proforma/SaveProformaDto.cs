@@ -19,6 +19,8 @@ public class SaveProformaDto
     [Required]
     public int CurrencyId { get; set; }
     [Required]
+    public int ProformaStatusId { get; set; }
+    [Required]
     public decimal ExchangeRate { get; set; }
     [Required]
     public string ProformaCode { get; set; }

@@ -48,7 +48,34 @@ namespace HTS.Enum
             /// Operasyon Onaylandı - Fiyatlandırma Bekliyor
             /// </summary>
             OperationApprovedWaitingPricing = 4,
-            Discharged = 5
+            /// <summary>
+            /// Proforma Oluşturuldu - MFB Onayı Bekliyor
+            /// </summary>
+            ProformaCreatedWaitingForMFBApproval = 5,
+            /// <summary>
+            /// MFB Reddetti - Fiyatlandırma Bekliyor
+            /// </summary>
+            MFBRejectedPriceExpecting = 6,
+            /// <summary>
+            /// Proforma Onaylandı - Hastaya İletilecek
+            /// </summary>
+            ProformaApprovedWillBeTransferredToPatient = 7,
+            /// <summary>
+            /// Proforma İletildi - Hasta Onayı Bekleniyor
+            /// </summary>
+            ProformaTransferredWaitingForPatientApproval = 8,
+            /// <summary>
+            ///  Hasta Proformayı Reddetti
+            /// </summary>
+            PatientRejectedProforma = 9,
+            /// <summary>
+            /// Proforma Onaylandı - Tahsilat Bekleniyor
+            /// </summary>
+            ProformaApprovedWaitingForPayment = 10,
+            /// <summary>
+            /// Proforma Tahsil Edildi - Tedavi Aşaması
+            /// </summary>
+            PaymentCompletedTreatmentProcess = 11
         }
 
         public enum HospitalConsultationStatusEnum
@@ -170,9 +197,33 @@ namespace HTS.Enum
             /// </summary>
             PriceExpecting = 1,
             /// <summary>
-            /// Proforma Oluşturuldu
+            /// Proforma Oluşturuldu - MFB Onayı Bekliyor
             /// </summary>
-            ProformaCreated = 2
+            ProformaCreatedWaitingForMFBApproval = 2,
+            /// <summary>
+            /// MFB Reddetti - Fiyatlandırma Bekliyor
+            /// </summary>
+            MFBRejectedPriceExpecting = 3,
+            /// <summary>
+            /// Proforma Onaylandı - Hastaya İletilecek
+            /// </summary>
+            ProformaApprovedWillBeTransferredToPatient = 4,
+            /// <summary>
+            /// Proforma İletildi - Hasta Onayı Bekleniyor
+            /// </summary>
+            ProformaTransferredWaitingForPatientApproval = 5,
+            /// <summary>
+            ///  Hasta Proformayı Reddetti
+            /// </summary>
+            PatientRejectedProforma = 6,
+            /// <summary>
+            /// Proforma Onaylandı - Tahsilat Bekleniyor
+            /// </summary>
+            ProformaApprovedWaitingForPayment = 7,
+            /// <summary>
+            /// Proforma Tahsil Edildi - Tedavi Aşaması
+            /// </summary>
+            PaymentCompletedTreatmentProcess = 8
         }
 
         public enum ProcessTypeEnum
@@ -185,6 +236,38 @@ namespace HTS.Enum
             /// Materials
             /// </summary>
             Material = 2
+        }
+
+        public enum ProformaStatusEnum
+        {
+            /// <summary>
+            /// MFB Onay Bekliyor
+            /// </summary>
+            MFBWaitingApproval = 1,
+            /// <summary>
+            /// MFB Reddetti
+            /// </summary>
+            MFBRejected = 2,
+            /// <summary>
+            /// Hastaya İletilecek
+            /// </summary>
+            WillBeTransferedToPatient = 3,
+            /// <summary>
+            /// Hasta Onayı Bekliyor
+            /// </summary>
+            WaitingForPatientApproval = 4,
+            /// <summary>
+            /// Hasta Proformayı Reddetti
+            /// </summary>
+            PatientRejected = 5,
+            /// <summary>
+            /// Tahsilat Bekleniyor
+            /// </summary>
+            WaitingForPayment = 6,
+            /// <summary>
+            /// Tahsil Edildi
+            /// </summary>
+            PaymentCompleted = 7
         }
     }
 }

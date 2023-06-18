@@ -53,7 +53,9 @@ public class ProformaService : ApplicationService, IProformaService
     private async Task<int> GetVersion(Proforma entity)
     {
         var query = await _proformaRepository.GetQueryableAsync();
-        int version = query.Where(p => p.OperationId == entity.OperationId).Max(p => p == null ? 0 : p.Version);
+        int version = query.Where(p => p.OperationId == entity.OperationId)
+            .DefaultIfEmpty()
+            .Max(p => p == null ? 0 : p.Version);
         return ++version;
     }
     

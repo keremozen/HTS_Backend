@@ -7,6 +7,7 @@ using HTS.Dto.ContractedInstitution;
 using HTS.Dto.ContractedInstitutionStaff;
 using HTS.Dto.Currency;
 using HTS.Dto.DocumentType;
+using HTS.Dto.ExchangeRateInformation;
 using HTS.Dto.Gender;
 using HTS.Dto.Hospital;
 using HTS.Dto.HospitalConsultation;
@@ -131,6 +132,7 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<SaveProformaAdditionalServiceDto, ProformaAdditionalService>();
         CreateMap<ProformaNotIncludingService, ProformaNotIncludingServiceDto>();
         CreateMap<SaveProformaNotIncludingServiceDto, ProformaNotIncludingService>();
+        CreateMap<ExchangeRateInformation, ExchangeRateInformationDto>();
 
     }
 }

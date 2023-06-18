@@ -45,34 +45,6 @@ public class ProcessService : ApplicationService, IProcessService
         return ObjectMapper.Map<Process, ProcessDto>(entity);
     }
 
-    /*public async Task<ProcessDto> UpdateAsync(int id, SaveProcessDto process)
-    {
-        var entity = (await _processRepository.GetQueryableAsync()).AsNoTracking().FirstOrDefault(p => p.Id == id);
-        
-        var processCosts = process.ProcessCosts;
-        process.ProcessCosts = null;
-        ObjectMapper.Map(process, entity);
-
-        foreach (var cost in processCosts)
-        {
-            
-            if (!cost.Id.HasValue)
-            {
-                var costEntity = new ProcessCost();
-                ObjectMapper.Map(cost, costEntity);
-                await _processCostRepository.InsertAsync(costEntity);
-            }
-            else
-            {
-                var costEntity = (await _processCostRepository.GetQueryableAsync()).AsNoTracking().FirstOrDefault(pc => pc.Id == cost.Id);
-                ObjectMapper.Map(cost, costEntity);
-                await _processCostRepository.UpdateAsync(costEntity);
-            }
-        }
-        
-        return ObjectMapper.Map<Process, ProcessDto>(await _processRepository.UpdateAsync(entity));
-    }*/
-
     public async Task<ProcessDto> UpdateAsync(int id, SaveProcessDto process)
     {
         var entity = await _processRepository.GetAsync(id);

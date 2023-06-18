@@ -62,6 +62,7 @@ namespace HTS.Data
         public DbSet<ProformaAdditionalService>  ProformaAdditionalServices { get; set; }
         public DbSet<ProformaNotIncludingService>  ProformaNotIncludingServices { get; set; }
         public DbSet<ProformaStatus> ProformaStatuses { get; set; }
+        public  DbSet<ExchangeRateInformation> ExchangeRateInformations { get; set; }
 
         public DbSet<IdentityUser> Users { get; set; }
 

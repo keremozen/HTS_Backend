@@ -331,6 +331,9 @@ namespace HTS.Data.Migrations
                     b.Property<int>("Id")
                         .HasColumnType("integer");
 
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -1390,20 +1393,6 @@ namespace HTS.Data.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("CreatorId");
 
-                    b.Property<Guid?>("DeleterId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("DeleterId");
-
-                    b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("DeletionTime");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IsDeleted");
-
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("LastModificationTime");
@@ -1425,8 +1414,6 @@ namespace HTS.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CreatorId");
-
-                    b.HasIndex("DeleterId");
 
                     b.HasIndex("LastModifierId");
 
@@ -1580,6 +1567,191 @@ namespace HTS.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProcessTypes");
+                });
+
+            modelBuilder.Entity("HTS.Data.Entity.Proforma", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<int>("CurrencyId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("ExchangeRate")
+                        .HasColumnType("numeric");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<int>("OperationId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ProformaCode")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("ProformaStatusId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("TPDescription")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("TotalProformaPrice")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("Version")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatorId");
+
+                    b.HasIndex("CurrencyId");
+
+                    b.HasIndex("LastModifierId");
+
+                    b.HasIndex("OperationId");
+
+                    b.HasIndex("ProformaStatusId");
+
+                    b.ToTable("Proformas");
+                });
+
+            modelBuilder.Entity("HTS.Data.Entity.ProformaAdditionalService", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AdditionalServiceId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("CompanionCount")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("DayCount")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("ItemCount")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ProformaId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("RoomTypeId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdditionalServiceId");
+
+                    b.HasIndex("ProformaId");
+
+                    b.ToTable("ProformaAdditionalServices");
+                });
+
+            modelBuilder.Entity("HTS.Data.Entity.ProformaNotIncludingService", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("ProformaId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProformaId");
+
+                    b.ToTable("ProformaNotIncludingServices");
+                });
+
+            modelBuilder.Entity("HTS.Data.Entity.ProformaProcess", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Change")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ProcessId")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("ProformaFinalPrice")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("ProformaId")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("ProformaPrice")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("TreatmentCount")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("numeric");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProcessId");
+
+                    b.HasIndex("ProformaId");
+
+                    b.ToTable("ProformaProcesses");
+                });
+
+            modelBuilder.Entity("HTS.Data.Entity.ProformaStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProformaStatuses");
                 });
 
             modelBuilder.Entity("HTS.Data.Entity.RejectReason", b =>
@@ -3009,10 +3181,6 @@ namespace HTS.Data.Migrations
                         .WithMany()
                         .HasForeignKey("CreatorId");
 
-                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Deleter")
-                        .WithMany()
-                        .HasForeignKey("DeleterId");
-
                     b.HasOne("Volo.Abp.Identity.IdentityUser", "LastModifier")
                         .WithMany()
                         .HasForeignKey("LastModifierId");
@@ -3030,8 +3198,6 @@ namespace HTS.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Creator");
-
-                    b.Navigation("Deleter");
 
                     b.Navigation("LastModifier");
 
@@ -3097,6 +3263,94 @@ namespace HTS.Data.Migrations
                     b.Navigation("ChildProcess");
 
                     b.Navigation("Process");
+                });
+
+            modelBuilder.Entity("HTS.Data.Entity.Proforma", b =>
+                {
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId");
+
+                    b.HasOne("HTS.Data.Entity.Currency", "Currency")
+                        .WithMany()
+                        .HasForeignKey("CurrencyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "LastModifier")
+                        .WithMany()
+                        .HasForeignKey("LastModifierId");
+
+                    b.HasOne("HTS.Data.Entity.Operation", "Operation")
+                        .WithMany()
+                        .HasForeignKey("OperationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HTS.Data.Entity.ProformaStatus", "ProformaStatus")
+                        .WithMany()
+                        .HasForeignKey("ProformaStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Creator");
+
+                    b.Navigation("Currency");
+
+                    b.Navigation("LastModifier");
+
+                    b.Navigation("Operation");
+
+                    b.Navigation("ProformaStatus");
+                });
+
+            modelBuilder.Entity("HTS.Data.Entity.ProformaAdditionalService", b =>
+                {
+                    b.HasOne("HTS.Data.Entity.AdditionalService", "AdditionalService")
+                        .WithMany()
+                        .HasForeignKey("AdditionalServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HTS.Data.Entity.Proforma", "Proforma")
+                        .WithMany("ProformaAdditionalServices")
+                        .HasForeignKey("ProformaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AdditionalService");
+
+                    b.Navigation("Proforma");
+                });
+
+            modelBuilder.Entity("HTS.Data.Entity.ProformaNotIncludingService", b =>
+                {
+                    b.HasOne("HTS.Data.Entity.Proforma", "Proforma")
+                        .WithMany("ProformaNotIncludingServices")
+                        .HasForeignKey("ProformaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Proforma");
+                });
+
+            modelBuilder.Entity("HTS.Data.Entity.ProformaProcess", b =>
+                {
+                    b.HasOne("HTS.Data.Entity.Process", "Process")
+                        .WithMany()
+                        .HasForeignKey("ProcessId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HTS.Data.Entity.Proforma", "Proforma")
+                        .WithMany("ProformaProcesses")
+                        .HasForeignKey("ProformaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Process");
+
+                    b.Navigation("Proforma");
                 });
 
             modelBuilder.Entity("HTS.Data.Entity.RejectReason", b =>
@@ -3327,6 +3581,15 @@ namespace HTS.Data.Migrations
                     b.Navigation("ProcessRelationChildren");
 
                     b.Navigation("ProcessRelations");
+                });
+
+            modelBuilder.Entity("HTS.Data.Entity.Proforma", b =>
+                {
+                    b.Navigation("ProformaAdditionalServices");
+
+                    b.Navigation("ProformaNotIncludingServices");
+
+                    b.Navigation("ProformaProcesses");
                 });
 
             modelBuilder.Entity("Volo.Abp.Identity.IdentityRole", b =>

@@ -179,7 +179,8 @@ namespace HTS.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false),
-                    Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
+                    Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    IsDefault = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -293,6 +294,18 @@ namespace HTS.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ProcessTypes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProformaStatuses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false),
+                    Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProformaStatuses", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -1218,10 +1231,7 @@ namespace HTS.Data.Migrations
                     CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
                     LastModificationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    LastModifierId = table.Column<Guid>(type: "uuid", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
-                    DeleterId = table.Column<Guid>(type: "uuid", nullable: true),
-                    DeletionTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    LastModifierId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1229,11 +1239,6 @@ namespace HTS.Data.Migrations
                     table.ForeignKey(
                         name: "FK_PatientTreatmentProcesses_AbpUsers_CreatorId",
                         column: x => x.CreatorId,
-                        principalTable: "AbpUsers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_PatientTreatmentProcesses_AbpUsers_DeleterId",
-                        column: x => x.DeleterId,
                         principalTable: "AbpUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
@@ -1620,6 +1625,142 @@ namespace HTS.Data.Migrations
                         column: x => x.TreatmentTypeId,
                         principalTable: "TreatmentTypes",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Proformas",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    OperationId = table.Column<int>(type: "integer", nullable: false),
+                    CurrencyId = table.Column<int>(type: "integer", nullable: false),
+                    ProformaStatusId = table.Column<int>(type: "integer", nullable: false),
+                    ExchangeRate = table.Column<decimal>(type: "numeric", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
+                    TPDescription = table.Column<string>(type: "text", nullable: false),
+                    ProformaCode = table.Column<string>(type: "text", nullable: false),
+                    Version = table.Column<int>(type: "integer", nullable: false),
+                    TotalProformaPrice = table.Column<decimal>(type: "numeric", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    LastModifierId = table.Column<Guid>(type: "uuid", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Proformas", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Proformas_AbpUsers_CreatorId",
+                        column: x => x.CreatorId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Proformas_AbpUsers_LastModifierId",
+                        column: x => x.LastModifierId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Proformas_Currencies_CurrencyId",
+                        column: x => x.CurrencyId,
+                        principalTable: "Currencies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Proformas_Operations_OperationId",
+                        column: x => x.OperationId,
+                        principalTable: "Operations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Proformas_ProformaStatuses_ProformaStatusId",
+                        column: x => x.ProformaStatusId,
+                        principalTable: "ProformaStatuses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProformaAdditionalServices",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    ProformaId = table.Column<int>(type: "integer", nullable: false),
+                    AdditionalServiceId = table.Column<int>(type: "integer", nullable: false),
+                    DayCount = table.Column<int>(type: "integer", nullable: true),
+                    RoomTypeId = table.Column<int>(type: "integer", nullable: true),
+                    CompanionCount = table.Column<int>(type: "integer", nullable: true),
+                    ItemCount = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProformaAdditionalServices", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProformaAdditionalServices_AdditionalServices_AdditionalSer~",
+                        column: x => x.AdditionalServiceId,
+                        principalTable: "AdditionalServices",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProformaAdditionalServices_Proformas_ProformaId",
+                        column: x => x.ProformaId,
+                        principalTable: "Proformas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProformaNotIncludingServices",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    ProformaId = table.Column<int>(type: "integer", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProformaNotIncludingServices", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProformaNotIncludingServices_Proformas_ProformaId",
+                        column: x => x.ProformaId,
+                        principalTable: "Proformas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProformaProcesses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    ProformaId = table.Column<int>(type: "integer", nullable: false),
+                    ProcessId = table.Column<int>(type: "integer", nullable: false),
+                    TreatmentCount = table.Column<int>(type: "integer", nullable: false),
+                    UnitPrice = table.Column<decimal>(type: "numeric", nullable: false),
+                    TotalPrice = table.Column<decimal>(type: "numeric", nullable: false),
+                    ProformaPrice = table.Column<decimal>(type: "numeric", nullable: false),
+                    Change = table.Column<int>(type: "integer", nullable: false),
+                    ProformaFinalPrice = table.Column<decimal>(type: "numeric", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProformaProcesses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProformaProcesses_Processes_ProcessId",
+                        column: x => x.ProcessId,
+                        principalTable: "Processes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProformaProcesses_Proformas_ProformaId",
+                        column: x => x.ProformaId,
+                        principalTable: "Proformas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -2144,11 +2285,6 @@ namespace HTS.Data.Migrations
                 column: "CreatorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PatientTreatmentProcesses_DeleterId",
-                table: "PatientTreatmentProcesses",
-                column: "DeleterId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_PatientTreatmentProcesses_LastModifierId",
                 table: "PatientTreatmentProcesses",
                 column: "LastModifierId");
@@ -2187,6 +2323,56 @@ namespace HTS.Data.Migrations
                 name: "IX_Processes_ProcessTypeId",
                 table: "Processes",
                 column: "ProcessTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProformaAdditionalServices_AdditionalServiceId",
+                table: "ProformaAdditionalServices",
+                column: "AdditionalServiceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProformaAdditionalServices_ProformaId",
+                table: "ProformaAdditionalServices",
+                column: "ProformaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProformaNotIncludingServices_ProformaId",
+                table: "ProformaNotIncludingServices",
+                column: "ProformaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProformaProcesses_ProcessId",
+                table: "ProformaProcesses",
+                column: "ProcessId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProformaProcesses_ProformaId",
+                table: "ProformaProcesses",
+                column: "ProformaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Proformas_CreatorId",
+                table: "Proformas",
+                column: "CreatorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Proformas_CurrencyId",
+                table: "Proformas",
+                column: "CurrencyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Proformas_LastModifierId",
+                table: "Proformas",
+                column: "LastModifierId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Proformas_OperationId",
+                table: "Proformas",
+                column: "OperationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Proformas_ProformaStatusId",
+                table: "Proformas",
+                column: "ProformaStatusId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RejectReasons_CreatorId",
@@ -2293,12 +2479,6 @@ namespace HTS.Data.Migrations
                 name: "AbpUserTokens");
 
             migrationBuilder.DropTable(
-                name: "AdditionalServices");
-
-            migrationBuilder.DropTable(
-                name: "Currencies");
-
-            migrationBuilder.DropTable(
                 name: "HospitalConsultationDocuments");
 
             migrationBuilder.DropTable(
@@ -2314,9 +2494,6 @@ namespace HTS.Data.Migrations
                 name: "IncludingProcesses");
 
             migrationBuilder.DropTable(
-                name: "Operations");
-
-            migrationBuilder.DropTable(
                 name: "PatientDocuments");
 
             migrationBuilder.DropTable(
@@ -2324,6 +2501,15 @@ namespace HTS.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "ProcessCosts");
+
+            migrationBuilder.DropTable(
+                name: "ProformaAdditionalServices");
+
+            migrationBuilder.DropTable(
+                name: "ProformaNotIncludingServices");
+
+            migrationBuilder.DropTable(
+                name: "ProformaProcesses");
 
             migrationBuilder.DropTable(
                 name: "RejectReasons");
@@ -2341,6 +2527,45 @@ namespace HTS.Data.Migrations
                 name: "Branches");
 
             migrationBuilder.DropTable(
+                name: "DocumentTypes");
+
+            migrationBuilder.DropTable(
+                name: "PatientDocumentStatuses");
+
+            migrationBuilder.DropTable(
+                name: "PatientNoteStatuses");
+
+            migrationBuilder.DropTable(
+                name: "AdditionalServices");
+
+            migrationBuilder.DropTable(
+                name: "Processes");
+
+            migrationBuilder.DropTable(
+                name: "Proformas");
+
+            migrationBuilder.DropTable(
+                name: "ContractedInstitutionStaffs");
+
+            migrationBuilder.DropTable(
+                name: "PatientAdmissionMethods");
+
+            migrationBuilder.DropTable(
+                name: "ProcessTypes");
+
+            migrationBuilder.DropTable(
+                name: "Currencies");
+
+            migrationBuilder.DropTable(
+                name: "Operations");
+
+            migrationBuilder.DropTable(
+                name: "ProformaStatuses");
+
+            migrationBuilder.DropTable(
+                name: "ContractedInstitutions");
+
+            migrationBuilder.DropTable(
                 name: "HospitalResponses");
 
             migrationBuilder.DropTable(
@@ -2353,24 +2578,6 @@ namespace HTS.Data.Migrations
                 name: "TreatmentTypes");
 
             migrationBuilder.DropTable(
-                name: "DocumentTypes");
-
-            migrationBuilder.DropTable(
-                name: "PatientDocumentStatuses");
-
-            migrationBuilder.DropTable(
-                name: "PatientNoteStatuses");
-
-            migrationBuilder.DropTable(
-                name: "Processes");
-
-            migrationBuilder.DropTable(
-                name: "ContractedInstitutionStaffs");
-
-            migrationBuilder.DropTable(
-                name: "PatientAdmissionMethods");
-
-            migrationBuilder.DropTable(
                 name: "HospitalConsultations");
 
             migrationBuilder.DropTable(
@@ -2378,12 +2585,6 @@ namespace HTS.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "HospitalizationTypes");
-
-            migrationBuilder.DropTable(
-                name: "ProcessTypes");
-
-            migrationBuilder.DropTable(
-                name: "ContractedInstitutions");
 
             migrationBuilder.DropTable(
                 name: "HospitalConsultationStatuses");

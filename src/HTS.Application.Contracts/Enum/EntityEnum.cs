@@ -269,5 +269,17 @@ namespace HTS.Enum
             /// </summary>
             PaymentCompleted = 7
         }
+
+        public enum RoomTypeEnum
+        {
+            /// <summary>
+            /// Standart
+            /// </summary>
+            Standart = 1,
+            /// <summary>
+            /// VIP
+            /// </summary>
+            VIP = 2
+        }
     }
 }

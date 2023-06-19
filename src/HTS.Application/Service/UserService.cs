@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Identity;
 using Volo.Abp.ObjectMapping;
+using Microsoft.Extensions.Configuration;
 
 namespace HTS.Service
 {
@@ -16,9 +17,11 @@ namespace HTS.Service
     public class UserService : ApplicationService, IUserService
     {
         private IdentityUserManager _userManager;
-        public UserService(IdentityUserManager userManager)
+        private IConfiguration _config;
+        public UserService(IdentityUserManager userManager, IConfiguration configuration)
         {
             _userManager = userManager;
+            _config = configuration;
         }
 
         public async Task<IdentityUserDto> GetById(string id)
@@ -29,6 +32,16 @@ namespace HTS.Service
         public async Task<IList<IdentityUserDto>> GetByRoleAsync(string roleName)
         {
             return ObjectMapper.Map<IList<IdentityUser>, IList<IdentityUserDto>>(await _userManager.GetUsersInRoleAsync(roleName));
+        }
+
+        public async Task<IList<IdentityUserDto>> GetUhbStaffListAsync()
+        {
+            return ObjectMapper.Map<IList<IdentityUser>, IList<IdentityUserDto>>(await _userManager.GetUsersInRoleAsync(_config["UygulamaRolleri:UHBYetkilisi"]));
+        }
+
+        public async Task<IList<IdentityUserDto>> GetInterpreterListAsync()
+        {
+            return ObjectMapper.Map<IList<IdentityUser>, IList<IdentityUserDto>>(await _userManager.GetUsersInRoleAsync(_config["UygulamaRolleri:Tercuman"]));
         }
     }
 }

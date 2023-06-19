@@ -4,8 +4,8 @@ INSERT INTO "Nationalities"("Name", "PhoneCode", "IsActive", "CreationTime", "Is
 INSERT INTO "Nationalities"("Name", "PhoneCode", "IsActive", "CreationTime", "IsDeleted") VALUES ('Singapur', '+65', true,'"2023-03-26 22:49:04.678786+03"', false);
 
 --Genders Table
-INSERT INTO "Genders"("Id", "Name") VALUES (2, 'Kadın');
 INSERT INTO "Genders"("Id", "Name") VALUES (1, 'Erkek');
+INSERT INTO "Genders"("Id", "Name") VALUES (2, 'Kadın');
 
 --Languages Table
 INSERT INTO "Languages"("Name", "IsActive", "CreationTime", "IsDeleted") VALUES ('Türkçe', true,'"2023-03-26 22:49:04.678786+03"', false);

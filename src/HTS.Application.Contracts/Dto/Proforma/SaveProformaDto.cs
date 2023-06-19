@@ -23,6 +23,8 @@ public class SaveProformaDto
     [Required]
     public decimal ExchangeRate { get; set; }
     [Required]
+    public decimal TotalProformaPrice { get; set; }
+    [Required]
     public string ProformaCode { get; set; }
     public string Description { get; set; }
     public string TPDescription { get; set; }

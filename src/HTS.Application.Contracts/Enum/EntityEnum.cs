@@ -241,33 +241,37 @@ namespace HTS.Enum
         public enum ProformaStatusEnum
         {
             /// <summary>
+            /// Yeni Kayıt
+            /// </summary>
+            NewRecord = 1,
+            /// <summary>
             /// MFB Onay Bekliyor
             /// </summary>
-            MFBWaitingApproval = 1,
+            MFBWaitingApproval = 2,
             /// <summary>
             /// MFB Reddetti
             /// </summary>
-            MFBRejected = 2,
+            MFBRejected = 3,
             /// <summary>
             /// Hastaya İletilecek
             /// </summary>
-            WillBeTransferedToPatient = 3,
+            WillBeTransferedToPatient = 4,
             /// <summary>
             /// Hasta Onayı Bekliyor
             /// </summary>
-            WaitingForPatientApproval = 4,
+            WaitingForPatientApproval = 5,
             /// <summary>
             /// Hasta Proformayı Reddetti
             /// </summary>
-            PatientRejected = 5,
+            PatientRejected = 6,
             /// <summary>
             /// Tahsilat Bekleniyor
             /// </summary>
-            WaitingForPayment = 6,
+            WaitingForPayment = 7,
             /// <summary>
             /// Tahsil Edildi
             /// </summary>
-            PaymentCompleted = 7
+            PaymentCompleted = 8
         }
 
         public enum RoomTypeEnum

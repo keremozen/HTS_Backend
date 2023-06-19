@@ -14,5 +14,13 @@ public static class  ErrorCode
     public const string HospitalResponseTypeNotValidToReject = "HTS:11";
     public const string AnotherHospitalResponseIsApprovedInSameRowNumber = "HTS:12";
     public const string TreatmentNumberCouldNotBeGenerated = "HTS:13";
+    public const string NoExchangeRateInformation = "HTS:14";
+    public const string ExchangeRateInformationNotMatch = "HTS:15";
+    public const string ProformaStatusNotValid = "HTS:16";
+    public const string ProformaAdditionalServiceNotValid = "HTS:17";
+    public const string InvalidProcessInProforma = "HTS:18";
+    public const string InvalidProcessUnitPriceInProforma = "HTS:19";
+    public const string InvalidCalculationsInProforma = "HTS:20";
+
 
 }

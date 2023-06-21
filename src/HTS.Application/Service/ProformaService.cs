@@ -43,7 +43,7 @@ public class ProformaService : ApplicationService, IProformaService
 
     public async Task SaveAsync(SaveProformaDto proforma)
     {
-        IsDataValidToSave(proforma);
+        await IsDataValidToSave(proforma);
         var entity = ObjectMapper.Map<SaveProformaDto, Proforma>(proforma);
         entity.Version = await GetVersion(entity);;
         entity.CreationDate = DateTime.Now;
@@ -64,7 +64,7 @@ public class ProformaService : ApplicationService, IProformaService
     private async Task<string> GenerateProformaCode(int operationId, int version)
     {
        string treatmentCode = (await _proformaRepository.GetQueryableAsync()).Where(p => p.OperationId == operationId)
-            .Select(p => p.Operation.PatientTreatmentProcess.TreatmentCode).ToString();
+            .Select(p => p.Operation.PatientTreatmentProcess.TreatmentCode).First().ToString();
        return $"P-{treatmentCode}-{version}";
     }
     
@@ -74,7 +74,7 @@ public class ProformaService : ApplicationService, IProformaService
     /// </summary>
     /// <param name="proforma">To be saved object</param>
     /// <exception cref="HTSBusinessException">Check response exceptions</exception>
-    private async void IsDataValidToSave(SaveProformaDto proforma)
+    private async Task IsDataValidToSave(SaveProformaDto proforma)
     {
         //Status that not valid to save proforma
         List<int> notSuitableStatus = new List<int>
@@ -85,7 +85,7 @@ public class ProformaService : ApplicationService, IProformaService
             EntityEnum.ProformaStatusEnum.WillBeTransferedToPatient.GetHashCode()
         };
         
-        if (!await _proformaRepository.AnyAsync(p => p.OperationId == proforma.OperationId 
+        if (await _proformaRepository.AnyAsync(p => p.OperationId == proforma.OperationId 
                                                      && notSuitableStatus.Contains(p.ProformaStatusId)))
         {
             throw new HTSBusinessException(ErrorCode.ProformaStatusNotValid);
@@ -95,7 +95,7 @@ public class ProformaService : ApplicationService, IProformaService
         if (!await _proformaRepository.AnyAsync(p => p.OperationId == proforma.OperationId))
         {
             //check exchange rate
-          ExchangeRateInformation exchangeRateInformation =  await _exchangeRateRepository.GetAsync(e =>
+          ExchangeRateInformation exchangeRateInformation =  await _exchangeRateRepository.FirstOrDefaultAsync(e =>
                 e.CreationTime.Date.Date == DateTime.Now.Date.AddDays(-1));
           if (exchangeRateInformation == null)//No exchange rate
           {
@@ -109,7 +109,7 @@ public class ProformaService : ApplicationService, IProformaService
         }
         else
         {//More than 1 revision
-            if ((await _proformaRepository.GetAsync(p => p.OperationId == proforma.OperationId)).ExchangeRate !=
+            if ((await _proformaRepository.FirstOrDefaultAsync(p => p.OperationId == proforma.OperationId)).ExchangeRate !=
                 proforma.ExchangeRate)
             {
                 throw new HTSBusinessException(ErrorCode.ExchangeRateInformationNotMatch);
@@ -184,7 +184,7 @@ public class ProformaService : ApplicationService, IProformaService
             }
 
             if ((proformaProcess.UnitPrice * proformaProcess.TreatmentCount) != proformaProcess.TotalPrice
-                || Decimal.Divide(proformaProcess.TotalPrice,proforma.ExchangeRate) != proformaProcess.ProformaPrice
+                || Math.Round(Decimal.Divide(proformaProcess.TotalPrice,proforma.ExchangeRate),2) != proformaProcess.ProformaPrice
                 || (proformaProcess.Change != 0 &&  
                     Math.Round((proformaProcess.ProformaPrice + Decimal.Divide(proformaProcess.ProformaPrice*proformaProcess.Change,100)),2) != proformaProcess.ProformaFinalPrice )
                 || (proformaProcess.Change == 0 &&  

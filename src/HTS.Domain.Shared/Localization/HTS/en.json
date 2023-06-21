@@ -42,6 +42,14 @@
     "HTS:10": "In order to approve hospital response it has to be set to sutiable for treatment.",
     "HTS:11": "In order to reject hospital response it has to be set to sutiable for treatment.",
     "HTS:12": "Another hospital response is approved for this treatment process.",
+    "HTS:13": "An error occured during creation of treatment code.",
+    "HTS:14": "No exchange rate information could be found.",
+    "HTS:15": "Inconsistency found on the exchange rate information.",
+    "HTS:16": "Proforma status is invalid.",
+    "HTS:17": "Proforma additional services are invalid.",
+    "HTS:18": "Invalid treatment process found in the proforma.",
+    "HTS:19": "Invalid treatment process unit price found in the proforma.",
+    "HTS:20": "Invalid calculations found in the proforma.",
 
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Successful",
@@ -465,6 +473,9 @@
     "Proforma:NotIncludingService:Button:NewService": "Add",
     "Proforma:AdditionalServices:Field:Day": "Day",
     "Proforma:AdditionalServices:Field:RoomType": "Room Type",
+    "Proforma:AdditionalServices:Field:Piece": "Piece",
+    "Proforma:AdditionalServices:Field:Companion": "Companion",
+    "Proforma:SaveSuccessful": "Proforma is saved successfully",
 
     /*QUOTATION*/
     "Quotation:FieldLegend:HBYSProcesses": "HBYS Processes",

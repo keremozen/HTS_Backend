@@ -42,6 +42,14 @@
     "HTS:10": "Hastane cevabının onaylanabilmesi için durumunun tedaviye uygun olması gerekmektedir.",
     "HTS:11": "Hastane cevabının reddedilebilmesi için durumunun tedaviye uygun olması gerekmektedir.",
     "HTS:12": "Tedavi süreci için başka bir hastane cevabı onaylanmış.",
+    "HTS:13": "Tedavi kodu oluşturma sırasında hata oluştu.",
+    "HTS:14": "Kur bilgisi bulunamadı.",
+    "HTS:15": "Kur bilgisi sistemde tanımlı kur bilgisinden farklı olduğu için işlem gerçekleştirilemiyor.",
+    "HTS:16": "Proforma durumu geçerli bir durum değil.",
+    "HTS:17": "Proforma ek servisleri geçerli değil.",
+    "HTS:18": "Geçersiz tedavi kalemi bilgisi olduğu için işlem gerçekleştirilemiyor.",
+    "HTS:19": "Geçersiz tedavi birim fiyatı olduğu için işlem gerçekleştirilemiyor.",
+    "HTS:20": "Hesaplama bilgilerinde hata olduğu için işlem gerçekleştirilemiyor.",
 
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Başarılı",
@@ -466,6 +474,9 @@
     "Proforma:NotIncludingService:Button:NewService": "Ekle",
     "Proforma:AdditionalServices:Field:Day": "Gün",
     "Proforma:AdditionalServices:Field:RoomType": "Oda Tipi",
+    "Proforma:AdditionalServices:Field:Piece": "Adet",
+    "Proforma:AdditionalServices:Field:Companion": "Refakatçi",
+    "Proforma:SaveSuccessful": "Proforma başarıyla kaydedildi",
 
     /*QUOTATION*/
     "Quotation:FieldLegend:HBYSProcesses": "HBYS İşlemleri",

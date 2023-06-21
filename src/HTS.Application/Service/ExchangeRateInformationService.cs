@@ -27,7 +27,7 @@ namespace HTS.Service
         public async Task<ExchangeRateInformationDto> GetAsync(int currencyId)
         {
             var result =
-                await _exchangeRateInformationRepository.GetAsync(e =>
+                await _exchangeRateInformationRepository.FirstOrDefaultAsync(e =>
                     e.CreationTime.Date.Date == DateTime.Now.Date.AddDays(-1));
             return ObjectMapper.Map<ExchangeRateInformation, ExchangeRateInformationDto>(result);
         }

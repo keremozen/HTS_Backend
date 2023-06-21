@@ -7,6 +7,7 @@ using HTS.Dto.Operation;
 using HTS.Dto.ProformaAdditionalService;
 using HTS.Dto.ProformaNotIncludingService;
 using HTS.Dto.ProformaProcess;
+using HTS.Enum;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Identity;
 
@@ -19,7 +20,7 @@ public class SaveProformaDto
     [Required]
     public int CurrencyId { get; set; }
     [Required]
-    public int ProformaStatusId { get; set; }
+    public EntityEnum.ProformaStatusEnum ProformaStatusId { get; set; }
     [Required]
     public decimal ExchangeRate { get; set; }
     [Required]

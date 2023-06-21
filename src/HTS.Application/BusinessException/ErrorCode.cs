@@ -21,6 +21,7 @@ public static class  ErrorCode
     public const string InvalidProcessInProforma = "HTS:18";
     public const string InvalidProcessUnitPriceInProforma = "HTS:19";
     public const string InvalidCalculationsInProforma = "HTS:20";
+    public const string BadRequest = "HTS:20";
 
 
 }

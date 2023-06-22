@@ -26,7 +26,28 @@ namespace HTS.Interface
         /// <param name="proforma">To be inserted object</param>
         /// <returns></returns>
         Task SaveAsync(SaveProformaDto proforma);
-       
+
+        /// <summary>
+        /// Proforma send to mfb
+        /// </summary>
+        /// <param name="id">Proforma Id to be send</param>
+        /// <returns></returns>
+        Task SendAsync(int id);
+
+        /// <summary>
+        /// Approve proforma
+        /// </summary>
+        /// <param name="id">Proforma id to be approved</param>
+        /// <returns></returns>
+        Task ApproveMFBAsync(int id);
+
+        /// <summary>
+        /// Reject proforma
+        /// </summary>
+        /// <param name="rejectProforma">Reject object</param>
+        /// <returns></returns>
+        Task RejectMFBAsync(RejectProformaDto rejectProforma);
+
 
     }
 }

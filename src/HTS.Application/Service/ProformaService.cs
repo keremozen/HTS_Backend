@@ -19,16 +19,19 @@ public class ProformaService : ApplicationService, IProformaService
     private readonly IRepository<Proforma, int> _proformaRepository;
     private readonly IRepository<ExchangeRateInformation, int> _exchangeRateRepository;
     private readonly IRepository<Process, int> _processRepository;
+    private readonly IRepository<RejectReason, int> _rejectReasonRepository;
     private readonly IRepository<PatientTreatmentProcess, int> _patientTreatmentProcessRepository;
 
     public ProformaService(IRepository<Proforma, int> proformaRepository,
         IRepository<ExchangeRateInformation, int> exchangeRateRepository,
         IRepository<Process, int> processRepository,
+        IRepository<RejectReason, int> rejectReasonRepository,
         IRepository<PatientTreatmentProcess, int> patientTreatmentProcessRepository)
     {
         _proformaRepository = proformaRepository;
         _exchangeRateRepository = exchangeRateRepository;
         _processRepository = processRepository;
+        _rejectReasonRepository = rejectReasonRepository;
         _patientTreatmentProcessRepository = patientTreatmentProcessRepository;
     }
 
@@ -55,7 +58,7 @@ public class ProformaService : ApplicationService, IProformaService
         //Get entity from db
         var proforma =
             (await _proformaRepository.WithDetailsAsync((p => p.Operation), (p => p.Operation.PatientTreatmentProcess)))
-            .FirstOrDefault();
+            .FirstOrDefault(p => p.Id == id);
         await IsDataValidToSend(proforma);
         //Treatment process, operation, proforma status update
         proforma.ProformaStatusId = EntityEnum.ProformaStatusEnum.MFBWaitingApproval.GetHashCode();
@@ -65,8 +68,39 @@ public class ProformaService : ApplicationService, IProformaService
             .ProformaCreatedWaitingForMFBApproval.GetHashCode();
         await _proformaRepository.UpdateAsync(proforma);
     }
-
-
+    
+    public async Task ApproveMFBAsync(int id)
+    {
+        //Get entity from db
+        var proforma =
+            (await _proformaRepository.WithDetailsAsync((p => p.Operation), (p => p.Operation.PatientTreatmentProcess)))
+            .FirstOrDefault(p => p.Id == id);
+        await IsDataValidToApproveMFB(proforma);
+        //Treatment process, operation, proforma status update
+        proforma.ProformaStatusId = EntityEnum.ProformaStatusEnum.WillBeTransferedToPatient.GetHashCode();
+        proforma.Operation.OperationStatusId =
+            EntityEnum.OperationStatusEnum.ProformaApprovedWillBeTransferredToPatient.GetHashCode();
+        proforma.Operation.PatientTreatmentProcess.TreatmentProcessStatusId = EntityEnum.PatientTreatmentStatusEnum
+            .ProformaApprovedWillBeTransferredToPatient.GetHashCode();
+        await _proformaRepository.UpdateAsync(proforma);
+    }
+    
+    public async Task RejectMFBAsync(RejectProformaDto rejectProforma)
+    {
+        //Get entity from db
+        var proforma =
+            (await _proformaRepository.WithDetailsAsync((p => p.Operation), (p => p.Operation.PatientTreatmentProcess)))
+            .FirstOrDefault(p => p.Id == rejectProforma.Id);
+        await IsDataValidToRejectMFB(rejectProforma, proforma);
+        //Treatment process, operation, proforma status update
+        proforma.ProformaStatusId = EntityEnum.ProformaStatusEnum.MFBRejected.GetHashCode();
+        proforma.Operation.OperationStatusId =
+            EntityEnum.OperationStatusEnum.MFBRejectedPriceExpecting.GetHashCode();
+        proforma.Operation.PatientTreatmentProcess.TreatmentProcessStatusId = EntityEnum.PatientTreatmentStatusEnum
+            .MFBRejectedPriceExpecting.GetHashCode();
+        proforma.RejectReasonId = rejectProforma.RejectReasonId;
+        await _proformaRepository.UpdateAsync(proforma);
+    }
 
     private async Task<int> GetVersion(Proforma entity)
     {
@@ -221,6 +255,11 @@ public class ProformaService : ApplicationService, IProformaService
     }
 
 
+    /// <summary>
+    /// Checks if data is valid to send to mfb
+    /// </summary>
+    /// <param name="proforma">To be send proforma</param>
+    /// <exception cref="HTSBusinessException"></exception>
     private async Task IsDataValidToSend(Proforma proforma)
     {
         if (proforma == null)
@@ -239,6 +278,69 @@ public class ProformaService : ApplicationService, IProformaService
 
         if (await _proformaRepository.AnyAsync(p => p.OperationId == proforma.OperationId
                                                     && notSuitableStatus.Contains(p.ProformaStatusId)))
+        {
+            throw new HTSBusinessException(ErrorCode.ProformaStatusNotValid);
+        }
+    }
+    
+    /// <summary>
+    /// Checks if data is valid to approve mfb
+    /// </summary>
+    /// <param name="proforma">To be approved proforma</param>
+    /// <exception cref="HTSBusinessException"></exception>
+    private async Task IsDataValidToApproveMFB(Proforma proforma)
+    {
+        if (proforma == null)
+        {
+            throw new HTSBusinessException(ErrorCode.BadRequest);
+        }
+        //Status that not valid to send proforma
+        List<int> notSuitableStatus = new List<int>
+        {
+            EntityEnum.ProformaStatusEnum.PaymentCompleted.GetHashCode(),
+            EntityEnum.ProformaStatusEnum.WaitingForPayment.GetHashCode(),
+            EntityEnum.ProformaStatusEnum.WaitingForPatientApproval.GetHashCode(),
+            EntityEnum.ProformaStatusEnum.WillBeTransferedToPatient.GetHashCode()
+        };
+
+        if (await _proformaRepository.AnyAsync(p => p.OperationId == proforma.OperationId
+                                                    && notSuitableStatus.Contains(p.ProformaStatusId))
+            || proforma.ProformaStatusId != EntityEnum.ProformaStatusEnum.MFBWaitingApproval.GetHashCode())
+        {
+            throw new HTSBusinessException(ErrorCode.ProformaStatusNotValid);
+        }
+    }
+    
+    /// <summary>
+    /// Checks if data is valid to reject mfb
+    /// </summary>
+    /// <param name="rejectProforma">Reject object</param>
+    /// <param name="proforma">To be rejected proforma</param>
+    /// <exception cref="HTSBusinessException"></exception>
+    private async Task IsDataValidToRejectMFB(RejectProformaDto rejectProforma, Proforma proforma)
+    {
+        if (proforma == null)
+        {
+            throw new HTSBusinessException(ErrorCode.BadRequest);
+        }
+
+        if (!await _rejectReasonRepository.AnyAsync(r => r.IsActive && r.Id == rejectProforma.RejectReasonId  )  )
+        {
+            throw new HTSBusinessException(ErrorCode.RelationalDataIsMissing);
+        }
+        
+        //Status that not valid to send proforma
+        List<int> notSuitableStatus = new List<int>
+        {
+            EntityEnum.ProformaStatusEnum.PaymentCompleted.GetHashCode(),
+            EntityEnum.ProformaStatusEnum.WaitingForPayment.GetHashCode(),
+            EntityEnum.ProformaStatusEnum.WaitingForPatientApproval.GetHashCode(),
+            EntityEnum.ProformaStatusEnum.WillBeTransferedToPatient.GetHashCode()
+        };
+
+        if (await _proformaRepository.AnyAsync(p => p.OperationId == proforma.OperationId
+                                                    && notSuitableStatus.Contains(p.ProformaStatusId))
+            || proforma.ProformaStatusId != EntityEnum.ProformaStatusEnum.MFBWaitingApproval.GetHashCode())
         {
             throw new HTSBusinessException(ErrorCode.ProformaStatusNotValid);
         }

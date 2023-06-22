@@ -25,6 +25,7 @@ public class ProformaDto : AuditedEntityWithUserDto<int, IdentityUserDto>
     public string TPDescription { get; set; }
     public int Version { get; set; }
     public decimal TotalProformaPrice { get; set; }
+    public string RejectReason { get; set; }
 
     public CurrencyDto Currency { get; set; }
     public OperationDto Operation { get; set; }

@@ -29,12 +29,17 @@ namespace HTS.Data.Entity
         [Required]
         public decimal TotalProformaPrice { get; set; }
 
+        public int? RejectReasonId { get; set; }
+
         [ForeignKey("OperationId")]
         public Operation Operation { get; set; }
         [ForeignKey("CurrencyId")]
         public Currency Currency { get; set; }
         [ForeignKey("ProformaStatusId")]
         public ProformaStatus ProformaStatus { get; set; }
+
+        [ForeignKey("RejectReasonId")]
+        public virtual RejectReason? RejectReason { get; set; }
         public virtual ICollection<ProformaProcess> ProformaProcesses { get; set; }
         public virtual ICollection<ProformaAdditionalService> ProformaAdditionalServices { get; set; }
         public virtual ICollection<ProformaNotIncludingService> ProformaNotIncludingServices { get; set; }

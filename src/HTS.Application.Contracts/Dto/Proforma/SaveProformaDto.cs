@@ -30,7 +30,7 @@ public class SaveProformaDto
     public string Description { get; set; }
     public string TPDescription { get; set; }
     public int Version { get; set; }
-
+    public string RejectReason { get; set; }
     public virtual ICollection<SaveProformaProcessDto> ProformaProcesses { get; set; }
     public virtual ICollection<SaveProformaAdditionalServiceDto> ProformaAdditionalServices { get; set; }
     public virtual ICollection<SaveProformaNotIncludingServiceDto> ProformaNotIncludingServices { get; set; }

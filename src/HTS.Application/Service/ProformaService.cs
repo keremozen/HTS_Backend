@@ -46,8 +46,9 @@ public class ProformaService : ApplicationService, IProformaService
     {
         await IsDataValidToSave(proforma);
         var entity = ObjectMapper.Map<SaveProformaDto, Proforma>(proforma);
-        entity.Version = await GetVersion(entity); ;
+        entity.Version = await GetVersion(entity);
         entity.CreationDate = DateTime.Now;
+        //TODO: MFB onayındayken mfb tekrar güncelliyorsa status gene mfb onayında olarak kalacak
         entity.ProformaStatusId = EntityEnum.ProformaStatusEnum.NewRecord.GetHashCode();
         entity.ProformaCode = await GenerateProformaCode(entity.OperationId, entity.Version);
         await _proformaRepository.InsertAsync(entity);
@@ -126,7 +127,7 @@ public class ProformaService : ApplicationService, IProformaService
     /// <exception cref="HTSBusinessException">Check response exceptions</exception>
     private async Task IsDataValidToSave(SaveProformaDto proforma)
     {
-        //TODO:Hopsy mfd onayı bekleyen case de, mfd yeni versiyon çıkabilir
+        //TODO:Hopsy mfd onayı bekleyen case de, sadece mfd yeni versiyon çıkabilir.
         //Status that not valid to save proforma
         List<int> notSuitableStatus = new List<int>
         {
@@ -309,6 +310,12 @@ public class ProformaService : ApplicationService, IProformaService
         {
             throw new HTSBusinessException(ErrorCode.ProformaStatusNotValid);
         }
+        //Sadece son versiyon onaylanıp reddedilebilir
+       int maxVersion = (await _proformaRepository.GetListAsync(p => p.OperationId == proforma.OperationId)).Max(p => p.Version);
+       if (proforma.Version != maxVersion)
+       {
+           throw new HTSBusinessException(ErrorCode.LastProformaVersionCanBeApprovedRejected);
+       }
     }
     
     /// <summary>
@@ -343,6 +350,13 @@ public class ProformaService : ApplicationService, IProformaService
             || proforma.ProformaStatusId != EntityEnum.ProformaStatusEnum.MFBWaitingApproval.GetHashCode())
         {
             throw new HTSBusinessException(ErrorCode.ProformaStatusNotValid);
+        }
+        
+        //Sadece son versiyon onaylanıp reddedilebilir
+        int maxVersion = (await _proformaRepository.GetListAsync(p => p.OperationId == proforma.OperationId)).Max(p => p.Version);
+        if (proforma.Version != maxVersion)
+        {
+            throw new HTSBusinessException(ErrorCode.LastProformaVersionCanBeApprovedRejected);
         }
     }
 

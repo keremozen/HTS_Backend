@@ -50,7 +50,9 @@
     "HTS:18": "Geçersiz tedavi kalemi bilgisi olduğu için işlem gerçekleştirilemiyor.",
     "HTS:19": "Geçersiz tedavi birim fiyatı olduğu için işlem gerçekleştirilemiyor.",
     "HTS:20": "Hesaplama bilgilerinde hata olduğu için işlem gerçekleştirilemiyor.",
+    "HTS:21": "Sadece son versiyon proforma üzerinde onay / red işlemleri yapılabilir.",
 
+    
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Başarılı",
     "ToastTitle:Info": "Bilgi",

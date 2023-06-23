@@ -38,8 +38,14 @@ public class ProformaService : ApplicationService, IProformaService
     public async Task<List<ProformaListDto>> GetNameListByOperationIdAsync(int operationId)
     {
         var query = await (await _proformaRepository.WithDetailsAsync(p => p.Creator))
-            .Where(p => p.OperationId == operationId).ToListAsync();
+            .Where(p => p.OperationId == operationId).OrderByDescending(p => p.Version).ToListAsync();
         return ObjectMapper.Map<List<Proforma>, List<ProformaListDto>>(query);
+    }
+
+    public async Task<ProformaDto> GetByIdAsync(int proformaId)
+    {
+        var query = (await _proformaRepository.WithDetailsAsync()).FirstOrDefaultAsync(p => p.Id == proformaId);
+        return ObjectMapper.Map<Proforma, ProformaDto>(await query);
     }
 
     public async Task SaveAsync(SaveProformaDto proforma)
@@ -69,7 +75,7 @@ public class ProformaService : ApplicationService, IProformaService
             .ProformaCreatedWaitingForMFBApproval.GetHashCode();
         await _proformaRepository.UpdateAsync(proforma);
     }
-    
+
     public async Task ApproveMFBAsync(int id)
     {
         //Get entity from db
@@ -85,7 +91,7 @@ public class ProformaService : ApplicationService, IProformaService
             .ProformaApprovedWillBeTransferredToPatient.GetHashCode();
         await _proformaRepository.UpdateAsync(proforma);
     }
-    
+
     public async Task RejectMFBAsync(RejectProformaDto rejectProforma)
     {
         //Get entity from db
@@ -283,7 +289,7 @@ public class ProformaService : ApplicationService, IProformaService
             throw new HTSBusinessException(ErrorCode.ProformaStatusNotValid);
         }
     }
-    
+
     /// <summary>
     /// Checks if data is valid to approve mfb
     /// </summary>
@@ -311,13 +317,13 @@ public class ProformaService : ApplicationService, IProformaService
             throw new HTSBusinessException(ErrorCode.ProformaStatusNotValid);
         }
         //Sadece son versiyon onaylanıp reddedilebilir
-       int maxVersion = (await _proformaRepository.GetListAsync(p => p.OperationId == proforma.OperationId)).Max(p => p.Version);
-       if (proforma.Version != maxVersion)
-       {
-           throw new HTSBusinessException(ErrorCode.LastProformaVersionCanBeApprovedRejected);
-       }
+        int maxVersion = (await _proformaRepository.GetListAsync(p => p.OperationId == proforma.OperationId)).Max(p => p.Version);
+        if (proforma.Version != maxVersion)
+        {
+            throw new HTSBusinessException(ErrorCode.LastProformaVersionCanBeApprovedRejected);
+        }
     }
-    
+
     /// <summary>
     /// Checks if data is valid to reject mfb
     /// </summary>
@@ -331,11 +337,11 @@ public class ProformaService : ApplicationService, IProformaService
             throw new HTSBusinessException(ErrorCode.BadRequest);
         }
 
-        if (!await _rejectReasonRepository.AnyAsync(r => r.IsActive && r.Id == rejectProforma.RejectReasonId  )  )
+        if (!await _rejectReasonRepository.AnyAsync(r => r.IsActive && r.Id == rejectProforma.RejectReasonId))
         {
             throw new HTSBusinessException(ErrorCode.RelationalDataIsMissing);
         }
-        
+
         //Status that not valid to send proforma
         List<int> notSuitableStatus = new List<int>
         {
@@ -351,7 +357,7 @@ public class ProformaService : ApplicationService, IProformaService
         {
             throw new HTSBusinessException(ErrorCode.ProformaStatusNotValid);
         }
-        
+
         //Sadece son versiyon onaylanıp reddedilebilir
         int maxVersion = (await _proformaRepository.GetListAsync(p => p.OperationId == proforma.OperationId)).Max(p => p.Version);
         if (proforma.Version != maxVersion)

@@ -19,6 +19,12 @@ namespace HTS.Interface
         /// <returns>Response list</returns>
         Task<List<ProformaListDto>> GetNameListByOperationIdAsync(int operationId);
 
+        /// <summary>
+        /// Get proforma by id
+        /// </summary>
+        /// <param name="proformaId">Proforma ID</param>
+        /// <returns>Proforma</returns>
+        Task<ProformaDto> GetByIdAsync(int proformaId);
 
         /// <summary>
         /// Proforma insert with relational data

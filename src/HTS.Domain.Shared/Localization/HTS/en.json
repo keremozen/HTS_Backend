@@ -476,7 +476,9 @@
     "Proforma:AdditionalServices:Field:RoomType": "Room Type",
     "Proforma:AdditionalServices:Field:Piece": "Piece",
     "Proforma:AdditionalServices:Field:Companion": "Companion",
-    "Proforma:SaveSuccessful": "Proforma is saved successfully",
+    "Proforma:SaveSuccessful": "Proforma is saved successfully.",
+    "Proforma:SendSuccessful": "Proforma is sent to MFB approval.",
+    "Proforma:Message:SendConfirm": "Are you sure you want to send proforma to MFB approval?",
 
     /*QUOTATION*/
     "Quotation:FieldLegend:HBYSProcesses": "HBYS Processes",

@@ -30,6 +30,13 @@ INSERT INTO "TreatmentProcessStatuses"("Id", "Name") VALUES (1, 'Yeni Kayıt');
 INSERT INTO "TreatmentProcessStatuses"("Id", "Name") VALUES (2, 'Hastanelere Danışıldı - Cevap Bekleniyor');
 INSERT INTO "TreatmentProcessStatuses"("Id", "Name") VALUES (3, 'Hastanelere Danışıldı - Değerlendirme Bekliyor');
 INSERT INTO "TreatmentProcessStatuses"("Id", "Name") VALUES (4, 'Operasyon Onaylandı - Fiyatlandırma Bekliyor');
+INSERT INTO "TreatmentProcessStatuses"("Id", "Name") VALUES (5, 'Proforma Oluşturuldu - MFB Onayı Bekliyor');
+INSERT INTO "TreatmentProcessStatuses"("Id", "Name") VALUES (6, 'MFB Reddetti - Fiyatlandırma Bekliyor');
+INSERT INTO "TreatmentProcessStatuses"("Id", "Name") VALUES (7, 'Proforma Onaylandı - Hastaya İletilecek');
+INSERT INTO "TreatmentProcessStatuses"("Id", "Name") VALUES (8, 'Proforma İletildi - Hasta Onayı Bekleniyor');
+INSERT INTO "TreatmentProcessStatuses"("Id", "Name") VALUES (9, 'Hasta Proformayı Reddetti');
+INSERT INTO "TreatmentProcessStatuses"("Id", "Name") VALUES (10, 'Proforma Onaylandı - Tahsilat Bekleniyor');
+INSERT INTO "TreatmentProcessStatuses"("Id", "Name") VALUES (11, 'Proforma Tahsil Edildi - Tedavi Aşaması');
 
 --Cities Table
 INSERT INTO "Cities"("Name","CreationTime") VALUES ('Ankara','"2023-03-26 22:49:04.678786+03"');
@@ -74,7 +81,23 @@ INSERT INTO "OperationTypes"("Id", "Name") VALUES (2, 'Elle giriş');
 
 --Operation status Table
 INSERT INTO "OperationStatuses"("Id", "Name") VALUES (1, 'Fiyatlandırma Bekleniyor');
-INSERT INTO "OperationStatuses"("Id", "Name") VALUES (2, 'Proforma Oluşturuldu');
+INSERT INTO "OperationStatuses"("Id", "Name") VALUES (2, 'Proforma Oluşturuldu - MFB Onayı Bekliyor');
+INSERT INTO "OperationStatuses"("Id", "Name") VALUES (3, 'MFB Reddetti - Fiyatlandırma Bekliyor');
+INSERT INTO "OperationStatuses"("Id", "Name") VALUES (4, 'Proforma Onaylandı - Hastaya İletilecek');
+INSERT INTO "OperationStatuses"("Id", "Name") VALUES (5, 'Proforma İletildi - Hasta Onayı Bekleniyor');
+INSERT INTO "OperationStatuses"("Id", "Name") VALUES (6, 'Hasta Proformayı Reddetti');
+INSERT INTO "OperationStatuses"("Id", "Name") VALUES (7, 'Proforma Onaylandı - Tahsilat Bekleniyor');
+INSERT INTO "OperationStatuses"("Id", "Name") VALUES (8, 'Proforma Tahsil Edildi - Tedavi Aşaması');
+
+--Proforma status Table
+INSERT INTO "OperationStatuses"("Id", "Name") VALUES (1, 'Yeni Kayıt');
+INSERT INTO "OperationStatuses"("Id", "Name") VALUES (2, 'MFB Onay Bekliyor');
+INSERT INTO "OperationStatuses"("Id", "Name") VALUES (3, 'MFB Reddetti');
+INSERT INTO "OperationStatuses"("Id", "Name") VALUES (4, 'Hastaya İletilecek');
+INSERT INTO "OperationStatuses"("Id", "Name") VALUES (5, 'Hasta Onayı Bekliyor');
+INSERT INTO "OperationStatuses"("Id", "Name") VALUES (6, 'Hasta Proformayı Reddetti');
+INSERT INTO "OperationStatuses"("Id", "Name") VALUES (7, 'Tahsilat Bekleniyor');
+INSERT INTO "OperationStatuses"("Id", "Name") VALUES (8, 'Tahsil Edildi');
 
 --Process type Table
 INSERT INTO "ProcessTypes"("Id", "Name", "IsActive") VALUES (1, 'Sut Kodu', true);

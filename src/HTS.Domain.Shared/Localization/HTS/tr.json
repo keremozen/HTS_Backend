@@ -52,7 +52,7 @@
     "HTS:20": "Hesaplama bilgilerinde hata olduğu için işlem gerçekleştirilemiyor.",
     "HTS:21": "Sadece son versiyon proforma üzerinde onay / red işlemleri yapılabilir.",
 
-    
+
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Başarılı",
     "ToastTitle:Info": "Bilgi",
@@ -479,6 +479,8 @@
     "Proforma:AdditionalServices:Field:Piece": "Adet",
     "Proforma:AdditionalServices:Field:Companion": "Refakatçi",
     "Proforma:SaveSuccessful": "Proforma başarıyla kaydedildi",
+    "Proforma:SendSuccessful": "Proforma başarıyla MFB onayına gönderildi.",
+    "Proforma:Message:SendConfirm": "Proformayı MFB onayına göndermek istediğize emin misiniz?",
 
     /*QUOTATION*/
     "Quotation:FieldLegend:HBYSProcesses": "HBYS İşlemleri",

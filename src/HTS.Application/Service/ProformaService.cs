@@ -105,6 +105,23 @@ public class ProformaService : ApplicationService, IProformaService
             EntityEnum.OperationStatusEnum.MFBRejectedPriceExpecting.GetHashCode();
         proforma.Operation.PatientTreatmentProcess.TreatmentProcessStatusId = EntityEnum.PatientTreatmentStatusEnum
             .MFBRejectedPriceExpecting.GetHashCode();
+        proforma.RejectReasonMFB = rejectProforma.RejectReason;
+        await _proformaRepository.UpdateAsync(proforma);
+    }
+    
+    public async Task RejectPatientAsync(RejectProformaDto rejectProforma)
+    {
+        //Get entity from db
+        var proforma =
+            (await _proformaRepository.WithDetailsAsync((p => p.Operation), (p => p.Operation.PatientTreatmentProcess)))
+            .FirstOrDefault(p => p.Id == rejectProforma.Id);
+        await IsDataValidToRejectPatient(rejectProforma, proforma);
+        //Treatment process, operation, proforma status update
+        proforma.ProformaStatusId = EntityEnum.ProformaStatusEnum.PatientRejected.GetHashCode();
+        proforma.Operation.OperationStatusId =
+            EntityEnum.OperationStatusEnum.PatientRejectedProforma.GetHashCode();
+        proforma.Operation.PatientTreatmentProcess.TreatmentProcessStatusId = EntityEnum.PatientTreatmentStatusEnum
+            .PatientRejectedProforma.GetHashCode();
         proforma.RejectReasonId = rejectProforma.RejectReasonId;
         await _proformaRepository.UpdateAsync(proforma);
     }
@@ -172,6 +189,13 @@ public class ProformaService : ApplicationService, IProformaService
                 proforma.ExchangeRate)
             {
                 throw new HTSBusinessException(ErrorCode.ExchangeRateInformationNotMatch);
+            }
+            
+            //Only last version can be updated
+            int maxVersion = (await _proformaRepository.GetListAsync(p => p.OperationId == proforma.OperationId)).Max(p => p.Version);
+            if (proforma.Version != maxVersion)
+            {
+                throw new HTSBusinessException(ErrorCode.LastProformaVersionCanBeOperated);
             }
         }
         //Check additional service data
@@ -288,6 +312,12 @@ public class ProformaService : ApplicationService, IProformaService
         {
             throw new HTSBusinessException(ErrorCode.ProformaStatusNotValid);
         }
+        //Only last version can be updated
+        int maxVersion = (await _proformaRepository.GetListAsync(p => p.OperationId == proforma.OperationId)).Max(p => p.Version);
+        if (proforma.Version != maxVersion)
+        {
+            throw new HTSBusinessException(ErrorCode.LastProformaVersionCanBeOperated);
+        }
     }
 
     /// <summary>
@@ -332,17 +362,13 @@ public class ProformaService : ApplicationService, IProformaService
     /// <exception cref="HTSBusinessException"></exception>
     private async Task IsDataValidToRejectMFB(RejectProformaDto rejectProforma, Proforma proforma)
     {
-        if (proforma == null)
+        if (proforma == null
+            || string.IsNullOrEmpty(rejectProforma.RejectReason))
         {
             throw new HTSBusinessException(ErrorCode.BadRequest);
         }
 
-        if (!await _rejectReasonRepository.AnyAsync(r => r.IsActive && r.Id == rejectProforma.RejectReasonId))
-        {
-            throw new HTSBusinessException(ErrorCode.RelationalDataIsMissing);
-        }
-
-        //Status that not valid to send proforma
+        //Status that not valid to reject proforma
         List<int> notSuitableStatus = new List<int>
         {
             EntityEnum.ProformaStatusEnum.PaymentCompleted.GetHashCode(),
@@ -366,4 +392,47 @@ public class ProformaService : ApplicationService, IProformaService
         }
     }
 
+    
+    /// <summary>
+    /// Checks if data is valid to patient reject
+    /// </summary>
+    /// <param name="rejectProforma">Reject object</param>
+    /// <param name="proforma">To be rejected proforma</param>
+    /// <exception cref="HTSBusinessException"></exception>
+    private async Task IsDataValidToRejectPatient(RejectProformaDto rejectProforma, Proforma proforma)
+    {
+        if (proforma == null)
+        {
+            throw new HTSBusinessException(ErrorCode.BadRequest);
+        }
+
+        if (!await _rejectReasonRepository.AnyAsync(r => r.IsActive && r.Id == rejectProforma.RejectReasonId))
+        {
+            throw new HTSBusinessException(ErrorCode.RelationalDataIsMissing);
+        }
+
+        //Status that not valid to reject proforma
+        List<int> notSuitableStatus = new List<int>
+        {
+            EntityEnum.ProformaStatusEnum.PaymentCompleted.GetHashCode(),
+            EntityEnum.ProformaStatusEnum.WaitingForPayment.GetHashCode(),
+            EntityEnum.ProformaStatusEnum.WillBeTransferedToPatient.GetHashCode()
+        };
+
+        if (await _proformaRepository.AnyAsync(p => p.OperationId == proforma.OperationId
+                                                    && notSuitableStatus.Contains(p.ProformaStatusId))
+            || proforma.ProformaStatusId != EntityEnum.ProformaStatusEnum.WaitingForPatientApproval.GetHashCode())
+        {
+            throw new HTSBusinessException(ErrorCode.ProformaStatusNotValid);
+        }
+
+        //Sadece son versiyon onaylanıp reddedilebilir
+        int maxVersion = (await _proformaRepository.GetListAsync(p => p.OperationId == proforma.OperationId)).Max(p => p.Version);
+        if (proforma.Version != maxVersion)
+        {
+            throw new HTSBusinessException(ErrorCode.LastProformaVersionCanBeApprovedRejected);
+        }
+    }
+
+    
 }

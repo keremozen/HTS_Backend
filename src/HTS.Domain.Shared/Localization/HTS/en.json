@@ -50,7 +50,8 @@
     "HTS:18": "Invalid treatment process found in the proforma.",
     "HTS:19": "Invalid treatment process unit price found in the proforma.",
     "HTS:20": "Invalid calculations found in the proforma.",
-    "HTS:21": "Only last version of profoma can be approved / rejected",
+    "HTS:21": "Only last version of proforma can be approved / rejected.",
+    "HTS:22": "Only last version of proforma can be operated.",
 
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Successful",

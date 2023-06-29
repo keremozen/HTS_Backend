@@ -51,6 +51,7 @@
     "HTS:19": "Geçersiz tedavi birim fiyatı olduğu için işlem gerçekleştirilemiyor.",
     "HTS:20": "Hesaplama bilgilerinde hata olduğu için işlem gerçekleştirilemiyor.",
     "HTS:21": "Sadece son versiyon proforma üzerinde onay / red işlemleri yapılabilir.",
+    "HTS:22": "Sadece son versiyon proforma üzerinde işlem yapılabilir.",
 
 
     /*TOAST TITLES*/

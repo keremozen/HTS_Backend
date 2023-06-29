@@ -54,6 +54,13 @@ namespace HTS.Interface
         /// <returns></returns>
         Task RejectMFBAsync(RejectProformaDto rejectProforma);
 
+        /// <summary>
+        /// Patient reject proforma
+        /// </summary>
+        /// <param name="rejectProforma">Reject object</param>
+        /// <returns></returns>
+        Task RejectPatientAsync(RejectProformaDto rejectProforma);
+
 
     }
 }

@@ -30,6 +30,7 @@ namespace HTS.Data.Entity
         public decimal TotalProformaPrice { get; set; }
 
         public int? RejectReasonId { get; set; }
+        public string? RejectReasonMFB { get; set; }
 
         [ForeignKey("OperationId")]
         public Operation Operation { get; set; }

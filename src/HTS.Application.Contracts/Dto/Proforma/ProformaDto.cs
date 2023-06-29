@@ -7,6 +7,7 @@ using HTS.Dto.Operation;
 using HTS.Dto.ProformaAdditionalService;
 using HTS.Dto.ProformaNotIncludingService;
 using HTS.Dto.ProformaProcess;
+using HTS.Dto.RejectReason;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Identity;
 using static HTS.Enum.EntityEnum;
@@ -25,8 +26,11 @@ public class ProformaDto : AuditedEntityWithUserDto<int, IdentityUserDto>
     public string TPDescription { get; set; }
     public int Version { get; set; }
     public decimal TotalProformaPrice { get; set; }
-    public string RejectReason { get; set; }
 
+    public int? RejectReasonId { get; set; }
+    public string RejectReasonMFB { get; set; }
+
+    public RejectReasonDto RejectReason { get; set; }
     public CurrencyDto Currency { get; set; }
     public OperationDto Operation { get; set; }
     public virtual ICollection<ProformaProcessDto> ProformaProcesses { get; set; }

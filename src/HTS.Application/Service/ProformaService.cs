@@ -129,7 +129,34 @@ public class ProformaService : ApplicationService, IProformaService
         proforma.RejectReasonMFB = rejectProforma.RejectReason;
         await _proformaRepository.UpdateAsync(proforma);
     }
-    
+
+    public async Task SendToPatient(int id)
+    {
+        //Get entity from db
+        var proforma =
+            (await _proformaRepository.WithDetailsAsync((p => p.Operation), 
+                (p => p.Operation.PatientTreatmentProcess),
+                (p => p.Operation.PatientTreatmentProcess.Patient)))
+            .FirstOrDefault(p => p.Id == id); 
+        IsDataValidToSendToPatient(proforma);
+        var patientEmail = proforma?.Operation.PatientTreatmentProcess?.Patient.Email;
+        if (string.IsNullOrEmpty(patientEmail))//No email
+        {
+            proforma.SendToPatientManually = true;
+        }
+        else
+        {
+            //TODO:Hopsy send email to patient
+        }
+        proforma.ProformaStatusId = EntityEnum.ProformaStatusEnum.WaitingForPatientApproval.GetHashCode();
+        proforma.Operation.OperationStatusId =
+            EntityEnum.OperationStatusEnum.ProformaTransferredWaitingForPatientApproval.GetHashCode();
+        proforma.Operation.PatientTreatmentProcess.TreatmentProcessStatusId = EntityEnum.PatientTreatmentStatusEnum
+            .ProformaTransferredWaitingForPatientApproval.GetHashCode();
+        await _proformaRepository.UpdateAsync(proforma);
+
+    }
+
     public async Task RejectPatientAsync(RejectProformaDto rejectProforma)
     {
         //Get entity from db
@@ -410,6 +437,19 @@ public class ProformaService : ApplicationService, IProformaService
         if (proforma.Version != maxVersion)
         {
             throw new HTSBusinessException(ErrorCode.LastProformaVersionCanBeApprovedRejected);
+        }
+    }
+    
+    private void IsDataValidToSendToPatient(Proforma proforma)
+    {
+        if (proforma == null)
+        {
+            throw new HTSBusinessException(ErrorCode.BadRequest);
+        }
+       
+        if (proforma.ProformaStatusId != EntityEnum.ProformaStatusEnum.WillBeTransferedToPatient.GetHashCode())
+        {
+            throw new HTSBusinessException(ErrorCode.ProformaStatusNotValid);
         }
     }
 

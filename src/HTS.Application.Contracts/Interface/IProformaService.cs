@@ -20,6 +20,13 @@ namespace HTS.Interface
         Task<List<ProformaListDto>> GetNameListByOperationIdAsync(int operationId);
 
         /// <summary>
+        /// Get proforma pricing list by patient treatment process id
+        /// </summary>
+        /// <param name="ptpId">patient treatment process id</param>
+        /// <returns></returns>
+        Task<List<ProformaPricingListDto>> GetPricingListByPTPIdAsync(int ptpId);
+
+        /// <summary>
         /// Get proforma by id
         /// </summary>
         /// <param name="proformaId">Proforma ID</param>

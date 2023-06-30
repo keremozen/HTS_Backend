@@ -42,6 +42,27 @@ public class ProformaService : ApplicationService, IProformaService
         return ObjectMapper.Map<List<Proforma>, List<ProformaListDto>>(query);
     }
 
+    public async Task<List<ProformaPricingListDto>> GetPricingListByPTPIdAsync(int ptpId)
+    {
+        List<int> proformaStatuses = new List<int>
+        {
+            EntityEnum.ProformaStatusEnum.PatientRejected.GetHashCode(),
+            EntityEnum.ProformaStatusEnum.PaymentCompleted.GetHashCode(),
+            EntityEnum.ProformaStatusEnum.WaitingForPayment.GetHashCode(),
+            EntityEnum.ProformaStatusEnum.WillBeTransferedToPatient.GetHashCode(),
+            EntityEnum.ProformaStatusEnum.MFBWaitingApproval.GetHashCode(),
+            EntityEnum.ProformaStatusEnum.MFBRejected.GetHashCode(),
+            EntityEnum.ProformaStatusEnum.WaitingForPatientApproval.GetHashCode()
+        };
+        var query = await (await _proformaRepository.WithDetailsAsync(p => p.Creator))
+            .Where(p => p.Operation.PatientTreatmentProcessId == ptpId
+                                && proformaStatuses.Contains(p.ProformaStatusId))
+            .OrderByDescending(p => p.Version)
+            .ToListAsync();
+        return ObjectMapper.Map<List<Proforma>, List<ProformaPricingListDto>>(query);
+    }
+
+    
     public async Task<ProformaDto> GetByIdAsync(int proformaId)
     {
         var query = (await _proformaRepository.WithDetailsAsync()).FirstOrDefaultAsync(p => p.Id == proformaId);

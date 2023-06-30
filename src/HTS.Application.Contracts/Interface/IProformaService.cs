@@ -69,6 +69,14 @@ namespace HTS.Interface
         Task SendToPatient(int id);
 
         /// <summary>
+        /// Patient approve proforma
+        /// </summary>
+        /// <param name="id">Proforma id</param>
+        /// <returns></returns>
+        Task ApprovePatientAsync(int id);
+  
+
+        /// <summary>
         /// Patient reject proforma
         /// </summary>
         /// <param name="rejectProforma">Reject object</param>

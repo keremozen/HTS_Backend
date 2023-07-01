@@ -285,5 +285,17 @@ namespace HTS.Enum
             /// </summary>
             VIP = 2
         }
+        
+        public enum  PaymentKindEnum
+        {
+            /// <summary>
+            /// Nakit
+            /// </summary>
+            Cash = 1,
+            /// <summary>
+            /// EFT
+            /// </summary>
+            EFT = 2
+        }
     }
 }

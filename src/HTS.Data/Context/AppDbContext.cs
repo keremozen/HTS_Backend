@@ -65,6 +65,7 @@ namespace HTS.Data
         public  DbSet<ExchangeRateInformation> ExchangeRateInformations { get; set; }
 
         public DbSet<PaymentReason> PaymentReasons { get; set; }
+        public DbSet<PaymentKind> PaymentKinds { get; set; }
 
         public DbSet<IdentityUser> Users { get; set; }
 

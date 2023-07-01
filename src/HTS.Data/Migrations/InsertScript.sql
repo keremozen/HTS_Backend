@@ -102,3 +102,7 @@ INSERT INTO "OperationStatuses"("Id", "Name") VALUES (8, 'Tahsil Edildi');
 --Process type Table
 INSERT INTO "ProcessTypes"("Id", "Name", "IsActive") VALUES (1, 'Sut Kodu', true);
 INSERT INTO "ProcessTypes"("Id", "Name", "IsActive") VALUES (2, 'Sarf Malzeme', true);
+
+--Payment Kind Table
+INSERT INTO "PaymentKinds"("Id", "Name") VALUES (1, 'Nakit');
+INSERT INTO "PaymentKinds"("Id", "Name") VALUES (2, 'Eft');

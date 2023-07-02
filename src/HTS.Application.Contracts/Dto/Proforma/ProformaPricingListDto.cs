@@ -8,6 +8,7 @@ using HTS.Dto.ProformaAdditionalService;
 using HTS.Dto.ProformaNotIncludingService;
 using HTS.Dto.ProformaProcess;
 using HTS.Dto.RejectReason;
+using HTS.Dto.TreatmentProcessStatus;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Identity;
 using static HTS.Enum.EntityEnum;
@@ -24,4 +25,5 @@ public class ProformaPricingListDto : AuditedEntityWithUserDto<int, IdentityUser
     public int? RejectReasonId { get; set; }
     public string RejectReasonMFB { get; set; }
     public RejectReasonDto RejectReason { get; set; }
+    public ProformaStatusDto ProformaStatus { get; set; }
 }

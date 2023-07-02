@@ -405,6 +405,35 @@ namespace HTS.Data.Migrations
                     b.ToTable("DocumentTypes");
                 });
 
+            modelBuilder.Entity("HTS.Data.Entity.ExchangeRateInformation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<int>("CurrencyId")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("ExchangeRate")
+                        .HasColumnType("numeric");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CurrencyId");
+
+                    b.ToTable("ExchangeRateInformations");
+                });
+
             modelBuilder.Entity("HTS.Data.Entity.Gender", b =>
                 {
                     b.Property<int>("Id")
@@ -1424,6 +1453,62 @@ namespace HTS.Data.Migrations
                     b.ToTable("PatientTreatmentProcesses");
                 });
 
+            modelBuilder.Entity("HTS.Data.Entity.PaymentKind", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PaymentKinds");
+                });
+
+            modelBuilder.Entity("HTS.Data.Entity.PaymentReason", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatorId");
+
+                    b.HasIndex("LastModifierId");
+
+                    b.ToTable("PaymentReasons");
+                });
+
             modelBuilder.Entity("HTS.Data.Entity.Process", b =>
                 {
                     b.Property<int>("Id")
@@ -1616,6 +1701,15 @@ namespace HTS.Data.Migrations
                     b.Property<int>("ProformaStatusId")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("RejectReasonId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("RejectReasonMFB")
+                        .HasColumnType("text");
+
+                    b.Property<bool?>("SendToPatientManually")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("TPDescription")
                         .IsRequired()
                         .HasColumnType("text");
@@ -1637,6 +1731,8 @@ namespace HTS.Data.Migrations
                     b.HasIndex("OperationId");
 
                     b.HasIndex("ProformaStatusId");
+
+                    b.HasIndex("RejectReasonId");
 
                     b.ToTable("Proformas");
                 });
@@ -2701,6 +2797,17 @@ namespace HTS.Data.Migrations
                     b.Navigation("LastModifier");
                 });
 
+            modelBuilder.Entity("HTS.Data.Entity.ExchangeRateInformation", b =>
+                {
+                    b.HasOne("HTS.Data.Entity.Currency", "Currency")
+                        .WithMany()
+                        .HasForeignKey("CurrencyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Currency");
+                });
+
             modelBuilder.Entity("HTS.Data.Entity.Hospital", b =>
                 {
                     b.HasOne("HTS.Data.Entity.City", "City")
@@ -3206,6 +3313,21 @@ namespace HTS.Data.Migrations
                     b.Navigation("TreatmentProcessStatus");
                 });
 
+            modelBuilder.Entity("HTS.Data.Entity.PaymentReason", b =>
+                {
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId");
+
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "LastModifier")
+                        .WithMany()
+                        .HasForeignKey("LastModifierId");
+
+                    b.Navigation("Creator");
+
+                    b.Navigation("LastModifier");
+                });
+
             modelBuilder.Entity("HTS.Data.Entity.Process", b =>
                 {
                     b.HasOne("Volo.Abp.Identity.IdentityUser", "Creator")
@@ -3293,6 +3415,10 @@ namespace HTS.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("HTS.Data.Entity.RejectReason", "RejectReason")
+                        .WithMany()
+                        .HasForeignKey("RejectReasonId");
+
                     b.Navigation("Creator");
 
                     b.Navigation("Currency");
@@ -3302,6 +3428,8 @@ namespace HTS.Data.Migrations
                     b.Navigation("Operation");
 
                     b.Navigation("ProformaStatus");
+
+                    b.Navigation("RejectReason");
                 });
 
             modelBuilder.Entity("HTS.Data.Entity.ProformaAdditionalService", b =>

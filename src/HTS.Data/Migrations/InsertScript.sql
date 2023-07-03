@@ -90,14 +90,14 @@ INSERT INTO "OperationStatuses"("Id", "Name") VALUES (7, 'Proforma Onaylandı - 
 INSERT INTO "OperationStatuses"("Id", "Name") VALUES (8, 'Proforma Tahsil Edildi - Tedavi Aşaması');
 
 --Proforma status Table
-INSERT INTO "OperationStatuses"("Id", "Name") VALUES (1, 'Yeni Kayıt');
-INSERT INTO "OperationStatuses"("Id", "Name") VALUES (2, 'MFB Onay Bekliyor');
-INSERT INTO "OperationStatuses"("Id", "Name") VALUES (3, 'MFB Reddetti');
-INSERT INTO "OperationStatuses"("Id", "Name") VALUES (4, 'Hastaya İletilecek');
-INSERT INTO "OperationStatuses"("Id", "Name") VALUES (5, 'Hasta Onayı Bekliyor');
-INSERT INTO "OperationStatuses"("Id", "Name") VALUES (6, 'Hasta Proformayı Reddetti');
-INSERT INTO "OperationStatuses"("Id", "Name") VALUES (7, 'Tahsilat Bekleniyor');
-INSERT INTO "OperationStatuses"("Id", "Name") VALUES (8, 'Tahsil Edildi');
+INSERT INTO "ProformaStatuses"("Id", "Name") VALUES (1, 'Yeni Kayıt');
+INSERT INTO "ProformaStatuses"("Id", "Name") VALUES (2, 'MFB Onay Bekliyor');
+INSERT INTO "ProformaStatuses"("Id", "Name") VALUES (3, 'MFB Reddetti');
+INSERT INTO "ProformaStatuses"("Id", "Name") VALUES (4, 'Hastaya İletilecek');
+INSERT INTO "ProformaStatuses"("Id", "Name") VALUES (5, 'Hasta Onayı Bekliyor');
+INSERT INTO "ProformaStatuses"("Id", "Name") VALUES (6, 'Hasta Proformayı Reddetti');
+INSERT INTO "ProformaStatuses"("Id", "Name") VALUES (7, 'Tahsilat Bekleniyor');
+INSERT INTO "ProformaStatuses"("Id", "Name") VALUES (8, 'Tahsil Edildi');
 
 --Process type Table
 INSERT INTO "ProcessTypes"("Id", "Name", "IsActive") VALUES (1, 'Sut Kodu', true);

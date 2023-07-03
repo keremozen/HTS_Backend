@@ -88,6 +88,7 @@
     "Permission:ProcessManagement": "Process Management",
     "Permission:MaterialManagement": "Material Management",
     "Permission:RejectReasonManagement": "Reject Reason Management",
+    "Permission:PaymentReasonManagement": "Payment Reason Management",
     "Permission:Patient": "Patient",
     "Permission:PatientAccess": "Access Patient Page",
     "Permission:PatientList": "List Patient",
@@ -117,6 +118,7 @@
     "Menu:Admin:Process": "Process Type Management",
     "Menu:Admin:Material": "Material Management",
     "Menu:Admin:RejectReason": "Reject Reason Management",
+    "Menu:Admin:PaymentReason": "Payment Reason Management",
 
     /*HOSPITAL MANAGEMENT*/
     "Admin:Hospital:Name": "Hospital",
@@ -295,6 +297,14 @@
     "Admin:RejectReason:Column:Reason": "Reason",
     "Admin:RejectReason:Column:IsActive": "Is Active?",
     "Admin:RejectReason:RejectReasonDetails": "Reject Reason Details",
+
+    /*PAYMENT REASON MANAGEMENT*/
+    "Admin:PaymentReason:Name": "Payment Reason",
+    "Admin:PaymentReason:PaymentReasonManagement": "Payment Reason Management",
+    "Admin:PaymentReason:NewPaymentReason": "New Payment Reason",
+    "Admin:PaymentReason:Column:Reason": "Reason",
+    "Admin:PaymentReason:Column:IsActive": "Is Active?",
+    "Admin:PaymentReason:PaymentReasonDetails": "Payment Reason Details",
 
     /*PATIENTS*/
     "Patients:Title": "Patients",
@@ -483,6 +493,19 @@
 
     /*QUOTATION*/
     "Quotation:FieldLegend:HBYSProcesses": "HBYS Processes",
-    "Quotation:FieldLegend:Quotation": "Quotation"
+    "Quotation:FieldLegend:Quotation": "Quotation",
+    "Quotation:FieldLegend:Receipt": "Receipt",
+    "Quotation:ProformaTable:Column:ProformaCode": "Proforma Code",
+    "Quotation:ProformaTable:Column:CreatedBy": "Created By",
+    "Quotation:ProformaTable:Column:Created": "Creation Time",
+    "Quotation:ProformaTable:Column:ProformaStatus": "Proforma Status",
+    "Quotation:ProformaTable:Column:MFBApproval": "MFB Approval",
+    "Quotation:ProformaTable:Column:PatientApproval": "Patient Approval",
+    "Quotation:ProformaTable:Column:Receipt": "Receipt",
+    "Quotation:ProformaTable:Button:SendToPatient": "Send",
+    "Quotation:ProformaTable:Button:Approve": "Approve",
+    "Quotation:ProformaTable:Button:Reject": "Reject",
+    "Quotation:ProformaTable:Button:Payment": "Payment",
+    "Quotation:ProformaTable:Message:ConfirmApprove": "Are you sure you want to approve proforma?"
   }
 }

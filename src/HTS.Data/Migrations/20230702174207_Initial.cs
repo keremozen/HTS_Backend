@@ -284,6 +284,18 @@ namespace HTS.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PaymentKinds",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false),
+                    Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PaymentKinds", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ProcessTypes",
                 columns: table => new
                 {
@@ -702,6 +714,34 @@ namespace HTS.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PaymentReasons",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    LastModifierId = table.Column<Guid>(type: "uuid", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PaymentReasons", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PaymentReasons_AbpUsers_CreatorId",
+                        column: x => x.CreatorId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_PaymentReasons_AbpUsers_LastModifierId",
+                        column: x => x.LastModifierId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "RejectReasons",
                 columns: table => new
                 {
@@ -771,6 +811,28 @@ namespace HTS.Data.Migrations
                         column: x => x.LastModifierId,
                         principalTable: "AbpUsers",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ExchangeRateInformations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    CurrencyId = table.Column<int>(type: "integer", nullable: false),
+                    ExchangeRate = table.Column<decimal>(type: "numeric", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatorId = table.Column<Guid>(type: "uuid", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExchangeRateInformations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ExchangeRateInformations_Currencies_CurrencyId",
+                        column: x => x.CurrencyId,
+                        principalTable: "Currencies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -1643,6 +1705,9 @@ namespace HTS.Data.Migrations
                     ProformaCode = table.Column<string>(type: "text", nullable: false),
                     Version = table.Column<int>(type: "integer", nullable: false),
                     TotalProformaPrice = table.Column<decimal>(type: "numeric", nullable: false),
+                    RejectReasonId = table.Column<int>(type: "integer", nullable: true),
+                    RejectReasonMFB = table.Column<string>(type: "text", nullable: true),
+                    SendToPatientManually = table.Column<bool>(type: "boolean", nullable: true),
                     CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
                     LastModificationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
@@ -1679,6 +1744,11 @@ namespace HTS.Data.Migrations
                         principalTable: "ProformaStatuses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Proformas_RejectReasons_RejectReasonId",
+                        column: x => x.RejectReasonId,
+                        principalTable: "RejectReasons",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1948,6 +2018,11 @@ namespace HTS.Data.Migrations
                 name: "IX_DocumentTypes_LastModifierId",
                 table: "DocumentTypes",
                 column: "LastModifierId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ExchangeRateInformations_CurrencyId",
+                table: "ExchangeRateInformations",
+                column: "CurrencyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_HospitalConsultationDocuments_CreatorId",
@@ -2300,6 +2375,16 @@ namespace HTS.Data.Migrations
                 column: "TreatmentProcessStatusId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PaymentReasons_CreatorId",
+                table: "PaymentReasons",
+                column: "CreatorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PaymentReasons_LastModifierId",
+                table: "PaymentReasons",
+                column: "LastModifierId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProcessCosts_ProcessId",
                 table: "ProcessCosts",
                 column: "ProcessId");
@@ -2373,6 +2458,11 @@ namespace HTS.Data.Migrations
                 name: "IX_Proformas_ProformaStatusId",
                 table: "Proformas",
                 column: "ProformaStatusId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Proformas_RejectReasonId",
+                table: "Proformas",
+                column: "RejectReasonId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RejectReasons_CreatorId",
@@ -2479,6 +2569,9 @@ namespace HTS.Data.Migrations
                 name: "AbpUserTokens");
 
             migrationBuilder.DropTable(
+                name: "ExchangeRateInformations");
+
+            migrationBuilder.DropTable(
                 name: "HospitalConsultationDocuments");
 
             migrationBuilder.DropTable(
@@ -2500,6 +2593,12 @@ namespace HTS.Data.Migrations
                 name: "PatientNotes");
 
             migrationBuilder.DropTable(
+                name: "PaymentKinds");
+
+            migrationBuilder.DropTable(
+                name: "PaymentReasons");
+
+            migrationBuilder.DropTable(
                 name: "ProcessCosts");
 
             migrationBuilder.DropTable(
@@ -2510,9 +2609,6 @@ namespace HTS.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "ProformaProcesses");
-
-            migrationBuilder.DropTable(
-                name: "RejectReasons");
 
             migrationBuilder.DropTable(
                 name: "SalesMethodAndCompanionInfos");
@@ -2561,6 +2657,9 @@ namespace HTS.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "ProformaStatuses");
+
+            migrationBuilder.DropTable(
+                name: "RejectReasons");
 
             migrationBuilder.DropTable(
                 name: "ContractedInstitutions");

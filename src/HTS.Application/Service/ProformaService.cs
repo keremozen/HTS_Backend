@@ -21,10 +21,12 @@ public class ProformaService : ApplicationService, IProformaService
     private readonly IRepository<Process, int> _processRepository;
     private readonly IRepository<RejectReason, int> _rejectReasonRepository;
     private readonly IRepository<PatientTreatmentProcess, int> _patientTreatmentProcessRepository;
+    private readonly IRepository<Operation, int> _operationRepository;
 
     public ProformaService(IRepository<Proforma, int> proformaRepository,
         IRepository<ExchangeRateInformation, int> exchangeRateRepository,
         IRepository<Process, int> processRepository,
+        IRepository<Operation, int> operationRepository,
         IRepository<RejectReason, int> rejectReasonRepository,
         IRepository<PatientTreatmentProcess, int> patientTreatmentProcessRepository)
     {
@@ -33,6 +35,7 @@ public class ProformaService : ApplicationService, IProformaService
         _processRepository = processRepository;
         _rejectReasonRepository = rejectReasonRepository;
         _patientTreatmentProcessRepository = patientTreatmentProcessRepository;
+        _operationRepository = operationRepository;
     }
 
     public async Task<List<ProformaListDto>> GetNameListByOperationIdAsync(int operationId)
@@ -55,6 +58,7 @@ public class ProformaService : ApplicationService, IProformaService
             EntityEnum.ProformaStatusEnum.WaitingForPatientApproval.GetHashCode()
         };
         var query = await (await _proformaRepository.WithDetailsAsync(p => p.Creator))
+            .Include(p=>p.ProformaStatus)
             .Where(p => p.Operation.PatientTreatmentProcessId == ptpId
                                 && proformaStatuses.Contains(p.ProformaStatusId))
             .OrderByDescending(p => p.Version)
@@ -204,8 +208,8 @@ public class ProformaService : ApplicationService, IProformaService
 
     private async Task<string> GenerateProformaCode(int operationId, int version)
     {
-        string treatmentCode = (await _proformaRepository.GetQueryableAsync()).Where(p => p.OperationId == operationId)
-             .Select(p => p.Operation.PatientTreatmentProcess.TreatmentCode).First().ToString();
+        string treatmentCode = (await _operationRepository.GetQueryableAsync()).Where(p => p.Id == operationId)
+             .Select(p => p.PatientTreatmentProcess.TreatmentCode).First().ToString();
         return $"P-{treatmentCode}-{version}";
     }
 
@@ -237,17 +241,30 @@ public class ProformaService : ApplicationService, IProformaService
         if (!await _proformaRepository.AnyAsync(p => p.OperationId == proforma.OperationId))
         {
             //check exchange rate
-            ExchangeRateInformation exchangeRateInformation = await _exchangeRateRepository.FirstOrDefaultAsync(e =>
-                  e.CreationTime.Date.Date == DateTime.Now.Date.AddDays(-1));
-            if (exchangeRateInformation == null)//No exchange rate
+            if (proforma.CurrencyId != 1)
             {
-                throw new HTSBusinessException(ErrorCode.NoExchangeRateInformation);
+                ExchangeRateInformation exchangeRateInformation = await _exchangeRateRepository.FirstOrDefaultAsync(e =>
+                      e.CurrencyId == proforma.CurrencyId && e.CreationTime.Date.Date == DateTime.Now.Date.AddDays(-1));
+                if (exchangeRateInformation == null)//No exchange rate
+                {
+                    throw new HTSBusinessException(ErrorCode.NoExchangeRateInformation);
+                }
+
+                if (exchangeRateInformation.ExchangeRate != proforma.ExchangeRate)
+                {
+                    throw new HTSBusinessException(ErrorCode.ExchangeRateInformationNotMatch);
+                }
+            }
+            else
+            {
+                if (proforma.ExchangeRate != 1)
+                {
+                    throw new HTSBusinessException(ErrorCode.ExchangeRateInformationNotMatch);
+                }
             }
 
-            if (exchangeRateInformation.ExchangeRate != proforma.ExchangeRate)
-            {
-                throw new HTSBusinessException(ErrorCode.ExchangeRateInformationNotMatch);
-            }
+
+            
         }
         else
         {//More than 1 revision

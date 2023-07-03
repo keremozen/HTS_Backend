@@ -126,6 +126,8 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<SaveOperationDto, Operation>();
 
         CreateMap<Proforma, ProformaDto>();
+        CreateMap<Proforma, ProformaPricingListDto>();
+        CreateMap<ProformaStatus, ProformaStatusDto>();
         CreateMap<SaveProformaDto, Proforma>();
         CreateMap<Proforma, ProformaListDto>().ForMember(x => x.Name,
             opt => opt.MapFrom(o => o.ProformaCode + " " + o.Creator.Name + " " + o.CreationDate));

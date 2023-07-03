@@ -89,6 +89,7 @@
     "Permission:ProcessManagement": "İşlem Yönetimi",
     "Permission:MaterialManagement": "Sarf Malzeme Yönetimi",
     "Permission:RejectReasonManagement": "Ret Nedeni Yönetimi",
+    "Permission:PaymentReasonManagement": "Ödeme Nedeni Yönetimi",
     "Permission:Patient": "Hasta",
     "Permission:PatientAccess": "Hasta Sayfasına Erişim",
     "Permission:PatientList": "Hasta Tablosu Listeleme",
@@ -118,6 +119,7 @@
     "Menu:Admin:Process": "İşlem Yönetimi",
     "Menu:Admin:Material": "Sarf Malzeme Yönetimi",
     "Menu:Admin:RejectReason": "Ret Nedeni Yönetimi",
+    "Menu:Admin:PaymentReason": "Ödeme Nedeni Yönetimi",
 
     /*HOSPITAL MANAGEMENT*/
     "Admin:Hospital:Name": "Hastane",
@@ -297,6 +299,14 @@
     "Admin:RejectReason:Column:Reason": "Neden",
     "Admin:RejectReason:Column:IsActive": "Aktif mi?",
     "Admin:RejectReason:RejectReasonDetails": "Ret Nedeni Detayları",
+
+    /*PAYMENT REASON MANAGEMENT*/
+    "Admin:PaymentReason:Name": "Ödeme Nedeni",
+    "Admin:PaymentReason:PaymentReasonManagement": "Ödeme Nedeni Yönetimi",
+    "Admin:PaymentReason:NewPaymentReason": "Yeni Ödeme Nedeni",
+    "Admin:PaymentReason:Column:Name": "Neden",
+    "Admin:PaymentReason:Column:IsActive": "Aktif mi?",
+    "Admin:PaymentReason:PaymentReasonDetails": "Ödeme Nedeni Detayları",
 
     /*PATIENTS*/
     "Patients:Title": "Hastalar",
@@ -485,7 +495,19 @@
 
     /*QUOTATION*/
     "Quotation:FieldLegend:HBYSProcesses": "HBYS İşlemleri",
-    "Quotation:FieldLegend:Quotation": "Fiyatlandırma"
-
+    "Quotation:FieldLegend:Quotation": "Fiyatlandırma",
+    "Quotation:FieldLegend:Receipt": "Tahsilatlar",
+    "Quotation:ProformaTable:Column:ProformaCode": "Proforma Kodu",
+    "Quotation:ProformaTable:Column:CreatedBy": "Ekleyen Kişi",
+    "Quotation:ProformaTable:Column:Created": "Eklenme Tarihi",
+    "Quotation:ProformaTable:Column:ProformaStatus": "Durum",
+    "Quotation:ProformaTable:Column:MFBApproval": "MFB Onayı",
+    "Quotation:ProformaTable:Column:PatientApproval": "Hasta Onayı",
+    "Quotation:ProformaTable:Column:Receipt": "Tahsilat",
+    "Quotation:ProformaTable:Button:SendToPatient": "İlet",
+    "Quotation:ProformaTable:Button:Approve": "Kabul",
+    "Quotation:ProformaTable:Button:Reject": "Red",
+    "Quotation:ProformaTable:Button:Payment": "Tahsil Et",
+    "Quotation:ProformaTable:Message:ConfirmApprove": "Proformayı onaylamak istediğinizden emin misiniz?"
   }
 }

@@ -64,6 +64,8 @@ namespace HTS.Data
         public DbSet<ProformaStatus> ProformaStatuses { get; set; }
         public  DbSet<ExchangeRateInformation> ExchangeRateInformations { get; set; }
 
+        public DbSet<Payment> Payments { get; set; }
+        public DbSet<PaymentItem> PaymentItems { get; set; }
         public DbSet<PaymentReason> PaymentReasons { get; set; }
         public DbSet<PaymentKind> PaymentKinds { get; set; }
 

@@ -122,7 +122,18 @@ namespace HTS.Data
                                                                          .Include(p => p.Currency)
                                                                          .Include(p => p.RejectReason);
                 });
-
+                
+                options.Entity<Payment>(entityOptions =>
+                {
+                    entityOptions.DefaultWithDetailsFunc = query => query.Include(p => p.Hospital)
+                        .Include(p => p.PaymentReason)
+                        .Include(p => p.PaymentItems);
+                });
+                options.Entity<PaymentItem>(entityOptions =>
+                {
+                    entityOptions.DefaultWithDetailsFunc = query => query.Include(p => p.Currency)
+                        .Include(p => p.PaymentKind);
+                });
             });
         }
     }

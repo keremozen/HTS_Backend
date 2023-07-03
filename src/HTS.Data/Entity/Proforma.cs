@@ -45,5 +45,6 @@ namespace HTS.Data.Entity
         public virtual ICollection<ProformaProcess> ProformaProcesses { get; set; }
         public virtual ICollection<ProformaAdditionalService> ProformaAdditionalServices { get; set; }
         public virtual ICollection<ProformaNotIncludingService> ProformaNotIncludingServices { get; set; }
+        public virtual ICollection<Payment> Payments { get; set; }
     }
 }

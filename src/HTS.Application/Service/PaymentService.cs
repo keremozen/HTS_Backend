@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
@@ -39,6 +40,7 @@ public class PaymentService : ApplicationService, IPaymentService
     public async Task CreateAsync(SavePaymentDto payment)
     {
         var entity = ObjectMapper.Map<SavePaymentDto, Payment>(payment);
+        entity.PaymentDate = DateTime.Now;
         await _paymentRepository.InsertAsync(entity);
     }
     

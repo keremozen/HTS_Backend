@@ -59,6 +59,7 @@ public class ProformaService : ApplicationService, IProformaService
         };
         var query = await (await _proformaRepository.WithDetailsAsync(p => p.Creator))
             .Include(p=>p.ProformaStatus)
+            .Include(p=>p.RejectReason)
             .Where(p => p.Operation.PatientTreatmentProcessId == ptpId
                                 && proformaStatuses.Contains(p.ProformaStatusId))
             .OrderByDescending(p => p.Version)
@@ -93,6 +94,8 @@ public class ProformaService : ApplicationService, IProformaService
             .FirstOrDefault(p => p.Id == id);
         await IsDataValidToSend(proforma);
         //Treatment process, operation, proforma status update
+        proforma.RejectReasonId = null;
+        proforma.RejectReasonMFB = null;
         proforma.ProformaStatusId = EntityEnum.ProformaStatusEnum.MFBWaitingApproval.GetHashCode();
         proforma.Operation.OperationStatusId =
             EntityEnum.OperationStatusEnum.ProformaCreatedWaitingForMFBApproval.GetHashCode();

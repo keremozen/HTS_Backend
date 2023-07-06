@@ -55,6 +55,7 @@ public class PaymentService : ApplicationService, IPaymentService
     }
     public async Task<PagedResultDto<ListPaymentDto>> GetListAsync(int ptpId)
     {
+        //TODO:Hopsy calculate total amount
         //Get all entities
         var query = (await _paymentRepository.WithDetailsAsync())
             .Where(p => p.PtpId == ptpId);
@@ -97,6 +98,7 @@ public class PaymentService : ApplicationService, IPaymentService
        entity.PatientNameSurname = $"{ptp.Patient.Name} {ptp.Patient.Surname}";
        //Set linenumber
        entity = await SetLineNumber(entity);
+       //TODO:Hopsy set item currency. TL set 1
        await _paymentRepository.InsertAsync(entity);
     }
 

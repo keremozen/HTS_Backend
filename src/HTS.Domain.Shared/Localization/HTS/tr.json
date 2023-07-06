@@ -493,6 +493,7 @@
     "Proforma:SaveSuccessful": "Proforma başarıyla kaydedildi",
     "Proforma:SendSuccessful": "Proforma başarıyla MFB onayına gönderildi.",
     "Proforma:Message:SendConfirm": "Proformayı MFB onayına göndermek istediğize emin misiniz?",
+    "Proforma:Field:RejectReason": "Reddedilme Nedeni",
 
     /*QUOTATION*/
     "Quotation:FieldLegend:HBYSProcesses": "HBYS İşlemleri",
@@ -509,6 +510,39 @@
     "Quotation:ProformaTable:Button:Approve": "Kabul",
     "Quotation:ProformaTable:Button:Reject": "Red",
     "Quotation:ProformaTable:Button:Payment": "Tahsil Et",
-    "Quotation:ProformaTable:Message:ConfirmApprove": "Proformayı onaylamak istediğinizden emin misiniz?"
+    "Quotation:ProformaTable:Message:ConfirmApprove": "Proformayı onaylamak istediğinizden emin misiniz?",
+    "Quotation:MFBReject:Dialog:Title": "MFB Proforma Red Nedeni",
+    "Quotation:MFBReject:Dialog:RejectReason": "Red Nedeni",
+    "Quotation:MFBReject:Message:ConfirmApprove": "Proformayı reddetmek istediğinizden emin misiniz?",
+    "Quotation:ProformaTable:Message:ConfirmSendToPatient": "Proformayı hastaya iletmek istediğinize emin misiniz?",
+    "Quotation:ProformaTable:Message:ConfirmGivePatientManually": "Hastanın e-posta adresi bulunmadığı için otomatik gönderilemiyor. Proformayı hastaya elden iletmek ister misiniz?",
+    "Quotation:PatientReject:Dialog:Title": "Hasta Proforma Red Nedeni",
+    "Quotation:PatientReject:Dialog:RejectReason": "Red Nedeni",
+    "Quotation:PatientReject:Message:ConfirmApprove": "Proformayı reddetmek istediğinizden emin misiniz?",
+
+    /*PAYMENT DIALOG*/
+    "PaymentDialog:Title": "Tahsilat İşlemi",
+    "PaymentDialog:Field:Hospital": "Hastane",
+    "PaymentDialog:Field:ProformaNo": "Proforma No",
+    "PaymentDialog:Field:OrderNo": "Sıra No",
+    "PaymentDialog:Field:PatientName": "Hasta Adı",
+    "PaymentDialog:Field:CollectorName": "Tahsilat Yapan",
+    "PaymentDialog:Field:PayerName": "Ödeme Yapan",
+    "PaymentDialog:Field:PaymentReason": "Ödeme Nedeni",
+    "PaymentDialog:Field:OperationNo": "İşlem Numarası",
+    "PaymentDialog:Field:FileNo": "Dosya Numarası",
+    "PaymentDialog:Field:PaymentDate": "Tahsilat Tarihi",
+    "PaymentDialog:Field:DescriptionPlaceholder": "Açıklama giriniz...",
+    "PaymentDialog:PaymentItemTable:Column:Order": "Sıra",
+    "PaymentDialog:PaymentItemTable:Column:PaymentKind": "Tahsilat Türü",
+    "PaymentDialog:PaymentItemTable:Column:PosApprovalCode": "Pos Onay Kodu",
+    "PaymentDialog:PaymentItemTable:Column:Bank": "Banka",
+    "PaymentDialog:PaymentItemTable:Column:QueryNo": "Sorgu No",
+    "PaymentDialog:PaymentItemTable:Column:Currency": "Para Birimi",
+    "PaymentDialog:PaymentItemTable:Column:Amount": "Tutar",
+    "PaymentDialog:PaymentItemTable:AddItem": "Ekle",
+    "PaymentDialog:PaymentItemDialog:Title": "Tahsilat Kalemi",
+    "PaymentDialog:PaymentItemDialog:Field:PaymentKind": "Tahsilat Türü"
+
   }
 }

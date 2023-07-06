@@ -491,6 +491,7 @@
     "Proforma:SaveSuccessful": "Proforma is saved successfully.",
     "Proforma:SendSuccessful": "Proforma is sent to MFB approval.",
     "Proforma:Message:SendConfirm": "Are you sure you want to send proforma to MFB approval?",
+    "Proforma:Field:RejectReason": "Reject Reason",
 
     /*QUOTATION*/
     "Quotation:FieldLegend:HBYSProcesses": "HBYS Processes",
@@ -507,6 +508,38 @@
     "Quotation:ProformaTable:Button:Approve": "Approve",
     "Quotation:ProformaTable:Button:Reject": "Reject",
     "Quotation:ProformaTable:Button:Payment": "Payment",
-    "Quotation:ProformaTable:Message:ConfirmApprove": "Are you sure you want to approve proforma?"
+    "Quotation:ProformaTable:Message:ConfirmApprove": "Are you sure you want to approve proforma?",
+    "Quotation:MFBReject:Dialog:Title": "MFB Proforma Reject Reason",
+    "Quotation:MFBReject:Dialog:RejectReason": "Reject Reason",
+    "Quotation:MFBReject:Message:ConfirmApprove": "Are you sure you want to reject proforma?",
+    "Quotation:ProformaTable:Message:ConfirmSendToPatient": "Are you sure you want to send proforma to the patient?",
+    "Quotation:ProformaTable:Message:ConfirmGivePatientManually": "Proforma can not be sent to patient since patient record has no email address. Do you want to hand over proforma to the patient?",
+    "Quotation:PatientReject:Dialog:Title": "Patient Proforma Reject Reason",
+    "Quotation:PatientReject:Dialog:RejectReason": "Reject Reason",
+    "Quotation:PatientReject:Message:ConfirmApprove": "Are you sure you want to reject proforma?",
+
+    /*PAYMENT DIALOG*/
+    "PaymentDialog:Title": "Payment Operation",
+    "PaymentDialog:Field:Hospital": "Hospital",
+    "PaymentDialog:Field:ProformaNo": "Proforma No",
+    "PaymentDialog:Field:OrderNo": "Order No",
+    "PaymentDialog:Field:PatientName": "Patient Name",
+    "PaymentDialog:Field:CollectorName": "Collector",
+    "PaymentDialog:Field:PayerName": "Payer",
+    "PaymentDialog:Field:PaymentReason": "Payment Reason",
+    "PaymentDialog:Field:OperationNo": "Operation Number",
+    "PaymentDialog:Field:FileNo": "File Number",
+    "PaymentDialog:Field:PaymentDate": "Payment Date",
+    "PaymentDialog:Field:DescriptionPlaceholder": "Enter description...",
+    "PaymentDialog:PaymentItemTable:Column:Order": "Order",
+    "PaymentDialog:PaymentItemTable:Column:PaymentKind": "Payment Kind",
+    "PaymentDialog:PaymentItemTable:Column:PosApprovalCode": "Pos Approval Code",
+    "PaymentDialog:PaymentItemTable:Column:Bank": "Bank",
+    "PaymentDialog:PaymentItemTable:Column:QueryNo": "Query No",
+    "PaymentDialog:PaymentItemTable:Column:Currency": "Currency",
+    "PaymentDialog:PaymentItemTable:Column:Amount": "Amount",
+    "PaymentDialog:PaymentItemTable:AddItem": "Add",
+    "PaymentDialog:PaymentItemDialog:Title": "Payment Item",
+    "PaymentDialog:PaymentItemDialog:Field:PaymentKind": "Payment Kind"
   }
 }

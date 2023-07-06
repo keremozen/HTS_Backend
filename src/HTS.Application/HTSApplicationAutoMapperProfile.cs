@@ -34,6 +34,7 @@ using HTS.Dto.PatientNoteStatus;
 using HTS.Dto.PatientTreatmentProcess;
 using HTS.Dto.Payment;
 using HTS.Dto.PaymentItem;
+using HTS.Dto.PaymentKind;
 using HTS.Dto.PaymentReason;
 using HTS.Dto.Process;
 using HTS.Dto.ProcessCost;
@@ -141,6 +142,7 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<ExchangeRateInformation, ExchangeRateInformationDto>();
 
         CreateMap<PaymentReason, PaymentReasonDto>();
+        CreateMap<PaymentKind, PaymentKindDto>();
         CreateMap<SavePaymentReasonDto, PaymentReason>();
         CreateMap<Payment, PaymentDto>();
         CreateMap<Payment, ListPaymentDto>()

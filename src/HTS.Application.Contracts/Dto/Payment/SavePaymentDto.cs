@@ -15,7 +15,7 @@ public class SavePaymentDto
     [Required]
     public int HospitalId { get; set; }
     [Required]
-    public string ProcessingUserNameSurname { get; set; }
+    public string PayerNameSurname { get; set; }
     [Required]
     public int PaymentReasonId { get; set; }
     public string ProcessingNumber { get; set; }

@@ -13,7 +13,7 @@ public class PaymentItemDto: EntityDto<int>
     public string QueryNumber { get; set; }
     public int CurrencyId { get; set; }
     public decimal Price { get; set; }
-
+    public decimal ExchangeRate { get; set; }
     public CurrencyDto Currency { get; set; }
     public PaymentKindDto PaymentKind { get; set; }
 }

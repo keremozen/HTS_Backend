@@ -28,6 +28,7 @@
     "ChooseFile": "Dosya Seç",
     "EmptyMessage": "Kayıt bulunamadı.",
     "EmptyFilterMessage": "Kayıt bulunamadı.",
+    "NoProforma": "Harici",
 
     /*ERROR MESSAGES*/
     "HTS:1": "Eklenmeye çalışılan kişi mevcuttur.",

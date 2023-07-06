@@ -20,6 +20,8 @@ namespace HTS.Data.Entity
         [Required]
         public int CurrencyId { get; set; }
         public decimal Price { get; set; }
+        [Required]
+        public decimal ExchangeRate { get; set; }
 
         [ForeignKey("PaymentId")]
         public Payment Payment { get; set; }

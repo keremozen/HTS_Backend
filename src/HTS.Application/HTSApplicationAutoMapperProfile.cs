@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Linq;
+using AutoMapper;
 using HTS.Data.Entity;
 using HTS.Dto.AdditionalService;
 using HTS.Dto.Branch;
@@ -142,6 +143,8 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<PaymentReason, PaymentReasonDto>();
         CreateMap<SavePaymentReasonDto, PaymentReason>();
         CreateMap<Payment, PaymentDto>();
+        CreateMap<Payment, ListPaymentDto>()
+            .ForMember(x => x.TotalPrice, opt => opt.MapFrom(o => o.PaymentItems.Sum(i => i.Price)));
         CreateMap<SavePaymentDto, Payment>();
         CreateMap<PaymentItem, PaymentItemDto>();
         CreateMap<SavePaymentItemDto, PaymentItem>();

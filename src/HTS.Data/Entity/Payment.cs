@@ -17,13 +17,15 @@ namespace HTS.Data.Entity
         [Required]
         public int HospitalId { get; set; }
         [Required]
-        public string RowNumber { get; set; }
+        public int RowNumber { get; set; }
+        [Required]
+        public string GeneratedRowNumber { get; set; }
         [Required]
         public string PatientNameSurname { get; set; }
         [Required]
-        public string PaidNameSurname { get; set; }
+        public string PayerNameSurname { get; set; }
         [Required]
-        public string ProcessingUserNameSurname { get; set; }
+        public string CollectorNameSurname { get; set; }
         [Required]
         public int PaymentReasonId { get; set; }
         [Required]
@@ -31,6 +33,8 @@ namespace HTS.Data.Entity
         public string? ProcessingNumber { get; set; }
         public string? FileNumber { get; set; }
         public string? Description { get; set; }
+        [Required]
+        public string ProformaNumber { get; set; }
         
         [ForeignKey("PtpId")]
         public PatientTreatmentProcess PatientTreatmentProcess { get; set; }

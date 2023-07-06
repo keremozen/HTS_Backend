@@ -24,5 +24,7 @@ public static class  ErrorCode
     public const string BadRequest = "HTS:20";
     public const string LastProformaVersionCanBeApprovedRejected = "HTS:21";
     public const string LastProformaVersionCanBeOperated = "HTS:22";
+    public const string RequiredFieldsMissing = "HTS:23";
+
 
 }

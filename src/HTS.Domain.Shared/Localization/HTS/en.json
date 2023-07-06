@@ -28,6 +28,7 @@
     "ChooseFile": "Choose File",
     "EmptyMessage": "No records found.",
     "EmptyFilterMessage": "No records found.",
+    "NoProforma": "External",
 
     /*ERROR MESSAGES*/
     "HTS:1": "The user already exists.",

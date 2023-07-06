@@ -12,7 +12,7 @@ using Volo.Abp.Identity;
 
 namespace HTS.Dto.Payment;
 
-public class PaymentDto: AuditedEntityWithUserDto<int, IdentityUserDto>
+public class ListPaymentDto: EntityDto<int>
 {
     public int? ProformaId { get; set; }
     public int PtpId { get; set; }
@@ -28,9 +28,5 @@ public class PaymentDto: AuditedEntityWithUserDto<int, IdentityUserDto>
     public string ProformaNumber { get; set; }
     public string Description { get; set; }
     public DateTime PaymentDate { get; set; }
-
-    public HospitalDto Hospital { get; set; }
-    public PaymentReasonDto PaymentReason { get; set; }
-        
-    public List<PaymentItemDto> PaymentItems { get; set; }
+    public decimal TotalPrice { get; set; }
 }

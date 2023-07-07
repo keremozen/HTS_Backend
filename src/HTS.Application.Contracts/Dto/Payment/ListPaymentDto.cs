@@ -29,4 +29,5 @@ public class ListPaymentDto: EntityDto<int>
     public string Description { get; set; }
     public DateTime PaymentDate { get; set; }
     public decimal TotalPrice { get; set; }
+    public PaymentReasonDto PaymentReason { get; set; }
 }

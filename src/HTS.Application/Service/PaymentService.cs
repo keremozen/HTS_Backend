@@ -59,7 +59,7 @@ public class PaymentService : ApplicationService, IPaymentService
     public async Task<PagedResultDto<ListPaymentDto>> GetListAsync(int ptpId)
     {
         //Get all entities
-        var query = (await _paymentRepository.WithDetailsAsync())
+        var query = (await _paymentRepository.WithDetailsAsync()).Include(p=>p.PaymentReason)
             .Where(p => p.PtpId == ptpId);
         var responseList = ObjectMapper.Map<List<Payment>, List<ListPaymentDto>>(await AsyncExecuter.ToListAsync(query));
         var totalCount = await _paymentRepository.CountAsync();//item count

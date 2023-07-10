@@ -496,7 +496,7 @@
     /*QUOTATION*/
     "Quotation:FieldLegend:HBYSProcesses": "HBYS Processes",
     "Quotation:FieldLegend:Quotation": "Quotation",
-    "Quotation:FieldLegend:Receipt": "Receipt",
+    "Quotation:FieldLegend:PaymentList": "Payment List",
     "Quotation:ProformaTable:Column:ProformaCode": "Proforma Code",
     "Quotation:ProformaTable:Column:CreatedBy": "Created By",
     "Quotation:ProformaTable:Column:Created": "Creation Time",
@@ -540,6 +540,19 @@
     "PaymentDialog:PaymentItemTable:Column:Amount": "Amount",
     "PaymentDialog:PaymentItemTable:AddItem": "Add",
     "PaymentDialog:PaymentItemDialog:Title": "Payment Item",
-    "PaymentDialog:PaymentItemDialog:Field:PaymentKind": "Payment Kind"
+    "PaymentDialog:PaymentItemDialog:Field:PaymentKind": "Payment Kind",
+
+    /*PAYMENT*/
+    "Payment:NewPayment": "New Payment",
+    "Payment:Column:ProformaCode": "Proforma No",
+    "Payment:Column:RowNumber": "Row No",
+    "Payment:Column:PaymentDate": "Date",
+    "Payment:Column:FileNumber": "File Number",
+    "Payment:Column:ProcessingNumber": "Process Number",
+    "Payment:Column:PayerNameSurname": "Payer",
+    "Payment:Column:CollectorNameSurname": "Collector",
+    "Payment:Column:PaymentReason": "Payment Reasonx",
+    "Payment:Column:TotalPrice": "Total Price (₺)",
+    "Payment:Column:Description": "Description"
   }
 }

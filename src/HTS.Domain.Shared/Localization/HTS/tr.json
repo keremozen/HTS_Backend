@@ -498,7 +498,7 @@
     /*QUOTATION*/
     "Quotation:FieldLegend:HBYSProcesses": "HBYS İşlemleri",
     "Quotation:FieldLegend:Quotation": "Fiyatlandırma",
-    "Quotation:FieldLegend:Receipt": "Tahsilatlar",
+    "Quotation:FieldLegend:PaymentList": "Tahsilatlar",
     "Quotation:ProformaTable:Column:ProformaCode": "Proforma Kodu",
     "Quotation:ProformaTable:Column:CreatedBy": "Ekleyen Kişi",
     "Quotation:ProformaTable:Column:Created": "Eklenme Tarihi",
@@ -542,7 +542,23 @@
     "PaymentDialog:PaymentItemTable:Column:Amount": "Tutar",
     "PaymentDialog:PaymentItemTable:AddItem": "Ekle",
     "PaymentDialog:PaymentItemDialog:Title": "Tahsilat Kalemi",
-    "PaymentDialog:PaymentItemDialog:Field:PaymentKind": "Tahsilat Türü"
+    "PaymentDialog:PaymentItemDialog:Field:PaymentKind": "Tahsilat Türü",
+
+    /*PAYMENT*/
+    "Payment:NewPayment": "Yeni Tahsilat",
+    "Payment:Column:ProformaCode": "Proforma No",
+    "Payment:Column:RowNumber": "Sıra No",
+    "Payment:Column:PaymentDate": "Tarih",
+    "Payment:Column:FileNumber": "Dosya Numarası",
+    "Payment:Column:ProcessingNumber": "İşlem Numarası",
+    "Payment:Column:PayerNameSurname": "Ödeme Yapan",
+    "Payment:Column:CollectorNameSurname": "Tahsilat Yapan",
+    "Payment:Column:PaymentReason": "Ödeme Nedeni",
+    "Payment:Column:TotalPrice": "Toplam Tutar (₺)",
+    "Payment:Column:Description": "Açıklama"
+
+
+
 
   }
 }

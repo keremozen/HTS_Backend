@@ -83,6 +83,13 @@ namespace HTS.Interface
         /// <returns></returns>
         Task RejectPatientAsync(RejectProformaDto rejectProforma);
 
+        /// <summary>
+        /// Create proforma PDF
+        /// </summary>
+        /// <param name="id">Proforma id</param>
+        /// <returns></returns>
+        Task CreateProformaPdf(int id);
+
 
     }
 }

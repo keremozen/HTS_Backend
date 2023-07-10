@@ -146,7 +146,7 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<SavePaymentReasonDto, PaymentReason>();
         CreateMap<Payment, PaymentDto>();
         CreateMap<Payment, ListPaymentDto>()
-            .ForMember(x => x.TotalPrice, opt => opt.MapFrom(o => o.PaymentItems.Sum(i => i.Price)));
+            .ForMember(x => x.TotalPrice, opt => opt.MapFrom(o => o.PaymentItems.Sum(i => i.Price * i.ExchangeRate)));
         CreateMap<SavePaymentDto, Payment>();
         CreateMap<PaymentItem, PaymentItemDto>();
         CreateMap<SavePaymentItemDto, PaymentItem>();

@@ -29,13 +29,15 @@ public class PaymentService : ApplicationService, IPaymentService
     private readonly IRepository<PatientTreatmentProcess, int> _ptpRepository;
     private readonly ICurrentUser _currentUser;
     private readonly IRepository<Hospital, int> _hospitalRepository;
+    private readonly IRepository<ExchangeRateInformation, int> _erRepository;
 
 
-    public PaymentService(IRepository<Payment, int> paymentRepository, 
+    public PaymentService(IRepository<Payment, int> paymentRepository,
         IRepository<PaymentItem, int> paymentItemRepository,
-        IRepository<Proforma, int> proformaRepository,  
+        IRepository<Proforma, int> proformaRepository,
         IRepository<PatientTreatmentProcess, int> ptpRepository,
         IRepository<Hospital, int> hospitalRepository,
+        IRepository<ExchangeRateInformation, int> erRepository,
         ICurrentUser currentUser
         )
     {
@@ -44,9 +46,10 @@ public class PaymentService : ApplicationService, IPaymentService
         _proformaRepository = proformaRepository;
         _ptpRepository = ptpRepository;
         _hospitalRepository = hospitalRepository;
+        _erRepository = erRepository;
         _currentUser = currentUser;
     }
-    
+
     public async Task<PaymentDto> GetAsync(int id)
     {
         var query = (await _paymentRepository.WithDetailsAsync()).Where(p => p.Id == id);
@@ -55,7 +58,6 @@ public class PaymentService : ApplicationService, IPaymentService
     }
     public async Task<PagedResultDto<ListPaymentDto>> GetListAsync(int ptpId)
     {
-        //TODO:Hopsy calculate total amount
         //Get all entities
         var query = (await _paymentRepository.WithDetailsAsync())
             .Where(p => p.PtpId == ptpId);
@@ -72,11 +74,11 @@ public class PaymentService : ApplicationService, IPaymentService
         entity.CollectorNameSurname = $"{_currentUser.Name} {_currentUser.SurName}";
         if (payment.ProformaId.HasValue)//Set hospitalid and proforma number from proforma
         {
-            var query =  (await _proformaRepository.WithDetailsAsync((p => p.Operation), 
+            var query = (await _proformaRepository.WithDetailsAsync((p => p.Operation),
                 (p => p.Operation.HospitalResponse),
                 (p => p.Operation.HospitalResponse.HospitalConsultation)))
                 .Where(p => p.Id == payment.ProformaId);
-            var proforma =await AsyncExecuter.FirstAsync(query);
+            var proforma = await AsyncExecuter.FirstAsync(query);
             if (proforma.Operation.OperationTypeId == EntityEnum.OperationTypeEnum.Manual.GetHashCode())//Manuel operation
             {
                 entity.HospitalId = proforma.Operation.HospitalId.Value;
@@ -91,17 +93,59 @@ public class PaymentService : ApplicationService, IPaymentService
         {
             entity.ProformaNumber = LocalizableString.Create<HTSResource>("NoProforma").Name;
         }
-        
+
         //Set patient information
         var ptp = await (await _ptpRepository.WithDetailsAsync(p => p.Patient))
            .FirstOrDefaultAsync(p => p.Id == payment.PtpId);
-       entity.PatientNameSurname = $"{ptp.Patient.Name} {ptp.Patient.Surname}";
-       //Set linenumber
-       entity = await SetLineNumber(entity);
-       //TODO:Hopsy set item currency. TL set 1
-       await _paymentRepository.InsertAsync(entity);
+        entity.PatientNameSurname = $"{ptp.Patient.Name} {ptp.Patient.Surname}";
+        //Set linenumber
+        entity = await SetLineNumber(entity);
+        //set item exchangerate TL set 1
+        await SetPaymentItems(entity);
+        await _paymentRepository.InsertAsync(entity);
     }
 
+    /// <summary>
+    /// Set exchangerate clm of paymentitems
+    /// </summary>
+    /// <param name="payment"></param>
+    /// <exception cref="HTSBusinessException"></exception>
+    private async Task SetPaymentItems(Payment payment)
+    {
+        if (payment.PaymentItems?.Any() ?? false)
+        {
+            //Paymentitem currencies
+            List<int> currencies = payment.PaymentItems.Select(i => i.CurrencyId)
+                .Distinct()
+                .ToList();
+            //Get exchangerate information of currencies
+            var exchangeRates = await _erRepository.GetListAsync(er => currencies.Contains(er.CurrencyId)
+                                             && er.CreationTime.Date.Date == payment.PaymentDate.Date);
+            ExchangeRateInformation processingER;
+            foreach (var paymentItem in payment.PaymentItems)
+            {
+                if (paymentItem.CurrencyId == EntityEnum.CurrencyEnum.TL.GetHashCode())//If item is TL set it to 1
+                {
+                    paymentItem.ExchangeRate = 1;
+                }
+                else
+                {
+                    processingER = exchangeRates.FirstOrDefault(e => e.CurrencyId == paymentItem.CurrencyId);
+                    if (processingER == null) //No exchange rate
+                    {
+                        throw new HTSBusinessException(ErrorCode.NoExchangeRateInformation);
+                    }
+                    paymentItem.ExchangeRate = processingER.ExchangeRate;
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Generate row number, set rownumber and generatedrownumber clms
+    /// </summary>
+    /// <param name="entity">payment entity</param>
+    /// <returns></returns>
     private async Task<Payment> SetLineNumber(Payment entity)
     {
         var hospital = await _hospitalRepository.FirstOrDefaultAsync(h => h.Id == entity.HospitalId);
@@ -134,5 +178,5 @@ public class PaymentService : ApplicationService, IPaymentService
             throw new HTSBusinessException(ErrorCode.RequiredFieldsMissing);
         }
     }
-    
+
 }

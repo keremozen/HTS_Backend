@@ -132,7 +132,10 @@ namespace HTS.Data
                 {
                     entityOptions.DefaultWithDetailsFunc = query => query.Include(p => p.Hospital)
                         .Include(p => p.PaymentReason)
-                        .Include(p => p.PaymentItems);
+                        .Include(p => p.PaymentItems)
+                        .ThenInclude(pi => pi.Currency)
+                        .Include(p => p.PaymentItems)
+                        .ThenInclude(pi => pi.PaymentKind);
                 });
                 options.Entity<PaymentItem>(entityOptions =>
                 {

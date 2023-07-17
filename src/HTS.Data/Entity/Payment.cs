@@ -44,7 +44,8 @@ namespace HTS.Data.Entity
         public Hospital Hospital { get; set; }
         [ForeignKey("PaymentReasonId")]
         public PaymentReason PaymentReason { get; set; }
-        
         public virtual ICollection<PaymentItem> PaymentItems { get; set; }
+        public virtual ICollection<PaymentDocument> PaymentDocuments { get; set; }
+
     }
 }

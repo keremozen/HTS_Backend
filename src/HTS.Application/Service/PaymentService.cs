@@ -11,8 +11,11 @@ using HTS.Dto.Process;
 using HTS.Enum;
 using HTS.Interface;
 using HTS.Localization;
+using HTS.PDFDocument;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using QuestPDF.Fluent;
+using QuestPDF.Infrastructure;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
@@ -177,6 +180,22 @@ public class PaymentService : ApplicationService, IPaymentService
         {
             throw new HTSBusinessException(ErrorCode.RequiredFieldsMissing);
         }
+    }
+
+
+    public async Task CreateInvoicePdf(int id)
+    {
+        var payment = await (await _paymentRepository.WithDetailsAsync()).FirstOrDefaultAsync(p => p.Id == id);
+        if (payment != null)
+        {
+            QuestPDF.Settings.License = LicenseType.Community;
+            var filePath = "invoice.pdf";
+
+
+            var document = new InvoiceDocument(payment);
+            document.GeneratePdf(filePath);
+        }
+        return;
     }
 
 }

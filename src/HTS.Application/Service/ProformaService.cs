@@ -7,9 +7,12 @@ using HTS.Data.Entity;
 using HTS.Dto.Proforma;
 using HTS.Enum;
 using HTS.Interface;
+using HTS.PDFDocument;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Polly.Fallback;
+using QuestPDF.Fluent;
+using QuestPDF.Infrastructure;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 namespace HTS.Service;
@@ -571,5 +574,21 @@ public class ProformaService : ApplicationService, IProformaService
         }
     }
 
-    
+    public async Task CreateProformaPdf(int id)
+    {
+        var proforma = await (await _proformaRepository.WithDetailsAsync()).FirstOrDefaultAsync(p => p.Id == id);
+        if (proforma != null)
+        {
+            QuestPDF.Settings.License = LicenseType.Community;
+            var filePath = "proforma.pdf";
+
+
+            var document = new ProformaDocument(proforma);
+            document.GeneratePdf(filePath);
+        }
+        return;
+    }
+
+
+
 }

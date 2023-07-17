@@ -29,6 +29,10 @@ namespace HTS.Interface
         /// <param name="payment">Payment data</param>
         /// <returns>Inserted entity object</returns>
         Task CreateAsync(SavePaymentDto payment);
-        
+
+
+        Task CreateInvoicePdf(int id);
+
+
     }
 }

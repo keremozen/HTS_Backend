@@ -120,14 +120,22 @@ namespace HTS.Data
                                                                          .Include(p => p.ProformaProcesses)
                                                                          .ThenInclude(pp => pp.Process)
                                                                          .Include(p => p.Currency)
-                                                                         .Include(p => p.RejectReason);
+                                                                         .Include(p => p.RejectReason)
+                                                                         .Include(p => p.Operation)
+                                                                         .ThenInclude(p => p.PatientTreatmentProcess)
+                                                                         .ThenInclude(p => p.Patient)
+                                                                         .Include(p => p.Operation)
+                                                                         .ThenInclude(p => p.Hospital);
                 });
-                
+
                 options.Entity<Payment>(entityOptions =>
                 {
                     entityOptions.DefaultWithDetailsFunc = query => query.Include(p => p.Hospital)
                         .Include(p => p.PaymentReason)
-                        .Include(p => p.PaymentItems);
+                        .Include(p => p.PaymentItems)
+                        .ThenInclude(pi => pi.Currency)
+                        .Include(p => p.PaymentItems)
+                        .ThenInclude(pi => pi.PaymentKind);
                 });
                 options.Entity<PaymentItem>(entityOptions =>
                 {

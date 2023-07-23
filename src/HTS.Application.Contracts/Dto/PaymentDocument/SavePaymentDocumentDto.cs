@@ -7,7 +7,7 @@ public class SavePaymentDocumentDto
     [Required]
     public int PaymentId { get; set; }
     [Required]
-    public string SignedFileName { get; set; }
+    public string FileName { get; set; }
     [Required]
-    public string SignedFile { get; set; }
+    public string File { get; set; }
 }

@@ -16,10 +16,7 @@ namespace HTS.Data.Entity
         public string FileName { get; set; }
         [Required]
         public string FilePath { get; set; }
-        public string? SignedFileName { get; set; }
-        public string? SignedFilePath { get; set; }
-        [Required]
-        public bool IsSigned { get; set; }
+        
         [ForeignKey("PaymentId")]
         public Payment Payment { get; set; }
       

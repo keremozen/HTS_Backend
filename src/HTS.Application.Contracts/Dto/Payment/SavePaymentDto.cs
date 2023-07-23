@@ -9,7 +9,7 @@ namespace HTS.Dto.Payment;
 public class SavePaymentDto
 {
     [Required]
-    public int? ProformaId { get; set; }
+    public int ProformaId { get; set; }
     [Required]
     public int PtpId { get; set; }
     [Required]

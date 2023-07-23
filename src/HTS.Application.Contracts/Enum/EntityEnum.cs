@@ -273,6 +273,18 @@ namespace HTS.Enum
             /// </summary>
             PaymentCompleted = 8
         }
+        
+        public enum PaymentStatusEnum
+        {
+            /// <summary>
+            /// Yeni Kayıt
+            /// </summary>
+            NewRecord = 1, 
+            /// <summary>
+            /// Tahsil Edildi
+            /// </summary>
+            PaymentCompleted = 2
+        }
 
         public enum RoomTypeEnum
         {

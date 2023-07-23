@@ -62,7 +62,7 @@ public class PaymentService : ApplicationService, IPaymentService
     public async Task<PagedResultDto<ListPaymentDto>> GetListAsync(int ptpId)
     {
         //Get all entities
-        var query = (await _paymentRepository.WithDetailsAsync()).Include(p=>p.PaymentReason)
+        var query = (await _paymentRepository.WithDetailsAsync()).Include(p => p.PaymentReason)
             .Where(p => p.PtpId == ptpId);
         var responseList = ObjectMapper.Map<List<Payment>, List<ListPaymentDto>>(await AsyncExecuter.ToListAsync(query));
         var totalCount = await _paymentRepository.CountAsync();//item count
@@ -75,27 +75,21 @@ public class PaymentService : ApplicationService, IPaymentService
         var entity = ObjectMapper.Map<SavePaymentDto, Payment>(payment);
         entity.PaymentDate = DateTime.Now;
         entity.CollectorNameSurname = $"{_currentUser.Name} {_currentUser.SurName}";
-        if (payment.ProformaId.HasValue)//Set hospitalid and proforma number from proforma
+        //Set hospitalid and proforma number from proforma
+        var query = (await _proformaRepository.WithDetailsAsync((p => p.Operation),
+            (p => p.Operation.HospitalResponse),
+            (p => p.Operation.HospitalResponse.HospitalConsultation)))
+            .Where(p => p.Id == payment.ProformaId);
+        var proforma = await AsyncExecuter.FirstAsync(query);
+        if (proforma.Operation.OperationTypeId == EntityEnum.OperationTypeEnum.Manual.GetHashCode())//Manuel operation
         {
-            var query = (await _proformaRepository.WithDetailsAsync((p => p.Operation),
-                (p => p.Operation.HospitalResponse),
-                (p => p.Operation.HospitalResponse.HospitalConsultation)))
-                .Where(p => p.Id == payment.ProformaId);
-            var proforma = await AsyncExecuter.FirstAsync(query);
-            if (proforma.Operation.OperationTypeId == EntityEnum.OperationTypeEnum.Manual.GetHashCode())//Manuel operation
-            {
-                entity.HospitalId = proforma.Operation.HospitalId.Value;
-            }
-            else
-            {
-                entity.HospitalId = proforma.Operation.HospitalResponse.HospitalConsultation.HospitalId;
-            }
-            entity.ProformaNumber = proforma.ProformaCode;
+            entity.HospitalId = proforma.Operation.HospitalId.Value;
         }
         else
         {
-            entity.ProformaNumber = LocalizableString.Create<HTSResource>("NoProforma").Name;
+            entity.HospitalId = proforma.Operation.HospitalResponse.HospitalConsultation.HospitalId;
         }
+        entity.ProformaNumber = proforma.ProformaCode;
 
         //Set patient information
         var ptp = await (await _ptpRepository.WithDetailsAsync(p => p.Patient))
@@ -168,12 +162,10 @@ public class PaymentService : ApplicationService, IPaymentService
     /// <exception cref="HTSBusinessException"></exception>
     private async Task IsDataValidToCreate(SavePaymentDto payment)
     {
-        if (payment.ProformaId.HasValue)//Proforma related
+        //Proforma related
+        if (!await _proformaRepository.AnyAsync(p => p.Id == payment.ProformaId))//No proforma in db
         {
-            if (!await _proformaRepository.AnyAsync(p => p.Id == payment.ProformaId.Value))//No proforma in db
-            {
-                throw new HTSBusinessException(ErrorCode.RelationalDataIsMissing);
-            }
+            throw new HTSBusinessException(ErrorCode.RelationalDataIsMissing);
         }
 
         if (string.IsNullOrEmpty(payment.PayerNameSurname))

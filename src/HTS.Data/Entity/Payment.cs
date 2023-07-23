@@ -11,7 +11,7 @@ namespace HTS.Data.Entity
     public class Payment : AuditedEntityWithUser<int, IdentityUser>
     {
         [Required]
-        public int? ProformaId { get; set; }
+        public int ProformaId { get; set; }
         [Required]
         public int PtpId { get; set; }
         [Required]
@@ -35,6 +35,8 @@ namespace HTS.Data.Entity
         public string? Description { get; set; }
         [Required]
         public string ProformaNumber { get; set; }
+        [Required]
+        public int PaymentStatusId { get; set; }
         
         [ForeignKey("PtpId")]
         public PatientTreatmentProcess PatientTreatmentProcess { get; set; }
@@ -44,6 +46,9 @@ namespace HTS.Data.Entity
         public Hospital Hospital { get; set; }
         [ForeignKey("PaymentReasonId")]
         public PaymentReason PaymentReason { get; set; }
+
+        [ForeignKey("PaymentStatusId")]
+        public PaymentStatus PaymentStatus { get; set; }
         public virtual ICollection<PaymentItem> PaymentItems { get; set; }
         public virtual ICollection<PaymentDocument> PaymentDocuments { get; set; }
 

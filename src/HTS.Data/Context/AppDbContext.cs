@@ -69,6 +69,7 @@ namespace HTS.Data
         public DbSet<PaymentReason> PaymentReasons { get; set; }
         public DbSet<PaymentKind> PaymentKinds { get; set; }
         public DbSet<PaymentDocument> PaymentDocuments { get; set; }
+        public DbSet<PaymentStatus> PaymentStatuses { get; set; }
 
         
         public DbSet<IdentityUser> Users { get; set; }

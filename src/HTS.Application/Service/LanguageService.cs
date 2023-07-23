@@ -11,7 +11,6 @@ using Volo.Abp.Domain.Repositories;
 
 namespace HTS.Service
 {
-    [Authorize]
     public class LanguageService : ApplicationService, ILanguageService
     {
 
@@ -36,6 +35,7 @@ namespace HTS.Service
             return new PagedResultDto<LanguageDto>(totalCount, responseList);
         }
 
+        [Authorize]
         public async Task<LanguageDto> CreateAsync(SaveLanguageDto language)
         {
             var entity = ObjectMapper.Map<SaveLanguageDto, Language>(language);
@@ -43,6 +43,7 @@ namespace HTS.Service
             return ObjectMapper.Map<Language, LanguageDto>(entity);
         }
 
+        [Authorize]
         public async Task<LanguageDto> UpdateAsync(int id, SaveLanguageDto language)
         {
             var entity = await _languageRepository.GetAsync(id);
@@ -50,6 +51,7 @@ namespace HTS.Service
             return ObjectMapper.Map<Language, LanguageDto>(await _languageRepository.UpdateAsync(entity));
         }
 
+        [Authorize]
         public async Task DeleteAsync(int id)
         {
             await _languageRepository.DeleteAsync(id);

@@ -10,7 +10,6 @@ using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
 namespace HTS.Service;
-[Authorize]
 public class TreatmentTypeService : ApplicationService, ITreatmentTypeService
 {
     private readonly IRepository<TreatmentType, int> _treatmentTypeRepository;
@@ -34,6 +33,7 @@ public class TreatmentTypeService : ApplicationService, ITreatmentTypeService
         return new PagedResultDto<TreatmentTypeDto>(totalCount,responseList);
     }
 
+    [Authorize]
     public async Task<TreatmentTypeDto> CreateAsync(SaveTreatmentTypeDto treatmentType)
     {
         var entity = ObjectMapper.Map<SaveTreatmentTypeDto, TreatmentType>(treatmentType);
@@ -41,13 +41,15 @@ public class TreatmentTypeService : ApplicationService, ITreatmentTypeService
         return ObjectMapper.Map<TreatmentType, TreatmentTypeDto>(entity);
     }
 
+    [Authorize]
     public async Task<TreatmentTypeDto> UpdateAsync(int id, SaveTreatmentTypeDto treatmentType)
     {
         var entity = await _treatmentTypeRepository.GetAsync(id);
         ObjectMapper.Map(treatmentType, entity);
         return ObjectMapper.Map<TreatmentType,TreatmentTypeDto>( await _treatmentTypeRepository.UpdateAsync(entity));
     }
-        
+
+    [Authorize]
     public async Task DeleteAsync(int id)
     {
         await _treatmentTypeRepository.DeleteAsync(id);

@@ -10,7 +10,6 @@ using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
 namespace HTS.Service;
-[Authorize]
 public class HospitalService : ApplicationService, IHospitalService
 {
     private readonly IRepository<Hospital, int> _hospitalRepository;
@@ -36,6 +35,7 @@ public class HospitalService : ApplicationService, IHospitalService
         return new PagedResultDto<HospitalDto>(totalCount,responseList);
     }
 
+    [Authorize]
     public async Task<HospitalDto> CreateAsync(SaveHospitalDto hospital)
     {
         var entity = ObjectMapper.Map<SaveHospitalDto, Hospital>(hospital);
@@ -43,13 +43,15 @@ public class HospitalService : ApplicationService, IHospitalService
         return ObjectMapper.Map<Hospital, HospitalDto>(entity);
     }
 
+    [Authorize]
     public async Task<HospitalDto> UpdateAsync(int id, SaveHospitalDto hospital)
     {
         var entity = await _hospitalRepository.GetAsync(id);
         ObjectMapper.Map(hospital, entity);
         return ObjectMapper.Map<Hospital,HospitalDto>( await _hospitalRepository.UpdateAsync(entity));
     }
-        
+
+    [Authorize]
     public async Task DeleteAsync(int id)
     {
         await _hospitalRepository.DeleteAsync(id);

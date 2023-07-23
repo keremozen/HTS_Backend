@@ -11,7 +11,6 @@ using Volo.Abp.Domain.Repositories;
 
 namespace HTS.Service
 {
-    [Authorize]
     public class CurrencyService : ApplicationService, ICurrencyService
     {
         private readonly IRepository<Currency, int> _currencyRepository;

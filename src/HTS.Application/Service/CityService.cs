@@ -11,7 +11,6 @@ using Volo.Abp.Domain.Repositories;
 
 namespace HTS.Service
 {
-    [Authorize]
     public class CityService : ApplicationService, ICityService
     {
 
@@ -35,6 +34,7 @@ namespace HTS.Service
             return new PagedResultDto<CityDto>(totalCount, responseList);
         }
 
+        [Authorize]
         public async Task<CityDto> CreateAsync(SaveCityDto city)
         {
             var entity = ObjectMapper.Map<SaveCityDto, City>(city);
@@ -42,6 +42,7 @@ namespace HTS.Service
             return ObjectMapper.Map<City, CityDto>(entity);
         }
 
+        [Authorize]
         public async Task<CityDto> UpdateAsync(int id, SaveCityDto city)
         {
             var entity = await _cityRepository.GetAsync(id);
@@ -49,6 +50,7 @@ namespace HTS.Service
             return ObjectMapper.Map<City, CityDto>(await _cityRepository.UpdateAsync(entity));
         }
 
+        [Authorize]
         public async Task DeleteAsync(int id)
         {
             await _cityRepository.DeleteAsync(id);

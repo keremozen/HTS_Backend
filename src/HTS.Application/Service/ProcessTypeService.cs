@@ -10,7 +10,6 @@ using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
 namespace HTS.Service;
-[Authorize]
 public class ProcessTypeService : ApplicationService, IProcessTypeService
 {
     private readonly IRepository<ProcessType, int> _processTypeRepository;

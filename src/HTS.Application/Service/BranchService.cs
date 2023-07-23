@@ -11,7 +11,6 @@ using Volo.Abp.Domain.Repositories;
 
 namespace HTS.Service;
 
-[Authorize]
 public class BranchService : ApplicationService, IBranchService
 {
     private readonly IRepository<Branch, int> _branchRepository;
@@ -37,6 +36,7 @@ public class BranchService : ApplicationService, IBranchService
         return new PagedResultDto<BranchDto>(totalCount,responseList);
     }
 
+    [Authorize]
     public async Task<BranchDto> CreateAsync(SaveBranchDto major)
     {
         var entity = ObjectMapper.Map<SaveBranchDto, Branch>(major);
@@ -44,13 +44,15 @@ public class BranchService : ApplicationService, IBranchService
         return ObjectMapper.Map<Branch, BranchDto>(entity);
     }
 
+    [Authorize]
     public async Task<BranchDto> UpdateAsync(int id, SaveBranchDto major)
     {
         var entity = await _branchRepository.GetAsync(id);
         ObjectMapper.Map(major, entity);
         return ObjectMapper.Map<Branch, BranchDto>( await _branchRepository.UpdateAsync(entity));
     }
-        
+
+    [Authorize]
     public async Task DeleteAsync(int id)
     {
         await _branchRepository.DeleteAsync(id);

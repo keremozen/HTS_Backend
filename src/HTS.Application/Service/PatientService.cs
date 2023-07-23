@@ -52,15 +52,15 @@ public class PatientService : ApplicationService, IPatientService
         var query = await _patientRepository.WithDetailsAsync();
         if (!string.IsNullOrEmpty(filter.Name))
         {
-            query = query.Where(p => EF.Functions.ILike(p.Name, filter.Name));
+            query = query.Where(p => EF.Functions.ILike(p.Name, $"%{filter.Name}%"));
         }
         if (!string.IsNullOrEmpty(filter.Surname))
         {
-            query = query.Where(p => EF.Functions.ILike(p.Surname, filter.Surname));
+            query = query.Where(p => EF.Functions.ILike(p.Surname, $"%{filter.Surname}%"));
         }
         if (!string.IsNullOrEmpty(filter.PassportNumber))
         {
-            query = query.Where(p => EF.Functions.ILike(p.PassportNumber, filter.PassportNumber));
+            query = query.Where(p => EF.Functions.ILike(p.PassportNumber, $"%{filter.PassportNumber}%"));
         }
         if (filter.PhoneCountryCodeIds?.Any() ?? false)
         {

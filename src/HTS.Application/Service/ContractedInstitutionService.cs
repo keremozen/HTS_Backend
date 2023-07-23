@@ -10,8 +10,6 @@ using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
 namespace HTS.Service;
-
-[Authorize]
 public class ContractedInstitutionService : ApplicationService, IContractedInstitutionService
 {
     private readonly IRepository<ContractedInstitution, int> _contractedInstitutionRepository;
@@ -37,6 +35,7 @@ public class ContractedInstitutionService : ApplicationService, IContractedInsti
         return new PagedResultDto<ContractedInstitutionDto>(totalCount,responseList);
     }
 
+    [Authorize]
     public async Task<ContractedInstitutionDto> CreateAsync(SaveContractedInstitutionDto contractedInstitution)
     {
         var entity = ObjectMapper.Map<SaveContractedInstitutionDto, ContractedInstitution>(contractedInstitution);
@@ -44,13 +43,15 @@ public class ContractedInstitutionService : ApplicationService, IContractedInsti
         return ObjectMapper.Map<ContractedInstitution, ContractedInstitutionDto>(entity);
     }
 
+    [Authorize]
     public async Task<ContractedInstitutionDto> UpdateAsync(int id, SaveContractedInstitutionDto contractedInstitution)
     {
         var entity = await _contractedInstitutionRepository.GetAsync(id);
         ObjectMapper.Map(contractedInstitution, entity);
         return ObjectMapper.Map<ContractedInstitution, ContractedInstitutionDto>( await _contractedInstitutionRepository.UpdateAsync(entity));
     }
-        
+
+    [Authorize]
     public async Task DeleteAsync(int id)
     {
         await _contractedInstitutionRepository.DeleteAsync(id);

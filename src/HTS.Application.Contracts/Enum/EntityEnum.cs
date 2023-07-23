@@ -193,37 +193,41 @@ namespace HTS.Enum
         public enum OperationStatusEnum
         {
             /// <summary>
+            /// Yeni Kayıt
+            /// </summary>
+            NewRecord = 1,
+            /// <summary>
             /// Fiyatlandırma Bekleniyor
             /// </summary>
-            PriceExpecting = 1,
+            PriceExpecting = 2,
             /// <summary>
             /// Proforma Oluşturuldu - MFB Onayı Bekliyor
             /// </summary>
-            ProformaCreatedWaitingForMFBApproval = 2,
+            ProformaCreatedWaitingForMFBApproval = 3,
             /// <summary>
             /// MFB Reddetti - Fiyatlandırma Bekliyor
             /// </summary>
-            MFBRejectedPriceExpecting = 3,
+            MFBRejectedPriceExpecting = 4,
             /// <summary>
             /// Proforma Onaylandı - Hastaya İletilecek
             /// </summary>
-            ProformaApprovedWillBeTransferredToPatient = 4,
+            ProformaApprovedWillBeTransferredToPatient = 5,
             /// <summary>
             /// Proforma İletildi - Hasta Onayı Bekleniyor
             /// </summary>
-            ProformaTransferredWaitingForPatientApproval = 5,
+            ProformaTransferredWaitingForPatientApproval = 6,
             /// <summary>
             ///  Hasta Proformayı Reddetti
             /// </summary>
-            PatientRejectedProforma = 6,
+            PatientRejectedProforma = 7,
             /// <summary>
             /// Proforma Onaylandı - Tahsilat Bekleniyor
             /// </summary>
-            ProformaApprovedWaitingForPayment = 7,
+            ProformaApprovedWaitingForPayment = 8,
             /// <summary>
             /// Proforma Tahsil Edildi - Tedavi Aşaması
             /// </summary>
-            PaymentCompletedTreatmentProcess = 8
+            PaymentCompletedTreatmentProcess = 9
         }
 
         public enum ProcessTypeEnum

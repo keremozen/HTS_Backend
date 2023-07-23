@@ -51,7 +51,7 @@ public class OperationService : ApplicationService, IOperationService
     {
         IsDataValidToSave(operation);
         var entity = ObjectMapper.Map<SaveOperationDto, Operation>(operation);
-        entity.OperationStatusId = OperationStatusEnum.PriceExpecting.GetHashCode();
+        entity.OperationStatusId = OperationStatusEnum.NewRecord.GetHashCode();
         entity.OperationTypeId = OperationTypeEnum.Manual.GetHashCode();
         await _operationRepository.InsertAsync(entity);
         //Tedavi sürecini, operasyon onaylandı fiyatlandırma bekliyor olarak güncelle

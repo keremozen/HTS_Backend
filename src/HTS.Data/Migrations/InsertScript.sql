@@ -80,14 +80,15 @@ INSERT INTO "OperationTypes"("Id", "Name") VALUES (1, 'Hastane danışma');
 INSERT INTO "OperationTypes"("Id", "Name") VALUES (2, 'Elle giriş');
 
 --Operation status Table
-INSERT INTO "OperationStatuses"("Id", "Name") VALUES (1, 'Fiyatlandırma Bekleniyor');
-INSERT INTO "OperationStatuses"("Id", "Name") VALUES (2, 'Proforma Oluşturuldu - MFB Onayı Bekliyor');
-INSERT INTO "OperationStatuses"("Id", "Name") VALUES (3, 'MFB Reddetti - Fiyatlandırma Bekliyor');
-INSERT INTO "OperationStatuses"("Id", "Name") VALUES (4, 'Proforma Onaylandı - Hastaya İletilecek');
-INSERT INTO "OperationStatuses"("Id", "Name") VALUES (5, 'Proforma İletildi - Hasta Onayı Bekleniyor');
-INSERT INTO "OperationStatuses"("Id", "Name") VALUES (6, 'Hasta Proformayı Reddetti');
-INSERT INTO "OperationStatuses"("Id", "Name") VALUES (7, 'Proforma Onaylandı - Tahsilat Bekleniyor');
-INSERT INTO "OperationStatuses"("Id", "Name") VALUES (8, 'Proforma Tahsil Edildi - Tedavi Aşaması');
+INSERT INTO "OperationStatuses"("Id", "Name") VALUES (1, 'Yeni Kayıt');
+INSERT INTO "OperationStatuses"("Id", "Name") VALUES (2, 'Fiyatlandırma Bekleniyor');
+INSERT INTO "OperationStatuses"("Id", "Name") VALUES (3, 'Proforma Oluşturuldu - MFB Onayı Bekliyor');
+INSERT INTO "OperationStatuses"("Id", "Name") VALUES (4, 'MFB Reddetti - Fiyatlandırma Bekliyor');
+INSERT INTO "OperationStatuses"("Id", "Name") VALUES (5, 'Proforma Onaylandı - Hastaya İletilecek');
+INSERT INTO "OperationStatuses"("Id", "Name") VALUES (6, 'Proforma İletildi - Hasta Onayı Bekleniyor');
+INSERT INTO "OperationStatuses"("Id", "Name") VALUES (7, 'Hasta Proformayı Reddetti');
+INSERT INTO "OperationStatuses"("Id", "Name") VALUES (8, 'Proforma Onaylandı - Tahsilat Bekleniyor');
+INSERT INTO "OperationStatuses"("Id", "Name") VALUES (9, 'Proforma Tahsil Edildi - Tedavi Aşaması');
 
 --Proforma status Table
 INSERT INTO "ProformaStatuses"("Id", "Name") VALUES (1, 'Yeni Kayıt');

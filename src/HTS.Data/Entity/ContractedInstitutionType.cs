@@ -4,13 +4,11 @@ using Volo.Abp.Identity;
 
 namespace HTS.Data.Entity
 {
-    public class Nationality : FullAuditedEntityWithUser<int, IdentityUser>
+    public class ContractedInstitutionType : FullAuditedEntityWithUser<int, IdentityUser>
     {
-        [Required, StringLength(50)]
+        [Required]
         public string Name { get; set; }
 
-        [Required, StringLength(10)]
-        public string PhoneCode { get; set; }
         [Required]
         public bool IsActive { get; set; }
     }

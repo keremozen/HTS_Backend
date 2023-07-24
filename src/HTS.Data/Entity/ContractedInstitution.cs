@@ -27,6 +27,8 @@ namespace HTS.Data.Entity
         public string? Site { get; set; }
 
         public string? Address { get; set; }
+        public int TypeId { get; set; }
+        public int KindId { get; set; }
 
         [Required]
         public bool IsActive { get; set; }
@@ -35,6 +37,12 @@ namespace HTS.Data.Entity
 
         [ForeignKey("NationalityId")]
         public Nationality? Nationality { get; set; }
+
+        [ForeignKey("KindId")]
+        public ContractedInstitutionKind ContractedInstitutionKind { get; set; }
+        
+        [ForeignKey("TypeId")]
+        public ContractedInstitutionType ContractedInstitutionType { get; set; }
         public virtual ICollection<ContractedInstitutionStaff>? ContractedInstitutionStaffs { get; set; }
     }
 }

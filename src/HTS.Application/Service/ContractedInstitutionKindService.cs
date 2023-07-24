@@ -2,8 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HTS.Data.Entity;
-using HTS.Dto.ContractedInstitutionType;
-using HTS.Dto.Nationality;
+using HTS.Dto.ContractedInstitutionKind;
 using HTS.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Application.Dtos;
@@ -11,47 +10,47 @@ using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
 namespace HTS.Service;
-public class ContractedInstitutionTypeService : ApplicationService, IContractedInstitutionTypeService
+public class ContractedInstitutionKindService : ApplicationService, IContractedInstitutionKindService
 {
-    private readonly IRepository<ContractedInstitutionType, int> _ciTypeRepository;
-    public ContractedInstitutionTypeService(IRepository<ContractedInstitutionType, int> ciTypeRepository) 
+    private readonly IRepository<ContractedInstitutionKind, int> _ciKindRepository;
+    public ContractedInstitutionKindService(IRepository<ContractedInstitutionKind, int> ciKindRepository) 
     {
-        _ciTypeRepository = ciTypeRepository;
+        _ciKindRepository = ciKindRepository;
     }
     
-    public async Task<ContractedInstitutionTypeDto> GetAsync(int id)
+    public async Task<ContractedInstitutionKindDto> GetAsync(int id)
     {
-        return ObjectMapper.Map<ContractedInstitutionType, ContractedInstitutionTypeDto>(await _ciTypeRepository.GetAsync(id));
+        return ObjectMapper.Map<ContractedInstitutionKind, ContractedInstitutionKindDto>(await _ciKindRepository.GetAsync(id));
     }
 
-    public async Task<PagedResultDto<ContractedInstitutionTypeDto>> GetListAsync(bool? isActive=null)
+    public async Task<PagedResultDto<ContractedInstitutionKindDto>> GetListAsync(bool? isActive=null)
     {
-        var query = await _ciTypeRepository.GetQueryableAsync();
+        var query = await _ciKindRepository.GetQueryableAsync();
         query = query.WhereIf(isActive.HasValue,
             n => n.IsActive == isActive.Value);
-        var responseList = ObjectMapper.Map<List<ContractedInstitutionType>, List<ContractedInstitutionTypeDto>>(await AsyncExecuter.ToListAsync(query));
-        var totalCount = await _ciTypeRepository.CountAsync();//item count
-        return new PagedResultDto<ContractedInstitutionTypeDto>(totalCount,responseList);
+        var responseList = ObjectMapper.Map<List<ContractedInstitutionKind>, List<ContractedInstitutionKindDto>>(await AsyncExecuter.ToListAsync(query));
+        var totalCount = await _ciKindRepository.CountAsync();//item count
+        return new PagedResultDto<ContractedInstitutionKindDto>(totalCount,responseList);
     }
 
     [Authorize]
-    public async Task CreateAsync(SaveContractedInstitutionTypeDto type)
+    public async Task CreateAsync(SaveContractedInstitutionKindDto type)
     {
-        var entity = ObjectMapper.Map<SaveContractedInstitutionTypeDto, ContractedInstitutionType>(type);
-        await _ciTypeRepository.InsertAsync(entity);
+        var entity = ObjectMapper.Map<SaveContractedInstitutionKindDto, ContractedInstitutionKind>(type);
+        await _ciKindRepository.InsertAsync(entity);
     }
 
     [Authorize]
-    public async Task UpdateAsync(int id, SaveContractedInstitutionTypeDto type)
+    public async Task UpdateAsync(int id, SaveContractedInstitutionKindDto type)
     {
-        var entity = await _ciTypeRepository.GetAsync(id);
+        var entity = await _ciKindRepository.GetAsync(id);
         ObjectMapper.Map(type, entity); 
-        await _ciTypeRepository.UpdateAsync(entity);
+        await _ciKindRepository.UpdateAsync(entity);
     }
 
     [Authorize]
     public async Task DeleteAsync(int id)
     {
-        await _ciTypeRepository.DeleteAsync(id);
+        await _ciKindRepository.DeleteAsync(id);
     }
 }

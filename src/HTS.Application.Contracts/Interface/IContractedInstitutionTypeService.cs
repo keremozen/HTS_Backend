@@ -1,43 +1,45 @@
 ﻿using System.Threading.Tasks;
+using HTS.Dto.ContractedInstitutionType;
 using HTS.Dto.Nationality;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 
 namespace HTS.Interface
 {
-    public interface INationalityService : IApplicationService
+    public interface IContractedInstitutionTypeService : IApplicationService
     {
         /// <summary>
-        /// Get nationality by id
+        /// Get object by id
         /// </summary>
-        /// <param name="id">Desired nationality id</param>
-        /// <returns>Desired nationality</returns>
-        Task<NationalityDto> GetAsync(int id);
+        /// <param name="id">Desired entity id</param>
+        /// <returns>Desired object</returns>
+        Task<ContractedInstitutionTypeDto> GetAsync(int id);
         /// <summary>
-        /// Get all nationalities
+        /// Get all objects
         /// </summary>
         /// <param name="isActive">IsActive value of data. Default parameter with null value</param>
-        /// <returns>Nationality list</returns>
-        Task<PagedResultDto<NationalityDto>> GetListAsync(bool? isActive=null);
+        /// <returns>Object list</returns>
+        Task<PagedResultDto<ContractedInstitutionTypeDto>> GetListAsync(bool? isActive=null);
+
         /// <summary>
-        /// Creates nationality
+        /// Creates entity
         /// </summary>
-        /// <param name="nationality">Nationality information to be insert</param>
-        /// <returns>Inserted nationality</returns>
-        Task<NationalityDto> CreateAsync(SaveNationalityDto nationality);
+        /// <param name="ciType"></param>
+        /// <returns></returns>
+        Task CreateAsync(SaveContractedInstitutionTypeDto ciType);
+
+        /// <summary>
+        /// Updates entity
+        /// </summary>
+        /// <param name="id">To be updated entity id</param>
+        /// <param name="ciType"></param>
+        /// <returns></returns>
+        Task UpdateAsync(int id, SaveContractedInstitutionTypeDto ciType);
         
         /// <summary>
-        /// Updates nationality
+        /// Delete given id of entity
         /// </summary>
-        /// <param name="id">To be updated nationality id</param>
-        /// <param name="nationality">To be updated information</param>
-        /// <returns>Updated nationality object</returns>
-        Task<NationalityDto> UpdateAsync(int id, SaveNationalityDto nationality);
-        
-        /// <summary>
-        /// Delete given id of nationality
-        /// </summary>
-        /// <param name="id">To be deleted nationality id</param>
+        /// <param name="id">To be deleted entity id</param>
         /// <returns></returns>
         Task DeleteAsync(int id);
     }

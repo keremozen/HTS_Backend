@@ -4,9 +4,9 @@ using Volo.Abp.Identity;
 
 namespace HTS.Data.Entity
 {
-    public class ContractedInstitutionType : FullAuditedEntityWithUser<int, IdentityUser>
+    public class ContractedInstitutionKind : FullAuditedEntityWithUser<int, IdentityUser>
     {
-        [Required, StringLength(50)]
+        [Required]
         public string Name { get; set; }
 
         [Required]

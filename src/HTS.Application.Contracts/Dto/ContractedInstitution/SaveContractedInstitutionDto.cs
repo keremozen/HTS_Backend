@@ -23,6 +23,11 @@ public class SaveContractedInstitutionDto
 
     [StringLength(500)]
     public string Address { get; set; }
+    
+    [Required]
+    public int TypeId { get; set; }
+    [Required]
+    public int KindId { get; set; }
 
     [Required]
     public bool IsActive { get; set; }

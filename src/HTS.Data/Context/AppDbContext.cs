@@ -19,6 +19,8 @@ namespace HTS.Data
 
         public DbSet<ContractedInstitution> ContractedInstitutions { get; set; }
         public DbSet<ContractedInstitutionStaff> ContractedInstitutionStaffs { get; set; }
+        public DbSet<ContractedInstitutionKind> ContractedInstitutionKinds { get; set; }
+        public DbSet<ContractedInstitutionType> ContractedInstitutionTypes { get; set; }
         public DbSet<DocumentType> DocumentTypes { get; set; }
         public DbSet<Gender> Genders { get; set; }
         public DbSet<Currency> Currencies { get; set; }

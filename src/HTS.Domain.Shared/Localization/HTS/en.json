@@ -29,7 +29,6 @@
     "EmptyMessage": "No records found.",
     "EmptyFilterMessage": "No records found.",
 
-
     /*ERROR MESSAGES*/
     "HTS:1": "The user already exists.",
     "HTS:2": "One default user already exits. Multiple default users are not allowed.",
@@ -80,6 +79,8 @@
     "Permission:CityManagement": "City Management",
     "Permission:DocumentTypeManagement": "Document Type Management",
     "Permission:PatientAdmissionMethodManagement": "Patient Admission Method Management",
+    "Permission:ContractedInstitutionTypeManagement": "Contracted Institution Type Management",
+    "Permission:ContractedInstitutionKindManagement": "Contracted Institution Kind Management",
     "Permission:ContractedInstitutionManagement": "Contracted Institution Management",
     "Permission:BranchManagement": "Branch Management",
     "Permission:TreatmentTypeManagement": "Treatment Type Management",
@@ -109,6 +110,8 @@
     "Menu:Admin:PatientDocumentStatus": "Patient Document Status Management",
     "Menu:Admin:TreatmentProcessStatus": "Treatment Process Status Management",
     "Menu:Admin:PatientAdmissionMethod": "Patient Admission Method Management",
+    "Menu:Admin:ContractedInstitutionType": "Contracted Institution Type Management",
+    "Menu:Admin:ContractedInstitutionKind": "Contracted Institution Kind Management",
     "Menu:Admin:ContractedInstitution": "Contracted Institution Management",
     "Menu:Admin:HospitalConsultationStatus": "Hospital Consultation Status Management",
     "Menu:Admin:Branch": "Branch Management",
@@ -179,11 +182,29 @@
     "Admin:PatientAdmissionMethod:Column:IsActive": "Is Active?",
     "Admin:PatientAdmissionMethod:PatientAdmissionMethodDetails": "Patient Admission Method Details",
 
+    /*CONTRACTED INSTITUTION TYPE MANAGEMENT*/
+    "Admin:ContractedInstitutionType:Name": "Contracted Institution Type",
+    "Admin:ContractedInstitutionType:ContractedInstitutionTypeManagement": "Contracted Institution Type Management",
+    "Admin:ContractedInstitutionType:NewContractedInstitutionType": "New Contracted Institution Type",
+    "Admin:ContractedInstitutionType:Column:Name": "Name",
+    "Admin:ContractedInstitutionType:Column:IsActive": "Is Active?",
+    "Admin:ContractedInstitutionType:ContractedInstitutionTypeDetails": "Contracted Institution Type Details",
+
+    /*CONTRACTED INSTITUTION KIND MANAGEMENT*/
+    "Admin:ContractedInstitutionKind:Name": "Contracted Institution Kind",
+    "Admin:ContractedInstitutionKind:ContractedInstitutionKindManagement": "Contracted Institution Kind Management",
+    "Admin:ContractedInstitutionKind:NewContractedInstitutionKind": "New Contracted Institution Kind",
+    "Admin:ContractedInstitutionKind:Column:Name": "Name",
+    "Admin:ContractedInstitutionKind:Column:IsActive": "Is Active?",
+    "Admin:ContractedInstitutionKind:ContractedInstitutionKindDetails": "Contracted Institution Kind Details",
+
     /*CONTRACTED INSTITUTION MANAGEMENT*/
     "Admin:ContractedInstitution:Name": "Contracted Institution",
     "Admin:ContractedInstitution:ContractedInstitutionManagement": "Contracted Institution Management",
     "Admin:ContractedInstitution:NewContractedInstitution": "New Contracted Institution",
     "Admin:ContractedInstitution:Column:Name": "Name",
+    "Admin:ContractedInstitution:Column:Type": "Type",
+    "Admin:ContractedInstitution:Column:Kind": "Kind",
     "Admin:ContractedInstitution:Column:Description": "Description",
     "Admin:ContractedInstitution:Column:PhoneNumber": "Phone Number",
     "Admin:ContractedInstitution:Column:Email": "E-Mail Address",

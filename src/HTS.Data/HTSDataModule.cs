@@ -60,7 +60,9 @@ namespace HTS.Data
                 {
                     entityOptions.DefaultWithDetailsFunc = query => query.Include(i => i.Nationality)
                                                                          .Include(i => i.PhoneCountryCode)
-                                                                         .Include(i => i.ContractedInstitutionStaffs);
+                                                                         .Include(i => i.ContractedInstitutionStaffs)
+                                                                         .Include(i => i.ContractedInstitutionKind)
+                                                                         .Include(i => i.ContractedInstitutionType);
                 });
 
                 options.Entity<ContractedInstitutionStaff>(entityOptions =>

@@ -53,7 +53,6 @@
     "HTS:21": "Sadece son versiyon proforma üzerinde onay / red işlemleri yapılabilir.",
     "HTS:22": "Sadece son versiyon proforma üzerinde işlem yapılabilir.",
 
-
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Başarılı",
     "ToastTitle:Info": "Bilgi",
@@ -80,6 +79,8 @@
     "Permission:CityManagement": "Şehir Yönetimi",
     "Permission:DocumentTypeManagement": "Doküman Tipi Yönetimi",
     "Permission:PatientAdmissionMethodManagement": "Hasta Geliş Yönetimi Yönetimi",
+    "Permission:ContractedInstitutionTypeManagement": "Anlaşmalı Kurum Tipi Yönetimi",
+    "Permission:ContractedInstitutionKindManagement": "Anlaşmalı Kurum Türü Yönetimi",
     "Permission:ContractedInstitutionManagement": "Anlaşmalı Kurum Yönetimi",
     "Permission:BranchManagement": "Branş Yönetimi",
     "Permission:TreatmentTypeManagement": "Tedavi Tipi Yönetimi",
@@ -109,6 +110,8 @@
     "Menu:Admin:PatientDocumentStatus": "Hasta Doküman Durumu Yönetimi",
     "Menu:Admin:TreatmentProcessStatus": "Tedavi Süreci Durumu Yönetimi",
     "Menu:Admin:PatientAdmissionMethod": "Hasta Geliş Yöntemi Yönetimi",
+    "Menu:Admin:ContractedInstitutionType": "Anlaşmalı Kurum Tipi Yönetimi",
+    "Menu:Admin:ContractedInstitutionKind": "Anlaşmalı Kurum Türü Yönetimi",
     "Menu:Admin:ContractedInstitution": "Anlaşmalı Kurum Yönetimi",
     "Menu:Admin:HospitalConsultationStatus": "Hastane Danışma Durumu Yönetimi",
     "Menu:Admin:Branch": "Branş Yönetimi",
@@ -179,11 +182,29 @@
     "Admin:PatientAdmissionMethod:Column:IsActive": "Aktif mi?",
     "Admin:PatientAdmissionMethod:PatientAdmissionMethodDetails": "Hasta Geliş Yöntemi Detayları",
 
+    /*CONTRACTED INSTITUTION TYPE MANAGEMENT*/
+    "Admin:ContractedInstitutionType:Name": "Anlaşmalı Kurum Tipi",
+    "Admin:ContractedInstitutionType:ContractedInstitutionTypeManagement": "Anlaşmalı Kurum Tipi Yönetimi",
+    "Admin:ContractedInstitutionType:NewContractedInstitutionType": "Yeni Anlaşmalı Kurum Tipi",
+    "Admin:ContractedInstitutionType:Column:Name": "İsim",
+    "Admin:ContractedInstitutionType:Column:IsActive": "Aktif mi?",
+    "Admin:ContractedInstitutionType:ContractedInstitutionTypeDetails": "Anlaşmalı Kurum Tipi Detayları",
+
+    /*CONTRACTED INSTITUTION KIND MANAGEMENT*/
+    "Admin:ContractedInstitutionKind:Name": "Anlaşmalı Kurum Türü",
+    "Admin:ContractedInstitutionKind:ContractedInstitutionKindManagement": "Anlaşmalı Kurum Türü Yönetimi",
+    "Admin:ContractedInstitutionKind:NewContractedInstitutionKind": "Yeni Anlaşmalı Kurum Türü",
+    "Admin:ContractedInstitutionKind:Column:Name": "İsim",
+    "Admin:ContractedInstitutionKind:Column:IsActive": "Aktif mi?",
+    "Admin:ContractedInstitutionKind:ContractedInstitutionKindDetails": "Anlaşmalı Kurum Türü Detayları",
+
     /*CONTRACTED INSTITUTION MANAGEMENT*/
     "Admin:ContractedInstitution:Name": "Anlaşmalı Kurum",
     "Admin:ContractedInstitution:ContractedInstitutionManagement": "Anlaşmalı Kurum Yönetimi",
     "Admin:ContractedInstitution:NewContractedInstitution": "Yeni Anlaşmalı Kurum",
     "Admin:ContractedInstitution:Column:Name": "İsim",
+    "Admin:ContractedInstitution:Column:Type": "Tip",
+    "Admin:ContractedInstitution:Column:Kind": "Tür",
     "Admin:ContractedInstitution:Column:Description": "Açıklama",
     "Admin:ContractedInstitution:Column:PhoneNumber": "Telefon Numarası",
     "Admin:ContractedInstitution:Column:EMail": "E-Posta Adresi",

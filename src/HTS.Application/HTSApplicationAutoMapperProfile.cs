@@ -96,7 +96,9 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<SavePatientAdmissionMethodDto, PatientAdmissionMethod>();
         CreateMap<PatientAdmissionMethod, PatientAdmissionMethodDto>();
         CreateMap<SaveContractedInstitutionDto, ContractedInstitution>();
-        CreateMap<ContractedInstitution, ContractedInstitutionDto>();
+        CreateMap<ContractedInstitution, ContractedInstitutionDto>()
+            .ForMember(x => x.Kind, opt => opt.MapFrom(o => o.ContractedInstitutionKind))
+            .ForMember(x => x.Type, opt => opt.MapFrom(o => o.ContractedInstitutionType));
         CreateMap<SaveContractedInstitutionStaffDto, ContractedInstitutionStaff>();
         CreateMap<ContractedInstitutionStaff, ContractedInstitutionStaffDto>();
         CreateMap<SaveContractedInstitutionTypeDto, ContractedInstitutionType>();

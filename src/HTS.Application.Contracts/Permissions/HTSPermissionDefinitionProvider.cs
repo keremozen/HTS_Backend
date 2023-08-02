@@ -17,6 +17,8 @@ public class HTSPermissionDefinitionProvider : PermissionDefinitionProvider
         managementPermission.AddChild(HTSPermissions.LanguageManagement, L("Permission:LanguageManagement")); 
         managementPermission.AddChild(HTSPermissions.DocumentTypeManagement, L("Permission:DocumentTypeManagement"));
         managementPermission.AddChild(HTSPermissions.PatientAdmissionMethodManagement, L("Permission:PatientAdmissionMethodManagement"));
+        managementPermission.AddChild(HTSPermissions.ContractedInstitutionTypeManagement, L("Permission:ContractedInstitutionTypeManagement"));
+        managementPermission.AddChild(HTSPermissions.ContractedInstitutionKindManagement, L("Permission:ContractedInstitutionKindManagement"));
         managementPermission.AddChild(HTSPermissions.ContractedInstitutionManagement, L("Permission:ContractedInstitutionManagement"));
         managementPermission.AddChild(HTSPermissions.BranchManagement, L("Permission:BranchManagement"));
         managementPermission.AddChild(HTSPermissions.TreatmentTypeManagement, L("Permission:TreatmentTypeManagement"));

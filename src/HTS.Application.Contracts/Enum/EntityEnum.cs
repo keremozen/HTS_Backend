@@ -125,17 +125,13 @@ namespace HTS.Enum
         public enum HospitalizationTypeEnum
         {
             /// <summary>
-            /// Medikal Tedavi
+            /// Medikal Tedavi Yatış
             /// </summary>
-            MedicalTreatment = 1,
-            /// <summary>
-            /// Yatış
-            /// </summary>
-            Hospitalization = 2,
+            MedicalTreatmentHospitalization = 1,
             /// <summary>
             /// Cerrahi Yatış
             /// </summary>
-            SurgicalHospitalization = 3
+            SurgicalHospitalization = 2
         }
 
         public enum AdditionalServiceEnum

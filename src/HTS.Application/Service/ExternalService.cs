@@ -24,16 +24,17 @@ namespace HTS.Service
             {
                 result = new ExternalApiResult()
                 {
-                    ResultCode = 200,
-                    Result = new List<SutCodeResult>()
+                    durum = 200,
+                    sonuc = new List<SutCodeResult>(),
+                    mesaj = null
                 };
                 foreach (var sutCode in sutCodesRequest.SutCodes)
                 {
-                    ((List<SutCodeResult>)result.Result).Add(new SutCodeResult()
+                    ((List<SutCodeResult>)result.sonuc).Add(new SutCodeResult()
                     {
-                        IsIncluded = (sutCode == "GR1000" || sutCode == "GR1001") ? true : false
+                        gecerliMi = (sutCode == "GR1000" || sutCode == "GR1001") ? true : false
                     ,
-                        SutCode = sutCode
+                        sutKodu = sutCode
                     });
                 }
             }
@@ -41,16 +42,17 @@ namespace HTS.Service
             {
                 result = new ExternalApiResult()
                 {
-                    ResultCode = 200,
-                    Result = new List<SutCodeResult>()
+                    durum = 200,
+                    sonuc = new List<SutCodeResult>(),
+                    mesaj = null
                 };
                 foreach (var sutCode in sutCodesRequest.SutCodes)
                 {
-                    ((List<SutCodeResult>)result.Result).Add(new SutCodeResult()
+                    ((List<SutCodeResult>)result.sonuc).Add(new SutCodeResult()
                     {
-                        IsIncluded = (sutCode == "GR2000" || sutCode == "GR2001") ? true : false
+                        gecerliMi = (sutCode == "GR2000" || sutCode == "GR2001") ? true : false
                     ,
-                        SutCode = sutCode
+                        sutKodu = sutCode
                     });
                 }
             }
@@ -58,8 +60,9 @@ namespace HTS.Service
             {
                 result = new ExternalApiResult()
                 {
-                    ResultCode = 201,
-                    Result = null
+                    durum = 201,
+                    sonuc = null,
+                    mesaj = null
                 };
             }
             return result;
@@ -72,38 +75,41 @@ namespace HTS.Service
             {
                 result = new ExternalApiResult()
                 {
-                    ResultCode = 200,
-                    Result = new PatientInfo()
+                    durum = 200,
+                    sonuc = new PatientInfo()
                     {
-                        Gender = "1",
-                        Name = "Yeager",
-                        Surname = "Jacobsen",
-                        Nationality = "DE",
-                        Passport = "UP1234EY"
-                    }
+                        cinsiyet = "1",
+                        adi = "Yeager",
+                        soyadi = "Jacobsen",
+                        ulkeKodu = "DE",
+                        pasaport = "UP1234EY"
+                    },
+                    mesaj = null
                 };
             }
             else if (htsCode == "U100000001")
             {
                 result = new ExternalApiResult()
                 {
-                    ResultCode = 200,
-                    Result = new PatientInfo()
+                    durum = 200,
+                    sonuc = new PatientInfo()
                     {
-                        Gender = "2",
-                        Name = "Aerır",
-                        Surname = "Jacobsen",
-                        Nationality = "DE",
-                        Passport = "UP1234EZ"
-                    }
+                        cinsiyet = "2",
+                        adi = "Aerır",
+                        soyadi = "Jacobsen",
+                        ulkeKodu = "DE",
+                        pasaport = "UP1234EZ"
+                    },
+                    mesaj = null
                 };
             }
             else
             {
                 result = new ExternalApiResult()
                 {
-                    ResultCode = 201,
-                    Result = null
+                    durum = 201,
+                    sonuc = null,
+                    mesaj = null
                 };
             }
             return result;

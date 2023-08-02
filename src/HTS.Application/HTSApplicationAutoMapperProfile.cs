@@ -40,6 +40,7 @@ using HTS.Dto.PaymentKind;
 using HTS.Dto.PaymentReason;
 using HTS.Dto.Process;
 using HTS.Dto.ProcessCost;
+using HTS.Dto.ProcessKind;
 using HTS.Dto.ProcessRelation;
 using HTS.Dto.ProcessType;
 using HTS.Dto.Proforma;
@@ -118,6 +119,8 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<SaveProcessCostDto, ProcessCost>();
         CreateMap<ProcessRelation, ProcessRelationDto>();
         CreateMap<SaveProcessRelationDto, ProcessRelation>();
+        CreateMap<ProcessKind, ProcessKindDto>();
+        CreateMap<SaveProcessKindDto, ProcessKind>();
         
         CreateMap<HospitalConsultation, HospitalConsultationDto>();
         CreateMap<SaveHospitalConsultationDto, HospitalConsultation>();

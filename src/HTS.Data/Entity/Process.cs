@@ -15,12 +15,17 @@ namespace HTS.Data.Entity
         [Required]
         public string Code { get; set; }
         public string? Description { get; set; }
+        [Required]
         public int ProcessTypeId { get; set; }
+        public int? ProcessKindId { get; set; }
         [Required]
         public bool IsActive { get; set; }
 
         [ForeignKey("ProcessTypeId")]
         public ProcessType ProcessType { get; set; }
+
+        [ForeignKey("ProcessKindId")]
+        public ProcessKind ProcessKind { get; set; }
 
         public virtual ICollection<ProcessCost> ProcessCosts { get; set; }
         [InverseProperty("Process")]

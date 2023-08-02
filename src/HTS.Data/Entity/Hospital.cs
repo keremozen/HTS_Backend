@@ -31,5 +31,6 @@ namespace HTS.Data.Entity
         [ForeignKey("CityId")]
         public City City { get; set; }
         public virtual ICollection<HospitalStaff> HospitalStaffs { get; set; }
+        public virtual ICollection<HospitalUHBStaff> HospitalUHBStaffs { get; set; }
     }
 }

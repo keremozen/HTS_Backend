@@ -75,7 +75,8 @@ namespace HTS.Data
                     entityOptions.DefaultWithDetailsFunc = query => query.Include(o => o.City)
                                                                          .Include(p => p.PhoneCountryCode)
                                                                          .Include(h => h.HospitalStaffs)
-                                                                         .ThenInclude(s => s.User);
+                                                                         .ThenInclude(s => s.User)
+                                                                         .Include(h => h.HospitalUHBStaffs);
                 });
 
                 options.Entity<HospitalStaff>(entityOptions =>

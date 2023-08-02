@@ -22,6 +22,7 @@ using HTS.Dto.HospitalResponseBranch;
 using HTS.Dto.HospitalResponseProcess;
 using HTS.Dto.HospitalResponseType;
 using HTS.Dto.HospitalStaff;
+using HTS.Dto.HospitalUHBStaff;
 using HTS.Dto.Language;
 using HTS.Dto.Nationality;
 using HTS.Dto.Operation;
@@ -110,6 +111,8 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<Hospital, HospitalDto>();
         CreateMap<SaveHospitalStaffDto, HospitalStaff>();
         CreateMap<HospitalStaff, HospitalStaffDto>();
+        CreateMap<SaveHospitalUHBStaffDto, HospitalUHBStaff>();
+        CreateMap<HospitalUHBStaff, HospitalUHBStaffDto>();
         CreateMap<PatientTreatmentProcess, PatientTreatmentProcessDto>();
         CreateMap<SaveSalesMethodAndCompanionInfoDto, SalesMethodAndCompanionInfo>();
         CreateMap<SalesMethodAndCompanionInfo, SalesMethodAndCompanionInfoDto>();

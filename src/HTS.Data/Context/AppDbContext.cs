@@ -30,6 +30,7 @@ namespace HTS.Data
         public DbSet<City> Cities { get; set; }
         public DbSet<Hospital> Hospitals { get; set; }
         public DbSet<HospitalStaff> HospitalStaffs { get; set; }
+        public DbSet<HospitalUHBStaff> HospitalUHBStaffs { get; set; }
         public DbSet<HospitalConsultation> HospitalConsultations { get; set; }
         public DbSet<HospitalConsultationDocument> HospitalConsultationDocuments { get; set; }
         public DbSet<HospitalConsultationStatus> HospitalConsultationStatuses { get; set; }

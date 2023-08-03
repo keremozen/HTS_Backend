@@ -52,6 +52,8 @@
     "HTS:20": "Hesaplama bilgilerinde hata olduğu için işlem gerçekleştirilemiyor.",
     "HTS:21": "Sadece son versiyon proforma üzerinde onay / red işlemleri yapılabilir.",
     "HTS:22": "Sadece son versiyon proforma üzerinde işlem yapılabilir.",
+    "HTS:23": "Zorunlu alanlar eksik.",
+    "HTS:24": "Operasyon durumu işlem yapmaya uygun değil. Sadece Yeni Kayıt durumu için işlem yapılabilir.",
 
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Başarılı",

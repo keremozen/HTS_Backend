@@ -35,6 +35,13 @@ namespace HTS.Interface
         /// <returns></returns>
         Task UpdateAsync(int id, SaveOperationDto operation);
 
+        /// <summary>
+        /// Send to pricing
+        /// </summary>
+        /// <param name="id">To be send entity id</param>
+        /// <returns></returns>
+        Task SendToPricing(int id);
+
 
     }
 }

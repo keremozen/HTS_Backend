@@ -25,6 +25,6 @@ public static class  ErrorCode
     public const string LastProformaVersionCanBeApprovedRejected = "HTS:21";
     public const string LastProformaVersionCanBeOperated = "HTS:22";
     public const string RequiredFieldsMissing = "HTS:23";
-
+    public const string OperationStatusNotValid = "HTS:24";
 
 }

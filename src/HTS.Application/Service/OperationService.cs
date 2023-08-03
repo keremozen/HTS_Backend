@@ -68,6 +68,32 @@ public class OperationService : ApplicationService, IOperationService
         await _operationRepository.UpdateAsync(entity);
     }
 
+    public async Task SendToPricing(int id)
+    {
+        var entity = await _operationRepository.GetAsync(id);
+        IsDataValidToSendToPricing(entity);
+        entity.OperationStatusId = OperationStatusEnum.PriceExpecting.GetHashCode();
+        await _operationRepository.UpdateAsync(entity);
+    }
+
+    /// <summary>
+    /// Checks if data is valid to send to pricing
+    /// </summary>
+    /// <param name="entity">To be checked entity</param>
+    /// <exception cref="HTSBusinessException"></exception>
+    private void IsDataValidToSendToPricing(Operation entity)
+    {
+        if (entity == null)
+        {
+            throw new HTSBusinessException(ErrorCode.BadRequest);
+        }
+
+        if (entity.OperationStatusId != OperationStatusEnum.NewRecord.GetHashCode())
+        {
+            throw new HTSBusinessException(ErrorCode.OperationStatusNotValid);
+        }
+    }
+
     /// <summary>
     /// Checks if data is valid to save
     /// </summary>

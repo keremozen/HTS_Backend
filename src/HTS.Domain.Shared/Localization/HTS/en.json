@@ -52,6 +52,8 @@
     "HTS:20": "Invalid calculations found in the proforma.",
     "HTS:21": "Only last version of proforma can be approved / rejected.",
     "HTS:22": "Only last version of proforma can be operated.",
+    "HTS:23": "Required fiels are missing.",
+    "HTS:24": "Operation status not valid to process. Only New Record status can do.",
 
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Successful",

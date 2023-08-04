@@ -21,5 +21,4 @@ public class SaveHospitalDto
     public string Email { get; set; }
     [Required]
     public bool IsActive { get; set; }
-    public List<SaveHospitalUHBStaffDto> HospitalUHBStaffs { get; set; }
 }

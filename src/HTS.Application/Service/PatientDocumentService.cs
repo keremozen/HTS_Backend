@@ -41,15 +41,17 @@ public class PatientDocumentService : ApplicationService, IPatientDocumentServic
     {
         var entity = ObjectMapper.Map<SavePatientDocumentDto, PatientDocument>(patientDocument);
         entity.PatientDocumentStatusId = PatientDocumentStatusEnum.NewRecord.GetHashCode();
-        entity.FilePath = "";
-        //SaveByteArrayToFileWithStaticMethod(patientDocument.File, entity.FilePath);
+        entity.FilePath = @"\\10.72.17.12\filesrv";
+        SaveByteArrayToFileWithStaticMethod(patientDocument.File, entity.FilePath);
         await _patientDocumentRepository.InsertAsync(entity);
         return ObjectMapper.Map<PatientDocument, PatientDocumentDto>(entity);
     }
 
     private static void SaveByteArrayToFileWithStaticMethod(string data, string filePath)
     {
-        File.WriteAllBytes(filePath, Convert.FromBase64String(data));
+        FileInfo file = new System.IO.FileInfo(filePath);
+        file.Directory?.Create(); // If the directory already exists, this method does nothing.
+        File.WriteAllBytes(file.FullName, Convert.FromBase64String(data));
     }
 
     public async Task<PatientDocumentDto> UpdateStatus(int id, int statusId)

@@ -13,7 +13,7 @@ namespace HTS.Interface
 {
     public interface IExternalService : IApplicationService
     {
-        Task<ExternalApiResult> CheckSutCodes(SutCodesRequestDto sutCodesRequest);
-        Task<ExternalApiResult> GetPatientInfo(string htsCode);
+        Task<ExternalApiResult> HtsHizmetKoduKontrol(SutCodesRequestDto sutCodesRequest);
+        Task<ExternalApiResult> HtsHastaBilgisi(string htsCode);
     }
 }

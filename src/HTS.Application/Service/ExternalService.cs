@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using HTS.Data.Entity;
 using HTS.Dto.City;
@@ -17,10 +18,10 @@ namespace HTS.Service
     public class ExternalService : ApplicationService, IExternalService
     {
 
-        public async Task<ExternalApiResult> CheckSutCodes(SutCodesRequestDto sutCodesRequest)
+        public async Task<ExternalApiResult> HtsHizmetKoduKontrol(SutCodesRequestDto sutCodesRequest)
         {
             ExternalApiResult result;
-            if (sutCodesRequest.HTSCode == "U100000000")
+            if (sutCodesRequest.HtsKodu == "U100000000")
             {
                 result = new ExternalApiResult()
                 {
@@ -28,7 +29,7 @@ namespace HTS.Service
                     sonuc = new List<SutCodeResult>(),
                     mesaj = null
                 };
-                foreach (var sutCode in sutCodesRequest.SutCodes)
+                foreach (var sutCode in sutCodesRequest.SutKoduList)
                 {
                     ((List<SutCodeResult>)result.sonuc).Add(new SutCodeResult()
                     {
@@ -38,7 +39,7 @@ namespace HTS.Service
                     });
                 }
             }
-            else if (sutCodesRequest.HTSCode == "U100000001")
+            else if (sutCodesRequest.HtsKodu == "U100000001")
             {
                 result = new ExternalApiResult()
                 {
@@ -46,13 +47,32 @@ namespace HTS.Service
                     sonuc = new List<SutCodeResult>(),
                     mesaj = null
                 };
-                foreach (var sutCode in sutCodesRequest.SutCodes)
+                foreach (var sutCode in sutCodesRequest.SutKoduList)
                 {
                     ((List<SutCodeResult>)result.sonuc).Add(new SutCodeResult()
                     {
                         gecerliMi = (sutCode == "GR2000" || sutCode == "GR2001") ? true : false
                     ,
                         sutKodu = sutCode
+                    });
+                }
+            }
+            else if (sutCodesRequest.HtsKodu == "U570126260")
+            {
+                result = new ExternalApiResult()
+                {
+                    durum = 200,
+                    sonuc = new List<SutCodeResult>(),
+                    mesaj = null
+                };
+                foreach (var sutCode in sutCodesRequest.SutKoduList)
+                {
+                    ((List<SutCodeResult>)result.sonuc).Add(new SutCodeResult()
+                    {
+                        gecerliMi = true,
+                        islemTarihi = new DateTime(2023,2,23),
+                        klinikKodu = "123456",
+                        sutKodu = "S102040"
                     });
                 }
             }
@@ -68,7 +88,7 @@ namespace HTS.Service
             return result;
         }
 
-        public async Task<ExternalApiResult> GetPatientInfo(string htsCode)
+        public async Task<ExternalApiResult> HtsHastaBilgisi(string htsCode)
         {
             ExternalApiResult result;
             if (htsCode == "U100000000")
@@ -99,6 +119,22 @@ namespace HTS.Service
                         soyadi = "Jacobsen",
                         ulkeKodu = "DE",
                         pasaport = "UP1234EZ"
+                    },
+                    mesaj = null
+                };
+            }
+            else if (htsCode == "U570126260")
+            {
+                result = new ExternalApiResult()
+                {
+                    durum = 200,
+                    sonuc = new PatientInfo()
+                    {
+                        cinsiyet = "1",
+                        adi = "Ahmet",
+                        soyadi = "Mehmet",
+                        ulkeKodu = "TR",
+                        pasaport = ""
                     },
                     mesaj = null
                 };

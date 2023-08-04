@@ -4,18 +4,21 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using HTS.BusinessException;
+using HTS.Common;
 using HTS.Data.Entity;
 using HTS.Dto.HospitalConsultation;
 using HTS.Dto.Language;
 using HTS.Dto.Nationality;
 using HTS.Dto.Patient;
 using HTS.Interface;
+using HTS.Localization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Identity;
+using Volo.Abp.Localization;
 using Volo.Abp.ObjectMapping;
 using Volo.Abp.Users;
 using static HTS.Enum.EntityEnum;
@@ -27,12 +30,15 @@ public class HospitalConsultationService : ApplicationService, IHospitalConsulta
 {
     private readonly IRepository<HospitalConsultation, int> _hcRepository;
     private readonly IRepository<PatientTreatmentProcess, int> _ptpRepository;
+    private readonly IRepository<Hospital, int> _hospitalRepository;
 
     public HospitalConsultationService(IRepository<HospitalConsultation, int> hcRepository,
-        IRepository<PatientTreatmentProcess, int> ptpRepository)
+        IRepository<PatientTreatmentProcess, int> ptpRepository,
+        IRepository<Hospital, int> hospitalRepository)
     {
         _hcRepository = hcRepository;
         _ptpRepository = ptpRepository;
+        _hospitalRepository = hospitalRepository;
     }
 
     public async Task<HospitalConsultationDto> GetAsync(int id)
@@ -68,7 +74,7 @@ public class HospitalConsultationService : ApplicationService, IHospitalConsulta
             ProcessHospitalConsultationDocuments(entity, hospitalConsultation);
             entityList.Add(entity);
         }
-        
+
         var ptpEntity = (await _ptpRepository.GetQueryableAsync()).FirstOrDefault(ptp => ptp.Id == hospitalConsultation.PatientTreatmentProcessId);
         if (ptpEntity != null)
         {
@@ -76,8 +82,28 @@ public class HospitalConsultationService : ApplicationService, IHospitalConsulta
             await _ptpRepository.UpdateAsync(ptpEntity);
         }
 
-        await _hcRepository.InsertManyAsync(entityList);
-        //TODO: Her hospital'ın sorumlusuna (sorumlularına olabilir?) mail atılacak. 
+
+        await _hcRepository.InsertManyAsync(entityList, true);
+        await SendEMailToHospitalUHBs(entityList);
+    }
+
+    private async Task SendEMailToHospitalUHBs(List<HospitalConsultation> entityList)
+    {
+        //Send mail to hospital consultations
+        string mailBodyFormat = LocalizableString.Create<HTSResource>("HospitalConsultation:MailBody").Name;
+        string urlFormat = "https://webhtstest.ushas.com.tr/hospital-response/{0}";
+        var hospitalIds = entityList.Select(c => c.HospitalId).ToList();
+        var hospitals = await (await _hospitalRepository.WithDetailsAsync(h => h.HospitalUHBStaffs))
+            .Where(h => hospitalIds.Contains(h.Id)).ToListAsync();
+        foreach (var hc in entityList)
+        {
+            var hospital = hospitals.FirstOrDefault(h => h.Id == hc.HospitalId);
+            var uhbList = hospital?.HospitalUHBStaffs.Select(s => s.Email).ToList();
+            if (uhbList?.Any() ?? false)
+            {
+                Helper.SendMail(uhbList, string.Format(mailBodyFormat,string.Format(urlFormat,hc.Id)));
+            }
+        }
     }
 
     private async Task<int> GetRowNumber(int ptProcessId)

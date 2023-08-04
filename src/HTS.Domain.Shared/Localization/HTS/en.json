@@ -576,6 +576,9 @@
     "Payment:Column:CollectorNameSurname": "Collector",
     "Payment:Column:PaymentReason": "Payment Reasonx",
     "Payment:Column:TotalPrice": "Total Price (₺)",
-    "Payment:Column:Description": "Description"
+    "Payment:Column:Description": "Description",
+
+    /*Mail Body*/
+    "HospitalConsultation:MailBody": "Dear UHB Staff,</br>To Create Treatment Process for the patient, please follow the link below.</br> {0}"
   }
 }

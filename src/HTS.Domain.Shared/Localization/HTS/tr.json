@@ -577,9 +577,10 @@
     "Payment:Column:CollectorNameSurname": "Tahsilat Yapan",
     "Payment:Column:PaymentReason": "Ödeme Nedeni",
     "Payment:Column:TotalPrice": "Toplam Tutar (₺)",
-    "Payment:Column:Description": "Açıklama"
+    "Payment:Column:Description": "Açıklama",
 
-
+    /*Mail Body*/
+    "HospitalConsultation:MailBody": "Sayın UHB Yetkilisi,</br>Hasta için tedavi planı oluşturmak için aşağıdaki adrese tıklayınız. </br> {0}"
 
 
   }

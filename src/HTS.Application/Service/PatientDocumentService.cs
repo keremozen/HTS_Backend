@@ -51,7 +51,7 @@ public class PatientDocumentService : ApplicationService, IPatientDocumentServic
     {
         FileInfo file = new System.IO.FileInfo(filePath);
         file.Directory?.Create(); // If the directory already exists, this method does nothing.
-        File.WriteAllBytes(file.FullName, Convert.FromBase64String(data));
+        File.WriteAllBytes(file.FullName, Convert.FromBase64String(data.Split(',')[1]));
     }
 
     public async Task<PatientDocumentDto> UpdateStatus(int id, int statusId)

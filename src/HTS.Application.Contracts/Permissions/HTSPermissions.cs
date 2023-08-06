@@ -16,7 +16,7 @@ public static class HTSPermissions
     public const string ContractedInstitutionManagement = GroupName + ".ContractedInstitutionManagement";
     public const string BranchManagement = GroupName + ".BranchManagement";
     public const string TreatmentTypeManagement = GroupName + ".TreatmentTypeManagement";
-    public const string ProcessTypeManagement = GroupName + ".ProcessTypeManagement";
+    public const string ProcessKindManagement = GroupName + ".ProcessKindManagement";
     public const string HospitalizationTypeManagement = GroupName + ".HospitalizationTypeManagement";
     public const string HospitalResponseTypeManagement = GroupName + ".HospitalResponseTypeManagement";
     public const string ProcessManagement = GroupName + ".ProcessManagement";

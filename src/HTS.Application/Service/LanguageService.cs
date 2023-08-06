@@ -15,6 +15,7 @@ namespace HTS.Service
     {
 
         private readonly IRepository<Language, int> _languageRepository;
+
         public LanguageService(IRepository<Language, int> languageRepository)
         {
             _languageRepository = languageRepository;

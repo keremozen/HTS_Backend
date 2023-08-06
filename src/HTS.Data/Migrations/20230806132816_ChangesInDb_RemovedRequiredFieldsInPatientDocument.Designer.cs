@@ -13,8 +13,8 @@ using Volo.Abp.EntityFrameworkCore;
 namespace HTS.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230723200620_ChangesInDB")]
-    partial class ChangesInDB
+    [Migration("20230806132816_ChangesInDb_RemovedRequiredFieldsInPatientDocument")]
+    partial class ChangesInDb_RemovedRequiredFieldsInPatientDocument
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -208,6 +208,9 @@ namespace HTS.Data.Migrations
                         .HasDefaultValue(false)
                         .HasColumnName("IsDeleted");
 
+                    b.Property<int>("KindId")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("LastModificationTime");
@@ -235,6 +238,73 @@ namespace HTS.Data.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
+                    b.Property<int>("TypeId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatorId");
+
+                    b.HasIndex("DeleterId");
+
+                    b.HasIndex("KindId");
+
+                    b.HasIndex("LastModifierId");
+
+                    b.HasIndex("NationalityId");
+
+                    b.HasIndex("PhoneCountryCodeId");
+
+                    b.HasIndex("TypeId");
+
+                    b.ToTable("ContractedInstitutions");
+                });
+
+            modelBuilder.Entity("HTS.Data.Entity.ContractedInstitutionKind", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("DeleterId");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("DeletionTime");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CreatorId");
@@ -243,11 +313,7 @@ namespace HTS.Data.Migrations
 
                     b.HasIndex("LastModifierId");
 
-                    b.HasIndex("NationalityId");
-
-                    b.HasIndex("PhoneCountryCodeId");
-
-                    b.ToTable("ContractedInstitutions");
+                    b.ToTable("ContractedInstitutionKinds");
                 });
 
             modelBuilder.Entity("HTS.Data.Entity.ContractedInstitutionStaff", b =>
@@ -307,7 +373,6 @@ namespace HTS.Data.Migrations
                         .HasColumnType("character varying(500)");
 
                     b.Property<int?>("PhoneCountryCodeId")
-                        .IsRequired()
                         .HasColumnType("integer");
 
                     b.Property<string>("PhoneNumber")
@@ -327,6 +392,62 @@ namespace HTS.Data.Migrations
                     b.HasIndex("PhoneCountryCodeId");
 
                     b.ToTable("ContractedInstitutionStaffs");
+                });
+
+            modelBuilder.Entity("HTS.Data.Entity.ContractedInstitutionType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("DeleterId");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("DeletionTime");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatorId");
+
+                    b.HasIndex("DeleterId");
+
+                    b.HasIndex("LastModifierId");
+
+                    b.ToTable("ContractedInstitutionTypes");
                 });
 
             modelBuilder.Entity("HTS.Data.Entity.Currency", b =>
@@ -850,6 +971,36 @@ namespace HTS.Data.Migrations
                     b.ToTable("HospitalStaffs");
                 });
 
+            modelBuilder.Entity("HTS.Data.Entity.HospitalUHBStaff", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("HospitalId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HospitalId");
+
+                    b.ToTable("HospitalUHBStaffs");
+                });
+
             modelBuilder.Entity("HTS.Data.Entity.HospitalizationType", b =>
                 {
                     b.Property<int>("Id")
@@ -1288,10 +1439,9 @@ namespace HTS.Data.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("DocumentTypeId")
+                    b.Property<int?>("DocumentTypeId")
                         .HasColumnType("integer");
 
                     b.Property<string>("FileName")
@@ -1745,6 +1895,10 @@ namespace HTS.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int?>("ProcessKindId")
+                        .IsRequired()
+                        .HasColumnType("integer");
+
                     b.Property<int>("ProcessTypeId")
                         .HasColumnType("integer");
 
@@ -1755,6 +1909,8 @@ namespace HTS.Data.Migrations
                     b.HasIndex("DeleterId");
 
                     b.HasIndex("LastModifierId");
+
+                    b.HasIndex("ProcessKindId");
 
                     b.HasIndex("ProcessTypeId");
 
@@ -1792,6 +1948,63 @@ namespace HTS.Data.Migrations
                     b.HasIndex("ProcessId");
 
                     b.ToTable("ProcessCosts");
+                });
+
+            modelBuilder.Entity("HTS.Data.Entity.ProcessKind", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("DeleterId");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("DeletionTime");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatorId");
+
+                    b.HasIndex("DeleterId");
+
+                    b.HasIndex("LastModifierId");
+
+                    b.ToTable("ProcessKinds");
                 });
 
             modelBuilder.Entity("HTS.Data.Entity.ProcessRelation", b =>
@@ -2896,6 +3109,12 @@ namespace HTS.Data.Migrations
                         .WithMany()
                         .HasForeignKey("DeleterId");
 
+                    b.HasOne("HTS.Data.Entity.ContractedInstitutionKind", "ContractedInstitutionKind")
+                        .WithMany()
+                        .HasForeignKey("KindId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Volo.Abp.Identity.IdentityUser", "LastModifier")
                         .WithMany()
                         .HasForeignKey("LastModifierId");
@@ -2908,6 +3127,16 @@ namespace HTS.Data.Migrations
                         .WithMany()
                         .HasForeignKey("PhoneCountryCodeId");
 
+                    b.HasOne("HTS.Data.Entity.ContractedInstitutionType", "ContractedInstitutionType")
+                        .WithMany()
+                        .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ContractedInstitutionKind");
+
+                    b.Navigation("ContractedInstitutionType");
+
                     b.Navigation("Creator");
 
                     b.Navigation("Deleter");
@@ -2917,6 +3146,27 @@ namespace HTS.Data.Migrations
                     b.Navigation("Nationality");
 
                     b.Navigation("PhoneCountryCode");
+                });
+
+            modelBuilder.Entity("HTS.Data.Entity.ContractedInstitutionKind", b =>
+                {
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId");
+
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Deleter")
+                        .WithMany()
+                        .HasForeignKey("DeleterId");
+
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "LastModifier")
+                        .WithMany()
+                        .HasForeignKey("LastModifierId");
+
+                    b.Navigation("Creator");
+
+                    b.Navigation("Deleter");
+
+                    b.Navigation("LastModifier");
                 });
 
             modelBuilder.Entity("HTS.Data.Entity.ContractedInstitutionStaff", b =>
@@ -2941,9 +3191,7 @@ namespace HTS.Data.Migrations
 
                     b.HasOne("HTS.Data.Entity.Nationality", "PhoneCountryCode")
                         .WithMany()
-                        .HasForeignKey("PhoneCountryCodeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PhoneCountryCodeId");
 
                     b.Navigation("ContractedInstitution");
 
@@ -2954,6 +3202,27 @@ namespace HTS.Data.Migrations
                     b.Navigation("LastModifier");
 
                     b.Navigation("PhoneCountryCode");
+                });
+
+            modelBuilder.Entity("HTS.Data.Entity.ContractedInstitutionType", b =>
+                {
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId");
+
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Deleter")
+                        .WithMany()
+                        .HasForeignKey("DeleterId");
+
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "LastModifier")
+                        .WithMany()
+                        .HasForeignKey("LastModifierId");
+
+                    b.Navigation("Creator");
+
+                    b.Navigation("Deleter");
+
+                    b.Navigation("LastModifier");
                 });
 
             modelBuilder.Entity("HTS.Data.Entity.DocumentType", b =>
@@ -3207,6 +3476,17 @@ namespace HTS.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("HTS.Data.Entity.HospitalUHBStaff", b =>
+                {
+                    b.HasOne("HTS.Data.Entity.Hospital", "Hospital")
+                        .WithMany("HospitalUHBStaffs")
+                        .HasForeignKey("HospitalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Hospital");
+                });
+
             modelBuilder.Entity("HTS.Data.Entity.Language", b =>
                 {
                     b.HasOne("Volo.Abp.Identity.IdentityUser", "Creator")
@@ -3400,9 +3680,7 @@ namespace HTS.Data.Migrations
 
                     b.HasOne("HTS.Data.Entity.DocumentType", "DocumentType")
                         .WithMany()
-                        .HasForeignKey("DocumentTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DocumentTypeId");
 
                     b.HasOne("Volo.Abp.Identity.IdentityUser", "LastModifier")
                         .WithMany()
@@ -3615,6 +3893,12 @@ namespace HTS.Data.Migrations
                         .WithMany()
                         .HasForeignKey("LastModifierId");
 
+                    b.HasOne("HTS.Data.Entity.ProcessKind", "ProcessKind")
+                        .WithMany()
+                        .HasForeignKey("ProcessKindId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("HTS.Data.Entity.ProcessType", "ProcessType")
                         .WithMany()
                         .HasForeignKey("ProcessTypeId")
@@ -3626,6 +3910,8 @@ namespace HTS.Data.Migrations
                     b.Navigation("Deleter");
 
                     b.Navigation("LastModifier");
+
+                    b.Navigation("ProcessKind");
 
                     b.Navigation("ProcessType");
                 });
@@ -3639,6 +3925,27 @@ namespace HTS.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Process");
+                });
+
+            modelBuilder.Entity("HTS.Data.Entity.ProcessKind", b =>
+                {
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId");
+
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Deleter")
+                        .WithMany()
+                        .HasForeignKey("DeleterId");
+
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "LastModifier")
+                        .WithMany()
+                        .HasForeignKey("LastModifierId");
+
+                    b.Navigation("Creator");
+
+                    b.Navigation("Deleter");
+
+                    b.Navigation("LastModifier");
                 });
 
             modelBuilder.Entity("HTS.Data.Entity.ProcessRelation", b =>
@@ -3945,6 +4252,8 @@ namespace HTS.Data.Migrations
             modelBuilder.Entity("HTS.Data.Entity.Hospital", b =>
                 {
                     b.Navigation("HospitalStaffs");
+
+                    b.Navigation("HospitalUHBStaffs");
                 });
 
             modelBuilder.Entity("HTS.Data.Entity.HospitalConsultation", b =>

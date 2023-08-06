@@ -25,6 +25,6 @@ namespace HTS.Data.Entity
         [ForeignKey("ContractedInstitutionId")]
         public ContractedInstitution ContractedInstitution { get; set; }
         [ForeignKey("PhoneCountryCodeId")]
-        public Nationality PhoneCountryCode { get; set; }
+        public Nationality? PhoneCountryCode { get; set; }
     }
 }

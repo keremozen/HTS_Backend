@@ -87,6 +87,7 @@
     "Permission:BranchManagement": "Branch Management",
     "Permission:TreatmentTypeManagement": "Treatment Type Management",
     "Permission:ProcessTypeManagement": "Process Type Management",
+    "Permission:ProcessKindManagement": "Process Kind Management",
     "Permission:HospitalizationTypeManagement": "Hospitalization Type Management",
     "Permission:HospitalResponseTypeManagement": "Hospital Response Management",
     "Permission:ProcessManagement": "Process Management",
@@ -119,12 +120,18 @@
     "Menu:Admin:Branch": "Branch Management",
     "Menu:Admin:TreatmentType": "Treatment Type Management",
     "Menu:Admin:ProcessType": "Process Type Management",
+    "Menu:Admin:ProcessKind": "Process Kind Management",
     "Menu:Admin:HospitalizationType": "Hospitalization Type Management",
     "Menu:Admin:HospitalResponseType": "Hospital Response Management",
     "Menu:Admin:Process": "Process Type Management",
     "Menu:Admin:Material": "Material Management",
     "Menu:Admin:RejectReason": "Reject Reason Management",
     "Menu:Admin:PaymentReason": "Payment Reason Management",
+
+    /*ROLE MANAGEMENT*/
+    "Admin:Role:RoleManagement": "Role Management",
+    "Admin:Role:RoleList": "Role List",
+    "Admin:Role:NewRole": "New Role",
 
     /*HOSPITAL MANAGEMENT*/
     "Admin:Hospital:Name": "Hospital",
@@ -149,6 +156,16 @@
     "Admin:HospitalStaff:Column:IsActive": "Is Active?",
     "Admin:HospitalStaff:NewHospitalStaff": "New Staff",
     "Admin:HospitalStaff:HospitalStaffDetails": "Hospital Staff Detail",
+    "Admin:Hospital:HospitalUHBStaffManagement": "Hospital UHB Staff Management",
+    "Admin:HospitalUHBStaff:Name": "Hospital UHB Staff",
+    "Admin:HospitalUHBStaff:Column:NameSurname": "Name Surname",
+    "Admin:HospitalUHBStaff:Column:Name": "Name",
+    "Admin:HospitalUHBStaff:Column:Surname": "Surname",
+    "Admin:HospitalUHBStaff:Column:Email": "E-Mail",
+    "Admin:HospitalUHBStaff:Column:IsDefault": "Is Default?",
+    "Admin:HospitalUHBStaff:Column:IsActive": "Is Active?",
+    "Admin:HospitalUHBStaff:NewHospitalUHBStaff": "New UHB Staff",
+    "Admin:HospitalUHBStaff:HospitalUHBStaffDetails": "Hospital UHB Staff Detail",
 
     /*NATIONALITY MANAGEMENT*/
     "Admin:Nationality:Name": "Country",
@@ -266,6 +283,14 @@
     "Admin:ProcessType:Column:IsActive": "Is Active?",
     "Admin:ProcessType:ProcessTypeDetails": "Process Type Details",
 
+    /*PROCESS KIND MANAGEMENT*/
+    "Admin:ProcessKind:Name": "Process Kind",
+    "Admin:ProcessKind:ProcessKindManagement": "Process Kind Management",
+    "Admin:ProcessKind:NewProcessKind": "New Process Kind",
+    "Admin:ProcessKind:Column:Name": "Name",
+    "Admin:ProcessKind:Column:IsActive": "Is Active?",
+    "Admin:ProcessKind:ProcessKindDetails": "Process Kind Details",
+
     /*HOSPITALIZATION TYPE MANAGEMENT*/
     "Admin:HospitalizationType:Name": "Hospitalization Type",
     "Admin:HospitalizationType:HospitalizationTypeManagement": "Hospitalization Type Management",
@@ -292,6 +317,7 @@
     "Admin:Process:Column:EnglishName": "English Name",
     "Admin:Process:Column:Description": "Description",
     "Admin:Process:Column:Type": "Type",
+    "Admin:Process:Column:Kind": "Kind",
     "Admin:Process:Column:IsActive": "Is Active?",
     "Admin:Process:ProcessDetails": "Process Details",
     "Admin:Process:ProcessCost:Title": "Process Cost List",

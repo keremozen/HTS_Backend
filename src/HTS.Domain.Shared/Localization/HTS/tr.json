@@ -87,6 +87,7 @@
     "Permission:BranchManagement": "Branş Yönetimi",
     "Permission:TreatmentTypeManagement": "Tedavi Tipi Yönetimi",
     "Permission:ProcessTypeManagement": "İşlem Tipi Yönetimi",
+    "Permission:ProcessKindManagement": "İşlem Türü Yönetimi",
     "Permission:HospitalizationTypeManagement": "Yatış Tipi Yönetimi",
     "Permission:HospitalResponseTypeManagement": "Hastane Cevabı Yönetimi",
     "Permission:ProcessManagement": "İşlem Yönetimi",
@@ -119,12 +120,18 @@
     "Menu:Admin:Branch": "Branş Yönetimi",
     "Menu:Admin:TreatmentType": "Tedavi Tipi Yönetimi",
     "Menu:Admin:ProcessType": "İşlem Tipi Yönetimi",
+    "Menu:Admin:ProcessKind": "İşlem Türü Yönetimi",
     "Menu:Admin:HospitalizationType": "Yatış Tipi Yönetimi",
     "Menu:Admin:HospitalResponseType": "Hastane Cevabı Yönetimi",
     "Menu:Admin:Process": "İşlem Yönetimi",
     "Menu:Admin:Material": "Sarf Malzeme Yönetimi",
     "Menu:Admin:RejectReason": "Ret Nedeni Yönetimi",
     "Menu:Admin:PaymentReason": "Ödeme Nedeni Yönetimi",
+
+    /*ROLE MANAGEMENT*/
+    "Admin:Role:RoleManagement": "Rol Yönetimi",
+    "Admin:Role:RoleList": "Rol Listesi",
+    "Admin:Role:NewRole": "Yeni Rol",
 
     /*HOSPITAL MANAGEMENT*/
     "Admin:Hospital:Name": "Hastane",
@@ -136,6 +143,7 @@
     "Admin:Hospital:Column:City": "Şehir",
     "Admin:Hospital:Column:PhoneNumber": "Telefon Numarası",
     "Admin:Hospital:Column:EMail": "E-Posta Adresi",
+    "Admin:Hospital:Column:UHBStaffs": "UHB Sorumluları",
     "Admin:Hospital:Column:Staffs": "Yetkili Kişiler",
     "Admin:Hospital:Column:IsActive": "Aktif mi?",
     "Admin:Hospital:HospitalDetails": "Hastane Detayları",
@@ -149,6 +157,16 @@
     "Admin:HospitalStaff:Column:IsActive": "Aktif mi?",
     "Admin:HospitalStaff:NewHospitalStaff": "Yeni Yetkili",
     "Admin:HospitalStaff:HospitalStaffDetails": "Hastane Yetkilisi Detayları",
+    "Admin:Hospital:HospitalUHBStaffManagement": "Hastane UHB Sorumlusu Yönetimi",
+    "Admin:HospitalUHBStaff:Name": "Hastane UHB Sorumlusu",
+    "Admin:HospitalUHBStaff:Column:NameSurname": "Ad Soyad",
+    "Admin:HospitalUHBStaff:Column:Name": "Ad",
+    "Admin:HospitalUHBStaff:Column:Surname": "Soyad",
+    "Admin:HospitalUHBStaff:Column:Email": "E-Posta",
+    "Admin:HospitalUHBStaff:Column:IsDefault": "Varsayılan",
+    "Admin:HospitalUHBStaff:Column:IsActive": "Aktif mi?",
+    "Admin:HospitalUHBStaff:NewHospitalUHBStaff": "Yeni Sorumlu",
+    "Admin:HospitalUHBStaff:HospitalUHBStaffDetails": "Hastane UHB Sorumlusu Detayları",
 
     /*NATIONALITY MANAGEMENT*/
     "Admin:Nationality:Name": "Ülke",
@@ -266,6 +284,14 @@
     "Admin:ProcessType:Column:IsActive": "Aktif mi?",
     "Admin:ProcessType:ProcessTypeDetails": "İşlem Tipi Detayları",
 
+    /*PROCESS KIND MANAGEMENT*/
+    "Admin:ProcessKind:Name": "İşlem Türü",
+    "Admin:ProcessKind:ProcessKindManagement": "İşlem Türü Yönetimi",
+    "Admin:ProcessKind:NewProcessKind": "Yeni İşlem Türü",
+    "Admin:ProcessKind:Column:Name": "İsim",
+    "Admin:ProcessKind:Column:IsActive": "Aktif mi?",
+    "Admin:ProcessKind:ProcessKindDetails": "İşlem Türü Detayları",
+
     /*HOSPITALIZATION TYPE MANAGEMENT*/
     "Admin:HospitalizationType:Name": "Yatış Tipi",
     "Admin:HospitalizationType:HospitalizationTypeManagement": "Yatış Tipi Yönetimi",
@@ -292,6 +318,7 @@
     "Admin:Process:Column:EnglishName": "İngilizce İsim",
     "Admin:Process:Column:Description": "Açıklama",
     "Admin:Process:Column:Type": "Tipi",
+    "Admin:Process:Column:Kind": "Türü",
     "Admin:Process:Column:IsActive": "Aktif mi?",
     "Admin:Process:ProcessDetails": "İşlem Detayları",
     "Admin:Process:ProcessCost:Title": "Fiyat Tablosu",
@@ -305,7 +332,6 @@
     "Admin:Process:ProcessRelation:NewRelation": "Ekle",
     "Admin:Process:ProcessRelationDetails": "Dahil İşlem Detayları",
     "Admin:Process:ProcessRelation:Process": "İşlem",
-
 
     /*MATERIAL MANAGEMENT*/
     "Admin:Material:Name": "Sarf Malzeme",
@@ -327,7 +353,7 @@
     "Admin:PaymentReason:Name": "Ödeme Nedeni",
     "Admin:PaymentReason:PaymentReasonManagement": "Ödeme Nedeni Yönetimi",
     "Admin:PaymentReason:NewPaymentReason": "Yeni Ödeme Nedeni",
-    "Admin:PaymentReason:Column:Name": "Neden",
+    "Admin:PaymentReason:Column:Reason": "Neden",
     "Admin:PaymentReason:Column:IsActive": "Aktif mi?",
     "Admin:PaymentReason:PaymentReasonDetails": "Ödeme Nedeni Detayları",
 

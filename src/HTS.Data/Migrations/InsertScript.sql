@@ -56,9 +56,8 @@ INSERT INTO "HospitalResponseTypes"("Id", "Name") VALUES (2, 'Tedaviye Uygun De�
 INSERT INTO "HospitalResponseTypes"("Id", "Name") VALUES (3, 'Tanı İçin Muayene Gerekli');
 
 --Hospitalization type Table
-INSERT INTO "HospitalizationTypes"("Id", "Name") VALUES (1, 'Medikal Tedavi');
-INSERT INTO "HospitalizationTypes"("Id", "Name") VALUES (2, 'Yatış');
-INSERT INTO "HospitalizationTypes"("Id", "Name") VALUES (3, 'Cerrahi Yatış');
+INSERT INTO "HospitalizationTypes"("Id", "Name") VALUES (1, 'Medikal Tedavi Yatış');
+INSERT INTO "HospitalizationTypes"("Id", "Name") VALUES (2, 'Cerrahi Yatış');
 
 --Currency Table
 INSERT INTO "Currencies"("Id", "Name","IsDefault") VALUES (1, 'TL',true);

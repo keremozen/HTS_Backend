@@ -12,7 +12,7 @@ using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
 namespace HTS.Service;
-[Authorize]
+
 public class ProcessKindService : ApplicationService, IProcessKindService
 {
     private readonly IRepository<ProcessKind, int> _pkRepository;
@@ -35,19 +35,22 @@ public class ProcessKindService : ApplicationService, IProcessKindService
         return new ListResultDto<ProcessKindDto>(responseList);
     }
 
+    [Authorize]
     public async Task CreateAsync(SaveProcessKindDto processKind)
     {
         var entity = ObjectMapper.Map<SaveProcessKindDto, ProcessKind>(processKind);
         await _pkRepository.InsertAsync(entity);
     }
 
+    [Authorize]
     public async Task UpdateAsync(int id, SaveProcessKindDto processKind)
     {
         var entity = await _pkRepository.GetAsync(id);
         ObjectMapper.Map(processKind, entity);
         await _pkRepository.UpdateAsync(entity);
     }
-        
+
+    [Authorize]
     public async Task DeleteAsync(int id)
     {
         await _pkRepository.DeleteAsync(id);

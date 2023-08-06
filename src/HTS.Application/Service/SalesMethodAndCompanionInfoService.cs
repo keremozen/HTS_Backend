@@ -45,16 +45,19 @@ public class SalesMethodAndCompanionInfoService : ApplicationService, ISalesMeth
 
     public async Task<SalesMethodAndCompanionInfoDto> SaveAsync(SaveSalesMethodAndCompanionInfoDto salesMethodAndCompanionInfo)
     {
-        bool isAnyInDB = await _salesMethodAndCompanionInfoRepository.AnyAsync(i =>
+        var entity = await _salesMethodAndCompanionInfoRepository.FirstOrDefaultAsync(i =>
                   i.PatientTreatmentProcessId == salesMethodAndCompanionInfo.PatientTreatmentProcessId);
-        if (isAnyInDB)
+        if (entity != null)
         {
-            throw new UserFriendlyException(
-                "There is already a sales method and companion information in the system."
-            );
+            ObjectMapper.Map(salesMethodAndCompanionInfo, entity);
+            await _salesMethodAndCompanionInfoRepository.UpdateAsync(entity);
         }
-        var entity = ObjectMapper.Map<SaveSalesMethodAndCompanionInfoDto, SalesMethodAndCompanionInfo>(salesMethodAndCompanionInfo);
-        await _salesMethodAndCompanionInfoRepository.InsertAsync(entity);
+        else
+        {
+            entity = ObjectMapper.Map<SaveSalesMethodAndCompanionInfoDto, SalesMethodAndCompanionInfo>(salesMethodAndCompanionInfo);
+            await _salesMethodAndCompanionInfoRepository.InsertAsync(entity);
+        }
+       
         return ObjectMapper.Map<SalesMethodAndCompanionInfo, SalesMethodAndCompanionInfoDto>(entity);
     }
 

@@ -18,9 +18,10 @@ public static class Helper
         };
 
         smtpClient.Credentials = new NetworkCredential("inncarenova@gmail.com", "dalpxgzynpunqzfw"); //Use the new password, generated from google!
-        MailMessage message = new MailMessage(new MailAddress("inncarenova@gmail.com", "INNCare"), 
-            new MailAddress(String.Join(';',toList)));
+        
+        MailMessage message = new MailMessage("inncarenova@gmail.com", string.Join(',',toList));
 
+        message.From = new MailAddress("inncarenova@gmail.com", "INNCare");
         message.Subject = "USHAŞ Tedavi Planı Talebi";
         message.IsBodyHtml = true;
         message.Body = body;

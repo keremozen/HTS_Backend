@@ -500,6 +500,7 @@
     "OperationalInfo:Field:TreatmentType": "Tedavi Tipi",
     "OperationalInfo:Field:AnyInvitationLetter": "Davet mektubu talebi var mı?",
     "OperationalInfo:Button:CreateProforma": "Fiyatlandır",
+    "OperationalInfo:Button:SendToPricing": "Fiyatlandırmaya Gönder",
 
     /*PROFORMA*/
     "Proforma:Title": "Proforma Sihirbazı",

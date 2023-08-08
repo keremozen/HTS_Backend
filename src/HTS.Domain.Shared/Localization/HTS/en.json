@@ -499,6 +499,7 @@
     "OperationalInfo:Field:TreatmentType": "Treatment Type",
     "OperationalInfo:Field:AnyInvitationLetter": "Is there an invitation letter request?",
     "OperationalInfo:Button:CreateProforma": "Create Proforma",
+    "OperationalInfo:Button:SendToPricing": "Send To Pricing",
 
     /*PROFORMA*/
     "Proforma:Title": "Proforma Wizard",

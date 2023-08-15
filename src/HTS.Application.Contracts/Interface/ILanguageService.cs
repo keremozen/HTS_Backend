@@ -25,6 +25,13 @@ namespace HTS.Interface
         /// <param name="language">Language information to be insert</param>
         /// <returns>Inserted Language</returns>
         Task<LanguageDto> CreateAsync(SaveLanguageDto language);
+
+        /// <summary>
+        /// Creates languages
+        /// </summary>
+        /// <param name="languages">Languages information to be insert</param>
+        /// <returns></returns>
+        Task CreateListAsync(List<SaveLanguageDto> languages);
         
         /// <summary>
         /// Updates languge
@@ -33,6 +40,8 @@ namespace HTS.Interface
         /// <param name="language">To be updated information</param>
         /// <returns>Updated language object</returns>
         Task<LanguageDto> UpdateAsync(int id, SaveLanguageDto language);
+
+
         
         /// <summary>
         /// Delete given id of language

@@ -52,7 +52,7 @@ namespace HTS.Interface
         /// </summary>
         /// <param name="id">Proforma id to be approved</param>
         /// <returns></returns>
-        Task ApproveMFBAsync(int id);
+        Task<ProformaDocument> ApproveMFBAsync(int id);
 
         /// <summary>
         /// Reject proforma
@@ -88,8 +88,7 @@ namespace HTS.Interface
         /// </summary>
         /// <param name="id">Proforma id</param>
         /// <returns></returns>
-        Task CreateProformaPdf(int id);
-
+        Task<ProformaDocument> CreateProformaPdf(int id);
 
     }
 }

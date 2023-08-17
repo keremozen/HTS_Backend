@@ -107,7 +107,7 @@ public class ProformaService : ApplicationService, IProformaService
         await _proformaRepository.UpdateAsync(proforma);
     }
 
-    public async Task ApproveMFBAsync(int id)
+    public async Task<ProformaDocument> ApproveMFBAsync(int id)
     {
         //Get entity from db
         var proforma =
@@ -121,6 +121,7 @@ public class ProformaService : ApplicationService, IProformaService
         proforma.Operation.PatientTreatmentProcess.TreatmentProcessStatusId = EntityEnum.PatientTreatmentStatusEnum
             .ProformaApprovedWillBeTransferredToPatient.GetHashCode();
         await _proformaRepository.UpdateAsync(proforma);
+        return await CreateProformaPdf(id);
     }
 
     public async Task RejectMFBAsync(RejectProformaDto rejectProforma)
@@ -574,7 +575,7 @@ public class ProformaService : ApplicationService, IProformaService
         }
     }
 
-    public async Task CreateProformaPdf(int id)
+    public async Task<ProformaDocument> CreateProformaPdf(int id)
     {
         var proforma = await (await _proformaRepository.WithDetailsAsync()).FirstOrDefaultAsync(p => p.Id == id);
         if (proforma != null)
@@ -586,7 +587,7 @@ public class ProformaService : ApplicationService, IProformaService
             var document = new ProformaDocument(proforma);
             document.GeneratePdf(filePath);
         }
-        return;
+        return document;
     }
 
 

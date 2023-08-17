@@ -48,7 +48,7 @@ namespace HTS.Service
         public async Task CreateListAsync(List<SaveLanguageDto> languages)
         {
             var entityList = ObjectMapper.Map<List<SaveLanguageDto>, List<Language>>(languages);
-            await _languageRepository.CreateListAsync(entityList);
+            await _languageRepository.InsertManyAsync(entityList);
         }
 
         [Authorize]

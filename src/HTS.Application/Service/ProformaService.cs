@@ -77,7 +77,7 @@ public class ProformaService : ApplicationService, IProformaService
         return ObjectMapper.Map<Proforma, ProformaDto>(await query);
     }
 
-    public async Task SaveAsync(SaveProformaDto proforma)
+    public async Task<int> SaveAsync(SaveProformaDto proforma)
     {
         await IsDataValidToSave(proforma);
         var entity = ObjectMapper.Map<SaveProformaDto, Proforma>(proforma);
@@ -86,7 +86,8 @@ public class ProformaService : ApplicationService, IProformaService
         //TODO: MFB onayındayken mfb tekrar güncelliyorsa status gene mfb onayında olarak kalacak
         entity.ProformaStatusId = EntityEnum.ProformaStatusEnum.NewRecord.GetHashCode();
         entity.ProformaCode = await GenerateProformaCode(entity.OperationId, entity.Version);
-        await _proformaRepository.InsertAsync(entity);
+        await _proformaRepository.InsertAsync(entity,true);
+        return entity.Id;
     }
 
     public async Task SendAsync(int id)
@@ -107,7 +108,7 @@ public class ProformaService : ApplicationService, IProformaService
         await _proformaRepository.UpdateAsync(proforma);
     }
 
-    public async Task<ProformaDocument> ApproveMFBAsync(int id)
+    public async Task<Object> ApproveMFBAsync(int id)
     {
         //Get entity from db
         var proforma =
@@ -121,7 +122,13 @@ public class ProformaService : ApplicationService, IProformaService
         proforma.Operation.PatientTreatmentProcess.TreatmentProcessStatusId = EntityEnum.PatientTreatmentStatusEnum
             .ProformaApprovedWillBeTransferredToPatient.GetHashCode();
         await _proformaRepository.UpdateAsync(proforma);
-        return await CreateProformaPdf(id);
+        return CreateProformaPdf(id);
+    }
+
+    public async Task<Object> SaveAndApproveMFBAsync(SaveProformaDto proforma)
+    {
+      int proformaId= await SaveAsync(proforma);
+      return ApproveMFBAsync(proformaId);
     }
 
     public async Task RejectMFBAsync(RejectProformaDto rejectProforma)
@@ -575,16 +582,16 @@ public class ProformaService : ApplicationService, IProformaService
         }
     }
 
-    public async Task<ProformaDocument> CreateProformaPdf(int id)
+    public async Task<Object> CreateProformaPdf(int id)
     {
         var proforma = await (await _proformaRepository.WithDetailsAsync()).FirstOrDefaultAsync(p => p.Id == id);
+        ProformaDocument document = null;
         if (proforma != null)
         {
             QuestPDF.Settings.License = LicenseType.Community;
             var filePath = "proforma.pdf";
-
-
-            var document = new ProformaDocument(proforma);
+            
+            document = new ProformaDocument(proforma);
             document.GeneratePdf(filePath);
         }
         return document;

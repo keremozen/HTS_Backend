@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using HTS.Dto.HospitalConsultation;
 using HTS.Dto.HospitalResponse;
@@ -37,8 +38,8 @@ namespace HTS.Interface
         /// Proforma insert with relational data
         /// </summary>
         /// <param name="proforma">To be inserted object</param>
-        /// <returns></returns>
-        Task SaveAsync(SaveProformaDto proforma);
+        /// <returns>Proforma id</returns>
+        Task<int> SaveAsync(SaveProformaDto proforma);
 
         /// <summary>
         /// Proforma send to mfb
@@ -52,7 +53,14 @@ namespace HTS.Interface
         /// </summary>
         /// <param name="id">Proforma id to be approved</param>
         /// <returns></returns>
-        Task<ProformaDocument> ApproveMFBAsync(int id);
+        Task<Object> ApproveMFBAsync(int id);
+        
+        /// <summary>
+        /// Save proforma and Approve proforma
+        /// </summary>
+        /// <param name="proforma">Proforma to be saved and approved</param>
+        /// <returns></returns>
+        Task<Object> SaveAndApproveMFBAsync(SaveProformaDto proforma);
 
         /// <summary>
         /// Reject proforma
@@ -88,7 +96,7 @@ namespace HTS.Interface
         /// </summary>
         /// <param name="id">Proforma id</param>
         /// <returns></returns>
-        Task<ProformaDocument> CreateProformaPdf(int id);
+        Task<Object> CreateProformaPdf(int id);
 
     }
 }

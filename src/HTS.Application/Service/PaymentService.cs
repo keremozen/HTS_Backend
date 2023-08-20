@@ -101,6 +101,41 @@ public class PaymentService : ApplicationService, IPaymentService
         await SetPaymentItems(entity);
         await _paymentRepository.InsertAsync(entity);
     }
+    
+    public async Task FinalizePayment(int id)
+    {
+        //If proforma amount and items amount equal mark as paied
+        //Get entity from db
+        var payment =
+            (await _paymentRepository.WithDetailsAsync( (p => p.Proforma),
+                (p => p.Proforma.Operation),
+                (p => p.Proforma.Operation.PatientTreatmentProcess),
+                (p => p.PaymentDocuments),
+                (p => p.PaymentItems)))
+            .FirstOrDefault(p => p.Id == id); 
+        IsDataValidToFinalizePayment(payment);
+        payment.PaymentStatusId = EntityEnum.PaymentStatusEnum.PaymentCompleted.GetHashCode();
+        payment.Proforma.ProformaStatusId = EntityEnum.ProformaStatusEnum.PaymentCompleted.GetHashCode();
+        payment.Proforma.Operation.OperationStatusId =
+            EntityEnum.OperationStatusEnum.PaymentCompletedTreatmentProcess.GetHashCode();
+        payment.Proforma.Operation.PatientTreatmentProcess.TreatmentProcessStatusId =
+            EntityEnum.PatientTreatmentStatusEnum.PaymentCompletedTreatmentProcess.GetHashCode();
+        await _paymentRepository.UpdateAsync(payment);
+    }
+
+    private void IsDataValidToFinalizePayment(Payment payment)
+    {
+        if (!(payment.PaymentDocuments?.Any() ?? false))
+        {
+            throw new HTSBusinessException(ErrorCode.NoPaymentDocumentUploaded);
+        }
+        //If proforma amount and items amount equal mark as paied
+        var paymentSum = payment.PaymentItems?.Sum(i => i.Price * i.ExchangeRate);
+        if (paymentSum < payment.Proforma.TotalProformaPrice)
+        {
+            throw new HTSBusinessException(ErrorCode.PaymentTotalAmountLessThanProformaAmount);
+        }
+    }
 
     /// <summary>
     /// Set exchangerate clm of paymentitems

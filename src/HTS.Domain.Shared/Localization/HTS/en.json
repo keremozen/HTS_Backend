@@ -54,7 +54,9 @@
     "HTS:22": "Only last version of proforma can be operated.",
     "HTS:23": "Required fiels are missing.",
     "HTS:24": "Operation status not valid to process. Only New Record status can do.",
-
+    "HTS:25": "There is no payment document uploaded in the system.",
+    "HTS:26": "Total payment item amount is less than proforma amount.",
+    
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Successful",
     "ToastTitle:Info": "Information",

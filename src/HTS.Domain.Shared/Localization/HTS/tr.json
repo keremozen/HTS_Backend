@@ -54,6 +54,8 @@
     "HTS:22": "Sadece son versiyon proforma üzerinde işlem yapılabilir.",
     "HTS:23": "Zorunlu alanlar eksik.",
     "HTS:24": "Operasyon durumu işlem yapmaya uygun değil. Sadece Yeni Kayıt durumu için işlem yapılabilir.",
+    "HTS:25": "Sistem kayıtlı yüklenmiş bir tahsilat dosyası bulunmamaktadır.",
+    "HTS:26": "Toplam tahsilat tutarı proforma tutarından küçük olduğu için işlem yapılamaz.",
 
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Başarılı",

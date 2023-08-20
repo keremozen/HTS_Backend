@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using HTS.BusinessException;
@@ -24,7 +25,7 @@ using static HTS.Enum.EntityEnum;
 namespace HTS.Service;
 
 [Authorize]
-public class PaymentDocumentService : ApplicationService//,IPaymentDocumentService
+public class PaymentDocumentService : ApplicationService,IPaymentDocumentService
 {
     private readonly IRepository<PaymentDocument, int> _paymentDocumentRepository;
     private readonly IRepository<Payment, int> _paymentRepository;
@@ -41,7 +42,6 @@ public class PaymentDocumentService : ApplicationService//,IPaymentDocumentServi
     public async Task SaveAsync(SavePaymentDocumentDto paymentDocument)
     {
         var entity = ObjectMapper.Map<SavePaymentDocumentDto, PaymentDocument>(paymentDocument);
-        //If proforma amount and items amount equal mark as paied
         //Get entity from db
         var payment =
             (await _paymentRepository.WithDetailsAsync( (p => p.Proforma),
@@ -49,11 +49,18 @@ public class PaymentDocumentService : ApplicationService//,IPaymentDocumentServi
                 (p => p.Proforma.Operation.PatientTreatmentProcess)))
             .FirstOrDefault(p => p.Id == paymentDocument.PaymentId); 
         IsDataValidToSave(payment);
-        entity.FilePath = "";
-        //SaveByteArrayToFileWithStaticMethod(patientDocument.File, entity.FilePath);
+        entity.FilePath = @"\\10.72.17.12\filesrv\"+payment?.Proforma?.Operation?.PatientTreatmentProcess?.TreatmentCode;
+        SaveByteArrayToFileWithStaticMethod(paymentDocument.File, entity.FilePath);
         await _paymentDocumentRepository.InsertAsync(entity);
         
     }
+    
+    public async Task DeleteAsync(int id)
+    {
+        //TODO:Hopsy entity type may be changed - Hard delete or soft delete
+        await _paymentDocumentRepository.DeleteAsync(id);
+    }
+    
 
     private void IsDataValidToSave(Payment payment)
     {
@@ -61,7 +68,12 @@ public class PaymentDocumentService : ApplicationService//,IPaymentDocumentServi
         {
             throw new HTSBusinessException(ErrorCode.RelationalDataIsMissing);
         }
-
-       
+    }
+    
+    private static void SaveByteArrayToFileWithStaticMethod(string data, string filePath)
+    {
+        FileInfo file = new System.IO.FileInfo(filePath);
+        file.Directory?.Create(); // If the directory already exists, this method does nothing.
+        File.WriteAllBytes(file.FullName, Convert.FromBase64String(data.Split(',')[1]));
     }
 }

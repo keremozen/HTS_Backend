@@ -26,5 +26,6 @@ public static class  ErrorCode
     public const string LastProformaVersionCanBeOperated = "HTS:22";
     public const string RequiredFieldsMissing = "HTS:23";
     public const string OperationStatusNotValid = "HTS:24";
-
+    public const string NoPaymentDocumentUploaded = "HTS:25";
+    public const string PaymentTotalAmountLessThanProformaAmount = "HTS:26";
 }

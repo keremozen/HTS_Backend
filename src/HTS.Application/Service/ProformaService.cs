@@ -108,7 +108,7 @@ public class ProformaService : ApplicationService, IProformaService
         await _proformaRepository.UpdateAsync(proforma);
     }
 
-    public async Task<Object> ApproveMFBAsync(int id)
+    public async Task ApproveMFBAsync(int id)
     {
         //Get entity from db
         var proforma =
@@ -122,7 +122,6 @@ public class ProformaService : ApplicationService, IProformaService
         proforma.Operation.PatientTreatmentProcess.TreatmentProcessStatusId = EntityEnum.PatientTreatmentStatusEnum
             .ProformaApprovedWillBeTransferredToPatient.GetHashCode();
         await _proformaRepository.UpdateAsync(proforma);
-        return CreateProformaPdf(id);
     }
 
     public async Task<Object> SaveAndApproveMFBAsync(SaveProformaDto proforma)

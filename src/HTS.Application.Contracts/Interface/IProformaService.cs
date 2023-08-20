@@ -53,7 +53,7 @@ namespace HTS.Interface
         /// </summary>
         /// <param name="id">Proforma id to be approved</param>
         /// <returns></returns>
-        Task<Object> ApproveMFBAsync(int id);
+        Task ApproveMFBAsync(int id);
         
         /// <summary>
         /// Save proforma and Approve proforma

@@ -56,6 +56,7 @@
     "HTS:24": "Operation status not valid to process. Only New Record status can do.",
     "HTS:25": "There is no payment document uploaded in the system.",
     "HTS:26": "Total payment item amount is less than proforma amount.",
+    "HTS:27": "There is already a payment document in the system. There can only be one document",
     
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Successful",

@@ -41,7 +41,7 @@ public class PatientDocumentService : ApplicationService, IPatientDocumentServic
     {
         var entity = ObjectMapper.Map<SavePatientDocumentDto, PatientDocument>(patientDocument);
         entity.PatientDocumentStatusId = PatientDocumentStatusEnum.NewRecord.GetHashCode();
-        entity.FilePath = @"\\10.72.17.12\filesrv";
+        entity.FilePath = @"\\HTS-WEB1/filesrv\";
         SaveByteArrayToFileWithStaticMethod(patientDocument.File, entity.FilePath);
         await _patientDocumentRepository.InsertAsync(entity);
         return ObjectMapper.Map<PatientDocument, PatientDocumentDto>(entity);

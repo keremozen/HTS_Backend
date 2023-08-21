@@ -10,18 +10,20 @@ public static class Helper
 {
     public static void SendMail(List<string> toList, string body)
     {
-        var smtpClient = new SmtpClient("smtp.gmail.com", 587)
+        string fromEmail = "info@ushas.com.tr";
+        string password = "VWhb8Jo4UZ";
+        string smtpServer = "mail.ushas.com.tr";
+        var smtpClient = new SmtpClient(smtpServer, 587)
         {
             DeliveryMethod = SmtpDeliveryMethod.Network,
             UseDefaultCredentials = false,
             EnableSsl = true
         };
-
-        smtpClient.Credentials = new NetworkCredential("inncarenova@gmail.com", "dalpxgzynpunqzfw"); //Use the new password, generated from google!
         
-        MailMessage message = new MailMessage("inncarenova@gmail.com", string.Join(',',toList));
+        smtpClient.Credentials = new NetworkCredential(fromEmail, password);
+        MailMessage message = new MailMessage(fromEmail, string.Join(',',toList));
 
-        message.From = new MailAddress("inncarenova@gmail.com", "INNCare");
+        message.From = new MailAddress(fromEmail, "Info USHAŞ");
         message.Subject = "USHAŞ Tedavi Planı Talebi";
         message.IsBodyHtml = true;
         message.Body = body;

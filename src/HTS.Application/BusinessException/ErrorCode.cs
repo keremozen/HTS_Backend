@@ -28,4 +28,5 @@ public static class  ErrorCode
     public const string OperationStatusNotValid = "HTS:24";
     public const string NoPaymentDocumentUploaded = "HTS:25";
     public const string PaymentTotalAmountLessThanProformaAmount = "HTS:26";
+    public const string ThereCanOnlyBeOneDocument = "HTS:27";
 }

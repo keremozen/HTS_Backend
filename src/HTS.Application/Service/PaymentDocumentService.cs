@@ -12,6 +12,7 @@ using HTS.Dto.Nationality;
 using HTS.Dto.Patient;
 using HTS.Dto.PatientDocument;
 using HTS.Dto.PaymentDocument;
+using HTS.Enum;
 using HTS.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -43,23 +44,60 @@ public class PaymentDocumentService : ApplicationService,IPaymentDocumentService
     {
         var entity = ObjectMapper.Map<SavePaymentDocumentDto, PaymentDocument>(paymentDocument);
         //Get entity from db
+        //Get entity from db
         var payment =
             (await _paymentRepository.WithDetailsAsync( (p => p.Proforma),
                 (p => p.Proforma.Operation),
-                (p => p.Proforma.Operation.PatientTreatmentProcess)))
-            .FirstOrDefault(p => p.Id == paymentDocument.PaymentId); 
+                (p => p.Proforma.Operation.PatientTreatmentProcess),
+                (p => p.PaymentDocuments),
+                (p => p.PaymentItems)))
+            .FirstOrDefault(p => p.Id == paymentDocument.PaymentId);
         IsDataValidToSave(payment);
-        entity.FilePath = @"\\10.72.17.12\filesrv\"+payment?.Proforma?.Operation?.PatientTreatmentProcess?.TreatmentCode;
+        entity.FilePath = @"\\HTS-WEB1/filesrv\"+payment?.Proforma?.Operation?.PatientTreatmentProcess?.TreatmentCode;
         SaveByteArrayToFileWithStaticMethod(paymentDocument.File, entity.FilePath);
         await _paymentDocumentRepository.InsertAsync(entity);
-        
+        if (IsDataValidToFinalizePayment(payment))
+        {
+            payment.PaymentStatusId = EntityEnum.PaymentStatusEnum.PaymentCompleted.GetHashCode();
+            payment.Proforma.ProformaStatusId = EntityEnum.ProformaStatusEnum.PaymentCompleted.GetHashCode();
+            payment.Proforma.Operation.OperationStatusId =
+                EntityEnum.OperationStatusEnum.PaymentCompletedTreatmentProcess.GetHashCode();
+            payment.Proforma.Operation.PatientTreatmentProcess.TreatmentProcessStatusId =
+                EntityEnum.PatientTreatmentStatusEnum.PaymentCompletedTreatmentProcess.GetHashCode();
+            await _paymentRepository.UpdateAsync(payment);
+        }
     }
     
     public async Task DeleteAsync(int id)
     {
         //TODO:Hopsy entity type may be changed - Hard delete or soft delete
         await _paymentDocumentRepository.DeleteAsync(id);
+        var payment =
+            (await _paymentRepository.WithDetailsAsync( (p => p.Proforma),
+                (p => p.Proforma.Operation),
+                (p => p.Proforma.Operation.PatientTreatmentProcess)))
+            .FirstOrDefault(p => p.PaymentDocuments.Any(d => d.Id == id));
+        payment.PaymentStatusId = EntityEnum.PaymentStatusEnum.NewRecord.GetHashCode();
+        payment.Proforma.ProformaStatusId = EntityEnum.ProformaStatusEnum.WaitingForPayment.GetHashCode();
+        payment.Proforma.Operation.OperationStatusId =
+            EntityEnum.OperationStatusEnum.ProformaApprovedWaitingForPayment.GetHashCode();
+        payment.Proforma.Operation.PatientTreatmentProcess.TreatmentProcessStatusId =
+            EntityEnum.PatientTreatmentStatusEnum.ProformaApprovedWaitingForPayment.GetHashCode();
+        await _paymentRepository.UpdateAsync(payment);
     }
+    
+    private bool IsDataValidToFinalizePayment(Payment payment)
+    {
+        bool result = false;
+        //If proforma amount and items amount equal mark as paied
+        var paymentSum = payment.PaymentItems?.Sum(i => i.Price * i.ExchangeRate);
+        if (paymentSum >= payment.Proforma.TotalProformaPrice)
+        {
+            result = true;
+        }
+        return result;
+    }
+
     
 
     private void IsDataValidToSave(Payment payment)
@@ -67,6 +105,10 @@ public class PaymentDocumentService : ApplicationService,IPaymentDocumentService
         if (payment == null)
         {
             throw new HTSBusinessException(ErrorCode.RelationalDataIsMissing);
+        }
+        if (payment.PaymentDocuments?.Any() ?? false)
+        {
+            throw new HTSBusinessException(ErrorCode.ThereCanOnlyBeOneDocument);
         }
     }
     

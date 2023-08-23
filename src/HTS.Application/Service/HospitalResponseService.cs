@@ -170,7 +170,6 @@ public class HospitalResponseService : ApplicationService, IHospitalResponseServ
                  || !(hospitalResponse.HospitalResponseBranches?.Any() ?? false)
                 || (hospitalResponse.HospitalizationTypeId == EntityEnum.HospitalizationTypeEnum.SurgicalHospitalization.GetHashCode() && !(hospitalResponse.HospitalResponseProcesses?.Any() ?? false))
                 || hospitalResponse.PossibleTreatmentDate == DateTime.MinValue
-                || hospitalResponse.PossibleTreatmentDate == null
                 || hospitalResponse.HospitalizationNumber == null)
             {
                 throw new HTSBusinessException(ErrorCode.RequiredFieldsMissingForSuitableForTreatment);

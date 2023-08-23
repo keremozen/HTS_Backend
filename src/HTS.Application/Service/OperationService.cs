@@ -109,7 +109,6 @@ public class OperationService : ApplicationService, IOperationService
                 || !(operation.HospitalResponse.HospitalResponseBranches?.Any() ?? false)
                 || (operation.HospitalResponse.HospitalizationTypeId == EntityEnum.HospitalizationTypeEnum.SurgicalHospitalization.GetHashCode() && !(operation.HospitalResponse.HospitalResponseProcesses?.Any() ?? false))
                 || operation.HospitalResponse.PossibleTreatmentDate == DateTime.MinValue
-                || operation.HospitalResponse.PossibleTreatmentDate == null
                 || operation.HospitalResponse.HospitalizationNumber == null)
             {
                 throw new HTSBusinessException(ErrorCode.RequiredFieldsMissingForSuitableForTreatment);

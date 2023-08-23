@@ -37,7 +37,8 @@ public class PatientDocumentService : ApplicationService, IPatientDocumentServic
     public async Task<PagedResultDto<PatientDocumentDto>> GetListAsync(int patientId)
     {
         //Get all entities
-        var query = (await _patientDocumentRepository.WithDetailsAsync(p => p.Creator))
+        var query = (await _patientDocumentRepository.WithDetailsAsync((p => p.Creator),
+                (p => p.DocumentType)))
             .Where(p => p.PatientId == patientId);
         var responseList = ObjectMapper.Map<List<PatientDocument>, List<PatientDocumentDto>>(await AsyncExecuter.ToListAsync(query));
         var totalCount = await _patientDocumentRepository.CountAsync();//item count

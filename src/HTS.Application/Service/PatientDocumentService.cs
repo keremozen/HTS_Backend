@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using HTS.BusinessException;
 using HTS.Data.Entity;
@@ -41,7 +42,7 @@ public class PatientDocumentService : ApplicationService, IPatientDocumentServic
     {
         var entity = ObjectMapper.Map<SavePatientDocumentDto, PatientDocument>(patientDocument);
         entity.PatientDocumentStatusId = PatientDocumentStatusEnum.NewRecord.GetHashCode();
-        entity.FilePath = @"\\HTS-WEB1/filesrv\";
+        entity.FilePath = @"C:\filesrv\" + patientDocument.FileName;
         SaveByteArrayToFileWithStaticMethod(patientDocument.File, entity.FilePath);
         await _patientDocumentRepository.InsertAsync(entity);
         return ObjectMapper.Map<PatientDocument, PatientDocumentDto>(entity);

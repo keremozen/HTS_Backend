@@ -14,6 +14,7 @@ using HTS.Interface;
 using HTS.Localization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
@@ -31,14 +32,17 @@ public class HospitalConsultationService : ApplicationService, IHospitalConsulta
     private readonly IRepository<HospitalConsultation, int> _hcRepository;
     private readonly IRepository<PatientTreatmentProcess, int> _ptpRepository;
     private readonly IRepository<Hospital, int> _hospitalRepository;
+    private readonly IStringLocalizer<HTSResource> _localizer;
 
     public HospitalConsultationService(IRepository<HospitalConsultation, int> hcRepository,
         IRepository<PatientTreatmentProcess, int> ptpRepository,
-        IRepository<Hospital, int> hospitalRepository)
+        IRepository<Hospital, int> hospitalRepository,
+        IStringLocalizer<HTSResource> localizer)
     {
         _hcRepository = hcRepository;
         _ptpRepository = ptpRepository;
         _hospitalRepository = hospitalRepository;
+        _localizer = localizer;
     }
 
     public async Task<HospitalConsultationDto> GetAsync(int id)
@@ -90,7 +94,7 @@ public class HospitalConsultationService : ApplicationService, IHospitalConsulta
     private async Task SendEMailToHospitalUHBs(List<HospitalConsultation> entityList)
     {
         //Send mail to hospital consultations
-        string mailBodyFormat = LocalizableString.Create<HTSResource>("HospitalConsultation:MailBody").Name;
+        string mailBodyFormat = _localizer["HospitalConsultation:MailBody"];
         string urlFormat = "https://webhtstest.ushas.com.tr/hospital-response/{0}";
         var hospitalIds = entityList.Select(c => c.HospitalId).ToList();
         var hospitals = await (await _hospitalRepository.WithDetailsAsync(h => h.HospitalUHBStaffs))

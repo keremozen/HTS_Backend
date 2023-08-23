@@ -90,7 +90,7 @@ public class PaymentService : ApplicationService, IPaymentService
             entity.HospitalId = proforma.Operation.HospitalResponse.HospitalConsultation.HospitalId;
         }
         entity.ProformaNumber = proforma.ProformaCode;
-
+        entity.PaymentStatusId = Enum.EntityEnum.PaymentStatusEnum.NewRecord.GetHashCode();
         //Set patient information
         var ptp = await (await _ptpRepository.WithDetailsAsync(p => p.Patient))
            .FirstOrDefaultAsync(p => p.Id == payment.PtpId);

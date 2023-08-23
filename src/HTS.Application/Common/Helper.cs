@@ -27,6 +27,9 @@ public static class Helper
         message.Subject = "USHAŞ Tedavi Planı Talebi";
         message.IsBodyHtml = true;
         message.Body = body;
+#if !DEBUG
         smtpClient.Send(message);
+#endif
     }
+
 }

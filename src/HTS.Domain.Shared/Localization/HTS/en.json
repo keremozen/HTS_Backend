@@ -57,7 +57,7 @@
     "HTS:25": "There is no payment document uploaded in the system.",
     "HTS:26": "Total payment item amount is less than proforma amount.",
     "HTS:27": "There is already a payment document in the system. There can only be one document",
-    
+
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Successful",
     "ToastTitle:Info": "Information",
@@ -545,6 +545,8 @@
     "Proforma:SendSuccessful": "Proforma is sent to MFB approval.",
     "Proforma:Message:SendConfirm": "Are you sure you want to send proforma to MFB approval?",
     "Proforma:Field:RejectReason": "Reject Reason",
+    "Proforma:Error:CurrencyNotFound": "Value of selected currency couldn't be found",
+    "Proforma:DefaultDescriptionText": "TERMS OF PAYMENT The above mentioned cost will be paid before the treatment. Payment must be made by wire-transfer to the Bank details below. Refund of wire transferred amount (if any) will be transferred back to the bank acount from which the payment has been received. The cost is VAT included.",
 
     /*QUOTATION*/
     "Quotation:FieldLegend:HBYSProcesses": "HBYS Processes",
@@ -607,6 +609,10 @@
     "Payment:Column:PaymentReason": "Payment Reasonx",
     "Payment:Column:TotalPrice": "Total Price (₺)",
     "Payment:Column:Description": "Description",
+    "Payment:Column:Document": "Documents",
+    "Payment:UploadInvoiceDialog:Title": "Upload Invoice",
+    "Payment:UploadInvoiceDialog:Field:Invoice": "Invoice",
+    "Payment:Invoices:NameSingular": "Invoice",
 
     /*Mail Body*/
     "HospitalConsultation:MailBody": "Dear UHB Staff,</br>To Create Treatment Process for the patient, please follow the link below.</br> {0}"

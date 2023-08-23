@@ -37,7 +37,7 @@ namespace HTS.Interface
         /// <returns></returns>
         Task FinalizePayment(int id);
 
-        Task CreateInvoicePdf(int id);
+        Task<byte[]> CreateInvoicePdf(int id);
 
 
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using HTS.BusinessException;
@@ -10,11 +11,11 @@ using HTS.Interface;
 using HTS.PDFDocument;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
-using Polly.Fallback;
 using QuestPDF.Fluent;
 using QuestPDF.Infrastructure;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
+
 namespace HTS.Service;
 [Authorize]
 public class ProformaService : ApplicationService, IProformaService
@@ -444,11 +445,11 @@ public class ProformaService : ApplicationService, IProformaService
             throw new HTSBusinessException(ErrorCode.ProformaStatusNotValid);
         }
         //Sadece son versiyon onaylanıp reddedilebilir
-        int maxVersion = (await _proformaRepository.GetListAsync(p => p.OperationId == proforma.OperationId)).Max(p => p.Version);
+        /*int maxVersion = (await _proformaRepository.GetListAsync(p => p.OperationId == proforma.OperationId)).Max(p => p.Version);
         if (proforma.Version != maxVersion)
         {
             throw new HTSBusinessException(ErrorCode.LastProformaVersionCanBeApprovedRejected);
-        }
+        }*/
     }
 
     /// <summary>
@@ -531,11 +532,11 @@ public class ProformaService : ApplicationService, IProformaService
             throw new HTSBusinessException(ErrorCode.ProformaStatusNotValid);
         }
         //Sadece son versiyon onaylanıp reddedilebilir
-        int maxVersion = (await _proformaRepository.GetListAsync(p => p.OperationId == proforma.OperationId)).Max(p => p.Version);
+        /*int maxVersion = (await _proformaRepository.GetListAsync(p => p.OperationId == proforma.OperationId)).Max(p => p.Version);
         if (proforma.Version != maxVersion)
         {
             throw new HTSBusinessException(ErrorCode.LastProformaVersionCanBeApprovedRejected);
-        }
+        }*/
     }
 
 
@@ -581,19 +582,19 @@ public class ProformaService : ApplicationService, IProformaService
         }
     }
 
-    public async Task<Object> CreateProformaPdf(int id)
+    public async Task<byte[]> CreateProformaPdf(int id)
     {
+        byte[] bytes = null;
         var proforma = await (await _proformaRepository.WithDetailsAsync()).FirstOrDefaultAsync(p => p.Id == id);
         ProformaDocument document = null;
         if (proforma != null)
         {
             QuestPDF.Settings.License = LicenseType.Community;
-            var filePath = "proforma.pdf";
-            
+            QuestPDF.Settings.CheckIfAllTextGlyphsAreAvailable = false;
             document = new ProformaDocument(proforma);
-            document.GeneratePdf(filePath);
+            bytes = document.GeneratePdf();
         }
-        return document;
+        return bytes;
     }
 
 

@@ -53,7 +53,7 @@ public class PaymentDocumentService : ApplicationService,IPaymentDocumentService
                 (p => p.PaymentItems)))
             .FirstOrDefault(p => p.Id == paymentDocument.PaymentId);
         IsDataValidToSave(payment);
-        entity.FilePath = @"\\HTS-WEB1/filesrv\"+payment?.Proforma?.Operation?.PatientTreatmentProcess?.TreatmentCode;
+        entity.FilePath = @"C:\filesrv\" + payment?.Proforma?.Operation?.PatientTreatmentProcess?.TreatmentCode + "\\" + paymentDocument.FileName;
         SaveByteArrayToFileWithStaticMethod(paymentDocument.File, entity.FilePath);
         await _paymentDocumentRepository.InsertAsync(entity);
         if (IsDataValidToFinalizePayment(payment))

@@ -96,12 +96,12 @@ namespace HTS.PDFDocument
                     foreach (var process in _proforma.ProformaProcesses)
                     {
                         table.Cell().Element(CellStyle).Text(process.TreatmentCount.ToString()).FontSize(8);
-                        table.Cell().Element(CellStyle).ExtendHorizontal().AlignLeft().Text(process.Process.Name).FontSize(8);
+                        table.Cell().Element(CellStyle).ExtendHorizontal().AlignLeft().Text(process.Process.EnglishName).FontSize(8);
                         table.Cell().Element(CellStyle).ExtendHorizontal().AlignLeft().Text(process.ProformaFinalPrice.ToString("C", CultureInfo.CreateSpecificCulture("en-US"))).FontSize(8);
                         totalPrice += process.ProformaFinalPrice;
                     }
 
-                    table.Cell().ColumnSpan(3).Element(CellStyle).ExtendHorizontal().AlignRight().Text(_proforma.TPDescription.ToString()).FontSize(8);
+                    table.Cell().ColumnSpan(3).Element(CellStyle).ExtendHorizontal().AlignRight().Text(_proforma.TPDescription.ToString()).FontFamily("Arial").FontSize(8);
                     table.Cell().ColumnSpan(2).Element(CellStyle).ExtendHorizontal().AlignLeft().Text("Total Amount").FontSize(8).Bold();
                     table.Cell().Element(CellStyle).ExtendHorizontal().AlignLeft().Text(totalPrice.ToString("C", CultureInfo.CreateSpecificCulture("en-US"))).FontSize(8).Bold();
 
@@ -178,23 +178,23 @@ namespace HTS.PDFDocument
                 column.Item().Text(text =>
                 {
                     text.Span("TL: ").FontSize(8).Bold();
-                    text.Span("TR79 0001 5800 7308 4825 32").FontSize(8);
+                    text.Span("TR 4400 0100 2533 8997 3332 5030").FontSize(8);
                 });
                 column.Item().Text(text =>
                 {
                     text.Span("USD: ").FontSize(8).Bold();
-                    text.Span("TR75 0001 5804 8017 6636 67").FontSize(8);
+                    text.Span("TR 1700 0100 2533 8997 3332 5031").FontSize(8);
                 });
                 column.Item().Text(text =>
                 {
                     text.Span("EUR: ").FontSize(8).Bold();
-                    text.Span("TR81 0001 5804 8017 6636 56").FontSize(8);
+                    text.Span("TR 8700 0100 2533 8997 3332 5032").FontSize(8);
                 });
 
-                column.Item().Text("Name of the Bank: Vakıfbank").Style(textStyle).FontSize(8);
-                column.Item().Text("Branch: Tunalı Hilmi Commercial Branch").Style(textStyle).FontSize(8);
-                column.Item().Text("Branch Code: 1222").Style(textStyle).FontSize(8);
-                column.Item().Text("SWIFT Code (BIC): TVBATR2A").Style(textStyle).FontSize(8);
+                column.Item().Text("Name of the Bank: Ziraat Bankası A.Ş.").Style(textStyle).FontSize(8);
+                column.Item().Text("Branch: Ankara Şehir Hastanesi Branch").Style(textStyle).FontSize(8);
+                column.Item().Text("Branch Code: 2533").Style(textStyle).FontSize(8);
+                column.Item().Text("SWIFT Code (BIC): TCZBTR2A").Style(textStyle).FontSize(8);
 
             });
         }

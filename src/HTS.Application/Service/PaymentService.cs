@@ -210,19 +210,18 @@ public class PaymentService : ApplicationService, IPaymentService
     }
 
 
-    public async Task CreateInvoicePdf(int id)
+    public async Task<byte[]> CreateInvoicePdf(int id)
     {
+        byte[] bytes = null;
         var payment = await (await _paymentRepository.WithDetailsAsync()).FirstOrDefaultAsync(p => p.Id == id);
         if (payment != null)
         {
             QuestPDF.Settings.License = LicenseType.Community;
-            var filePath = "invoice.pdf";
-
-
+            QuestPDF.Settings.CheckIfAllTextGlyphsAreAvailable = false;
             var document = new InvoiceDocument(payment);
-            document.GeneratePdf(filePath);
+            bytes = document.GeneratePdf();
         }
-        return;
+        return bytes;
     }
 
 }

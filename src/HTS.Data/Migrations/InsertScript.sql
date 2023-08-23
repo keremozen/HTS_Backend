@@ -62,6 +62,7 @@ INSERT INTO "HospitalizationTypes"("Id", "Name") VALUES (2, 'Cerrahi Yatış');
 --Currency Table
 INSERT INTO "Currencies"("Id", "Name","IsDefault") VALUES (1, 'TL',true);
 INSERT INTO "Currencies"("Id", "Name","IsDefault") VALUES (2, 'USD',false);
+INSERT INTO "Currencies"("Id", "Name","IsDefault") VALUES (3, 'EUR',false);
 
 --AdditionalService Table
 INSERT INTO "AdditionalServices"("Id", "Name", "Day","Piece","RoomType","Companion") VALUES (1, 'Transfer hizmeti',false,false,false,false);
@@ -106,3 +107,7 @@ INSERT INTO "ProcessTypes"("Id", "Name", "IsActive") VALUES (2, 'Sarf Malzeme', 
 --Payment Kind Table
 INSERT INTO "PaymentKinds"("Id", "Name") VALUES (1, 'Nakit');
 INSERT INTO "PaymentKinds"("Id", "Name") VALUES (2, 'Eft');
+
+--Payment Status Table
+INSERT INTO "PaymentStatuses"("Id", "Name") VALUES (1, 'Yeni Kayıt');
+INSERT INTO "PaymentStatuses"("Id", "Name") VALUES (2, 'Tahsil Edildi');

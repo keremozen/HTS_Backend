@@ -610,6 +610,10 @@
     "Payment:Column:PaymentReason": "Ödeme Nedeni",
     "Payment:Column:TotalPrice": "Toplam Tutar (₺)",
     "Payment:Column:Description": "Açıklama",
+    "Payment:Column:Document": "Dokümanlar",
+    "Payment:UploadInvoiceDialog:Title": "Tahsilat Makbuzu Yükleme",
+    "Payment:UploadInvoiceDialog:Field:Invoice": "Tahsilat Makbuzu",
+    "Payment:Invoices:NameSingular": "Taksilat makbuzu",
 
     /*Mail Body*/
     "HospitalConsultation:MailBody": "Sayın UHB Yetkilisi,</br>Hasta için tedavi planı oluşturmak için aşağıdaki adrese tıklayınız. </br> {0}"

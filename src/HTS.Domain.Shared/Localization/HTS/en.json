@@ -57,7 +57,7 @@
     "HTS:25": "There is no payment document uploaded in the system.",
     "HTS:26": "Total payment item amount is less than proforma amount.",
     "HTS:27": "There is already a payment document in the system. There can only be one document",
-    
+
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Successful",
     "ToastTitle:Info": "Information",
@@ -609,6 +609,10 @@
     "Payment:Column:PaymentReason": "Payment Reasonx",
     "Payment:Column:TotalPrice": "Total Price (₺)",
     "Payment:Column:Description": "Description",
+    "Payment:Column:Document": "Documents",
+    "Payment:UploadInvoiceDialog:Title": "Upload Invoice",
+    "Payment:UploadInvoiceDialog:Field:Invoice": "Invoice",
+    "Payment:Invoices:NameSingular": "Invoice",
 
     /*Mail Body*/
     "HospitalConsultation:MailBody": "Dear UHB Staff,</br>To Create Treatment Process for the patient, please follow the link below.</br> {0}"

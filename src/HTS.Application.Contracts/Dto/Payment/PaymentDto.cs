@@ -15,7 +15,7 @@ namespace HTS.Dto.Payment;
 
 public class PaymentDto: AuditedEntityWithUserDto<int, IdentityUserDto>
 {
-    public int ProformaId { get; set; }
+    public int? ProformaId { get; set; }
     public int PtpId { get; set; }
     public int HospitalId { get; set; }
     public int RowNumber { get; set; }

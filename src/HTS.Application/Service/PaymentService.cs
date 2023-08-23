@@ -197,12 +197,6 @@ public class PaymentService : ApplicationService, IPaymentService
     /// <exception cref="HTSBusinessException"></exception>
     private async Task IsDataValidToCreate(SavePaymentDto payment)
     {
-        //Proforma related
-        if (!await _proformaRepository.AnyAsync(p => p.Id == payment.ProformaId))//No proforma in db
-        {
-            throw new HTSBusinessException(ErrorCode.RelationalDataIsMissing);
-        }
-
         if (string.IsNullOrEmpty(payment.PayerNameSurname))
         {
             throw new HTSBusinessException(ErrorCode.RequiredFieldsMissing);

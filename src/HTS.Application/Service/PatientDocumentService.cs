@@ -27,6 +27,12 @@ public class PatientDocumentService : ApplicationService, IPatientDocumentServic
         _currentUser = currentUser;
     }
 
+    // public async Task<PatientDocumentDto> GetAsync(int id)
+    // {
+    //    var pd = await _patientDocumentRepository.GetAsync(id);
+    //    
+    // }
+
     public async Task<PagedResultDto<PatientDocumentDto>> GetListAsync(int patientId)
     {
         //Get all entities

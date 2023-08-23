@@ -28,11 +28,14 @@ public class PatientDocumentService : ApplicationService, IPatientDocumentServic
         _currentUser = currentUser;
     }
 
-    // public async Task<PatientDocumentDto> GetAsync(int id)
-    // {
-    //    var pd = await _patientDocumentRepository.GetAsync(id);
-    //    
-    // }
+    public async Task<PatientDocumentDto> GetAsync(int id)
+    {
+       var pd = await _patientDocumentRepository.GetAsync(id);
+       var fileBytes = File.ReadAllBytes($"{pd.FilePath}/{pd.FileName}");
+      var patientDocument = ObjectMapper.Map<PatientDocument, PatientDocumentDto>(pd);
+      patientDocument.File = Convert.ToBase64String(fileBytes);
+      return patientDocument;
+    }
 
     public async Task<PagedResultDto<PatientDocumentDto>> GetListAsync(int patientId)
     {

@@ -8,6 +8,13 @@ namespace HTS.Interface
 {
     public interface IPatientDocumentService : IApplicationService
     {
+
+        /// <summary>
+        /// Get document by Id
+        /// </summary>
+        /// <param name="id">Document id</param>
+        /// <returns>Patient document</returns>
+        Task<PatientDocumentDto> GetAsync(int id);
       
         /// <summary>
         /// Get all data by patient id

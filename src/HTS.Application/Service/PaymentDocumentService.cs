@@ -40,6 +40,15 @@ public class PaymentDocumentService : ApplicationService,IPaymentDocumentService
         _paymentRepository = paymentRepository;
     }
     
+    public async Task<PaymentDocumentDto> GetAsync(int id)
+    {
+        var pd = await _paymentDocumentRepository.GetAsync(id);
+        var fileBytes = File.ReadAllBytes($"{pd.FilePath}/{pd.FileName}");
+        var paymentDocument = ObjectMapper.Map<PaymentDocument, PaymentDocumentDto>(pd);
+        paymentDocument.File = Convert.ToBase64String(fileBytes);
+        return paymentDocument;
+    }
+    
     public async Task SaveAsync(SavePaymentDocumentDto paymentDocument)
     {
         var entity = ObjectMapper.Map<SavePaymentDocumentDto, PaymentDocument>(paymentDocument);

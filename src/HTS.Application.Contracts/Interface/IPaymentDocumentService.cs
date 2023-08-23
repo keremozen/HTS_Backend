@@ -10,6 +10,12 @@ namespace HTS.Interface
     public interface IPaymentDocumentService : IApplicationService
     {
 
+        /// <summary>
+        /// Get document by Id
+        /// </summary>
+        /// <param name="id">Document id</param>
+        /// <returns>Payment document</returns>
+        Task<PaymentDocumentDto> GetAsync(int id);
 
         /// <summary>
         /// Save payment document

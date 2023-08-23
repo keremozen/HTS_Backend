@@ -4,13 +4,16 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using HTS.BusinessException;
+using HTS.Common;
 using HTS.Data.Entity;
 using HTS.Dto.Proforma;
 using HTS.Enum;
 using HTS.Interface;
+using HTS.Localization;
 using HTS.PDFDocument;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using QuestPDF.Fluent;
 using QuestPDF.Infrastructure;
 using Volo.Abp.Application.Services;
@@ -26,13 +29,15 @@ public class ProformaService : ApplicationService, IProformaService
     private readonly IRepository<RejectReason, int> _rejectReasonRepository;
     private readonly IRepository<PatientTreatmentProcess, int> _patientTreatmentProcessRepository;
     private readonly IRepository<Operation, int> _operationRepository;
+    private readonly IStringLocalizer<HTSResource> _localizer;
 
     public ProformaService(IRepository<Proforma, int> proformaRepository,
         IRepository<ExchangeRateInformation, int> exchangeRateRepository,
         IRepository<Process, int> processRepository,
         IRepository<Operation, int> operationRepository,
         IRepository<RejectReason, int> rejectReasonRepository,
-        IRepository<PatientTreatmentProcess, int> patientTreatmentProcessRepository)
+        IRepository<PatientTreatmentProcess, int> patientTreatmentProcessRepository,
+        IStringLocalizer<HTSResource> localizer)
     {
         _proformaRepository = proformaRepository;
         _exchangeRateRepository = exchangeRateRepository;
@@ -40,6 +45,7 @@ public class ProformaService : ApplicationService, IProformaService
         _rejectReasonRepository = rejectReasonRepository;
         _patientTreatmentProcessRepository = patientTreatmentProcessRepository;
         _operationRepository = operationRepository;
+        _localizer = localizer;
     }
 
     public async Task<List<ProformaListDto>> GetNameListByOperationIdAsync(int operationId)
@@ -164,7 +170,7 @@ public class ProformaService : ApplicationService, IProformaService
         }
         else
         {
-            //TODO:Hopsy send email to patient
+            SendEMailToPatient(proforma.Id, patientEmail);
         }
         proforma.ProformaStatusId = EntityEnum.ProformaStatusEnum.WaitingForPatientApproval.GetHashCode();
         proforma.Operation.OperationStatusId =
@@ -172,7 +178,14 @@ public class ProformaService : ApplicationService, IProformaService
         proforma.Operation.PatientTreatmentProcess.TreatmentProcessStatusId = EntityEnum.PatientTreatmentStatusEnum
             .ProformaTransferredWaitingForPatientApproval.GetHashCode();
         await _proformaRepository.UpdateAsync(proforma);
-
+    }
+    
+    private async Task SendEMailToPatient(int proformaId, string eMail)
+    {
+        //Send mail to hospital consultations
+        string mailBody=  "Hello,</br>Proforma that is generated for your treatment is attached to email.</br>";
+        var proforma = await CreateProformaPdf(proformaId);
+        Helper.SendMail(eMail, mailBody,proforma);
     }
     
     public async Task ApprovePatientAsync(int id)
@@ -532,11 +545,11 @@ public class ProformaService : ApplicationService, IProformaService
             throw new HTSBusinessException(ErrorCode.ProformaStatusNotValid);
         }
         //Sadece son versiyon onaylanıp reddedilebilir
-        /*int maxVersion = (await _proformaRepository.GetListAsync(p => p.OperationId == proforma.OperationId)).Max(p => p.Version);
+        int maxVersion = (await _proformaRepository.GetListAsync(p => p.OperationId == proforma.OperationId)).Max(p => p.Version);
         if (proforma.Version != maxVersion)
         {
             throw new HTSBusinessException(ErrorCode.LastProformaVersionCanBeApprovedRejected);
-        }*/
+        }
     }
 
 

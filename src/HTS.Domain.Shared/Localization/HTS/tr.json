@@ -617,7 +617,5 @@
 
     /*Mail Body*/
     "HospitalConsultation:MailBody": "Sayın UHB Yetkilisi,</br>Hasta için tedavi planı oluşturmak için aşağıdaki adrese tıklayınız. </br> {0}"
-
-
   }
 }

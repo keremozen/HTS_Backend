@@ -96,12 +96,12 @@ namespace HTS.PDFDocument
                     foreach (var process in _proforma.ProformaProcesses)
                     {
                         table.Cell().Element(CellStyle).Text(process.TreatmentCount.ToString()).FontSize(8);
-                        table.Cell().Element(CellStyle).ExtendHorizontal().AlignLeft().Text(process.Process.Name).FontSize(8);
+                        table.Cell().Element(CellStyle).ExtendHorizontal().AlignLeft().Text(process.Process.EnglishName).FontSize(8);
                         table.Cell().Element(CellStyle).ExtendHorizontal().AlignLeft().Text(process.ProformaFinalPrice.ToString("C", CultureInfo.CreateSpecificCulture("en-US"))).FontSize(8);
                         totalPrice += process.ProformaFinalPrice;
                     }
 
-                    table.Cell().ColumnSpan(3).Element(CellStyle).ExtendHorizontal().AlignRight().Text(_proforma.TPDescription.ToString()).FontSize(8);
+                    table.Cell().ColumnSpan(3).Element(CellStyle).ExtendHorizontal().AlignRight().Text(_proforma.TPDescription.ToString()).FontFamily("Arial").FontSize(8);
                     table.Cell().ColumnSpan(2).Element(CellStyle).ExtendHorizontal().AlignLeft().Text("Total Amount").FontSize(8).Bold();
                     table.Cell().Element(CellStyle).ExtendHorizontal().AlignLeft().Text(totalPrice.ToString("C", CultureInfo.CreateSpecificCulture("en-US"))).FontSize(8).Bold();
 

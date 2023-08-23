@@ -593,7 +593,6 @@ public class ProformaService : ApplicationService, IProformaService
             QuestPDF.Settings.CheckIfAllTextGlyphsAreAvailable = false;
             document = new ProformaDocument(proforma);
             bytes = document.GeneratePdf();
-            
         }
         return bytes;
     }

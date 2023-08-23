@@ -546,6 +546,8 @@
     "Proforma:SendSuccessful": "Proforma başarıyla MFB onayına gönderildi.",
     "Proforma:Message:SendConfirm": "Proformayı MFB onayına göndermek istediğize emin misiniz?",
     "Proforma:Field:RejectReason": "Reddedilme Nedeni",
+    "Proforma:Error:CurrencyNotFound": "Seçilen döviz cinsine ait günlük değer bulunamadı.",
+    "Proforma:DefaultDescriptionText": "TERMS OF PAYMENT The above mentioned cost will be paid before the treatment. Payment must be made by wire-transfer to the Bank details below. Refund of wire transferred amount (if any) will be transferred back to the bank acount from which the payment has been received. The cost is VAT included.",
 
     /*QUOTATION*/
     "Quotation:FieldLegend:HBYSProcesses": "HBYS İşlemleri",

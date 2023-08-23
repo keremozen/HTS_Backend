@@ -545,6 +545,8 @@
     "Proforma:SendSuccessful": "Proforma is sent to MFB approval.",
     "Proforma:Message:SendConfirm": "Are you sure you want to send proforma to MFB approval?",
     "Proforma:Field:RejectReason": "Reject Reason",
+    "Proforma:Error:CurrencyNotFound": "Value of selected currency couldn't be found",
+    "Proforma:DefaultDescriptionText": "TERMS OF PAYMENT The above mentioned cost will be paid before the treatment. Payment must be made by wire-transfer to the Bank details below. Refund of wire transferred amount (if any) will be transferred back to the bank acount from which the payment has been received. The cost is VAT included.",
 
     /*QUOTATION*/
     "Quotation:FieldLegend:HBYSProcesses": "HBYS Processes",

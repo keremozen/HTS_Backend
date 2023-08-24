@@ -101,7 +101,10 @@ namespace HTS.PDFDocument
                         totalPrice += process.ProformaFinalPrice;
                     }
 
-                    table.Cell().ColumnSpan(3).Element(CellStyle).ExtendHorizontal().AlignRight().Text(_proforma.TPDescription.ToString()).FontFamily("Arial").FontSize(8);
+                    if (_proforma.TPDescription != null)
+                    {
+                        table.Cell().ColumnSpan(3).Element(CellStyle).ExtendHorizontal().AlignRight().Text(_proforma.TPDescription).FontFamily("Arial").FontSize(8);
+                    }
                     table.Cell().ColumnSpan(2).Element(CellStyle).ExtendHorizontal().AlignLeft().Text("Total Amount").FontSize(8).Bold();
                     table.Cell().Element(CellStyle).ExtendHorizontal().AlignLeft().Text(totalPrice.ToString("C", CultureInfo.CreateSpecificCulture("en-US"))).FontSize(8).Bold();
 
@@ -131,7 +134,7 @@ namespace HTS.PDFDocument
                         row.AutoItem().Text('\u2022' + " ").Style(textStyle).FontSize(8); // text or image
                         row.RelativeItem().Text(text =>
                         {
-                            text.Span(service.AdditionalService.Name).Style(textStyle).FontSize(8);
+                            text.Span(service.AdditionalService.EnglishName).Style(textStyle).FontSize(8);
                             bool hasExtraInfo = service.AdditionalService.Day || service.AdditionalService.Companion || service.AdditionalService.Companion || service.AdditionalService.Piece;
                             if (hasExtraInfo)
                             {
@@ -140,19 +143,19 @@ namespace HTS.PDFDocument
                             string extraInfo = "";
                             if (service.AdditionalService.Day)
                             {
-                                extraInfo += service.DayCount.ToString() + " Gün - ";
+                                extraInfo += service.DayCount.ToString() + " Day - ";
                             }
                             if (service.AdditionalService.Companion)
                             {
-                                extraInfo += service.CompanionCount.ToString() + " Refakatçi - ";
+                                extraInfo += service.CompanionCount.ToString() + " Companion - ";
                             }
                             if (service.AdditionalService.RoomType)
                             {
-                                extraInfo += (service.RoomTypeId.Value == 1 ? "Standart" : "VIP") + " Oda - ";
+                                extraInfo += (service.RoomTypeId.Value == 1 ? "Standart" : "VIP") + " Room - ";
                             }
                             if (service.AdditionalService.Piece)
                             {
-                                extraInfo += service.ItemCount.ToString() + " Adet - ";
+                                extraInfo += service.ItemCount.ToString() + " Count - ";
                             }
                             if (hasExtraInfo)
                             {

@@ -68,7 +68,7 @@ INSERT INTO "Currencies"("Id", "Name","IsDefault") VALUES (3, 'EUR',false);
 INSERT INTO "AdditionalServices"("Id", "Name","EnglishName", "Day","Piece","RoomType","Companion") VALUES (1, 'Transfer hizmeti','Transfer Service',false,false,false,false);
 INSERT INTO "AdditionalServices"("Id", "Name","EnglishName", "Day","Piece","RoomType","Companion") VALUES (2, 'Medikal İkinci Muayene','Medical Second Examination',false,false,false,false);
 INSERT INTO "AdditionalServices"("Id", "Name","EnglishName", "Day","Piece","RoomType","Companion") VALUES (3, 'Tercümanlık','Interpreting',false,false,false,false);
-INSERT INTO "AdditionalServices"("Id", "Name","EnglishName", "Day","Piece","RoomType","Companion") VALUES (4, 'Koordinasyon Hizmeti',,'Coordination Service',false,false,false,false);
+INSERT INTO "AdditionalServices"("Id", "Name","EnglishName", "Day","Piece","RoomType","Companion") VALUES (4, 'Koordinasyon Hizmeti','Coordination Service',false,false,false,false);
 INSERT INTO "AdditionalServices"("Id", "Name","EnglishName", "Day","Piece","RoomType","Companion") VALUES (5, 'Servis Yatışı','Service Admission',true,false,true,false);
 INSERT INTO "AdditionalServices"("Id", "Name","EnglishName", "Day","Piece","RoomType","Companion") VALUES (6, 'Yoğun Bakım','Intensive Care',true,false,false,false);
 INSERT INTO "AdditionalServices"("Id", "Name","EnglishName", "Day","Piece","RoomType","Companion") VALUES (7, 'Konaklama','Accomodation',true,false,false,true);

@@ -11,7 +11,8 @@ namespace HTS.Data.Entity
         public int Id { get; set; }
         [Required, StringLength(500)]
         public string Name { get; set; }
-
+        [Required]
+        public string EnglishName { get; set; }
         [Required]
         public bool Day { get; set; }
         [Required]

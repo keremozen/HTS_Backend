@@ -47,6 +47,23 @@ public class PatientDocumentService : ApplicationService, IPatientDocumentServic
         var totalCount = await _patientDocumentRepository.CountAsync();//item count
         return new PagedResultDto<PatientDocumentDto>(totalCount, responseList);
     }
+    
+    public async Task<PagedResultDto<PatientDocumentDto>> GetDetailedListAsync(int patientId)
+    {
+        //Get all entities
+        var query = (await _patientDocumentRepository.WithDetailsAsync((p => p.Creator),
+                (p => p.DocumentType)))
+            .Where(p => p.PatientId == patientId);
+        var dbItems = await AsyncExecuter.ToListAsync(query);
+        List<PatientDocumentDto> responseList = new List<PatientDocumentDto>();
+        foreach (var patientDocument in dbItems)
+        {
+            var fileBytes = File.ReadAllBytes($"{patientDocument.FilePath}");
+            responseList.Add(ObjectMapper.Map<PatientDocument, PatientDocumentDto>(patientDocument));
+        }
+        var totalCount = await _patientDocumentRepository.CountAsync();//item count
+        return new PagedResultDto<PatientDocumentDto>(totalCount, responseList);
+    }
 
     public async Task<PatientDocumentDto> CreateAsync(SavePatientDocumentDto patientDocument)
     {

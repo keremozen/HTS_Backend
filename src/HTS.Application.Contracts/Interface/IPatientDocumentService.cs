@@ -22,6 +22,14 @@ namespace HTS.Interface
         /// <param name="patientId">Patient id</param>
         /// <returns>Patient document list</returns>
         Task<PagedResultDto<PatientDocumentDto>> GetListAsync(int patientId);
+
+        /// <summary>
+        /// Get all documents with file info by patient id
+        /// </summary>
+        /// <param name="patientId">Patient id</param>
+        /// <returns>Patient document list with file info</returns>
+        Task<PagedResultDto<PatientDocumentDto>> GetDetailedListAsync(int patientId);
+        
         /// <summary>
         /// Creates patient document
         /// </summary>

@@ -170,7 +170,7 @@ public class ProformaService : ApplicationService, IProformaService
         }
         else
         {
-            SendEMailToPatient(proforma.Id, patientEmail);
+            SendEMailToPatient(proforma, patientEmail);
         }
         proforma.ProformaStatusId = EntityEnum.ProformaStatusEnum.WaitingForPatientApproval.GetHashCode();
         proforma.Operation.OperationStatusId =
@@ -180,12 +180,16 @@ public class ProformaService : ApplicationService, IProformaService
         await _proformaRepository.UpdateAsync(proforma);
     }
     
-    private async Task SendEMailToPatient(int proformaId, string eMail)
+    private async Task SendEMailToPatient(Proforma proforma, string eMail)
     {
         //Send mail to hospital consultations
-        string mailBody=  "Hello,</br>Proforma that is generated for your treatment is attached to email.</br>";
-        var proforma = await CreateProformaPdf(proformaId);
-        Helper.SendMail(eMail, mailBody,proforma);
+        string mailBody=  $"Dear {proforma.Operation.PatientTreatmentProcess.Patient.Name} {proforma.Operation.PatientTreatmentProcess.Patient.Surname}," +
+                          $"</br></br>Your application has been reviewed and the necessary treatment plan has been prepared. " +
+                          $"You can find the details of your treatment process in the appendix.Proforma that is generated for your treatment is attached to email.</br>"+
+        $"We wish you a nice days.</br></br>Regards.";
+        var proformaReceipt = await CreateProformaPdf(proforma.Id);
+        var mailSubject = $"Treatment Plan is Ready | {proforma.ProformaCode}";
+        Helper.SendMail(eMail, mailBody,proformaReceipt, subject: mailSubject);
     }
     
     public async Task ApprovePatientAsync(int id)

@@ -34,7 +34,7 @@ public static class Helper
 #endif
     }
     
-    public static void SendMail(string to, string body, byte[] file)
+    public static void SendMail(string to, string body, byte[] file, string subject = null)
     {
         string fromEmail = "info@ushas.com.tr";
         string password = "VWhb8Jo4UZ";
@@ -50,7 +50,7 @@ public static class Helper
         MailMessage message = new MailMessage(fromEmail, to);
 
         message.From = new MailAddress(fromEmail, "Info USHAŞ");
-        message.Subject = "USHAŞ Proforma";
+        message.Subject = subject ?? "USHAŞ Proforma";
         message.IsBodyHtml = true;
         message.Body = body;
         Attachment attachment = new Attachment(new MemoryStream(file), new ContentType(MediaTypeNames.Application.Pdf))

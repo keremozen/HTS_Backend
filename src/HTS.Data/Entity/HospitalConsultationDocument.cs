@@ -21,6 +21,8 @@ namespace HTS.Data.Entity
         public string FileName { get; set; }
         [Required]
         public string FilePath { get; set; }
+        [Required]
+        public string ContentType { get; set; }
         [ForeignKey("HospitalConsultationId")]
         public HospitalConsultation HospitalConsultation { get; set; }
         [ForeignKey("DocumentTypeId")]

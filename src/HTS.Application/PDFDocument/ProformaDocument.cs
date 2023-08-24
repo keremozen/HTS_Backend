@@ -57,7 +57,7 @@ namespace HTS.PDFDocument
         private void ComposeContent(IContainer container)
         {
             var textStyle = TextStyle.Default.FontFamily("Arial").FontSize(8);
-            
+
 
             container.Padding(10).Column(column =>
             {
@@ -110,7 +110,16 @@ namespace HTS.PDFDocument
                 column.Item().Text(text =>
                 {
                     text.Span("Selected Hospital: ").Style(textStyle).FontSize(8);
-                    text.Span(_proforma.Operation?.Hospital?.Name).Style(textStyle).FontSize(8).Bold();
+
+                    if (_proforma.Operation.Hospital != null)
+                    {
+                        text.Span(_proforma.Operation?.Hospital?.Name).Style(textStyle).FontSize(8).Bold();
+
+                    }
+                    else if (_proforma.Operation?.HospitalResponse?.HospitalConsultation?.Hospital != null)
+                    {
+                        text.Span(_proforma.Operation?.HospitalResponse?.HospitalConsultation?.Hospital?.Name).Style(textStyle).FontSize(8).Bold();
+                    }
                 });
 
                 column.Item().Text("EXTRA SERVICES INCLUDED IN THE COST").Style(textStyle).FontSize(8);
@@ -148,7 +157,7 @@ namespace HTS.PDFDocument
                             if (hasExtraInfo)
                             {
                                 extraInfo = extraInfo.Substring(0, extraInfo.Length - 3);
-                                text.Span(extraInfo+")").Style(textStyle).FontSize(8);
+                                text.Span(extraInfo + ")").Style(textStyle).FontSize(8);
                             }
                         });
                     });

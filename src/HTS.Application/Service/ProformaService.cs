@@ -598,7 +598,7 @@ public class ProformaService : ApplicationService, IProformaService
     public async Task<byte[]> CreateProformaPdf(int id)
     {
         byte[] bytes = null;
-        var proforma = await (await _proformaRepository.WithDetailsAsync()).FirstOrDefaultAsync(p => p.Id == id);
+        var proforma = (await _proformaRepository.WithDetailsAsync()).FirstOrDefault(p => p.Id == id);
         ProformaDocument document = null;
         if (proforma != null)
         {

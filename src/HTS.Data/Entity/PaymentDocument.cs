@@ -16,7 +16,8 @@ namespace HTS.Data.Entity
         public string FileName { get; set; }
         [Required]
         public string FilePath { get; set; }
-        
+        [Required]
+        public string ContentType { get; set; }
         [ForeignKey("PaymentId")]
         public Payment Payment { get; set; }
       

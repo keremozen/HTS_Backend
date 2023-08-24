@@ -12,4 +12,6 @@ public class SavePatientDocumentDto
     public string FileName { get; set; }
     [Required]
     public string File { get; set; }
+    [Required]
+    public string ContentType { get; set; }
 }

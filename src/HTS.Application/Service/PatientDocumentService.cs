@@ -31,7 +31,7 @@ public class PatientDocumentService : ApplicationService, IPatientDocumentServic
     public async Task<PatientDocumentDto> GetAsync(int id)
     {
        var pd = await _patientDocumentRepository.GetAsync(id);
-       var fileBytes = File.ReadAllBytes($"{pd.FilePath}/{pd.FileName}");
+       var fileBytes = File.ReadAllBytes($"{pd.FilePath}");
       var patientDocument = ObjectMapper.Map<PatientDocument, PatientDocumentDto>(pd);
       patientDocument.File = Convert.ToBase64String(fileBytes);
       return patientDocument;

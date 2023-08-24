@@ -129,6 +129,10 @@ namespace HTS.Data
                                                                          .ThenInclude(p => p.PatientTreatmentProcess)
                                                                          .ThenInclude(p => p.Patient)
                                                                          .Include(p => p.Operation)
+                                                                         .ThenInclude(p => p.HospitalResponse)
+                                                                         .ThenInclude(p => p.HospitalConsultation)
+                                                                         .ThenInclude(p => p.Hospital)
+                                                                         .Include(p => p.Operation)
                                                                          .ThenInclude(p => p.Hospital);
                 });
 

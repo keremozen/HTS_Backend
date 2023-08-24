@@ -58,7 +58,7 @@ public static class Helper
             Name = "Proforma.pdf"
         };
         message.Attachments.Add(attachment);
-#if !DEBUG
+#if DEBUG
         smtpClient.Send(message);
 #endif
     }

@@ -1,5 +1,6 @@
 using HTS.Dto.DocumentType;
 using HTS.Enum;
+using System.ComponentModel.DataAnnotations;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Identity;
 
@@ -13,6 +14,7 @@ public class HospitalConsultationDocumentDto: AuditedEntityWithUserDto<int, Iden
     public string Description { get; set; }
     public string FileName { get; set; }
     public string File { get; set; }
+    public string ContentType { get; set; }
     public DocumentTypeDto DocumentType { get; set; }
     public EntityEnum.PatientDocumentStatusEnum PatientDocumentStatus { get; set; }
     

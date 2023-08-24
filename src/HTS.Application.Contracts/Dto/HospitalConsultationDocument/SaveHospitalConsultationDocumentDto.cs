@@ -15,4 +15,6 @@ public class SaveHospitalConsultationDocumentDto
     public string FileName { get; set; }
     [Required]
     public string File { get; set; }
+    [Required]
+    public string ContentType { get; set; }
 }

@@ -21,7 +21,7 @@ namespace HTS.Data.Entity
         [Required]
         public DateTime CreationDate { get; set; }
         public string Description { get; set; }
-        public string TPDescription { get; set; }
+        public string? TPDescription { get; set; }
         [Required]
         public string ProformaCode { get; set; }
         [Required]

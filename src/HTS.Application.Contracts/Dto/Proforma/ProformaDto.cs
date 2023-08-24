@@ -23,7 +23,7 @@ public class ProformaDto : AuditedEntityWithUserDto<int, IdentityUserDto>
     public string ProformaCode { get; set; }
     public DateTime CreationDate { get; set; }
     public string Description { get; set; }
-    public string TPDescription { get; set; }
+    public string? TPDescription { get; set; }
     public int Version { get; set; }
     public decimal TotalProformaPrice { get; set; }
 

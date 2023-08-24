@@ -28,7 +28,7 @@ public class SaveProformaDto
     [Required]
     public string ProformaCode { get; set; }
     public string Description { get; set; }
-    public string TPDescription { get; set; }
+    public string? TPDescription { get; set; }
     public int Version { get; set; }
 
     public virtual ICollection<SaveProformaProcessDto> ProformaProcesses { get; set; }

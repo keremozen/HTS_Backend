@@ -307,11 +307,11 @@ public class ProformaService : ApplicationService, IProformaService
             }
             
             //Only last version can be updated
-            int maxVersion = (await _proformaRepository.GetListAsync(p => p.OperationId == proforma.OperationId)).Max(p => p.Version);
+            /*int maxVersion = (await _proformaRepository.GetListAsync(p => p.OperationId == proforma.OperationId)).Max(p => p.Version);
             if (proforma.Version != maxVersion)
             {
                 throw new HTSBusinessException(ErrorCode.LastProformaVersionCanBeOperated);
-            }
+            }*/
         }
         //Check additional service data
         bool invalidData = false;

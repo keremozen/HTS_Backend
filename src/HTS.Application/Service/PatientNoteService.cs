@@ -13,7 +13,7 @@ using Volo.Abp.Users;
 using static HTS.Enum.EntityEnum;
 
 namespace HTS.Service;
-[Authorize]
+[Authorize("HTS.PatientManagement")]
 public class PatientNoteService : ApplicationService, IPatientNoteService
 {
     private readonly IRepository<PatientNote, int> _patientNoteRepository;

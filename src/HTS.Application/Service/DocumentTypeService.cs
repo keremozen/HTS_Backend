@@ -35,7 +35,7 @@ public class DocumentTypeService : ApplicationService, IDocumentTypeService
         return new PagedResultDto<DocumentTypeDto>(totalCount,responseList);
     }
 
-    [Authorize]
+    [Authorize("HTS.DocumentTypeManagement")]
     public async Task<DocumentTypeDto> CreateAsync(SaveDocumentTypeDto documentType)
     {
         var entity = ObjectMapper.Map<SaveDocumentTypeDto, DocumentType>(documentType);
@@ -43,7 +43,7 @@ public class DocumentTypeService : ApplicationService, IDocumentTypeService
         return ObjectMapper.Map<DocumentType, DocumentTypeDto>(entity);
     }
 
-    [Authorize]
+    [Authorize("HTS.DocumentTypeManagement")]
     public async Task<DocumentTypeDto> UpdateAsync(int id, SaveDocumentTypeDto documentType)
     {
         var entity = await _documentTypeRepository.GetAsync(id);
@@ -51,7 +51,7 @@ public class DocumentTypeService : ApplicationService, IDocumentTypeService
         return ObjectMapper.Map<DocumentType,DocumentTypeDto>( await _documentTypeRepository.UpdateAsync(entity));
     }
 
-    [Authorize]
+    [Authorize("HTS.DocumentTypeManagement")]
     public async Task DeleteAsync(int id)
     {
         await _documentTypeRepository.DeleteAsync(id);

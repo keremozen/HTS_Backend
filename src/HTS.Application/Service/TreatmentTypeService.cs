@@ -33,7 +33,7 @@ public class TreatmentTypeService : ApplicationService, ITreatmentTypeService
         return new PagedResultDto<TreatmentTypeDto>(totalCount,responseList);
     }
 
-    [Authorize]
+    [Authorize("HTS.TreatmentTypeManagement")]
     public async Task<TreatmentTypeDto> CreateAsync(SaveTreatmentTypeDto treatmentType)
     {
         var entity = ObjectMapper.Map<SaveTreatmentTypeDto, TreatmentType>(treatmentType);
@@ -41,7 +41,7 @@ public class TreatmentTypeService : ApplicationService, ITreatmentTypeService
         return ObjectMapper.Map<TreatmentType, TreatmentTypeDto>(entity);
     }
 
-    [Authorize]
+    [Authorize("HTS.TreatmentTypeManagement")]
     public async Task<TreatmentTypeDto> UpdateAsync(int id, SaveTreatmentTypeDto treatmentType)
     {
         var entity = await _treatmentTypeRepository.GetAsync(id);
@@ -49,7 +49,7 @@ public class TreatmentTypeService : ApplicationService, ITreatmentTypeService
         return ObjectMapper.Map<TreatmentType,TreatmentTypeDto>( await _treatmentTypeRepository.UpdateAsync(entity));
     }
 
-    [Authorize]
+    [Authorize("HTS.TreatmentTypeManagement")]
     public async Task DeleteAsync(int id)
     {
         await _treatmentTypeRepository.DeleteAsync(id);

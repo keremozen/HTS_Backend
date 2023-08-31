@@ -10,7 +10,7 @@ using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
 namespace HTS.Service;
-[Authorize]
+[Authorize("HTS.ProcessCostManagement")]
 public class ProcessCostService : ApplicationService, IProcessCostService
 {
     private readonly IRepository<ProcessCost, int> _processCostRepository;

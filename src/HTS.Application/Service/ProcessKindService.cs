@@ -35,14 +35,14 @@ public class ProcessKindService : ApplicationService, IProcessKindService
         return new ListResultDto<ProcessKindDto>(responseList);
     }
 
-    [Authorize]
+    [Authorize("HTS.ProcessKindManagement")]
     public async Task CreateAsync(SaveProcessKindDto processKind)
     {
         var entity = ObjectMapper.Map<SaveProcessKindDto, ProcessKind>(processKind);
         await _pkRepository.InsertAsync(entity);
     }
 
-    [Authorize]
+    [Authorize("HTS.ProcessKindManagement")]
     public async Task UpdateAsync(int id, SaveProcessKindDto processKind)
     {
         var entity = await _pkRepository.GetAsync(id);
@@ -50,7 +50,7 @@ public class ProcessKindService : ApplicationService, IProcessKindService
         await _pkRepository.UpdateAsync(entity);
     }
 
-    [Authorize]
+    [Authorize("HTS.ProcessKindManagement")]
     public async Task DeleteAsync(int id)
     {
         await _pkRepository.DeleteAsync(id);

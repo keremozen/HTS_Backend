@@ -11,7 +11,7 @@ using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
 namespace HTS.Service;
-[Authorize]
+[Authorize("HTS.RejectReasonManagement")]
 public class RejectReasonService : ApplicationService, IRejectReasonService
 {
     private readonly IRepository<RejectReason, int> _rejectReasonRepository;

@@ -11,7 +11,7 @@ using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
 namespace HTS.Service;
-[Authorize]
+[Authorize("HTS.PaymentReasonManagement")]
 public class PaymentReasonService : ApplicationService, IPaymentReasonService
 {
     private readonly IRepository<PaymentReason, int> _prRepository;

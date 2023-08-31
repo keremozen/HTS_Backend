@@ -34,7 +34,7 @@ namespace HTS.Service
             return new PagedResultDto<CityDto>(totalCount, responseList);
         }
 
-        [Authorize]
+        [Authorize("HTS.CityManagement")]
         public async Task<CityDto> CreateAsync(SaveCityDto city)
         {
             var entity = ObjectMapper.Map<SaveCityDto, City>(city);
@@ -42,7 +42,7 @@ namespace HTS.Service
             return ObjectMapper.Map<City, CityDto>(entity);
         }
 
-        [Authorize]
+        [Authorize("HTS.CityManagement")]
         public async Task<CityDto> UpdateAsync(int id, SaveCityDto city)
         {
             var entity = await _cityRepository.GetAsync(id);
@@ -50,7 +50,7 @@ namespace HTS.Service
             return ObjectMapper.Map<City, CityDto>(await _cityRepository.UpdateAsync(entity));
         }
 
-        [Authorize]
+        [Authorize("HTS.CityManagement")]
         public async Task DeleteAsync(int id)
         {
             await _cityRepository.DeleteAsync(id);

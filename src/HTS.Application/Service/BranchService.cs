@@ -36,7 +36,7 @@ public class BranchService : ApplicationService, IBranchService
         return new PagedResultDto<BranchDto>(totalCount,responseList);
     }
 
-    [Authorize]
+    [Authorize("HTS.BranchManagement")]
     public async Task<BranchDto> CreateAsync(SaveBranchDto major)
     {
         var entity = ObjectMapper.Map<SaveBranchDto, Branch>(major);
@@ -44,7 +44,7 @@ public class BranchService : ApplicationService, IBranchService
         return ObjectMapper.Map<Branch, BranchDto>(entity);
     }
 
-    [Authorize]
+    [Authorize("HTS.BranchManagement")]
     public async Task<BranchDto> UpdateAsync(int id, SaveBranchDto major)
     {
         var entity = await _branchRepository.GetAsync(id);
@@ -52,7 +52,7 @@ public class BranchService : ApplicationService, IBranchService
         return ObjectMapper.Map<Branch, BranchDto>( await _branchRepository.UpdateAsync(entity));
     }
 
-    [Authorize]
+    [Authorize("HTS.BranchManagement")]
     public async Task DeleteAsync(int id)
     {
         await _branchRepository.DeleteAsync(id);

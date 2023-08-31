@@ -29,4 +29,6 @@ public static class  ErrorCode
     public const string NoPaymentDocumentUploaded = "HTS:25";
     public const string PaymentTotalAmountLessThanProformaAmount = "HTS:26";
     public const string ThereCanOnlyBeOneDocument = "HTS:27";
+    public const string PricerAlreadyExist = "HTS:28";
+    public const string DefaultPricerAlreadyExist = "HTS:29";
 }

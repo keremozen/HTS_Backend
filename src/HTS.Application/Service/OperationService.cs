@@ -13,20 +13,27 @@ using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
-using Volo.Abp.ObjectMapping;
 using static HTS.Enum.EntityEnum;
+
 namespace HTS.Service;
+
 [Authorize]
 public class OperationService : ApplicationService, IOperationService
 {
     private readonly IRepository<Operation, int> _operationRepository;
     private readonly IRepository<PatientTreatmentProcess, int> _patientTreatmentProcessRepository;
+    private readonly IRepository<HospitalResponseBranch, int> _hospitalResponseBranchRepository;
+    private readonly IRepository<HospitalResponseProcess, int> _hospitalResponseProcessRepository;
 
     public OperationService(IRepository<Operation, int> operationRepository,
-        IRepository<PatientTreatmentProcess, int> patientTreatmentProcessRepository)
+        IRepository<PatientTreatmentProcess, int> patientTreatmentProcessRepository,
+        IRepository<HospitalResponseBranch, int> hospitalResponseBranchRepository,
+        IRepository<HospitalResponseProcess, int> hospitalResponseProcessRepository)
     {
         _operationRepository = operationRepository;
         _patientTreatmentProcessRepository = patientTreatmentProcessRepository;
+        _hospitalResponseBranchRepository = hospitalResponseBranchRepository;
+        _hospitalResponseProcessRepository = hospitalResponseProcessRepository;
     }
 
     public async Task<OperationDto> GetAsync(int id)
@@ -56,14 +63,22 @@ public class OperationService : ApplicationService, IOperationService
         await _operationRepository.InsertAsync(entity);
         //Tedavi sürecini, operasyon onaylandı fiyatlandırma bekliyor olarak güncelle
         var ptp = await _patientTreatmentProcessRepository.GetAsync(operation.PatientTreatmentProcessId.Value);
-        ptp.TreatmentProcessStatusId =PatientTreatmentStatusEnum.OperationApprovedWaitingPricing.GetHashCode();
+        ptp.TreatmentProcessStatusId = PatientTreatmentStatusEnum.OperationApprovedWaitingPricing.GetHashCode();
         await _patientTreatmentProcessRepository.UpdateAsync(ptp);
     }
 
     public async Task UpdateAsync(int id, SaveOperationDto operation)
     {
-        operation.HospitalResponse = null;
-        var entity = await _operationRepository.GetAsync(id);
+        var entity = (await _operationRepository.WithDetailsAsync((o=>o.HospitalResponse.HospitalResponseBranches), (o=>o.HospitalResponse.HospitalResponseProcesses))).FirstOrDefault(o => o.Id == id);
+        if (entity.OperationStatusId != OperationStatusEnum.NewRecord.GetHashCode())
+        {
+            operation.HospitalResponse = null;
+        }
+        else
+        {
+            await _hospitalResponseBranchRepository.DeleteManyAsync(entity.HospitalResponse.HospitalResponseBranches.Select(b => b.Id).ToList());
+            await _hospitalResponseProcessRepository.DeleteManyAsync(entity.HospitalResponse.HospitalResponseProcesses.Select(p => p.Id).ToList());
+        }
         ObjectMapper.Map(operation, entity);
         await _operationRepository.UpdateAsync(entity);
     }

@@ -26,9 +26,9 @@ public static class HTSPermissions
     public const string RejectReasonManagement = GroupName + ".RejectReasonManagement";
     public const string PaymentReasonManagement = GroupName + ".PaymentReasonManagement";
 
-    public const string Patient = GroupName + ".Patient";
-    public const string PatientAccess = GroupName + ".PatientAccess";
     public const string PatientList = GroupName + ".PatientList";
     public const string PatientManagement = GroupName + ".PatientManagement";
     public const string PatientViewAll = GroupName + ".PatientViewAll";
+    public const string HospitalConsultation = GroupName + ".HospitalConsultation";
+    public const string ProformaManagement = GroupName + ".ProformaManagement";
 }

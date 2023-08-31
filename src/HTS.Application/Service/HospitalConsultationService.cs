@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using HTS.BusinessException;
 using HTS.Common;
@@ -26,7 +27,6 @@ using static HTS.Enum.EntityEnum;
 
 namespace HTS.Service;
 
-[Authorize]
 public class HospitalConsultationService : ApplicationService, IHospitalConsultationService
 {
     private readonly IRepository<HospitalConsultation, int> _hcRepository;
@@ -51,6 +51,8 @@ public class HospitalConsultationService : ApplicationService, IHospitalConsulta
         var consultation = await AsyncExecuter.FirstOrDefaultAsync(query);
         return ObjectMapper.Map<HospitalConsultation, HospitalConsultationDto>(consultation);
     }
+
+    [Authorize("HTS.PatientList")]
     public async Task<PagedResultDto<HospitalConsultationDto>> GetByPatientTreatmenProcessAsync(int ptpId)
     {
         var query = await _hcRepository.WithDetailsAsync();
@@ -62,7 +64,7 @@ public class HospitalConsultationService : ApplicationService, IHospitalConsulta
         return new PagedResultDto<HospitalConsultationDto>(totalCount, responseList);
     }
 
-
+    [Authorize("HTS.HospitalConsultation")]
     public async Task CreateAsync(SaveHospitalConsultationDto hospitalConsultation)
     {
         await IsDataValidToSave(hospitalConsultation);
@@ -95,7 +97,7 @@ public class HospitalConsultationService : ApplicationService, IHospitalConsulta
     {
         //Send mail to hospital consultations
         string mailBodyFormat = _localizer["HospitalConsultation:MailBody"];
-        string urlFormat = "https://webhtstest.ushas.com.tr/hospital-response/{0}";
+        string urlFormat = "https://webhtstest.ushas.com.tr/hospital-response/{0}.{1}";
         var hospitalIds = entityList.Select(c => c.HospitalId).ToList();
         var hospitals = await (await _hospitalRepository.WithDetailsAsync(h => h.HospitalUHBStaffs))
             .Where(h => hospitalIds.Contains(h.Id)).ToListAsync();
@@ -105,9 +107,17 @@ public class HospitalConsultationService : ApplicationService, IHospitalConsulta
             var uhbList = hospital?.HospitalUHBStaffs.Select(s => s.Email).ToList();
             if (uhbList?.Any() ?? false)
             {
-                Helper.SendMail(uhbList, string.Format(mailBodyFormat,string.Format(urlFormat,hc.Id)));
+                Helper.SendMail(uhbList, string.Format(mailBodyFormat, string.Format(urlFormat, RandomString(8), Convert.ToBase64String(Encoding.UTF8.GetBytes(hc.Id.ToString())))));
             }
         }
+    }
+
+    private string RandomString(int length)
+    {
+        Random random = new Random();
+        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        return new string(Enumerable.Repeat(chars, length)
+            .Select(s => s[random.Next(s.Length)]).ToArray());
     }
 
     private async Task<int> GetRowNumber(int ptProcessId)
@@ -133,12 +143,11 @@ public class HospitalConsultationService : ApplicationService, IHospitalConsulta
         File.WriteAllBytes(filePath, Convert.FromBase64String(data));
     }
 
-
+    [Authorize("HTS.HospitalConsultation")]
     public async Task DeleteAsync(int id)
     {
         await _hcRepository.DeleteAsync(id);
     }
-
 
     /// <summary>
     /// Checks if data is valid to save

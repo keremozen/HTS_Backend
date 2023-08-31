@@ -33,7 +33,7 @@ public class NationalityService : ApplicationService, INationalityService
         return new PagedResultDto<NationalityDto>(totalCount,responseList);
     }
 
-    [Authorize]
+    [Authorize("HTS.NationalityManagement")]
     public async Task<NationalityDto> CreateAsync(SaveNationalityDto nationality)
     {
         var entity = ObjectMapper.Map<SaveNationalityDto, Nationality>(nationality);
@@ -41,7 +41,7 @@ public class NationalityService : ApplicationService, INationalityService
         return ObjectMapper.Map<Nationality, NationalityDto>(entity);
     }
 
-    [Authorize]
+    [Authorize("HTS.NationalityManagement")]
     public async Task<NationalityDto> UpdateAsync(int id, SaveNationalityDto nationality)
     {
         var entity = await _nationalityRepository.GetAsync(id);
@@ -49,7 +49,7 @@ public class NationalityService : ApplicationService, INationalityService
         return ObjectMapper.Map<Nationality,NationalityDto>( await _nationalityRepository.UpdateAsync(entity));
     }
 
-    [Authorize]
+    [Authorize("HTS.NationalityManagement")]
     public async Task DeleteAsync(int id)
     {
         await _nationalityRepository.DeleteAsync(id);

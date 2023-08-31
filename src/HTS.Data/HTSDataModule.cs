@@ -76,10 +76,17 @@ namespace HTS.Data
                                                                          .Include(p => p.PhoneCountryCode)
                                                                          .Include(h => h.HospitalStaffs)
                                                                          .ThenInclude(s => s.User)
+                                                                         .Include(h => h.HospitalPricers)
+                                                                         .ThenInclude(s => s.User)
                                                                          .Include(h => h.HospitalUHBStaffs);
                 });
 
                 options.Entity<HospitalStaff>(entityOptions =>
+                {
+                    entityOptions.DefaultWithDetailsFunc = query => query.Include(s => s.User);
+                });
+
+                options.Entity<HospitalPricer>(entityOptions =>
                 {
                     entityOptions.DefaultWithDetailsFunc = query => query.Include(s => s.User);
                 });

@@ -11,7 +11,6 @@ using Volo.Abp.Domain.Repositories;
 
 namespace HTS.Service;
 
-[Authorize]
 public class HospitalizationTypeService : ApplicationService, IHospitalizationTypeService
 {
     private readonly IRepository<HospitalizationType, int> _hospitalizationTypeRepository;

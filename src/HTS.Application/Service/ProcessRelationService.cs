@@ -9,7 +9,7 @@ using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
 namespace HTS.Service;
-[Authorize]
+[Authorize("HTS.ProcessRelationManagement")]
 public class ProcessRelationService : ApplicationService, IProcessRelationService
 {
     private readonly IRepository<ProcessRelation, int> _processRelationRepository;

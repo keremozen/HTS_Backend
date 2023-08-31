@@ -36,7 +36,7 @@ namespace HTS.Service
             return new PagedResultDto<LanguageDto>(totalCount, responseList);
         }
 
-        [Authorize]
+        [Authorize("HTS.LanguageManagement")]
         public async Task<LanguageDto> CreateAsync(SaveLanguageDto language)
         {
             var entity = ObjectMapper.Map<SaveLanguageDto, Language>(language);
@@ -44,14 +44,14 @@ namespace HTS.Service
             return ObjectMapper.Map<Language, LanguageDto>(entity);
         }
 
-        [Authorize]
+        [Authorize("HTS.LanguageManagement")]
         public async Task CreateListAsync(List<SaveLanguageDto> languages)
         {
             var entityList = ObjectMapper.Map<List<SaveLanguageDto>, List<Language>>(languages);
             await _languageRepository.InsertManyAsync(entityList);
         }
 
-        [Authorize]
+        [Authorize("HTS.LanguageManagement")]
         public async Task<LanguageDto> UpdateAsync(int id, SaveLanguageDto language)
         {
             var entity = await _languageRepository.GetAsync(id);
@@ -59,7 +59,7 @@ namespace HTS.Service
             return ObjectMapper.Map<Language, LanguageDto>(await _languageRepository.UpdateAsync(entity));
         }
 
-        [Authorize]
+        [Authorize("HTS.LanguageManagement")]
         public async Task DeleteAsync(int id)
         {
             await _languageRepository.DeleteAsync(id);

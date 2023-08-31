@@ -30,12 +30,12 @@ public class HTSPermissionDefinitionProvider : PermissionDefinitionProvider
         managementPermission.AddChild(HTSPermissions.RejectReasonManagement, L("Permission:RejectReasonManagement"));
         managementPermission.AddChild(HTSPermissions.PaymentReasonManagement, L("Permission:PaymentReasonManagement"));
 
-        var patientPermission = htsGroup.AddPermission(HTSPermissions.Patient, L("Permission:Patient"));
-        var patientAccessPermission = patientPermission.AddChild(HTSPermissions.PatientAccess, L("Permission:PatientAccess"));
-        patientAccessPermission.AddChild(HTSPermissions.PatientList, L("Permission:PatientList"));
-        patientAccessPermission.AddChild(HTSPermissions.PatientManagement, L("Permission:PatientManagement"));
-        patientAccessPermission.AddChild(HTSPermissions.PatientViewAll, L("Permission:PatientViewAll"));
-        
+        htsGroup.AddPermission(HTSPermissions.PatientList, L("Permission:PatientList"));
+        htsGroup.AddPermission(HTSPermissions.PatientManagement, L("Permission:PatientManagement"));
+        htsGroup.AddPermission(HTSPermissions.PatientViewAll, L("Permission:PatientViewAll"));
+        htsGroup.AddPermission(HTSPermissions.HospitalConsultation, L("Permission:HospitalConsultation"));
+        htsGroup.AddPermission(HTSPermissions.ProformaManagement, L("Permission:ProformaManagement"));
+
     }
 
     private static LocalizableString L(string name)

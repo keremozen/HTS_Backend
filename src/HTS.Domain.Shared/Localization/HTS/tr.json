@@ -57,6 +57,9 @@
     "HTS:25": "Sistem kayıtlı yüklenmiş bir tahsilat dosyası bulunmamaktadır.",
     "HTS:26": "Toplam tahsilat tutarı proforma tutarından küçük olduğu için işlem yapılamaz.",
     "HTS:27": "Sistemde kayıtlı tahsilat makbuzu bulunmaktadır. Yenisi yüklenemez",
+    "HTS:28": "Eklenmeye çalışılan fiyatlandırıcı mevcuttur.",
+    "HTS:29": "Varsayılan bir fiyatlandırıcı mevcuttur. Birden çok varsayılan fiyatlandırıcı eklenemez.",
+    "HTS:30": "Geçersiz bir işlem yaptınız.",
 
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Başarılı",
@@ -97,11 +100,11 @@
     "Permission:MaterialManagement": "Sarf Malzeme Yönetimi",
     "Permission:RejectReasonManagement": "Ret Nedeni Yönetimi",
     "Permission:PaymentReasonManagement": "Ödeme Nedeni Yönetimi",
-    "Permission:Patient": "Hasta",
-    "Permission:PatientAccess": "Hasta Sayfasına Erişim",
     "Permission:PatientList": "Hasta Tablosu Listeleme",
     "Permission:PatientManagement": "Hasta Ekleme / Güncelleme",
     "Permission:PatientViewAll": "Tüm Hastaları Görebilme",
+    "Permission:HospitalConsultation": "Hastanelere Danışma",
+    "Permission:ProformaManagement": "Proforma Oluşturma",
 
     /*MENU*/
     "Menu:Home": "Ana sayfa",
@@ -148,6 +151,7 @@
     "Admin:Hospital:Column:EMail": "E-Posta Adresi",
     "Admin:Hospital:Column:UHBStaffs": "UHB Sorumluları",
     "Admin:Hospital:Column:Staffs": "Yetkili Kişiler",
+    "Admin:Hospital:Column:Pricers": "Fiyatlandırıcılar",
     "Admin:Hospital:Column:IsActive": "Aktif mi?",
     "Admin:Hospital:HospitalDetails": "Hastane Detayları",
     "Admin:Hospital:HospitalStaffManagement": "Hastane Yetkilisi Yönetimi",
@@ -170,6 +174,16 @@
     "Admin:HospitalUHBStaff:Column:IsActive": "Aktif mi?",
     "Admin:HospitalUHBStaff:NewHospitalUHBStaff": "Yeni Sorumlu",
     "Admin:HospitalUHBStaff:HospitalUHBStaffDetails": "Hastane UHB Sorumlusu Detayları",
+    "Admin:Hospital:HospitalPricerManagement": "Hastane Fiyatlandırıcı Yönetimi",
+    "Admin:HospitalPricer:Name": "Hastane Fiyatlandırıcı",
+    "Admin:HospitalPricer:Column:Pricer": "Fiyatlandırıcı",
+    "Admin:HospitalPricer:Column:NameSurname": "Ad Soyad",
+    "Admin:HospitalPricer:Column:PhoneNumber": "Telefon Numarası",
+    "Admin:HospitalPricer:Column:Email": "E-Posta",
+    "Admin:HospitalPricer:Column:IsDefault": "Varsayılan",
+    "Admin:HospitalPricer:Column:IsActive": "Aktif mi?",
+    "Admin:HospitalPricer:NewHospitalPricer": "Yeni Fiyatlandırıcı",
+    "Admin:HospitalPricer:HospitalPricerDetails": "Hastane Fiyatlandırıcı Detayları",
 
     /*NATIONALITY MANAGEMENT*/
     "Admin:Nationality:Name": "Ülke",

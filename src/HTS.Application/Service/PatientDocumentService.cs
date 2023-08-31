@@ -16,7 +16,7 @@ using Volo.Abp.Users;
 using static HTS.Enum.EntityEnum;
 
 namespace HTS.Service;
-[Authorize]
+[Authorize("HTS.PatientManagement")]
 public class PatientDocumentService : ApplicationService, IPatientDocumentService
 {
     private readonly IRepository<PatientDocument, int> _patientDocumentRepository;
@@ -59,7 +59,10 @@ public class PatientDocumentService : ApplicationService, IPatientDocumentServic
         foreach (var patientDocument in dbItems)
         {
             var fileBytes = File.ReadAllBytes($"{patientDocument.FilePath}");
-            responseList.Add(ObjectMapper.Map<PatientDocument, PatientDocumentDto>(patientDocument));
+            var dto = ObjectMapper.Map<PatientDocument, PatientDocumentDto>(patientDocument);
+            dto.File = Convert.ToBase64String(fileBytes);
+            responseList.Add(dto);
+
         }
         var totalCount = await _patientDocumentRepository.CountAsync();//item count
         return new PagedResultDto<PatientDocumentDto>(totalCount, responseList);

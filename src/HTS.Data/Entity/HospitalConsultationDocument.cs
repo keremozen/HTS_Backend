@@ -10,12 +10,10 @@ namespace HTS.Data.Entity
     {
         [Required]
         public int HospitalConsultationId { get; set; }
-        [Required]
-        public int DocumentTypeId { get; set; }
+        public int? DocumentTypeId { get; set; }
         [Required]
         public int PatientDocumentStatusId { get; set; }
-        [Required]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         [Required, StringLength(100)]
         public string FileName { get; set; }
@@ -26,7 +24,7 @@ namespace HTS.Data.Entity
         [ForeignKey("HospitalConsultationId")]
         public HospitalConsultation HospitalConsultation { get; set; }
         [ForeignKey("DocumentTypeId")]
-        public DocumentType DocumentType { get; set; }
+        public DocumentType? DocumentType { get; set; }
         [ForeignKey("PatientDocumentStatusId")]
         public PatientDocumentStatus PatientDocumentStatus { get; set; }
 

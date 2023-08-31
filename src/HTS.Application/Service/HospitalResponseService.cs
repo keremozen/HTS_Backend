@@ -19,7 +19,7 @@ using Volo.Abp.ObjectMapping;
 using static HTS.Enum.EntityEnum;
 
 namespace HTS.Service;
-[Authorize]
+
 public class HospitalResponseService : ApplicationService, IHospitalResponseService
 {
     private readonly IRepository<HospitalResponse, int> _hospitalResponseRepository;
@@ -35,19 +35,21 @@ public class HospitalResponseService : ApplicationService, IHospitalResponseServ
         _operationRepository = operationRepository;
     }
 
+    [Authorize]
     public async Task<HospitalResponseDto> GetAsync(int id)
     {
         var query = (await _hospitalResponseRepository.WithDetailsAsync()).Where(r => r.Id == id);
         return ObjectMapper.Map<HospitalResponse, HospitalResponseDto>(await AsyncExecuter.FirstOrDefaultAsync(query));
     }
 
+    [Authorize]
     public async Task<HospitalResponseDto> GetByHospitalConsultationAsync(int consultationId)
     {
         var query = (await _hospitalResponseRepository.WithDetailsAsync()).Where(hr => hr.HospitalConsultationId == consultationId);
         return ObjectMapper.Map<HospitalResponse, HospitalResponseDto>(await AsyncExecuter.FirstOrDefaultAsync(query));
     }
 
-
+    [AllowAnonymous]
     public async Task CreateAsync(SaveHospitalResponseDto hospitalResponse)
     {
         await IsDataValidToSave(hospitalResponse);
@@ -74,6 +76,7 @@ public class HospitalResponseService : ApplicationService, IHospitalResponseServ
         await _hcRepository.UpdateAsync(hConsultation);
     }
 
+    [Authorize]
     public async Task ApproveAsync(int hospitalResponseId)
     {
         var hr = (await _hospitalResponseRepository.WithDetailsAsync((hr => hr.HospitalConsultation), (hr => hr.HospitalConsultation.PatientTreatmentProcess)))
@@ -98,6 +101,7 @@ public class HospitalResponseService : ApplicationService, IHospitalResponseServ
         await _operationRepository.InsertAsync(operation);
     }
 
+    [Authorize]
     public async Task RejectAsync(int hospitalResponseId)
     {
         var hr = (await _hospitalResponseRepository.WithDetailsAsync(hr => hr.HospitalConsultation))

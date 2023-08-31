@@ -5,11 +5,9 @@ namespace HTS.Dto.HospitalConsultationDocument;
 
 public class SaveHospitalConsultationDocumentDto
 {
-    [Required]
-    public int DocumentTypeId { get; set; }
+    public int? DocumentTypeId { get; set; }
     [Required]
     public int PatientDocumentStatusId { get; set; }
-    [Required]
     public string Description { get; set; }
     [Required, StringLength(100)]
     public string FileName { get; set; }

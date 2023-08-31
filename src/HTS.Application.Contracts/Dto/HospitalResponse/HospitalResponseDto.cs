@@ -16,7 +16,7 @@ public class HospitalResponseDto : EntityDto<int>
     public string Description { get; set; }
     public HospitalResponseTypeEnum HospitalResponseTypeId { get; set; }
     public HospitalizationTypeEnum? HospitalizationTypeId { get; set; }
-    public DateTime PossibleTreatmentDate { get; set; }
+    public DateTime? PossibleTreatmentDate { get; set; }
     public int? HospitalizationNumber { get; set; }
     public HospitalResponseTypeDto HospitalResponseType { get; set; }
     public HospitalizationTypeDto HospitalizationType { get; set; }

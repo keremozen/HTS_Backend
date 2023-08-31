@@ -30,6 +30,7 @@ namespace HTS.Data.Entity
         public Nationality? PhoneCountryCode { get; set; }
         [ForeignKey("CityId")]
         public City City { get; set; }
+        public virtual ICollection<HospitalPricer> HospitalPricers { get; set; }
         public virtual ICollection<HospitalStaff> HospitalStaffs { get; set; }
         public virtual ICollection<HospitalUHBStaff> HospitalUHBStaffs { get; set; }
     }

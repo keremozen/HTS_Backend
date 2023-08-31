@@ -12,7 +12,7 @@ using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Identity;
 
 namespace HTS.Service;
-[Authorize]
+[Authorize("HTS.HospitalManagement")]
 public class HospitalStaffService : ApplicationService, IHospitalStaffService
 {
     private readonly IRepository<HospitalStaff, int> _hospitalStaffRepository;

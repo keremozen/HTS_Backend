@@ -35,7 +35,7 @@ public class ContractedInstitutionService : ApplicationService, IContractedInsti
         return new PagedResultDto<ContractedInstitutionDto>(totalCount,responseList);
     }
 
-    [Authorize]
+    [Authorize("HTS.ContractedInstitutionManagement")]
     public async Task<ContractedInstitutionDto> CreateAsync(SaveContractedInstitutionDto contractedInstitution)
     {
         var entity = ObjectMapper.Map<SaveContractedInstitutionDto, ContractedInstitution>(contractedInstitution);
@@ -43,7 +43,7 @@ public class ContractedInstitutionService : ApplicationService, IContractedInsti
         return ObjectMapper.Map<ContractedInstitution, ContractedInstitutionDto>(entity);
     }
 
-    [Authorize]
+    [Authorize("HTS.ContractedInstitutionManagement")]
     public async Task<ContractedInstitutionDto> UpdateAsync(int id, SaveContractedInstitutionDto contractedInstitution)
     {
         var entity = await _contractedInstitutionRepository.GetAsync(id);
@@ -51,7 +51,7 @@ public class ContractedInstitutionService : ApplicationService, IContractedInsti
         return ObjectMapper.Map<ContractedInstitution, ContractedInstitutionDto>( await _contractedInstitutionRepository.UpdateAsync(entity));
     }
 
-    [Authorize]
+    [Authorize("HTS.ContractedInstitutionManagement")]
     public async Task DeleteAsync(int id)
     {
         await _contractedInstitutionRepository.DeleteAsync(id);

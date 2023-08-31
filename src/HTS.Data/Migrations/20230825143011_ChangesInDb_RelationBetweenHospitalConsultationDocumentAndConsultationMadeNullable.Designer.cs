@@ -3,6 +3,7 @@ using System;
 using HTS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Volo.Abp.EntityFrameworkCore;
@@ -12,9 +13,11 @@ using Volo.Abp.EntityFrameworkCore;
 namespace HTS.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230825143011_ChangesInDb_RelationBetweenHospitalConsultationDocumentAndConsultationMadeNullable")]
+    partial class ChangesInDb_RelationBetweenHospitalConsultationDocumentAndConsultationMadeNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -806,35 +809,6 @@ namespace HTS.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("HospitalConsultationStatuses");
-                });
-
-            modelBuilder.Entity("HTS.Data.Entity.HospitalPricer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("HospitalId")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsDefault")
-                        .HasColumnType("boolean");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("HospitalId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("HospitalPricer");
                 });
 
             modelBuilder.Entity("HTS.Data.Entity.HospitalResponse", b =>
@@ -3415,25 +3389,6 @@ namespace HTS.Data.Migrations
                     b.Navigation("PatientDocumentStatus");
                 });
 
-            modelBuilder.Entity("HTS.Data.Entity.HospitalPricer", b =>
-                {
-                    b.HasOne("HTS.Data.Entity.Hospital", "Hospital")
-                        .WithMany("HospitalPricers")
-                        .HasForeignKey("HospitalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Volo.Abp.Identity.IdentityUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Hospital");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("HTS.Data.Entity.HospitalResponse", b =>
                 {
                     b.HasOne("Volo.Abp.Identity.IdentityUser", "Creator")
@@ -4309,8 +4264,6 @@ namespace HTS.Data.Migrations
 
             modelBuilder.Entity("HTS.Data.Entity.Hospital", b =>
                 {
-                    b.Navigation("HospitalPricers");
-
                     b.Navigation("HospitalStaffs");
 
                     b.Navigation("HospitalUHBStaffs");

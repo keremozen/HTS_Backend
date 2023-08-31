@@ -57,6 +57,9 @@
     "HTS:25": "There is no payment document uploaded in the system.",
     "HTS:26": "Total payment item amount is less than proforma amount.",
     "HTS:27": "There is already a payment document in the system. There can only be one document",
+    "HTS:28": "The hospital pricer already exists.",
+    "HTS:29": "One default hospital pricer already exits. Multiple default hospital pricers are not allowed.",
+    "HTS:30": "Invalid operation.",
 
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Successful",
@@ -97,11 +100,11 @@
     "Permission:MaterialManagement": "Material Management",
     "Permission:RejectReasonManagement": "Reject Reason Management",
     "Permission:PaymentReasonManagement": "Payment Reason Management",
-    "Permission:Patient": "Patient",
-    "Permission:PatientAccess": "Access Patient Page",
     "Permission:PatientList": "List Patient",
     "Permission:PatientManagement": "Patient Add / Update",
     "Permission:PatientViewAll": "View All Patients",
+    "Permission:HospitalConsultation": "Hospital Consultation",
+    "Permission:ProformaManagement": "Proforma Management",
 
     /*MENU*/
     "Menu:Home": "Home",
@@ -147,6 +150,7 @@
     "Admin:Hospital:Column:PhoneNumber": "Phone Number",
     "Admin:Hospital:Column:EMail": "E-Mail",
     "Admin:Hospital:Column:Staffs": "Staff List",
+    "Admin:Hospital:Column:Pricers": "Pricer List",
     "Admin:Hospital:Column:IsActive": "Is Active?",
     "Admin:Hospital:HospitalDetails": "Hospital Details",
     "Admin:Hospital:HospitalStaffManagement": "Hospital Staff Management",
@@ -169,6 +173,16 @@
     "Admin:HospitalUHBStaff:Column:IsActive": "Is Active?",
     "Admin:HospitalUHBStaff:NewHospitalUHBStaff": "New UHB Staff",
     "Admin:HospitalUHBStaff:HospitalUHBStaffDetails": "Hospital UHB Staff Detail",
+    "Admin:Hospital:HospitalPricerManagement": "Hospital Pricer Management",
+    "Admin:HospitalPricer:Name": "Hospital Pricer",
+    "Admin:HospitalPricer:Column:Pricer": "Pricer",
+    "Admin:HospitalPricer:Column:NameSurname": "Name Surname",
+    "Admin:HospitalPricer:Column:PhoneNumber": "Phone Number",
+    "Admin:HospitalPricer:Column:Email": "E-Mail",
+    "Admin:HospitalPricer:Column:IsDefault": "Is Default?",
+    "Admin:HospitalPricer:Column:IsActive": "Is Active?",
+    "Admin:HospitalPricer:NewHospitalPricer": "New Staff",
+    "Admin:HospitalPricer:HospitalPricerDetails": "Hospital Pricer Detail",
 
     /*NATIONALITY MANAGEMENT*/
     "Admin:Nationality:Name": "Country",

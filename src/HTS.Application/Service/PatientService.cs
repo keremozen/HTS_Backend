@@ -21,10 +21,20 @@ namespace HTS.Service;
 [Authorize]
 public class PatientService : ApplicationService, IPatientService
 {
+    private readonly ICurrentUser _currentUser;
+    private readonly IAuthorizationService _authorizationService;
     private readonly IRepository<Patient, int> _patientRepository;
-    public PatientService(IRepository<Patient, int> patientRepository)
+    private readonly IRepository<Hospital, int> _hospitalRepository;
+    public PatientService(
+        IRepository<Patient, int> patientRepository,
+        IRepository<Hospital, int> hospitalRepository,
+        ICurrentUser currentUser,
+        IAuthorizationService authorizationService)
     {
+        _currentUser = currentUser;
+        _authorizationService = authorizationService;
         _patientRepository = patientRepository;
+        _hospitalRepository = hospitalRepository;
     }
 
     public async Task<PatientDto> GetAsync(int id)
@@ -34,19 +44,30 @@ public class PatientService : ApplicationService, IPatientService
         return ObjectMapper.Map<Patient, PatientDto>(patient);
     }
 
+    [Authorize("HTS.PatientList")]
     public async Task<PagedResultDto<PatientDto>> GetListAsync()
     {
         //Get all entities
         var patientList = (await _patientRepository.WithDetailsAsync()).ToList();
+
+        bool isAllowedToViewAll = await _authorizationService.IsGrantedAsync("HTS.PatientViewAll");
+        if (!isAllowedToViewAll)
+        {
+            var hospitals = (await _hospitalRepository.WithDetailsAsync()).Where(h => h.HospitalStaffs.Any(hs => hs.UserId == _currentUser.Id) || h.HospitalPricers.Any(hs => hs.UserId == _currentUser.Id));
+            List<Guid> authorizedHospitalStaffIds = hospitals.SelectMany(h=>h.HospitalStaffs).Select(hs=>hs.UserId).ToList().Union(hospitals.SelectMany(h => h.HospitalPricers).Select(hs => hs.UserId).ToList()).ToList();
+            patientList = patientList.Where(p => authorizedHospitalStaffIds.Contains(p.CreatorId.Value)).ToList();
+        }
+        
         var patientDtoList = ObjectMapper.Map<List<Patient>, List<PatientDto>>(patientList);
         patientDtoList = patientDtoList.Select(p =>
         {
             p.PatientTreatmentProcesses = p.PatientTreatmentProcesses.OrderByDescending(t => t.Id).Take(1).ToList();
             return p;
         }).ToList();
-        return new PagedResultDto<PatientDto>(patientDtoList.Count(),patientDtoList);
+        return new PagedResultDto<PatientDto>(patientDtoList.Count(), patientDtoList);
     }
 
+    [Authorize("HTS.PatientList")]
     public async Task<PagedResultDto<PatientDto>> FilterListAsync(FilterPatientDto filter)
     {
         var query = await _patientRepository.WithDetailsAsync();
@@ -107,6 +128,8 @@ public class PatientService : ApplicationService, IPatientService
 
         return new PagedResultDto<PatientDto>(totalCount, responseList);
     }
+
+    [Authorize("HTS.PatientManagement")]
     public async Task<PatientDto> CreateAsync(SavePatientDto patient)
     {
         await IsDataValidToSave(patient);
@@ -115,6 +138,7 @@ public class PatientService : ApplicationService, IPatientService
         return ObjectMapper.Map<Patient, PatientDto>(createdEntity);
     }
 
+    [Authorize("HTS.PatientManagement")]
     public async Task<PatientDto> UpdateAsync(int id, SavePatientDto patient)
     {
         await IsDataValidToSave(patient, id);
@@ -123,6 +147,7 @@ public class PatientService : ApplicationService, IPatientService
         return ObjectMapper.Map<Patient, PatientDto>(await _patientRepository.UpdateAsync(entity));
     }
 
+    [Authorize("HTS.PatientManagement")]
     public async Task DeleteAsync(int id)
     {
         await _patientRepository.DeleteAsync(id);

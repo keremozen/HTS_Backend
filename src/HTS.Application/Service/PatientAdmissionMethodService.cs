@@ -33,7 +33,7 @@ public class PatientAdmissionMethodService : ApplicationService, IPatientAdmissi
         return new PagedResultDto<PatientAdmissionMethodDto>(totalCount,responseList);
     }
 
-    [Authorize]
+    [Authorize("HTS.PatientAdmissionMethodManagement")]
     public async Task<PatientAdmissionMethodDto> CreateAsync(SavePatientAdmissionMethodDto patientAdmissionMethod)
     {
         var entity = ObjectMapper.Map<SavePatientAdmissionMethodDto, PatientAdmissionMethod>(patientAdmissionMethod);
@@ -41,7 +41,7 @@ public class PatientAdmissionMethodService : ApplicationService, IPatientAdmissi
         return ObjectMapper.Map<PatientAdmissionMethod, PatientAdmissionMethodDto>(entity);
     }
 
-    [Authorize]
+    [Authorize("HTS.PatientAdmissionMethodManagement")]
     public async Task<PatientAdmissionMethodDto> UpdateAsync(int id, SavePatientAdmissionMethodDto patientAdmissionMethod)
     {
         var entity = await _patientAdmissionMethodRepository.GetAsync(id);
@@ -49,7 +49,7 @@ public class PatientAdmissionMethodService : ApplicationService, IPatientAdmissi
         return ObjectMapper.Map<PatientAdmissionMethod, PatientAdmissionMethodDto>( await _patientAdmissionMethodRepository.UpdateAsync(entity));
     }
 
-    [Authorize]
+    [Authorize("HTS.PatientAdmissionMethodManagement")]
     public async Task DeleteAsync(int id)
     {
         await _patientAdmissionMethodRepository.DeleteAsync(id);

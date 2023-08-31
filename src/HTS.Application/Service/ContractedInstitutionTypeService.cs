@@ -34,14 +34,14 @@ public class ContractedInstitutionTypeService : ApplicationService, IContractedI
         return new PagedResultDto<ContractedInstitutionTypeDto>(totalCount,responseList);
     }
 
-    [Authorize]
+    [Authorize("HTS.ContractedInstitutionTypeManagement")]
     public async Task CreateAsync(SaveContractedInstitutionTypeDto type)
     {
         var entity = ObjectMapper.Map<SaveContractedInstitutionTypeDto, ContractedInstitutionType>(type);
         await _ciTypeRepository.InsertAsync(entity);
     }
 
-    [Authorize]
+    [Authorize("HTS.ContractedInstitutionTypeManagement")]
     public async Task UpdateAsync(int id, SaveContractedInstitutionTypeDto type)
     {
         var entity = await _ciTypeRepository.GetAsync(id);
@@ -49,7 +49,7 @@ public class ContractedInstitutionTypeService : ApplicationService, IContractedI
         await _ciTypeRepository.UpdateAsync(entity);
     }
 
-    [Authorize]
+    [Authorize("HTS.ContractedInstitutionTypeManagement")]
     public async Task DeleteAsync(int id)
     {
         await _ciTypeRepository.DeleteAsync(id);

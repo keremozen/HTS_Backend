@@ -12,7 +12,7 @@ using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
 namespace HTS.Service;
-[Authorize]
+
 public class ProcessService : ApplicationService, IProcessService
 {
     private readonly IRepository<Process, int> _processRepository;
@@ -38,6 +38,7 @@ public class ProcessService : ApplicationService, IProcessService
         return new PagedResultDto<ProcessDto>(totalCount, responseList);
     }
 
+    [Authorize("HTS.ProcessManagement")]
     public async Task<ProcessDto> CreateAsync(SaveProcessDto process)
     {
         var entity = ObjectMapper.Map<SaveProcessDto, Process>(process);
@@ -45,6 +46,7 @@ public class ProcessService : ApplicationService, IProcessService
         return ObjectMapper.Map<Process, ProcessDto>(entity);
     }
 
+    [Authorize("HTS.ProcessManagement")]
     public async Task<ProcessDto> UpdateAsync(int id, SaveProcessDto process)
     {
         var entity = await _processRepository.GetAsync(id);
@@ -52,6 +54,7 @@ public class ProcessService : ApplicationService, IProcessService
         return ObjectMapper.Map<Process, ProcessDto>(await _processRepository.UpdateAsync(entity));
     }
 
+    [Authorize("HTS.ProcessManagement")]
     public async Task DeleteAsync(int id)
     {
         await _processRepository.DeleteAsync(id);

@@ -9,7 +9,7 @@ using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
 namespace HTS.Service;
-[Authorize]
+
 public class HospitalResponseTypeService : ApplicationService, IHospitalResponseTypeService
 {
     private readonly IRepository<HospitalResponseType, int> _hospitalResponseTypeRepository;

@@ -34,9 +34,14 @@ namespace HTS.Service
             return ObjectMapper.Map<IList<IdentityUser>, IList<IdentityUserDto>>(await _userManager.GetUsersInRoleAsync(roleName));
         }
 
-        public async Task<IList<IdentityUserDto>> GetUhbStaffListAsync()
+        public async Task<IList<IdentityUserDto>> GetHospitalStaffListAsync()
         {
-            return ObjectMapper.Map<IList<IdentityUser>, IList<IdentityUserDto>>(await _userManager.GetUsersInRoleAsync(_config["UygulamaRolleri:UHBYetkilisi"]));
+            return ObjectMapper.Map<IList<IdentityUser>, IList<IdentityUserDto>>(await _userManager.GetUsersInRoleAsync(_config["UygulamaRolleri:HastaneYetkilisi"]));
+        }
+
+        public async Task<IList<IdentityUserDto>> GetHospitalPricerListAsync()
+        {
+            return ObjectMapper.Map<IList<IdentityUser>, IList<IdentityUserDto>>(await _userManager.GetUsersInRoleAsync(_config["UygulamaRolleri:HastaneFiyatlandirici"]));
         }
 
         public async Task<IList<IdentityUserDto>> GetInterpreterListAsync()

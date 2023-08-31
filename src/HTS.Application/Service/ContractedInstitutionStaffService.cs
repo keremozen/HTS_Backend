@@ -12,7 +12,7 @@ using Volo.Abp.Domain.Repositories;
 
 namespace HTS.Service;
 
-[Authorize]
+[Authorize("HTS.ContractedInstitutionManagement")]
 public class ContractedInstitutionStaffService : ApplicationService, IContractedInstitutionStaffService
 {
     private readonly IRepository<ContractedInstitutionStaff, int> _contractedInstitutionStaffRepository;

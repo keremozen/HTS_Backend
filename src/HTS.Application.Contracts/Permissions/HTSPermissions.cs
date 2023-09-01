@@ -31,4 +31,6 @@ public static class HTSPermissions
     public const string PatientViewAll = GroupName + ".PatientViewAll";
     public const string HospitalConsultation = GroupName + ".HospitalConsultation";
     public const string ProformaManagement = GroupName + ".ProformaManagement";
+    public const string MFBApproval = GroupName + ".MFBApproval";
+    public const string PatientApproval = GroupName + ".PatientApproval";
 }

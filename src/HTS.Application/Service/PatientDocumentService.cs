@@ -16,7 +16,6 @@ using Volo.Abp.Users;
 using static HTS.Enum.EntityEnum;
 
 namespace HTS.Service;
-[Authorize("HTS.PatientManagement")]
 public class PatientDocumentService : ApplicationService, IPatientDocumentService
 {
     private readonly IRepository<PatientDocument, int> _patientDocumentRepository;
@@ -28,6 +27,7 @@ public class PatientDocumentService : ApplicationService, IPatientDocumentServic
         _currentUser = currentUser;
     }
 
+    [Authorize]
     public async Task<PatientDocumentDto> GetAsync(int id)
     {
        var pd = await _patientDocumentRepository.GetAsync(id);
@@ -36,6 +36,8 @@ public class PatientDocumentService : ApplicationService, IPatientDocumentServic
       patientDocument.File = Convert.ToBase64String(fileBytes);
       return patientDocument;
     }
+
+    [Authorize]
 
     public async Task<PagedResultDto<PatientDocumentDto>> GetListAsync(int patientId)
     {
@@ -47,7 +49,8 @@ public class PatientDocumentService : ApplicationService, IPatientDocumentServic
         var totalCount = await _patientDocumentRepository.CountAsync();//item count
         return new PagedResultDto<PatientDocumentDto>(totalCount, responseList);
     }
-    
+
+    [Authorize]
     public async Task<PagedResultDto<PatientDocumentDto>> GetDetailedListAsync(int patientId)
     {
         //Get all entities
@@ -68,6 +71,7 @@ public class PatientDocumentService : ApplicationService, IPatientDocumentServic
         return new PagedResultDto<PatientDocumentDto>(totalCount, responseList);
     }
 
+    [Authorize("HTS.PatientManagement")]
     public async Task<PatientDocumentDto> CreateAsync(SavePatientDocumentDto patientDocument)
     {
         var entity = ObjectMapper.Map<SavePatientDocumentDto, PatientDocument>(patientDocument);
@@ -85,6 +89,7 @@ public class PatientDocumentService : ApplicationService, IPatientDocumentServic
         File.WriteAllBytes(file.FullName, Convert.FromBase64String(data.Split(',')[1]));
     }
 
+    [Authorize("HTS.PatientManagement")]
     public async Task<PatientDocumentDto> UpdateStatus(int id, int statusId)
     {
         var entity = await _patientDocumentRepository.GetAsync(id);
@@ -93,6 +98,7 @@ public class PatientDocumentService : ApplicationService, IPatientDocumentServic
         return ObjectMapper.Map<PatientDocument, PatientDocumentDto>(await _patientDocumentRepository.UpdateAsync(entity));
     }
 
+    [Authorize("HTS.PatientManagement")]
     public async Task DeleteAsync(int id)
     {
         await _patientDocumentRepository.DeleteAsync(id);

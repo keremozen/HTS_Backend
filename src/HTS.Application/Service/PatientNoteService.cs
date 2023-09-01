@@ -13,7 +13,7 @@ using Volo.Abp.Users;
 using static HTS.Enum.EntityEnum;
 
 namespace HTS.Service;
-[Authorize("HTS.PatientManagement")]
+
 public class PatientNoteService : ApplicationService, IPatientNoteService
 {
     private readonly IRepository<PatientNote, int> _patientNoteRepository;
@@ -24,7 +24,7 @@ public class PatientNoteService : ApplicationService, IPatientNoteService
         _patientNoteRepository = nationalityRepository;
         _currentUser = currentUser;
     }
-
+    [Authorize]
     public async Task<PagedResultDto<PatientNoteDto>> GetListAsync(int patientId)
     {
         //Get all entities
@@ -35,6 +35,7 @@ public class PatientNoteService : ApplicationService, IPatientNoteService
         return new PagedResultDto<PatientNoteDto>(totalCount, responseList);
     }
 
+    [Authorize("HTS.PatientManagement")]
     public async Task<PatientNoteDto> CreateAsync(SavePatientNoteDto patientNote)
     {
         var entity = ObjectMapper.Map<SavePatientNoteDto, PatientNote>(patientNote);
@@ -43,6 +44,7 @@ public class PatientNoteService : ApplicationService, IPatientNoteService
         return ObjectMapper.Map<PatientNote, PatientNoteDto>(entity);
     }
 
+    [Authorize("HTS.PatientManagement")]
     public async Task<PatientNoteDto> UpdateStatus(int id, int statusId)
     {
         var entity = await _patientNoteRepository.GetAsync(id);
@@ -67,6 +69,7 @@ public class PatientNoteService : ApplicationService, IPatientNoteService
         }
     }
 
+    [Authorize("HTS.PatientManagement")]
     public async Task DeleteAsync(int id)
     {
         await _patientNoteRepository.DeleteAsync(id);

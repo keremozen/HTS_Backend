@@ -105,6 +105,8 @@
     "Permission:PatientViewAll": "View All Patients",
     "Permission:HospitalConsultation": "Hospital Consultation",
     "Permission:ProformaManagement": "Proforma Management",
+    "Permission:MFBApproval": "MFB Approaval",
+    "Permission:PatientApproval": "Patient Approval",
 
     /*MENU*/
     "Menu:Home": "Home",

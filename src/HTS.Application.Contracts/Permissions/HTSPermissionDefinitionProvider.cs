@@ -35,6 +35,8 @@ public class HTSPermissionDefinitionProvider : PermissionDefinitionProvider
         htsGroup.AddPermission(HTSPermissions.PatientViewAll, L("Permission:PatientViewAll"));
         htsGroup.AddPermission(HTSPermissions.HospitalConsultation, L("Permission:HospitalConsultation"));
         htsGroup.AddPermission(HTSPermissions.ProformaManagement, L("Permission:ProformaManagement"));
+        htsGroup.AddPermission(HTSPermissions.MFBApproval, L("Permission:MFBApproval"));
+        htsGroup.AddPermission(HTSPermissions.PatientApproval, L("Permission:PatientApproval"));
 
     }
 

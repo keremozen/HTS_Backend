@@ -19,7 +19,7 @@ using Volo.Abp.Identity;
 using static HTS.Enum.EntityEnum;
 
 namespace HTS.Service;
-[Authorize("HTS.PatientManagement")]
+
 public class PatientTreatmentProcessService : ApplicationService, IPatientTreatmentProcessService
 {
     private readonly IRepository<PatientTreatmentProcess, int> _patientTreatmentProcessRepository;
@@ -31,6 +31,7 @@ public class PatientTreatmentProcessService : ApplicationService, IPatientTreatm
         _userRepository = userRepository;
     }
 
+    [Authorize]
     public async Task<PagedResultDto<PatientTreatmentProcessDto>> GetListByPatientIdAsync(int patientId)
     {
         //Get all entities
@@ -41,6 +42,7 @@ public class PatientTreatmentProcessService : ApplicationService, IPatientTreatm
         return new PagedResultDto<PatientTreatmentProcessDto>(totalCount, responseList);
     }
 
+    [Authorize("HTS.PatientManagement")]
     public async Task<PatientTreatmentProcessDto> StartAsync(int patientId)
     {
         var entity = new PatientTreatmentProcess()

@@ -12,7 +12,7 @@ using Volo.Abp.Domain.Repositories;
 
 namespace HTS.Service;
 
-[Authorize("HTS.ContractedInstitutionManagement")]
+
 public class ContractedInstitutionStaffService : ApplicationService, IContractedInstitutionStaffService
 {
     private readonly IRepository<ContractedInstitutionStaff, int> _contractedInstitutionStaffRepository;
@@ -40,6 +40,7 @@ public class ContractedInstitutionStaffService : ApplicationService, IContracted
         return ObjectMapper.Map<ContractedInstitutionStaff, ContractedInstitutionStaffDto>(await AsyncExecuter.FirstOrDefaultAsync(query));
     }
 
+    [Authorize("HTS.ContractedInstitutionManagement")]
     public async Task CreateAsync(SaveContractedInstitutionStaffDto contractedInstitutionStaff)
     {
         await IsDataValidToSave(contractedInstitutionStaff);
@@ -48,6 +49,7 @@ public class ContractedInstitutionStaffService : ApplicationService, IContracted
         await _contractedInstitutionStaffRepository.InsertAsync(entity);
     }
 
+    [Authorize("HTS.ContractedInstitutionManagement")]
     public async Task UpdateAsync(int id,
         SaveContractedInstitutionStaffDto contractedInstitutionStaff)
     {
@@ -58,6 +60,7 @@ public class ContractedInstitutionStaffService : ApplicationService, IContracted
         await _contractedInstitutionStaffRepository.UpdateAsync(entity);
     }
 
+    [Authorize("HTS.ContractedInstitutionManagement")]
     public async Task DeleteAsync(int id)
     {
         await _contractedInstitutionStaffRepository.DeleteAsync(id);

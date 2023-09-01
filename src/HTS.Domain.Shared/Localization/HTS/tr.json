@@ -105,6 +105,8 @@
     "Permission:PatientViewAll": "Tüm Hastaları Görebilme",
     "Permission:HospitalConsultation": "Hastanelere Danışma",
     "Permission:ProformaManagement": "Proforma Oluşturma",
+    "Permission:MFBApproval": "MFB Onayı",
+    "Permission:PatientApproval": "Hasta Onayı",
 
     /*MENU*/
     "Menu:Home": "Ana sayfa",

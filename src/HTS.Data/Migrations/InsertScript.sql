@@ -1,7 +1,7 @@
 ﻿--Nationalities Table
-INSERT INTO "Nationalities"("Name", "PhoneCode", "IsActive", "CreationTime", "IsDeleted") VALUES ('Türkiye', '+90', true,'"2023-03-26 22:49:04.678786+03"', false);
-INSERT INTO "Nationalities"("Name", "PhoneCode", "IsActive", "CreationTime", "IsDeleted") VALUES ('Avustralya', '+61', true,'"2023-03-26 22:49:04.678786+03"', false);
-INSERT INTO "Nationalities"("Name", "PhoneCode", "IsActive", "CreationTime", "IsDeleted") VALUES ('Singapur', '+65', true,'"2023-03-26 22:49:04.678786+03"', false);
+INSERT INTO "Nationalities"("Name", "PhoneCode","CountryCode", "IsActive", "CreationTime", "IsDeleted") VALUES ('Türkiye', '+90','TR', true,'"2023-03-26 22:49:04.678786+03"', false);
+INSERT INTO "Nationalities"("Name", "PhoneCode","CountryCode", "IsActive", "CreationTime", "IsDeleted") VALUES ('Avustralya', '+61','AU', true,'"2023-03-26 22:49:04.678786+03"', false);
+INSERT INTO "Nationalities"("Name", "PhoneCode","CountryCode", "IsActive", "CreationTime", "IsDeleted") VALUES ('Singapur', '+65', 'SG',true,'"2023-03-26 22:49:04.678786+03"', false);
 
 --Genders Table
 INSERT INTO "Genders"("Id", "Name") VALUES (1, 'Erkek');

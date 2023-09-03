@@ -6,5 +6,6 @@ public class NationalityDto: EntityDto<int>
 {
     public string Name { get; set; }
     public string PhoneCode { get; set; }
+    public string CountryCode { get; set; }
     public bool IsActive { get; set; }
 }

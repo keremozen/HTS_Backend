@@ -9,5 +9,7 @@ public class SaveNationalityDto
 
     [Required, StringLength(10)]
     public string PhoneCode { get; set; }
+    [Required, StringLength(10)]
+    public string CountryCode { get; set; }
     public bool IsActive { get; set; }
 }

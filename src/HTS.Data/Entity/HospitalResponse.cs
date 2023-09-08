@@ -25,7 +25,7 @@ namespace HTS.Data.Entity
         public HospitalConsultation? HospitalConsultation { get; set; }
 
         [ForeignKey("HospitalizationTypeId")]
-        public HospitalizationType HospitalizationType { get; set; }
+        public HospitalizationType? HospitalizationType { get; set; }
         public virtual ICollection<HospitalResponseBranch> HospitalResponseBranches { get; set; }
         public virtual ICollection<HospitalResponseProcess> HospitalResponseProcesses { get; set; }
      

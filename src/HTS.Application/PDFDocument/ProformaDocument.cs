@@ -125,56 +125,62 @@ namespace HTS.PDFDocument
                     }
                 });
 
-                column.Item().Text("EXTRA SERVICES INCLUDED IN THE COST").Style(textStyle).FontSize(8);
-                foreach (var service in _proforma.ProformaAdditionalServices)
+                if (_proforma.ProformaAdditionalServices.Count > 0)
                 {
-                    column.Item().Row(row =>
+                    column.Item().Text("EXTRA SERVICES INCLUDED IN THE COST").Style(textStyle).FontSize(8);
+                    foreach (var service in _proforma.ProformaAdditionalServices)
                     {
-                        row.Spacing(5);
-                        row.AutoItem().Text('\u2022' + " ").Style(textStyle).FontSize(8); // text or image
-                        row.RelativeItem().Text(text =>
+                        column.Item().Row(row =>
                         {
-                            text.Span(service.AdditionalService.EnglishName).Style(textStyle).FontSize(8);
-                            bool hasExtraInfo = service.AdditionalService.Day || service.AdditionalService.Companion || service.AdditionalService.Companion || service.AdditionalService.Piece;
-                            if (hasExtraInfo)
+                            row.Spacing(5);
+                            row.AutoItem().Text('\u2022' + " ").Style(textStyle).FontSize(8); // text or image
+                            row.RelativeItem().Text(text =>
                             {
-                                text.Span(" (").Style(textStyle).FontSize(8);
-                            }
-                            string extraInfo = "";
-                            if (service.AdditionalService.Day)
-                            {
-                                extraInfo += service.DayCount.ToString() + " Day - ";
-                            }
-                            if (service.AdditionalService.Companion)
-                            {
-                                extraInfo += service.CompanionCount.ToString() + " Companion - ";
-                            }
-                            if (service.AdditionalService.RoomType)
-                            {
-                                extraInfo += (service.RoomTypeId.Value == 1 ? "Standart" : "VIP") + " Room - ";
-                            }
-                            if (service.AdditionalService.Piece)
-                            {
-                                extraInfo += service.ItemCount.ToString() + " Count - ";
-                            }
-                            if (hasExtraInfo)
-                            {
-                                extraInfo = extraInfo.Substring(0, extraInfo.Length - 3);
-                                text.Span(extraInfo + ")").Style(textStyle).FontSize(8);
-                            }
+                                text.Span(service.AdditionalService.EnglishName).Style(textStyle).FontSize(8);
+                                bool hasExtraInfo = service.AdditionalService.Day || service.AdditionalService.Companion || service.AdditionalService.Companion || service.AdditionalService.Piece;
+                                if (hasExtraInfo)
+                                {
+                                    text.Span(" (").Style(textStyle).FontSize(8);
+                                }
+                                string extraInfo = "";
+                                if (service.AdditionalService.Day)
+                                {
+                                    extraInfo += service.DayCount.ToString() + " Day - ";
+                                }
+                                if (service.AdditionalService.Companion)
+                                {
+                                    extraInfo += service.CompanionCount.ToString() + " Companion - ";
+                                }
+                                if (service.AdditionalService.RoomType)
+                                {
+                                    extraInfo += (service.RoomTypeId.Value == 1 ? "Standart" : "VIP") + " Room - ";
+                                }
+                                if (service.AdditionalService.Piece)
+                                {
+                                    extraInfo += service.ItemCount.ToString() + " Count - ";
+                                }
+                                if (hasExtraInfo)
+                                {
+                                    extraInfo = extraInfo.Substring(0, extraInfo.Length - 3);
+                                    text.Span(extraInfo + ")").Style(textStyle).FontSize(8);
+                                }
+                            });
                         });
-                    });
+                    }
                 }
 
-                column.Item().Text("SERVICES NOT INCLUDED").Style(textStyle).FontSize(8);
-                foreach (var service in _proforma.ProformaNotIncludingServices)
+                if (_proforma.ProformaNotIncludingServices.Count > 0)
                 {
-                    column.Item().Row(row =>
+                    column.Item().Text("SERVICES NOT INCLUDED").Style(textStyle).FontSize(8);
+                    foreach (var service in _proforma.ProformaNotIncludingServices)
                     {
-                        row.Spacing(5);
-                        row.AutoItem().Text('\u2022' + " ").Style(textStyle).FontSize(8); // text or image
-                        row.RelativeItem().Text(service.Description).Style(textStyle).FontSize(8);
-                    });
+                        column.Item().Row(row =>
+                        {
+                            row.Spacing(5);
+                            row.AutoItem().Text('\u2022' + " ").Style(textStyle).FontSize(8); // text or image
+                            row.RelativeItem().Text(service.Description).Style(textStyle).FontSize(8);
+                        });
+                    }
                 }
 
                 column.Item()

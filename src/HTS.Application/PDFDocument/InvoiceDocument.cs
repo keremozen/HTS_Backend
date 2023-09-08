@@ -17,6 +17,10 @@ namespace HTS.PDFDocument
     public class InvoiceDocument : IDocument
     {
         private Payment _payment;
+        string[] onesDigits = { "", "Bir", "İki", "Üç", "Dört", "Beş", "Altı", "Yedi", "Sekiz", "Dokuz" };
+        string[] tensDigits = { "", "On", "Yirmi", "Otuz", "Kırk", "Elli", "Altmış", "Yetmiş", "Seksen", "Doksan" };
+        string[] groups = { "", "Bin", "Milyon", "Milyar", "Trilyon", "Katrilyon" };
+
         public InvoiceDocument(Payment payment)
         {
             _payment = payment;
@@ -78,7 +82,7 @@ namespace HTS.PDFDocument
                     text.Span(_payment.ProcessingNumber).Style(textStyle).FontSize(8);
                 });
 
-
+                decimal totalPrice = 0;
                 column.Spacing(10);
                 column.Item().Table(table =>
                 {
@@ -115,10 +119,10 @@ namespace HTS.PDFDocument
                         header.Cell().Element(CellStyle).Text("Sorgu No").Style(textStyle);
                         header.Cell().Element(CellStyle).Text("Para Birimi").Style(textStyle);
                         header.Cell().Element(CellStyle).Text("Tutar").Style(textStyle);
-                        header.Cell().Element(CellStyle).Text("Tatar TRY").Style(textStyle);
+                        header.Cell().Element(CellStyle).Text("Tutar TRY").Style(textStyle);
                     });
 
-                    decimal totalPrice = 0;
+
                     foreach (var item in _payment.PaymentItems)
                     {
                         var priceInTry = item.Price * item.ExchangeRate;
@@ -137,26 +141,108 @@ namespace HTS.PDFDocument
 
                 });
 
-                column.Item().Text("Yalnız, Altı bin beş yüz (Yazı ile) EUR tahsil dilmiştir.").Style(textStyle);
+                column.Item().Text("Yalnız, " + this.ConvertDecimalToPieces(totalPrice) + " (Yazı ile) TL tahsil edilmiştir.").Style(textStyle);
 
                 column.Item().Row(row =>
                 {
-                    row.RelativeColumn().Column(column => {
+                    row.RelativeColumn().Column(column =>
+                    {
                         column.Item().Text("TESLİM EDEN;").Style(boldTextStyle);
-                        column.Item().Text("Adı Soyadı: Tuncay Beren").Style(textStyle);
+                        column.Item().Text("Adı Soyadı: " + _payment.PayerNameSurname).Style(textStyle);
                         column.Item().Text("İmza:").Style(textStyle);
                     });
 
-                    row.RelativeColumn().Column(column => {
+                    row.RelativeColumn().Column(column =>
+                    {
                         column.Item().Text("TAHSİL EDEN;").Style(boldTextStyle);
-                        column.Item().Text("Adı Soyadı: Yıldırım Hakan Savcı").Style(textStyle);
+                        column.Item().Text("Adı Soyadı: " + _payment.CollectorNameSurname).Style(textStyle);
                         column.Item().Text("İmza:").Style(textStyle);
                     });
                 });
 
             });
         }
-        
+
+        private string ConvertDecimalToPieces(decimal number)
+        {
+            long lira = (long)Math.Floor(number);
+            int kurus = (int)Math.Floor((number - lira) * 100);
+
+            string liraAsText = ConvertNumberToText(lira);
+            string kurusAsText = ConvertKurus(kurus);
+
+            return liraAsText + " TL " + kurusAsText;
+        }
+
+        private string ConvertNumberToText(long totalPrice)
+        {
+            if (totalPrice == 0)
+                return "Sıfır";
+
+            string converted = "";
+
+            int groupIndex = 0;
+            while (totalPrice > 0)
+            {
+                int grupDegeri = (int)(totalPrice % 1000);
+                if (grupDegeri > 0)
+                {
+                    string grupDegeriYaziyla = ConvertGroupValue(grupDegeri, groupIndex == 1);
+                    converted = grupDegeriYaziyla + " " + groups[groupIndex] + " " + converted;
+                }
+                totalPrice /= 1000;
+                groupIndex++;
+            }
+
+            return converted.Trim();
+
+        }
+
+        private string ConvertGroupValue(int number, bool thousandsGroup)
+        {
+            int hundredsDigit = number / 100;
+            int tensDigit = (number % 100) / 10;
+            int onesDigit = number % 10;
+
+            string numberAsText = "";
+
+            if (hundredsDigit > 0)
+            {
+                if (hundredsDigit == 1)
+                    numberAsText += "Yüz ";
+                else
+                    numberAsText += onesDigits[hundredsDigit] + " Yüz ";
+            }
+
+            if (tensDigit > 0)
+                numberAsText += tensDigits[tensDigit] + " ";
+
+            if (onesDigit > 0)
+            {
+                if (thousandsGroup && onesDigit == 1)
+                    numberAsText += "";
+                else
+                    numberAsText += onesDigits[onesDigit] + " ";
+            }
+
+            return numberAsText;
+        }
+
+        private string ConvertKurus(int kurus)
+        {
+            string kurusAsText = ConvertNumberToText(kurus);
+
+            if (kurus == 0)
+                return "";
+
+            if (kurusAsText == "Bir")
+                kurusAsText = "Bir Kuruş";
+            else
+                kurusAsText += " Kuruş";
+
+            return kurusAsText;
+        }
+
         private void ComposeHeader(IContainer container)
         {
             var textStyle = TextStyle.Default.FontFamily("Arial").FontSize(8);

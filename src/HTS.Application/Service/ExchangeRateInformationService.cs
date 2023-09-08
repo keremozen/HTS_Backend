@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
+using System.Linq;
 
 namespace HTS.Service
 {
@@ -26,9 +27,10 @@ namespace HTS.Service
 
         public async Task<ExchangeRateInformationDto> GetAsync(int currencyId)
         {
-            var result =
-                await _exchangeRateInformationRepository.FirstOrDefaultAsync(e =>
-                    e.CreationTime.Date.Date == DateTime.Now.Date.AddDays(-1));
+            var result = (await _exchangeRateInformationRepository.GetListAsync(e => e.CurrencyId == currencyId))
+                            .OrderByDescending(e => e.CreationTime.Date)
+                            .FirstOrDefault();
+
             return ObjectMapper.Map<ExchangeRateInformation, ExchangeRateInformationDto>(result);
         }
     }

@@ -33,4 +33,5 @@ public static class HTSPermissions
     public const string ProformaManagement = GroupName + ".ProformaManagement";
     public const string MFBApproval = GroupName + ".MFBApproval";
     public const string PatientApproval = GroupName + ".PatientApproval";
+    public const string SendToPricing = GroupName + ".SendToPricing";
 }

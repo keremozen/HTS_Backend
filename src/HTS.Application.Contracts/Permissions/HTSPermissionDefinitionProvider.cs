@@ -37,6 +37,7 @@ public class HTSPermissionDefinitionProvider : PermissionDefinitionProvider
         htsGroup.AddPermission(HTSPermissions.ProformaManagement, L("Permission:ProformaManagement"));
         htsGroup.AddPermission(HTSPermissions.MFBApproval, L("Permission:MFBApproval"));
         htsGroup.AddPermission(HTSPermissions.PatientApproval, L("Permission:PatientApproval"));
+        htsGroup.AddPermission(HTSPermissions.SendToPricing, L("Permission:SendToPricing"));
 
     }
 

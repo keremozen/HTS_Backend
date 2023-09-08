@@ -53,7 +53,6 @@ public class PaymentDocumentService : ApplicationService,IPaymentDocumentService
     {
         var entity = ObjectMapper.Map<SavePaymentDocumentDto, PaymentDocument>(paymentDocument);
         //Get entity from db
-        //Get entity from db
         var payment =
             (await _paymentRepository.WithDetailsAsync( (p => p.Proforma),
                 (p => p.Proforma.Operation),
@@ -64,6 +63,7 @@ public class PaymentDocumentService : ApplicationService,IPaymentDocumentService
         IsDataValidToSave(payment);
         entity.FilePath = @"C:\filesrv\" + payment?.Proforma?.Operation?.PatientTreatmentProcess?.TreatmentCode + "\\" + paymentDocument.FileName;
         SaveByteArrayToFileWithStaticMethod(paymentDocument.File, entity.FilePath);
+        await _paymentDocumentRepository.DeleteManyAsync(payment.PaymentDocuments);
         await _paymentDocumentRepository.InsertAsync(entity);
         if (IsDataValidToFinalizePayment(payment))
         {
@@ -115,10 +115,10 @@ public class PaymentDocumentService : ApplicationService,IPaymentDocumentService
         {
             throw new HTSBusinessException(ErrorCode.RelationalDataIsMissing);
         }
-        if (payment.PaymentDocuments?.Any() ?? false)
+        /*if (payment.PaymentDocuments?.Any() ?? false)
         {
             throw new HTSBusinessException(ErrorCode.ThereCanOnlyBeOneDocument);
-        }
+        }*/
     }
     
     private static void SaveByteArrayToFileWithStaticMethod(string data, string filePath)

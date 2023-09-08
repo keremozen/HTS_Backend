@@ -11,11 +11,19 @@ using HTS.Dto.Nationality;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.DependencyInjection;
+using HTS.Dto.PatientDocument;
 
 namespace HTS.Interface
 {
     public interface IHospitalConsultationDocumentService : IApplicationService
     {
+        /// <summary>
+        /// Get document by Id
+        /// </summary>
+        /// <param name="id">Document id</param>
+        /// <returns>Hospital consultation document</returns>
+        Task<HospitalConsultationDocumentDto> GetAsync(int id);
+
         /// <summary>
         /// Converts patient documents to hospital consultation documents
         /// </summary>

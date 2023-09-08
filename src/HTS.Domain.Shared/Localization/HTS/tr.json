@@ -107,6 +107,7 @@
     "Permission:ProformaManagement": "Proforma Oluşturma",
     "Permission:MFBApproval": "MFB Onayı",
     "Permission:PatientApproval": "Hasta Onayı",
+    "Permission:SendToPricing": "Fiyatlandırmaya Gönderme",
 
     /*MENU*/
     "Menu:Home": "Ana sayfa",
@@ -192,6 +193,7 @@
     "Admin:Nationality:NationalityManagement": "Ülke Yönetimi",
     "Admin:Nationality:NewNationality": "Yeni Ülke",
     "Admin:Nationality:Column:Name": "İsim",
+    "Admin:Nationality:Column:CountryCode": "Ülke Kodu",
     "Admin:Nationality:Column:PhoneCode": "Telefon Kodu",
     "Admin:Nationality:Column:IsActive": "Aktif mi?",
     "Admin:Nationality:NationalityDetails": "Ülke Detayları",
@@ -632,6 +634,8 @@
     "Payment:Invoices:NameSingular": "Taksilat makbuzu",
 
     /*Mail Body*/
-    "HospitalConsultation:MailBody": "Sayın UHB Yetkilisi,</br>Hasta için tedavi planı oluşturmak için aşağıdaki adrese tıklayınız. </br> {0}"
+    "HospitalConsultation:MailBody": "Sayın UHB Yetkilisi,</br>Hasta için tedavi planı oluşturmak için aşağıdaki adrese tıklayınız. </br> {0}",
+    "HospitalResponseCompleted:MailBody": "Sayın İlgili,<br>{0} isimli hasta için yapılan danışma {1} tarafından cevaplanmıştır.<br>Hastane Cevabı: {2}<br>İyi günler dileriz.",
+    "HospitalResponseCompleted:MailSubject": "HTS - Hastane Cevabı hk."
   }
 }

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using HTS.BusinessException;
+using HTS.Common;
 using HTS.Data.Entity;
 using HTS.Dto.Branch;
 using HTS.Dto.HospitalConsultation;
@@ -11,7 +13,9 @@ using HTS.Dto.HospitalResponseBranch;
 using HTS.Dto.HospitalResponseProcess;
 using HTS.Enum;
 using HTS.Interface;
+using HTS.Localization;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Localization;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
@@ -23,16 +27,22 @@ namespace HTS.Service;
 public class HospitalResponseService : ApplicationService, IHospitalResponseService
 {
     private readonly IRepository<HospitalResponse, int> _hospitalResponseRepository;
+    private readonly IRepository<HospitalResponseType, int> _responseTypeRepository;
     private readonly IRepository<HospitalConsultation, int> _hcRepository;
     private readonly IRepository<Operation, int> _operationRepository;
+    private readonly IStringLocalizer<HTSResource> _localizer;
 
     public HospitalResponseService(IRepository<HospitalResponse, int> hospitalResponseRepository,
+        IRepository<HospitalResponseType, int> hospitalResponseTypeRepository,
         IRepository<HospitalConsultation, int> hcRepository,
-        IRepository<Operation, int> operationRepository)
+        IRepository<Operation, int> operationRepository,
+        IStringLocalizer<HTSResource> localizer)
     {
         _hospitalResponseRepository = hospitalResponseRepository;
+        _responseTypeRepository = hospitalResponseTypeRepository;
         _hcRepository = hcRepository;
         _operationRepository = operationRepository;
+        _localizer = localizer;
     }
 
     [Authorize]
@@ -55,16 +65,18 @@ public class HospitalResponseService : ApplicationService, IHospitalResponseServ
         await IsDataValidToSave(hospitalResponse);
         var entity = ObjectMapper.Map<SaveHospitalResponseDto, HospitalResponse>(hospitalResponse);
 
-        var hConsultation = hospitalResponse.HospitalConsultationId.HasValue ? await _hcRepository.GetAsync(hospitalResponse.HospitalConsultationId.Value) : null;
-        if (hospitalResponse.HospitalResponseTypeId == EntityEnum.HospitalResponseTypeEnum.SuitableForTreatment.GetHashCode())
+        var hConsultation = hospitalResponse.HospitalConsultationId.HasValue ?
+            (await _hcRepository.WithDetailsAsync((hc => hc.Hospital), (hc => hc.PatientTreatmentProcess.Patient), (hc => hc.HospitalResponses), (hc => hc.Creator))).FirstOrDefault(hc => hc.Id == hospitalResponse.HospitalConsultationId.Value) :
+            null;
+        if (hospitalResponse.HospitalResponseTypeId == HospitalResponseTypeEnum.SuitableForTreatment.GetHashCode())
         {
             hConsultation.HospitalConsultationStatusId = HospitalConsultationStatusEnum.SuitableForTreatment.GetHashCode();
         }
-        else if (hospitalResponse.HospitalResponseTypeId == EntityEnum.HospitalResponseTypeEnum.NotSuitableForTreatment.GetHashCode())
+        else if (hospitalResponse.HospitalResponseTypeId == HospitalResponseTypeEnum.NotSuitableForTreatment.GetHashCode())
         {
             hConsultation.HospitalConsultationStatusId = HospitalConsultationStatusEnum.NotSuitableForTreatment.GetHashCode();
         }
-        else if (hospitalResponse.HospitalResponseTypeId == EntityEnum.HospitalResponseTypeEnum.ExaminationsIsRequiredForDiagnosis.GetHashCode())
+        else if (hospitalResponse.HospitalResponseTypeId == HospitalResponseTypeEnum.ExaminationsIsRequiredForDiagnosis.GetHashCode())
         {
             hConsultation.HospitalConsultationStatusId = HospitalConsultationStatusEnum.ExaminationsIsRequiredForDiagnosis.GetHashCode();
         }
@@ -74,6 +86,20 @@ public class HospitalResponseService : ApplicationService, IHospitalResponseServ
 
         hConsultation.HospitalResponses.Add(entity);
         await _hcRepository.UpdateAsync(hConsultation);
+
+        //hastane danışma kaydını oluşturan kullanıcıya mail atılacak
+        await SendEMailToHospitalStaff(hospitalResponse.HospitalResponseTypeId, hConsultation);
+    }
+
+    private async Task SendEMailToHospitalStaff(int responseTypeId, HospitalConsultation consultation)
+    {
+        var responseType = (await _responseTypeRepository.WithDetailsAsync()).FirstOrDefault(hr => hr.Id == responseTypeId);
+        //Send mail to hospital consultations
+        string mailBodyFormat = string.Format(_localizer["HospitalResponseCompleted:MailBody"],
+                                    consultation.PatientTreatmentProcess.Patient.Name + " " + consultation.PatientTreatmentProcess.Patient.Surname,
+                                    consultation.Hospital.Name,
+                                    responseType?.Name);
+        Helper.SendMail(consultation.Creator.Email, mailBodyFormat, null, _localizer["HospitalResponseCompleted:MailSubject"]);
     }
 
     [Authorize]

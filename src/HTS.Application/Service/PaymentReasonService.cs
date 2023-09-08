@@ -11,7 +11,7 @@ using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
 namespace HTS.Service;
-[Authorize("HTS.PaymentReasonManagement")]
+
 public class PaymentReasonService : ApplicationService, IPaymentReasonService
 {
     private readonly IRepository<PaymentReason, int> _prRepository;
@@ -34,19 +34,22 @@ public class PaymentReasonService : ApplicationService, IPaymentReasonService
         return new ListResultDto<PaymentReasonDto>(responseList);
     }
 
+    [Authorize("HTS.PaymentReasonManagement")]
     public async Task CreateAsync(SavePaymentReasonDto paymentReason)
     {
         var entity = ObjectMapper.Map<SavePaymentReasonDto, PaymentReason>(paymentReason);
         await _prRepository.InsertAsync(entity);
     }
 
+    [Authorize("HTS.PaymentReasonManagement")]
     public async Task UpdateAsync(int id, SavePaymentReasonDto paymentReason)
     {
         var entity = await _prRepository.GetAsync(id);
         ObjectMapper.Map(paymentReason, entity);
         await _prRepository.UpdateAsync(entity);
     }
-        
+
+    [Authorize("HTS.PaymentReasonManagement")]
     public async Task DeleteAsync(int id)
     {
         await _prRepository.DeleteAsync(id);

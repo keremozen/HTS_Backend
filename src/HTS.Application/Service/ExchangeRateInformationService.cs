@@ -11,6 +11,7 @@ using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 using System.Linq;
+using HTS.Dto.Nationality;
 
 namespace HTS.Service
 {
@@ -32,6 +33,12 @@ namespace HTS.Service
                             .FirstOrDefault();
 
             return ObjectMapper.Map<ExchangeRateInformation, ExchangeRateInformationDto>(result);
+        }
+
+        public async Task CreateAsync(SaveExchangeRateInformationDto exchangeRate)
+        {
+            var entity = ObjectMapper.Map<SaveExchangeRateInformationDto, ExchangeRateInformation>(exchangeRate);
+            await _exchangeRateInformationRepository.InsertAsync(entity);
         }
     }
 }

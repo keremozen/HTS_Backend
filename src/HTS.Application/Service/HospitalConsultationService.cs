@@ -15,6 +15,7 @@ using HTS.Interface;
 using HTS.Localization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Localization;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
@@ -33,16 +34,19 @@ public class HospitalConsultationService : ApplicationService, IHospitalConsulta
     private readonly IRepository<PatientTreatmentProcess, int> _ptpRepository;
     private readonly IRepository<Hospital, int> _hospitalRepository;
     private readonly IStringLocalizer<HTSResource> _localizer;
+    private IConfiguration _config;
 
     public HospitalConsultationService(IRepository<HospitalConsultation, int> hcRepository,
         IRepository<PatientTreatmentProcess, int> ptpRepository,
         IRepository<Hospital, int> hospitalRepository,
-        IStringLocalizer<HTSResource> localizer)
+        IStringLocalizer<HTSResource> localizer,
+        IConfiguration config)
     {
         _hcRepository = hcRepository;
         _ptpRepository = ptpRepository;
         _hospitalRepository = hospitalRepository;
         _localizer = localizer;
+        _config = config;
     }
 
     public async Task<HospitalConsultationDto> GetAsync(int id)
@@ -97,7 +101,7 @@ public class HospitalConsultationService : ApplicationService, IHospitalConsulta
     {
         //Send mail to hospital consultations
         string mailBodyFormat = _localizer["HospitalConsultation:MailBody"];
-        string urlFormat = "https://webhtstest.ushas.com.tr/hospital-response/{0}.{1}";
+        string urlFormat = _config["ServiceURL:HospitalResponseURLFormat"];
         var hospitalIds = entityList.Select(c => c.HospitalId).ToList();
         var hospitals = await (await _hospitalRepository.WithDetailsAsync(h => h.HospitalUHBStaffs))
             .Where(h => hospitalIds.Contains(h.Id)).ToListAsync();
@@ -107,7 +111,9 @@ public class HospitalConsultationService : ApplicationService, IHospitalConsulta
             var uhbList = hospital?.HospitalUHBStaffs.Select(s => s.Email).ToList();
             if (uhbList?.Any() ?? false)
             {
+                #if !DEBUG
                 Helper.SendMail(uhbList, string.Format(mailBodyFormat, string.Format(urlFormat, RandomString(8), Convert.ToBase64String(Encoding.UTF8.GetBytes(hc.Id.ToString())))));
+                #endif
             }
         }
     }

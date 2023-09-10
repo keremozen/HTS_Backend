@@ -272,7 +272,7 @@ public class ProformaService : ApplicationService, IProformaService
         if (!await _proformaRepository.AnyAsync(p => p.OperationId == proforma.OperationId))
         {
             //check exchange rate
-            if (proforma.CurrencyId != 1)
+            /*if (proforma.CurrencyId != 1)
             {
                 ExchangeRateInformation exchangeRateInformation = await _exchangeRateRepository.FirstOrDefaultAsync(e =>
                       e.CurrencyId == proforma.CurrencyId && e.CreationTime.Date.Date == DateTime.Now.Date.AddDays(-1));
@@ -292,10 +292,11 @@ public class ProformaService : ApplicationService, IProformaService
                 {
                     throw new HTSBusinessException(ErrorCode.ExchangeRateInformationNotMatch);
                 }
+            }*/
+            if (proforma.CurrencyId == 1 && proforma.ExchangeRate != 1)
+            {
+                throw new HTSBusinessException(ErrorCode.ExchangeRateInformationNotMatch);
             }
-
-
-            
         }
         else
         {//More than 1 revision

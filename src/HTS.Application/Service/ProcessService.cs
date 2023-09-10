@@ -34,7 +34,18 @@ public class ProcessService : ApplicationService, IProcessService
         var query = (await _processRepository.WithDetailsAsync()).WhereIf(isActive.HasValue,
             b => b.IsActive == isActive.Value);
         var responseList = ObjectMapper.Map<List<Process>, List<ProcessDto>>(await AsyncExecuter.ToListAsync(query));
-        var totalCount = await _processRepository.CountAsync();//item count
+        var totalCount = responseList.Count;//item count
+        return new PagedResultDto<ProcessDto>(totalCount, responseList);
+    }
+
+    public async Task<PagedResultDto<ProcessDto>> GetListByKeywordAsync(string keyword, int processTypeId, bool? isActive = null)
+    {
+        //Get all entities
+        var query = (await _processRepository.WithDetailsAsync()).WhereIf(isActive.HasValue,
+            b => b.IsActive == isActive.Value);
+        query = query.Where(p => p.ProcessTypeId == processTypeId && (p.Code.Contains(keyword) || p.Name.Contains(keyword)));
+        var responseList = ObjectMapper.Map<List<Process>, List<ProcessDto>>(await AsyncExecuter.ToListAsync(query));
+        var totalCount = responseList.Count;//item count
         return new PagedResultDto<ProcessDto>(totalCount, responseList);
     }
 

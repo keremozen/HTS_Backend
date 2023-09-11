@@ -1,5 +1,6 @@
 ﻿using HTS.Data.Entity;
 using HTS.Dto.Proforma;
+using Polly;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
@@ -11,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Volo.Abp.Auditing;
 
 namespace HTS.PDFDocument
 {
@@ -97,7 +99,7 @@ namespace HTS.PDFDocument
                     {
                         table.Cell().Element(CellStyle).Text(process.TreatmentCount.ToString()).FontSize(8);
                         table.Cell().Element(CellStyle).ExtendHorizontal().AlignLeft().Text(process.Process.EnglishName).FontSize(8);
-                        table.Cell().Element(CellStyle).ExtendHorizontal().AlignLeft().Text(process.ProformaFinalPrice.ToString("C", CultureInfo.CreateSpecificCulture("en-US"))).FontSize(8);
+                        table.Cell().Element(CellStyle).ExtendHorizontal().AlignLeft().Text(ConvertCurrencyToSymbol(_proforma.Currency.Name) +  string.Format("{0:#,##0.00}", process.ProformaFinalPrice)).FontFamily("Arial").FontSize(8); 
                         totalPrice += process.ProformaFinalPrice;
                     }
 
@@ -106,7 +108,7 @@ namespace HTS.PDFDocument
                         table.Cell().ColumnSpan(3).Element(CellStyle).ExtendHorizontal().AlignRight().Text(_proforma.TPDescription).FontFamily("Arial").FontSize(8);
                     }
                     table.Cell().ColumnSpan(2).Element(CellStyle).ExtendHorizontal().AlignLeft().Text("Total Amount").FontSize(8).Bold();
-                    table.Cell().Element(CellStyle).ExtendHorizontal().AlignLeft().Text(totalPrice.ToString("C", CultureInfo.CreateSpecificCulture("en-US"))).FontSize(8).Bold();
+                    table.Cell().Element(CellStyle).ExtendHorizontal().AlignLeft().Text(ConvertCurrencyToSymbol(_proforma.Currency.Name) + string.Format("{0:#,##0.00}", totalPrice)).FontFamily("Arial").FontSize(8).Bold();
 
                 });
 
@@ -215,6 +217,23 @@ namespace HTS.PDFDocument
                 column.Item().Text("SWIFT Code (BIC): TCZBTR2A").Style(textStyle).FontSize(8);
 
             });
+        }
+
+        private string ConvertCurrencyToSymbol(string name)
+        {
+            if (name == "TL")
+            {
+                return "₺";
+            }
+            else if (name == "EUR")
+            {
+                return "€";
+            }
+            else if (name == "USD")
+            {
+                return "$";
+            }
+            else return "";
         }
 
         private void ComposeHeader(IContainer container)

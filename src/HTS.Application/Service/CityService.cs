@@ -30,7 +30,6 @@ namespace HTS.Service
             //Get all entities
             var responseList = ObjectMapper.Map<List<City>, List<CityDto>>(await _cityRepository.GetListAsync());
             var totalCount = await _cityRepository.CountAsync();//item count
-            //TODO:Hopsy Ask Kerem the isActive case 
             return new PagedResultDto<CityDto>(totalCount, responseList);
         }
 

@@ -84,7 +84,6 @@ public class PaymentDocumentService : ApplicationService,IPaymentDocumentService
     
     public async Task DeleteAsync(int id)
     {
-        //TODO:Hopsy entity type may be changed - Hard delete or soft delete
         await _paymentDocumentRepository.DeleteAsync(id);
         var payment =
             (await _paymentRepository.WithDetailsAsync( (p => p.Proforma),

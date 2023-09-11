@@ -191,7 +191,6 @@ public class HospitalResponseService : ApplicationService, IHospitalResponseServ
         {
             throw new HTSBusinessException(ErrorCode.HospitalAlreadyResponsed);
         }
-        //TODO:Hopsy response should be correct hospital, authorized uhb user. In the future chech this.
 
         //If status is ok, check data
         if (hospitalResponse.HospitalResponseTypeId == EntityEnum.HospitalResponseTypeEnum.SuitableForTreatment.GetHashCode())

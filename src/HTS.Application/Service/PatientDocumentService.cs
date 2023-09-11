@@ -9,6 +9,7 @@ using HTS.Data.Entity;
 using HTS.Dto.PatientDocument;
 using HTS.Interface;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Configuration;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
@@ -20,11 +21,14 @@ public class PatientDocumentService : ApplicationService, IPatientDocumentServic
 {
     private readonly IRepository<PatientDocument, int> _patientDocumentRepository;
     private readonly ICurrentUser _currentUser;
+    private readonly IConfiguration _configuration;
     public PatientDocumentService(IRepository<PatientDocument, int> patientDocumentRepository,
-        ICurrentUser currentUser)
+        ICurrentUser currentUser,
+        IConfiguration configuration)
     {
         _patientDocumentRepository = patientDocumentRepository;
         _currentUser = currentUser;
+        _configuration = configuration;
     }
 
     [Authorize]
@@ -76,8 +80,8 @@ public class PatientDocumentService : ApplicationService, IPatientDocumentServic
     {
         var entity = ObjectMapper.Map<SavePatientDocumentDto, PatientDocument>(patientDocument);
         entity.PatientDocumentStatusId = PatientDocumentStatusEnum.NewRecord.GetHashCode();
-        entity.FilePath = @"C:\filesrv\" + patientDocument.FileName;
-        SaveByteArrayToFileWithStaticMethod(patientDocument.File, entity.FilePath);
+        entity.FilePath = string.Format(_configuration["FilePath:PatientDocumentPath"], entity.PatientId,
+            patientDocument.FileName);
         await _patientDocumentRepository.InsertAsync(entity);
         return ObjectMapper.Map<PatientDocument, PatientDocumentDto>(entity);
     }

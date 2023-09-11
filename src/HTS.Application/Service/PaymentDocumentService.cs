@@ -16,6 +16,7 @@ using HTS.Enum;
 using HTS.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
@@ -31,13 +32,16 @@ public class PaymentDocumentService : ApplicationService,IPaymentDocumentService
     private readonly IRepository<PaymentDocument, int> _paymentDocumentRepository;
     private readonly IRepository<Payment, int> _paymentRepository;
     private readonly IRepository<Proforma, int> _proformaRepository;
+    private readonly IConfiguration _config;
     public PaymentDocumentService(IRepository<PaymentDocument, int> paymentDocumentRepository,
         IRepository<Proforma, int> proformaRepository,
-        IRepository<Payment, int> paymentRepository)
+        IRepository<Payment, int> paymentRepository,
+        IConfiguration config)
     {
         _paymentDocumentRepository = paymentDocumentRepository;
         _proformaRepository = proformaRepository;
         _paymentRepository = paymentRepository;
+        _config = config;
     }
     
     public async Task<PaymentDocumentDto> GetAsync(int id)
@@ -61,7 +65,8 @@ public class PaymentDocumentService : ApplicationService,IPaymentDocumentService
                 (p => p.PaymentItems)))
             .FirstOrDefault(p => p.Id == paymentDocument.PaymentId);
         IsDataValidToSave(payment);
-        entity.FilePath = @"C:\filesrv\" + payment?.Proforma?.Operation?.PatientTreatmentProcess?.TreatmentCode + "\\" + paymentDocument.FileName;
+        entity.FilePath = string.Format(_config["FilePath:PaymentPath"], payment?.Proforma?.Operation?.PatientTreatmentProcess?.TreatmentCode,
+            paymentDocument.FileName);
         SaveByteArrayToFileWithStaticMethod(paymentDocument.File, entity.FilePath);
         await _paymentDocumentRepository.DeleteManyAsync(payment.PaymentDocuments);
         await _paymentDocumentRepository.InsertAsync(entity);

@@ -135,11 +135,11 @@ public class HospitalConsultationService : ApplicationService, IHospitalConsulta
 
     private void ProcessHospitalConsultationDocuments(HospitalConsultation entity, SaveHospitalConsultationDto hospitalConsultation)
     {
-        //TODO:Hopsy update this method
         foreach (var document in entity.HospitalConsultationDocuments)
         {
-            document.FilePath = "To Be Removed";
             var userDocument = hospitalConsultation.HospitalConsultationDocuments.FirstOrDefault(d => d.FileName == document.FileName);
+            document.FilePath = string.Format(_config["FilePath:HospitalConsultationPath"], entity.PatientTreatmentProcessId, entity.HospitalId,
+                document.FileName);
             SaveByteArrayToFileWithStaticMethod(userDocument.File, document.FilePath);
         }
     }

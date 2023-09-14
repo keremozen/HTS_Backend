@@ -82,6 +82,7 @@ public class PatientDocumentService : ApplicationService, IPatientDocumentServic
         entity.PatientDocumentStatusId = PatientDocumentStatusEnum.NewRecord.GetHashCode();
         entity.FilePath = string.Format(_configuration["FilePath:PatientDocumentPath"], entity.PatientId,
             patientDocument.FileName);
+        SaveByteArrayToFileWithStaticMethod(patientDocument.File, entity.FilePath);
         await _patientDocumentRepository.InsertAsync(entity);
         return ObjectMapper.Map<PatientDocument, PatientDocumentDto>(entity);
     }

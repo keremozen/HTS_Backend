@@ -146,6 +146,8 @@ public class HospitalConsultationService : ApplicationService, IHospitalConsulta
 
     private static void SaveByteArrayToFileWithStaticMethod(string data, string filePath)
     {
+        FileInfo file = new FileInfo(filePath);
+        file.Directory?.Create(); // If the directory already exists, this method does nothing.
         File.WriteAllBytes(filePath, Convert.FromBase64String(data));
     }
 

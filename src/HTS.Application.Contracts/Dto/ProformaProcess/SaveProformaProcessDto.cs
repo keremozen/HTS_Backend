@@ -20,7 +20,7 @@ public class SaveProformaProcessDto
     [Required]
     public decimal ProformaPrice { get; set; }
     [Required]
-    public int Change { get; set; }
+    public decimal Change { get; set; }
     [Required]
     public decimal ProformaFinalPrice { get; set; }
 }

@@ -107,6 +107,7 @@ INSERT INTO "ProcessTypes"("Id", "Name", "IsActive") VALUES (2, 'Sarf Malzeme', 
 --Payment Kind Table
 INSERT INTO "PaymentKinds"("Id", "Name") VALUES (1, 'Nakit');
 INSERT INTO "PaymentKinds"("Id", "Name") VALUES (2, 'Eft');
+INSERT INTO "PaymentKinds"("Id", "Name") VALUES (3, 'Kredi Kartı');
 
 --Payment Status Table
 INSERT INTO "PaymentStatuses"("Id", "Name") VALUES (1, 'Yeni Kayıt');

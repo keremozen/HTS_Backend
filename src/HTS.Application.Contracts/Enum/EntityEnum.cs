@@ -307,7 +307,12 @@ namespace HTS.Enum
             /// <summary>
             /// EFT
             /// </summary>
-            EFT = 2
+            EFT = 2,
+            /// <summary>
+            /// Kredi Kartı
+            /// </summary>
+            CreditCard = 3
+
         }
     }
 }

@@ -11,7 +11,7 @@ public class ProformaProcessDto: EntityDto<int>
     public decimal UnitPrice { get; set; }
     public decimal TotalPrice { get; set; }
     public decimal ProformaPrice { get; set; }
-    public int Change { get; set; }
+    public decimal Change { get; set; }
     public decimal ProformaFinalPrice { get; set; }
     public ProcessDto Process { get; set; }
 }

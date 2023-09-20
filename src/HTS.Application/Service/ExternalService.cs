@@ -217,7 +217,7 @@ namespace HTS.Service
                         gecerliMi = true,
                         islemTarihi = new DateTime(2023, 2, 23),
                         klinikKodu = "123456",
-                        sutKodu = "S102040"
+                        sutKodu = sutCode
                     });
                 }
             }

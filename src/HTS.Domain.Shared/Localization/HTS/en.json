@@ -60,6 +60,7 @@
     "HTS:28": "The hospital pricer already exists.",
     "HTS:29": "One default hospital pricer already exits. Multiple default hospital pricers are not allowed.",
     "HTS:30": "Invalid operation.",
+    "HTS:31": "Treatment items has an item with the same treatment code.",
 
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Successful",

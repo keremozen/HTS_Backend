@@ -272,19 +272,20 @@ public class ProformaService : ApplicationService, IProformaService
         if (!await _proformaRepository.AnyAsync(p => p.OperationId == proforma.OperationId))
         {
             //check exchange rate
-            /*if (proforma.CurrencyId != 1)
+            if (proforma.CurrencyId != 1)
             {
-                ExchangeRateInformation exchangeRateInformation = await _exchangeRateRepository.FirstOrDefaultAsync(e =>
-                      e.CurrencyId == proforma.CurrencyId && e.CreationTime.Date.Date == DateTime.Now.Date.AddDays(-1));
-                if (exchangeRateInformation == null)//No exchange rate
-                {
-                    throw new HTSBusinessException(ErrorCode.NoExchangeRateInformation);
-                }
+                //NOT Check the exchange rate. UI data will be used.
+                // ExchangeRateInformation exchangeRateInformation = await _exchangeRateRepository.FirstOrDefaultAsync(e =>
+                //       e.CurrencyId == proforma.CurrencyId && e.CreationTime.Date.Date == DateTime.Now.Date.AddDays(-1));
+                // if (exchangeRateInformation == null)//No exchange rate
+                // {
+                //     throw new HTSBusinessException(ErrorCode.NoExchangeRateInformation);
+                // }
 
-                if (exchangeRateInformation.ExchangeRate != proforma.ExchangeRate)
-                {
-                    throw new HTSBusinessException(ErrorCode.ExchangeRateInformationNotMatch);
-                }
+                // if (exchangeRateInformation.ExchangeRate != proforma.ExchangeRate)
+                // {
+                //     throw new HTSBusinessException(ErrorCode.ExchangeRateInformationNotMatch);
+                // }
             }
             else
             {
@@ -292,20 +293,16 @@ public class ProformaService : ApplicationService, IProformaService
                 {
                     throw new HTSBusinessException(ErrorCode.ExchangeRateInformationNotMatch);
                 }
-            }*/
-            if (proforma.CurrencyId == 1 && proforma.ExchangeRate != 1)
-            {
-                throw new HTSBusinessException(ErrorCode.ExchangeRateInformationNotMatch);
             }
         }
         else
         {//More than 1 revision
          //All revisions will use same exchange rate
-            if ((await _proformaRepository.FirstOrDefaultAsync(p => p.OperationId == proforma.OperationId)).ExchangeRate !=
-                proforma.ExchangeRate)
-            {
-                throw new HTSBusinessException(ErrorCode.ExchangeRateInformationNotMatch);
-            }
+            // if ((await _proformaRepository.FirstOrDefaultAsync(p => p.OperationId == proforma.OperationId)).ExchangeRate !=
+            //     proforma.ExchangeRate)
+            // {
+            //     throw new HTSBusinessException(ErrorCode.ExchangeRateInformationNotMatch);
+            // }
             
             //Only last version can be updated
             /*int maxVersion = (await _proformaRepository.GetListAsync(p => p.OperationId == proforma.OperationId)).Max(p => p.Version);
@@ -387,7 +384,7 @@ public class ProformaService : ApplicationService, IProformaService
             if ((proformaProcess.UnitPrice * proformaProcess.TreatmentCount) != proformaProcess.TotalPrice
                 || Math.Round(Decimal.Divide(proformaProcess.TotalPrice, proforma.ExchangeRate), 2) != proformaProcess.ProformaPrice
                 || (proformaProcess.Change != 0 &&
-                    Math.Round((proformaProcess.ProformaPrice + Decimal.Divide(proformaProcess.ProformaPrice * proformaProcess.Change, 100)), 2) != proformaProcess.ProformaFinalPrice)
+                    Math.Abs(Math.Round((proformaProcess.ProformaPrice + Decimal.Divide(proformaProcess.ProformaPrice * proformaProcess.Change, 100)), 2) - proformaProcess.ProformaFinalPrice) > 1 )
                 || (proformaProcess.Change == 0 &&
                     Math.Round(proformaProcess.ProformaPrice, 2) != proformaProcess.ProformaFinalPrice))
             {

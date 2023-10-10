@@ -68,8 +68,8 @@ public class ProformaService : ApplicationService, IProformaService
             EntityEnum.ProformaStatusEnum.WaitingForPatientApproval.GetHashCode()
         };
         var query = await (await _proformaRepository.WithDetailsAsync(p => p.Creator))
-            .Include(p=>p.ProformaStatus)
-            .Include(p=>p.RejectReason)
+            .Include(p => p.ProformaStatus)
+            .Include(p => p.RejectReason)
             .Where(p => p.Operation.PatientTreatmentProcessId == ptpId
                                 && proformaStatuses.Contains(p.ProformaStatusId))
             .OrderByDescending(p => p.Version)
@@ -77,7 +77,7 @@ public class ProformaService : ApplicationService, IProformaService
         return ObjectMapper.Map<List<Proforma>, List<ProformaPricingListDto>>(query);
     }
 
-    
+
     public async Task<ProformaDto> GetByIdAsync(int proformaId)
     {
         var query = (await _proformaRepository.WithDetailsAsync()).FirstOrDefaultAsync(p => p.Id == proformaId);
@@ -87,13 +87,24 @@ public class ProformaService : ApplicationService, IProformaService
     public async Task<int> SaveAsync(SaveProformaDto proforma)
     {
         await IsDataValidToSave(proforma);
+        var operation = (await _operationRepository.WithDetailsAsync()).Include(o => o.PatientTreatmentProcess).FirstOrDefault(o => o.Id == proforma.OperationId);
         var entity = ObjectMapper.Map<SaveProformaDto, Proforma>(proforma);
         entity.Version = await GetVersion(entity);
         entity.CreationDate = DateTime.Now;
-        //TODO: MFB onayındayken mfb tekrar güncelliyorsa status gene mfb onayında olarak kalacak
-        entity.ProformaStatusId = EntityEnum.ProformaStatusEnum.NewRecord.GetHashCode();
+        if (operation.PatientTreatmentProcess.TreatmentProcessStatusId == EntityEnum.PatientTreatmentStatusEnum.ProformaCreatedWaitingForMFBApproval.GetHashCode())
+        {
+            entity.ProformaStatusId = EntityEnum.ProformaStatusEnum.MFBWaitingApproval.GetHashCode();
+
+            var previousProforma = await _proformaRepository.FirstOrDefaultAsync(p => p.OperationId == proforma.OperationId && p.Version == entity.Version - 1);
+            previousProforma.ProformaStatusId = EntityEnum.ProformaStatusEnum.MFBUpdatedCancelled.GetHashCode();
+            await _proformaRepository.UpdateAsync(previousProforma, true);
+        }
+        else
+        {
+            entity.ProformaStatusId = EntityEnum.ProformaStatusEnum.NewRecord.GetHashCode();
+        }
         entity.ProformaCode = await GenerateProformaCode(entity.OperationId, entity.Version);
-        await _proformaRepository.InsertAsync(entity,true);
+        await _proformaRepository.InsertAsync(entity, true);
         return entity.Id;
     }
 
@@ -133,8 +144,8 @@ public class ProformaService : ApplicationService, IProformaService
 
     public async Task<Object> SaveAndApproveMFBAsync(SaveProformaDto proforma)
     {
-      int proformaId= await SaveAsync(proforma);
-      return ApproveMFBAsync(proformaId);
+        int proformaId = await SaveAsync(proforma);
+        return ApproveMFBAsync(proformaId);
     }
 
     public async Task RejectMFBAsync(RejectProformaDto rejectProforma)
@@ -158,10 +169,10 @@ public class ProformaService : ApplicationService, IProformaService
     {
         //Get entity from db
         var proforma =
-            (await _proformaRepository.WithDetailsAsync((p => p.Operation), 
+            (await _proformaRepository.WithDetailsAsync((p => p.Operation),
                 (p => p.Operation.PatientTreatmentProcess),
                 (p => p.Operation.PatientTreatmentProcess.Patient)))
-            .FirstOrDefault(p => p.Id == id); 
+            .FirstOrDefault(p => p.Id == id);
         IsDataValidToSendToPatient(proforma);
         var patientEmail = proforma?.Operation.PatientTreatmentProcess?.Patient.Email;
         if (string.IsNullOrEmpty(patientEmail))//No email
@@ -179,19 +190,19 @@ public class ProformaService : ApplicationService, IProformaService
             .ProformaTransferredWaitingForPatientApproval.GetHashCode();
         await _proformaRepository.UpdateAsync(proforma);
     }
-    
+
     private async Task SendEMailToPatient(Proforma proforma, string eMail)
     {
         //Send mail to hospital consultations
-        string mailBody=  $"Dear {proforma.Operation.PatientTreatmentProcess.Patient.Name} {proforma.Operation.PatientTreatmentProcess.Patient.Surname}," +
+        string mailBody = $"Dear {proforma.Operation.PatientTreatmentProcess.Patient.Name} {proforma.Operation.PatientTreatmentProcess.Patient.Surname}," +
                           $"</br></br>Your application has been reviewed and the necessary treatment plan has been prepared. " +
-                          $"You can find the details of your treatment process in the appendix.Proforma that is generated for your treatment is attached to email.</br>"+
+                          $"You can find the details of your treatment process in the appendix.Proforma that is generated for your treatment is attached to email.</br>" +
         $"We wish you a nice days.</br></br>Regards.";
         var proformaReceipt = await CreateProformaPdf(proforma.Id);
         var mailSubject = $"Treatment Plan is Ready | {proforma.ProformaCode}";
-        Helper.SendMail(eMail, mailBody,proformaReceipt, subject: mailSubject);
+        Helper.SendMail(eMail, mailBody, proformaReceipt, subject: mailSubject);
     }
-    
+
     public async Task ApprovePatientAsync(int id)
     {
         //Get entity from db
@@ -209,7 +220,7 @@ public class ProformaService : ApplicationService, IProformaService
         await _proformaRepository.UpdateAsync(proforma);
     }
 
-    
+
 
     public async Task RejectPatientAsync(RejectProformaDto rejectProforma)
     {
@@ -298,12 +309,12 @@ public class ProformaService : ApplicationService, IProformaService
         else
         {//More than 1 revision
          //All revisions will use same exchange rate
-            // if ((await _proformaRepository.FirstOrDefaultAsync(p => p.OperationId == proforma.OperationId)).ExchangeRate !=
-            //     proforma.ExchangeRate)
-            // {
-            //     throw new HTSBusinessException(ErrorCode.ExchangeRateInformationNotMatch);
-            // }
-            
+         // if ((await _proformaRepository.FirstOrDefaultAsync(p => p.OperationId == proforma.OperationId)).ExchangeRate !=
+         //     proforma.ExchangeRate)
+         // {
+         //     throw new HTSBusinessException(ErrorCode.ExchangeRateInformationNotMatch);
+         // }
+
             //Only last version can be updated
             /*int maxVersion = (await _proformaRepository.GetListAsync(p => p.OperationId == proforma.OperationId)).Max(p => p.Version);
             if (proforma.Version != maxVersion)
@@ -384,7 +395,7 @@ public class ProformaService : ApplicationService, IProformaService
             if ((proformaProcess.UnitPrice * proformaProcess.TreatmentCount) != proformaProcess.TotalPrice
                 || Math.Round(Decimal.Divide(proformaProcess.TotalPrice, proforma.ExchangeRate), 2) != proformaProcess.ProformaPrice
                 || (proformaProcess.Change != 0 &&
-                    Math.Abs(Math.Round((proformaProcess.ProformaPrice + Decimal.Divide(proformaProcess.ProformaPrice * proformaProcess.Change, 100)), 2) - proformaProcess.ProformaFinalPrice) > 1 )
+                    Math.Abs(Math.Round((proformaProcess.ProformaPrice + Decimal.Divide(proformaProcess.ProformaPrice * proformaProcess.Change, 100)), 2) - proformaProcess.ProformaFinalPrice) > 1)
                 || (proformaProcess.Change == 0 &&
                     Math.Round(proformaProcess.ProformaPrice, 2) != proformaProcess.ProformaFinalPrice))
             {
@@ -504,7 +515,7 @@ public class ProformaService : ApplicationService, IProformaService
             throw new HTSBusinessException(ErrorCode.LastProformaVersionCanBeApprovedRejected);
         }
     }
-    
+
     /// <summary>
     /// Checks if data is valid to send to patient approval
     /// </summary>
@@ -516,13 +527,13 @@ public class ProformaService : ApplicationService, IProformaService
         {
             throw new HTSBusinessException(ErrorCode.BadRequest);
         }
-       
+
         if (proforma.ProformaStatusId != EntityEnum.ProformaStatusEnum.WillBeTransferedToPatient.GetHashCode())
         {
             throw new HTSBusinessException(ErrorCode.ProformaStatusNotValid);
         }
     }
-    
+
     /// <summary>
     /// Checks if data is valid to patient approve
     /// </summary>
@@ -555,7 +566,7 @@ public class ProformaService : ApplicationService, IProformaService
     }
 
 
-    
+
     /// <summary>
     /// Checks if data is valid to patient reject
     /// </summary>

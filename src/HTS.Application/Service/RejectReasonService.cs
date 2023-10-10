@@ -11,7 +11,7 @@ using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
 namespace HTS.Service;
-[Authorize("HTS.RejectReasonManagement")]
+
 public class RejectReasonService : ApplicationService, IRejectReasonService
 {
     private readonly IRepository<RejectReason, int> _rejectReasonRepository;
@@ -35,6 +35,7 @@ public class RejectReasonService : ApplicationService, IRejectReasonService
         return new PagedResultDto<RejectReasonDto>(totalCount,responseList);
     }
 
+    [Authorize("HTS.RejectReasonManagement")]
     public async Task<RejectReasonDto> CreateAsync(SaveRejectReasonDto rejectReason)
     {
         var entity = ObjectMapper.Map<SaveRejectReasonDto, RejectReason>(rejectReason);
@@ -42,13 +43,15 @@ public class RejectReasonService : ApplicationService, IRejectReasonService
         return ObjectMapper.Map<RejectReason, RejectReasonDto>(entity);
     }
 
+    [Authorize("HTS.RejectReasonManagement")]
     public async Task<RejectReasonDto> UpdateAsync(int id, SaveRejectReasonDto rejectReason)
     {
         var entity = await _rejectReasonRepository.GetAsync(id);
         ObjectMapper.Map(rejectReason, entity);
         return ObjectMapper.Map<RejectReason,RejectReasonDto>( await _rejectReasonRepository.UpdateAsync(entity));
     }
-        
+
+    [Authorize("HTS.RejectReasonManagement")]
     public async Task DeleteAsync(int id)
     {
         await _rejectReasonRepository.DeleteAsync(id);

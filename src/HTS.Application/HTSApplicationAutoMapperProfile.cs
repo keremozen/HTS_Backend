@@ -169,5 +169,6 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<PaymentItem, PaymentItemDto>();
         CreateMap<SavePaymentItemDto, PaymentItem>();
         CreateMap<SavePaymentDocumentDto, PaymentDocument>();
+        CreateMap<PaymentDocument, PaymentDocumentDto>();
     }
 }

@@ -27,7 +27,7 @@ using static HTS.Enum.EntityEnum;
 namespace HTS.Service;
 
 [Authorize]
-public class PaymentDocumentService : ApplicationService,IPaymentDocumentService
+public class PaymentDocumentService : ApplicationService, IPaymentDocumentService
 {
     private readonly IRepository<PaymentDocument, int> _paymentDocumentRepository;
     private readonly IRepository<Payment, int> _paymentRepository;
@@ -43,22 +43,39 @@ public class PaymentDocumentService : ApplicationService,IPaymentDocumentService
         _paymentRepository = paymentRepository;
         _config = config;
     }
-    
+
     public async Task<PaymentDocumentDto> GetAsync(int id)
     {
         var pd = await _paymentDocumentRepository.GetAsync(id);
-        var fileBytes = File.ReadAllBytes($"{pd.FilePath}/{pd.FileName}");
-        var paymentDocument = ObjectMapper.Map<PaymentDocument, PaymentDocumentDto>(pd);
-        paymentDocument.File = Convert.ToBase64String(fileBytes);
-        return paymentDocument;
+        if (pd != null)
+        {
+            var fileBytes = File.ReadAllBytes($"{pd.FilePath}");
+            var paymentDocument = ObjectMapper.Map<PaymentDocument, PaymentDocumentDto>(pd);
+            paymentDocument.File = Convert.ToBase64String(fileBytes);
+            return paymentDocument;
+        }
+        return null;
     }
-    
+
+    public async Task<PaymentDocumentDto> GetByPaymentAsync(int paymentId)
+    {
+        var pd = await _paymentDocumentRepository.FirstOrDefaultAsync(p => p.PaymentId == paymentId);
+        if (pd != null)
+        {
+            var fileBytes = File.ReadAllBytes($"{pd.FilePath}");
+            var paymentDocument = ObjectMapper.Map<PaymentDocument, PaymentDocumentDto>(pd);
+            paymentDocument.File = Convert.ToBase64String(fileBytes);
+            return paymentDocument;
+        }
+        return null;
+    }
+
     public async Task SaveAsync(SavePaymentDocumentDto paymentDocument)
     {
         var entity = ObjectMapper.Map<SavePaymentDocumentDto, PaymentDocument>(paymentDocument);
         //Get entity from db
         var payment =
-            (await _paymentRepository.WithDetailsAsync( (p => p.Proforma),
+            (await _paymentRepository.WithDetailsAsync((p => p.Proforma),
                 (p => p.Proforma.Operation),
                 (p => p.Proforma.Operation.PatientTreatmentProcess),
                 (p => p.PaymentDocuments),
@@ -70,7 +87,12 @@ public class PaymentDocumentService : ApplicationService,IPaymentDocumentService
         SaveByteArrayToFileWithStaticMethod(paymentDocument.File, entity.FilePath);
         await _paymentDocumentRepository.DeleteManyAsync(payment.PaymentDocuments);
         await _paymentDocumentRepository.InsertAsync(entity);
-        if (IsDataValidToFinalizePayment(payment))
+
+        List<Payment> payments = (await _paymentRepository.WithDetailsAsync(
+            (p => p.PaymentItems),
+            (p => p.PaymentDocuments)))
+            .Where(p => p.ProformaId == payment.ProformaId).ToList();
+        if (IsDataValidToFinalizePayment(payments))
         {
             payment.PaymentStatusId = EntityEnum.PaymentStatusEnum.PaymentCompleted.GetHashCode();
             payment.Proforma.ProformaStatusId = EntityEnum.ProformaStatusEnum.PaymentCompleted.GetHashCode();
@@ -81,12 +103,12 @@ public class PaymentDocumentService : ApplicationService,IPaymentDocumentService
             await _paymentRepository.UpdateAsync(payment);
         }
     }
-    
+
     public async Task DeleteAsync(int id)
     {
         await _paymentDocumentRepository.DeleteAsync(id);
         var payment =
-            (await _paymentRepository.WithDetailsAsync( (p => p.Proforma),
+            (await _paymentRepository.WithDetailsAsync((p => p.Proforma),
                 (p => p.Proforma.Operation),
                 (p => p.Proforma.Operation.PatientTreatmentProcess)))
             .FirstOrDefault(p => p.PaymentDocuments.Any(d => d.Id == id));
@@ -98,20 +120,27 @@ public class PaymentDocumentService : ApplicationService,IPaymentDocumentService
             EntityEnum.PatientTreatmentStatusEnum.ProformaApprovedWaitingForPayment.GetHashCode();
         await _paymentRepository.UpdateAsync(payment);
     }
-    
-    private bool IsDataValidToFinalizePayment(Payment payment)
+
+    private bool IsDataValidToFinalizePayment(List<Payment> payments)
     {
         bool result = false;
+        decimal paymentSum = 0;
         //If proforma amount and items amount equal mark as paied
-        var paymentSum = payment.PaymentItems?.Sum(i => i.Price * i.ExchangeRate);
-        if (paymentSum >= payment.Proforma.TotalProformaPrice)
+        foreach (var payment in payments)
         {
-            result = true;
+            if (payment.PaymentDocuments.Count > 0)
+            {
+                paymentSum += (decimal)payment.PaymentItems?.Sum(i => i.Price * i.ExchangeRate);
+                if (paymentSum >= payment.Proforma.TotalProformaPrice * payment.Proforma.ExchangeRate)
+                {
+                    result = true;
+                }
+            }
         }
         return result;
     }
 
-    
+
 
     private void IsDataValidToSave(Payment payment)
     {
@@ -124,7 +153,7 @@ public class PaymentDocumentService : ApplicationService,IPaymentDocumentService
             throw new HTSBusinessException(ErrorCode.ThereCanOnlyBeOneDocument);
         }*/
     }
-    
+
     private static void SaveByteArrayToFileWithStaticMethod(string data, string filePath)
     {
         FileInfo file = new System.IO.FileInfo(filePath);

@@ -271,7 +271,11 @@ namespace HTS.Enum
             /// <summary>
             /// Tahsil Edildi
             /// </summary>
-            PaymentCompleted = 8
+            PaymentCompleted = 8,
+            /// <summary>
+            /// MFB Güncelledi - İptal
+            /// </summary>
+            MFBUpdatedCancelled = 9
         }
         
         public enum PaymentStatusEnum

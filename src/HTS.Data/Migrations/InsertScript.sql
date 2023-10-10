@@ -99,6 +99,7 @@ INSERT INTO "ProformaStatuses"("Id", "Name") VALUES (5, 'Hasta Onayı Bekliyor')
 INSERT INTO "ProformaStatuses"("Id", "Name") VALUES (6, 'Hasta Proformayı Reddetti');
 INSERT INTO "ProformaStatuses"("Id", "Name") VALUES (7, 'Tahsilat Bekleniyor');
 INSERT INTO "ProformaStatuses"("Id", "Name") VALUES (8, 'Tahsil Edildi');
+INSERT INTO "ProformaStatuses"("Id", "Name") VALUES (9, 'MFB Güncelledi - İptal');
 
 --Process type Table
 INSERT INTO "ProcessTypes"("Id", "Name", "IsActive") VALUES (1, 'Sut Kodu', true);

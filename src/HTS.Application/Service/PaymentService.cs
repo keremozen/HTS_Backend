@@ -73,7 +73,6 @@ public class PaymentService : ApplicationService, IPaymentService
     {
         await IsDataValidToCreate(payment);
         var entity = ObjectMapper.Map<SavePaymentDto, Payment>(payment);
-        entity.PaymentDate = DateTime.Now;
         entity.CollectorNameSurname = $"{_currentUser.Name} {_currentUser.SurName}";
         //Set hospitalid and proforma number from proforma
         var query = (await _proformaRepository.WithDetailsAsync((p => p.Operation),
@@ -147,13 +146,13 @@ public class PaymentService : ApplicationService, IPaymentService
         if (payment.PaymentItems?.Any() ?? false)
         {
             //Paymentitem currencies
-            List<int> currencies = payment.PaymentItems.Select(i => i.CurrencyId)
+            /*List<int> currencies = payment.PaymentItems.Select(i => i.CurrencyId)
                 .Distinct()
                 .ToList();
             //Get exchangerate information of currencies
             var exchangeRates = await _erRepository.GetListAsync(er => currencies.Contains(er.CurrencyId)
                                              && er.CreationTime.Date.Date == payment.PaymentDate.Date);
-            ExchangeRateInformation processingER;
+            ExchangeRateInformation processingER;*/
             foreach (var paymentItem in payment.PaymentItems)
             {
                 if (paymentItem.CurrencyId == EntityEnum.CurrencyEnum.TL.GetHashCode())//If item is TL set it to 1
@@ -162,7 +161,7 @@ public class PaymentService : ApplicationService, IPaymentService
                 }
                 else
                 {
-                    processingER = exchangeRates.FirstOrDefault(e => e.CurrencyId == paymentItem.CurrencyId);
+                    var processingER = (await _erRepository.GetListAsync(er=>er.CurrencyId == paymentItem.CurrencyId && er.CreationTime <= payment.PaymentDate)).OrderByDescending(er=>er.CreationTime).FirstOrDefault();
                     if (processingER == null) //No exchange rate
                     {
                         throw new HTSBusinessException(ErrorCode.NoExchangeRateInformation);
@@ -186,7 +185,7 @@ public class PaymentService : ApplicationService, IPaymentService
             .DefaultIfEmpty()
             .Max(p => p == null ? 0 : p.RowNumber);
         entity.GeneratedRowNumber = $"{hospital.Code}-{++rowNumber}";
-        entity.RowNumber = ++rowNumber;
+        entity.RowNumber = rowNumber;
         return entity;
     }
 

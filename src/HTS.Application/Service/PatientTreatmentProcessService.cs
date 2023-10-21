@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HTS.BusinessException;
 using HTS.Data.Entity;
+using HTS.Dto.External;
 using HTS.Dto.Hospital;
 using HTS.Dto.Language;
 using HTS.Dto.Nationality;
@@ -24,11 +25,14 @@ public class PatientTreatmentProcessService : ApplicationService, IPatientTreatm
 {
     private readonly IRepository<PatientTreatmentProcess, int> _patientTreatmentProcessRepository;
     private readonly IIdentityUserRepository _userRepository;
+    private readonly IUSSService _ussService;
     public PatientTreatmentProcessService(IRepository<PatientTreatmentProcess, int> patientTreatmentProcessRepository,
-        IIdentityUserRepository userRepository)
+        IIdentityUserRepository userRepository,
+        IUSSService ussService)
     {
         _patientTreatmentProcessRepository = patientTreatmentProcessRepository;
         _userRepository = userRepository;
+        _ussService = ussService;
     }
 
     [Authorize]
@@ -54,6 +58,12 @@ public class PatientTreatmentProcessService : ApplicationService, IPatientTreatm
         await _patientTreatmentProcessRepository.InsertAsync(entity, true);
         var newEntityQuery = (await _patientTreatmentProcessRepository.WithDetailsAsync()).Where(p => p.Id == entity.Id);
         return ObjectMapper.Map<PatientTreatmentProcess, PatientTreatmentProcessDto>(await AsyncExecuter.FirstOrDefaultAsync(newEntityQuery));
+    }
+    
+    public async Task<bool> SetSysTrackingNumber(string treatmentCode)
+    {
+        ExternalApiResult result = await _ussService.GetSysTrackingNumber(treatmentCode);
+        return true;
     }
 
     /// <summary>

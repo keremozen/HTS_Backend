@@ -25,7 +25,13 @@ public class PatientInfo
     public string ulkeKodu { get; set; }
     public string pasaport { get; set; }
     public string cinsiyet { get; set; }
+    
+}
 
-
-
+public class HTSCodeResult
+{
+    public string sysTakipNo { get; set; }
+    public string uyruk { get; set; }
+    public string pasaportNo { get; set; }
+    public string kurumKodu { get; set; }
 }

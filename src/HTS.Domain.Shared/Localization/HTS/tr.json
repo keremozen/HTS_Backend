@@ -60,7 +60,8 @@
     "HTS:28": "Eklenmeye çalışılan fiyatlandırıcı mevcuttur.",
     "HTS:29": "Varsayılan bir fiyatlandırıcı mevcuttur. Birden çok varsayılan fiyatlandırıcı eklenemez.",
     "HTS:30": "Geçersiz bir işlem yaptınız.",
-    "HTS:31": "Aynı tedavi koduna sahip tedavi kalemi mevcuttur.", 
+    "HTS:31": "Aynı tedavi koduna sahip tedavi kalemi mevcuttur.",
+    "HTS:32": "Sistemde kayıtlı ödemesi tamamlanmış proforma bulunmamaktadır.",
 
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Başarılı",

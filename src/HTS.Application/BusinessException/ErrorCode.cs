@@ -31,4 +31,5 @@ public static class  ErrorCode
     public const string ThereCanOnlyBeOneDocument = "HTS:27";
     public const string PricerAlreadyExist = "HTS:28";
     public const string DefaultPricerAlreadyExist = "HTS:29";
+    public const string NoPaymentCompletedProforma = "HTS:32";
 }

@@ -13,7 +13,7 @@ using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
 namespace HTS.Service;
-public class USSService : IUSSService
+public class USSService : ApplicationService, IUSSService
 {
     public USSService() 
     {

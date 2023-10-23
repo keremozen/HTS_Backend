@@ -61,6 +61,7 @@
     "HTS:29": "One default hospital pricer already exits. Multiple default hospital pricers are not allowed.",
     "HTS:30": "Invalid operation.",
     "HTS:31": "Treatment items has an item with the same treatment code.",
+    "HTS:32": "No payment completed proforma in system",
 
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Successful",

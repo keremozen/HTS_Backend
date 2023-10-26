@@ -80,7 +80,7 @@ public class PatientTreatmentProcessService : ApplicationService, IPatientTreatm
 
             var ptp = await _patientTreatmentProcessRepository.FirstOrDefaultAsync(ptp =>
                 ptp.TreatmentCode == treatmentCode);
-            ptp.SysTrackingNumber = lastTrackingNumber.sysTakipNo;
+         //   ptp.SysTrackingNumber = lastTrackingNumber.sysTakipNo;
             await _patientTreatmentProcessRepository.UpdateAsync(ptp);
             return true;
         }

@@ -76,6 +76,8 @@ namespace HTS.Data
         public DbSet<PaymentDocument> PaymentDocuments { get; set; }
         public DbSet<PaymentStatus> PaymentStatuses { get; set; }
 
+        public DbSet<TaskType>  TaskTypes { get; set; }
+        public DbSet<HTSTask> HTSTasks { get; set; }
         
         public DbSet<IdentityUser> Users { get; set; }
 

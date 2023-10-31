@@ -24,6 +24,7 @@ using HTS.Dto.HospitalResponseProcess;
 using HTS.Dto.HospitalResponseType;
 using HTS.Dto.HospitalStaff;
 using HTS.Dto.HospitalUHBStaff;
+using HTS.Dto.HTSTask;
 using HTS.Dto.Language;
 using HTS.Dto.Nationality;
 using HTS.Dto.Operation;
@@ -52,6 +53,7 @@ using HTS.Dto.ProformaNotIncludingService;
 using HTS.Dto.ProformaProcess;
 using HTS.Dto.RejectReason;
 using HTS.Dto.SalesMethodAndCompanionInfo;
+using HTS.Dto.TaskType;
 using HTS.Dto.TreatmentProcessStatus;
 using HTS.Dto.TreatmentType;
 
@@ -170,5 +172,8 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<SavePaymentItemDto, PaymentItem>();
         CreateMap<SavePaymentDocumentDto, PaymentDocument>();
         CreateMap<PaymentDocument, PaymentDocumentDto>();
+
+        CreateMap<HTSTask, HTSTaskDto>();
+        CreateMap<TaskType, TaskTypeDto>();
     }
 }

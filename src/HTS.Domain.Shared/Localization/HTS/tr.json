@@ -115,6 +115,7 @@
     "Menu:Home": "Ana sayfa",
     "Menu:Admin": "Yönetim",
     "Menu:Patients": "Hastalar",
+    "Menu:Tasks": "Görevler",
     "Menu:Admin:Hospital": "Hastane Yönetimi",
     "Menu:Admin:Nationality": "Ülke Yönetimi",
     "Menu:Admin:City": "Şehir Yönetimi",
@@ -379,6 +380,14 @@
     "Admin:PaymentReason:Column:Reason": "Neden",
     "Admin:PaymentReason:Column:IsActive": "Aktif mi?",
     "Admin:PaymentReason:PaymentReasonDetails": "Ödeme Nedeni Detayları",
+
+    /*TASKS*/
+    "Tasks:Title": "Görevler",
+    "Tasks:Column:TaskName": "Görev",
+    "Tasks:Column:PatientNameSurname": "Hasta Adı Soyadı",
+    "Tasks:Column:TaskDate": "Görev Tarihi",
+    "Tasks:Column:TimeElapsed": "Geçen Süre",
+    "Tasks:Column:PatientCreatedBy": "Hastayı Ekleyen Kullanıcı",
 
     /*PATIENTS*/
     "Patients:Title": "Hastalar",

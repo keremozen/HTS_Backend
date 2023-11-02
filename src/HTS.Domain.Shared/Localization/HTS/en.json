@@ -115,6 +115,7 @@
     "Menu:Home": "Home",
     "Menu:Patients": "Patients",
     "Menu:Admin": "Admin",
+    "Menu:Tasks": "Tasks",
     "Menu:Admin:Hospital": "Hospital Management",
     "Menu:Admin:Nationality": "Country Management",
     "Menu:Admin:City": "City Management",
@@ -378,6 +379,14 @@
     "Admin:PaymentReason:Column:Reason": "Reason",
     "Admin:PaymentReason:Column:IsActive": "Is Active?",
     "Admin:PaymentReason:PaymentReasonDetails": "Payment Reason Details",
+
+    /*TASKS*/
+    "Tasks:Title": "Tasks",
+    "Tasks:Column:TaskName": "Task",
+    "Tasks:Column:PatientNameSurname": "patient Name Surame",
+    "Tasks:Column:TaskDate": "Task Date",
+    "Tasks:Column:TimeElapsed": "Time Elpased",
+    "Tasks:Column:PatientCreatedBy": "Patient Created By",
 
     /*PATIENTS*/
     "Patients:Title": "Patients",

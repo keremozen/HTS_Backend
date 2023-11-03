@@ -62,6 +62,9 @@
     "HTS:30": "Invalid operation.",
     "HTS:31": "Treatment items has an item with the same treatment code.",
     "HTS:32": "No payment completed proforma in system",
+    "HTS:33":"Already assigned to Tik",
+    "HTS:34":"No user assigned to TIK role.",
+    "HTS:35":"Patient not set as assigned to tik. Process can not be done.",
 
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Successful",

@@ -48,5 +48,9 @@ namespace HTS.Service
         {
             return ObjectMapper.Map<IList<IdentityUser>, IList<IdentityUserDto>>(await _userManager.GetUsersInRoleAsync(_config["UygulamaRolleri:Tercuman"]));
         }
+        public async Task<IList<IdentityUserDto>> GetTikStaffListAsync()
+        {
+            return ObjectMapper.Map<IList<IdentityUser>, IList<IdentityUserDto>>(await _userManager.GetUsersInRoleAsync(_config["UygulamaRolleri:TIK"]));
+        }
     }
 }

@@ -20,5 +20,11 @@ namespace HTS.Interface
         /// <param name="id">User id</param>
         /// <returns>User by given id</returns>
         Task<IdentityUserDto> GetById(string id);
+
+        /// <summary>
+        /// Get users having Tik role
+        /// </summary>
+        /// <returns>User list in tik role</returns>
+        Task<IList<IdentityUserDto>> GetTikStaffListAsync();
     }
 }

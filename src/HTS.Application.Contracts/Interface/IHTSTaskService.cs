@@ -20,6 +20,25 @@ namespace HTS.Interface
         /// </summary>
         /// <returns>Task list</returns>
         Task<PagedResultDto<HTSTaskDto>> GetListAsync();
-      
+
+        /// <summary>
+        /// Assign user process to tik
+        /// Task opens to tik users
+        /// Email sends to tik users
+        /// Patient entity sets as assigned to tik
+        /// </summary>
+        /// <param name="userId">The user to be assigned to tik</param>
+        /// <returns></returns>
+        Task AssignToTik(int userId);
+        
+        /// <summary>
+        /// Get user process from tik
+        /// Close tik users tasks
+        /// Patient entity sets as returned from tik
+        /// </summary>
+        /// <param name="userId">The user to be returned from tik</param>
+        /// <returns></returns>
+        Task ReturnFromTik(int userId);
+
     }
 }

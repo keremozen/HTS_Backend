@@ -62,6 +62,11 @@
     "HTS:30": "Geçersiz bir işlem yaptınız.",
     "HTS:31": "Aynı tedavi koduna sahip tedavi kalemi mevcuttur.",
     "HTS:32": "Sistemde kayıtlı ödemesi tamamlanmış proforma bulunmamaktadır.",
+    "HTS:33":"Hasta zaten TIK e devredilmiş.",
+    "HTS:34":"TIK rolüne atanmış kullanıcı bulunmamaktadır",
+    "HTS:35":"Hasta TIK e devredilmediği için geri alma işlemi yapılamaz.",
+
+
 
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Başarılı",

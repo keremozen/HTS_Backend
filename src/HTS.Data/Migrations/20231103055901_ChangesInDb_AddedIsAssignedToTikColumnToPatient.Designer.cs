@@ -3,6 +3,7 @@ using System;
 using HTS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Volo.Abp.EntityFrameworkCore;
@@ -12,9 +13,11 @@ using Volo.Abp.EntityFrameworkCore;
 namespace HTS.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231103055901_ChangesInDb_AddedIsAssignedToTikColumnToPatient")]
+    partial class ChangesInDb_AddedIsAssignedToTikColumnToPatient
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1453,18 +1456,6 @@ namespace HTS.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<DateTime?>("TikAssignmentDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("TikReturnDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid?>("TikUserIdReturned")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("UserIdAssignedToTik")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CreatorId");
@@ -1482,10 +1473,6 @@ namespace HTS.Data.Migrations
                     b.HasIndex("PhoneCountryCodeId");
 
                     b.HasIndex("SecondTongueId");
-
-                    b.HasIndex("TikUserIdReturned");
-
-                    b.HasIndex("UserIdAssignedToTik");
 
                     b.ToTable("Patients");
                 });
@@ -3847,14 +3834,6 @@ namespace HTS.Data.Migrations
                         .WithMany()
                         .HasForeignKey("SecondTongueId");
 
-                    b.HasOne("Volo.Abp.Identity.IdentityUser", "TikUserReturned")
-                        .WithMany()
-                        .HasForeignKey("TikUserIdReturned");
-
-                    b.HasOne("Volo.Abp.Identity.IdentityUser", "UserAssignedToTik")
-                        .WithMany()
-                        .HasForeignKey("UserIdAssignedToTik");
-
                     b.Navigation("Creator");
 
                     b.Navigation("Deleter");
@@ -3870,10 +3849,6 @@ namespace HTS.Data.Migrations
                     b.Navigation("PhoneCountryCode");
 
                     b.Navigation("SecondTongue");
-
-                    b.Navigation("TikUserReturned");
-
-                    b.Navigation("UserAssignedToTik");
                 });
 
             modelBuilder.Entity("HTS.Data.Entity.PatientAdmissionMethod", b =>

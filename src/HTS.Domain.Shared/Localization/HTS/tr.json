@@ -416,6 +416,9 @@
     "PatientDetail:EditTitle": "Hasta Detayları",
     "PatientDetail:NewTitle": "Yeni Hasta",
     "PatientDetail:SaveSuccessful": "Hasta başarıyla kaydedildi",
+    "PatientDetail:SendToTIK": "TİK'e Devret",
+    "PatientDetail:SentToTIK": "TİK'e Devredildi",
+    "PatientDetail:Return": "İade Et",
 
     /*NOTES*/
     "Notes:NameSingular": "Not",

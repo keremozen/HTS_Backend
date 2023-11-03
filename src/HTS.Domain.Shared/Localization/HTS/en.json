@@ -415,6 +415,9 @@
     "PatientDetail:EditTitle": "Patient Details",
     "PatientDetail:NewTitle": "New Patient",
     "PatientDetail:SaveSuccessful": "Patient is saved successfully",
+    "PatientDetail:SendToTIK": "Send To TİK",
+    "PatientDetail:SentToTIK": "Sent To TİK",
+    "PatientDetail:Return": "Return",
 
     /*NOTES*/
     "Notes:NameSingular": "Note",

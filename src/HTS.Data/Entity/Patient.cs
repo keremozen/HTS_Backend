@@ -30,6 +30,11 @@ namespace HTS.Data.Entity
         public int? GenderId { get; set; }
         public int? MotherTongueId { get; set; }
         public int? SecondTongueId { get; set; }
+        public bool? IsAssignedToTik { get; set; }
+        public Guid? UserIdAssignedToTik { get; set; }
+        public DateTime? TikAssignmentDate { get; set; }
+        public Guid? TikUserIdReturned { get; set; }
+        public DateTime? TikReturnDate { get; set; }
 
         [ForeignKey("PhoneCountryCodeId")]
         public Nationality? PhoneCountryCode { get; set; }
@@ -45,6 +50,13 @@ namespace HTS.Data.Entity
         
         [ForeignKey("SecondTongueId")]
         public Language? SecondTongue { get; set; }
+
+        [ForeignKey("UserIdAssignedToTik")]
+        public IdentityUser? UserAssignedToTik { get; set; }
+
+        [ForeignKey("TikUserIdReturned")]
+        public IdentityUser? TikUserReturned { get; set; }
+
         public virtual ICollection<PatientNote> PatientNotes { get; set; }
         public virtual ICollection<PatientDocument> PatientDocuments { get; set; }
         public virtual ICollection<PatientTreatmentProcess> PatientTreatmentProcesses { get; set; }

@@ -40,5 +40,12 @@ namespace HTS.Interface
         /// <returns></returns>
         Task ReturnFromTik(int userId);
 
+        /// <summary>
+        /// Create task
+        /// </summary>
+        /// <param name="saveTask">To be created task object</param>
+        /// <returns></returns>
+        Task CreateAsync(SaveHTSTaskDto saveTask);
+
     }
 }

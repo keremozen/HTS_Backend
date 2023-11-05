@@ -11,6 +11,7 @@ using HTS.Dto.HospitalConsultation;
 using HTS.Dto.HospitalResponse;
 using HTS.Dto.HospitalResponseBranch;
 using HTS.Dto.HospitalResponseProcess;
+using HTS.Dto.HTSTask;
 using HTS.Enum;
 using HTS.Interface;
 using HTS.Localization;
@@ -31,18 +32,22 @@ public class HospitalResponseService : ApplicationService, IHospitalResponseServ
     private readonly IRepository<HospitalConsultation, int> _hcRepository;
     private readonly IRepository<Operation, int> _operationRepository;
     private readonly IStringLocalizer<HTSResource> _localizer;
+    private readonly IHTSTaskService _htsTaskService;
 
     public HospitalResponseService(IRepository<HospitalResponse, int> hospitalResponseRepository,
         IRepository<HospitalResponseType, int> hospitalResponseTypeRepository,
         IRepository<HospitalConsultation, int> hcRepository,
         IRepository<Operation, int> operationRepository,
-        IStringLocalizer<HTSResource> localizer)
+        IStringLocalizer<HTSResource> localizer,
+        IHTSTaskService htsTaskService
+        )
     {
         _hospitalResponseRepository = hospitalResponseRepository;
         _responseTypeRepository = hospitalResponseTypeRepository;
         _hcRepository = hcRepository;
         _operationRepository = operationRepository;
         _localizer = localizer;
+        _htsTaskService = htsTaskService;
     }
 
     [Authorize]
@@ -105,7 +110,8 @@ public class HospitalResponseService : ApplicationService, IHospitalResponseServ
     [Authorize]
     public async Task ApproveAsync(int hospitalResponseId)
     {
-        var hr = (await _hospitalResponseRepository.WithDetailsAsync((hr => hr.HospitalConsultation), (hr => hr.HospitalConsultation.PatientTreatmentProcess)))
+        var hr = (await _hospitalResponseRepository.WithDetailsAsync((hr => hr.HospitalConsultation),
+                (hr => hr.HospitalConsultation.PatientTreatmentProcess)))
             .Where(hr => hr.Id == hospitalResponseId);
         var entity = await AsyncExecuter.FirstOrDefaultAsync(hr);
         await IsDataValidToApprove(entity);
@@ -124,7 +130,16 @@ public class HospitalResponseService : ApplicationService, IHospitalResponseServ
             OperationTypeId = OperationTypeEnum.HospitalConsultation.GetHashCode(),
             OperationStatusId = OperationStatusEnum.PriceExpecting.GetHashCode()
         };
-        await _operationRepository.InsertAsync(operation);
+       operation= await _operationRepository.InsertAsync(operation, true);
+        //Create Pricing Task
+        await _htsTaskService.CreateAsync(new SaveHTSTaskDto()
+        {
+            HospitalId = entity.HospitalConsultation.HospitalId,
+            RelatedEntityId = operation.Id,
+            TaskType = TaskTypeEnum.Pricing,
+            TreatmentCode = entity.HospitalConsultation.PatientTreatmentProcess.TreatmentCode,
+            PatientId = entity.HospitalConsultation.PatientTreatmentProcess.PatientId
+        });
     }
 
     [Authorize]

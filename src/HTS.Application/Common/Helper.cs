@@ -11,7 +11,7 @@ namespace HTS.Common;
 
 public static class Helper
 {
-    public static void SendMail(List<string> toList, string body)
+    public static void SendMail(List<string> toList, string body, byte[] file=null, string subject = null)
     {
         string fromEmail = "info@ushas.com.tr";
         string password = "VWhb8Jo4UZ";

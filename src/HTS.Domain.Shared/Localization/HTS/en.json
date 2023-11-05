@@ -652,6 +652,10 @@
     /*Mail Body*/
     "HospitalConsultation:MailBody": "Dear UHB Staff,</br>To Create Treatment Process for the patient, please follow the link below.</br> {0}",
     "HospitalResponseCompleted:MailBody": "Dear sir/madam,<br>The hospital consultation requested for {0} is responded by {1}.<br>Hospital Response: {2}<br>Have a nice day.",
-    "HospitalResponseCompleted:MailSubject": "HTS - Hospital Response"
+    "HospitalResponseCompleted:MailSubject": "HTS - Hospital Response",
+    "SendToTik:MailBody": "Sayın İlgili,</br>{0} hastası tıbbi koordinasyon sağlanması amacıyla tarafınıza devredilmiştir.",
+    "SendToTik:MailSubject": "Tıbbi Koordinasyon",
+    "PricerTask:MailBody": "Sayın İlgili,</br>{0} hastası adına {1} kodlu tedavi kaydında bulunan operasyonun fiyatlandırılması bekleniyor.",
+    "PricerTask:MailSubject": "USHAŞ HTS - Fiyatlandırma Görevi"
   }
 }

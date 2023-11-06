@@ -16,6 +16,7 @@ using Microsoft.Extensions.Localization;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
+using Volo.Abp.Identity;
 using Volo.Abp.Users;
 
 namespace HTS.Service;
@@ -24,12 +25,14 @@ public class HTSTaskService : ApplicationService, IHTSTaskService
     private readonly IRepository<HTSTask, int> _taskRepository;
     private readonly IRepository<HospitalPricer, int> _hospitalPricerRepository;
     private readonly IRepository<Patient, int> _patientRepository;
+    private IRepository<Operation, int> _operationRepository;
     private readonly ICurrentUser _currentUser;
     private readonly IUserService _userService;
     private readonly IStringLocalizer<HTSResource> _localizer;
     public HTSTaskService(IRepository<HTSTask, int> taskRepository,
         IRepository<HospitalPricer, int> hospitalPricerRepository,
         IRepository<Patient, int> patientRepository,
+        IRepository<Operation, int> operationRepository,
         ICurrentUser currentUser,
         IUserService userService,
         IStringLocalizer<HTSResource> localizer)
@@ -38,6 +41,7 @@ public class HTSTaskService : ApplicationService, IHTSTaskService
         _currentUser = currentUser;
         _hospitalPricerRepository = hospitalPricerRepository;
         _patientRepository = patientRepository;
+        _operationRepository = operationRepository;
         _userService = userService;
         _localizer = localizer;
     }
@@ -119,7 +123,10 @@ public class HTSTaskService : ApplicationService, IHTSTaskService
         {
             await DoPricingTaskProcess(saveTask);
         }
-
+        else if (saveTask.TaskType == EntityEnum.TaskTypeEnum.PatientApproval)
+        {
+            await DoPatientApprovalProcess(saveTask);
+        }
 
 
     }
@@ -155,6 +162,54 @@ public class HTSTaskService : ApplicationService, IHTSTaskService
         }
     }
 
+    private async Task DoPatientApprovalProcess(SaveHTSTaskDto saveTask)
+    {
+
+        //Operasyon kaydını oluşturan kullanıcıya, ya da Tik e devredilmiş ise tik kullanıcılarına
+        List<Guid> taskUsers = new List<Guid>();
+        List<string> toList = new List<string>();
+        var patient = await _patientRepository.FirstOrDefaultAsync(p => p.Id == saveTask.PatientId);
+        if (patient.IsAssignedToTik.HasValue && patient.IsAssignedToTik == true)
+        {//Tik users task aç
+         //Get tik users
+            var tikUsers = await _userService.GetTikStaffListAsync();
+            if (tikUsers?.Any() ?? false)
+            {
+                taskUsers.AddRange(tikUsers.Select(u => u.Id));
+                toList.AddRange(tikUsers.Select(u => u.Email));
+            }
+        }
+        else
+        {//Operasyon kaydını oluşturan kullanıcıya task aç
+            var operation = (await _operationRepository.WithDetailsAsync(o => o.Creator)).FirstOrDefault(o => o.Id == saveTask.RelatedEntityId);
+            if (operation != null)
+            {
+                taskUsers.Add(operation.Creator.Id);
+                toList.Add(operation.Creator.Email);
+            }
+        }
+
+        //Create Task
+        if (taskUsers?.Any() ?? false)
+        {
+            List<HTSTask> tasks = new List<HTSTask>();
+            foreach (var user in taskUsers)
+            {
+                tasks.Add(new HTSTask()
+                {
+                    TaskTypeId = EntityEnum.TaskTypeEnum.PatientApproval.GetHashCode(),
+                    UserId = user,
+                    IsActive = true,
+                    PatientId = saveTask.PatientId,
+                    Url = "https://webhts.ushas.com.tr/patient/edit/" + saveTask.PatientId
+                });
+            }
+            await _taskRepository.InsertManyAsync(tasks);
+            //Send Email
+            await SendEMailToPatientApprovalTaskUsers(toList, saveTask);
+        }
+    }
+
     public async Task CloseTask(SaveHTSTaskDto saveTask)
     {
         //Close tasks
@@ -180,7 +235,7 @@ public class HTSTaskService : ApplicationService, IHTSTaskService
     /// </summary>
     /// <param name="patient">To be checked object</param>
     /// <exception cref="HTSBusinessException">Check response exceptions</exception>
-    private void  IsDataValidToAssignToTik([CanBeNull] Patient patient)
+    private void IsDataValidToAssignToTik([CanBeNull] Patient patient)
     {
         if (patient == null)
         {
@@ -210,21 +265,30 @@ public class HTSTaskService : ApplicationService, IHTSTaskService
     }
 
 
-     private void SendEMailToTikUsers(List<string> toUsers, Patient patient)
+    private void SendEMailToTikUsers(List<string> toUsers, Patient patient)
     {
         //Send mail to hospital consultations
         string mailBodyFormat = string.Format(_localizer["SendToTik:MailBody"],
                                     $"{patient.Name} {patient.Surname}");
         Helper.SendMail(toUsers, mailBodyFormat, null, _localizer["SendToTik:MailSubject"]);
     }
-     
-     private async Task SendEMailToPricerUsers(List<string> toUsers, SaveHTSTaskDto saveTask)
-     {
-         //Send mail to hospital consultations
-         var patient = await _patientRepository.FirstOrDefaultAsync(p => p.Id == saveTask.PatientId);
-         string mailBodyFormat = string.Format(_localizer["PricerTask:MailBody"],
-             $"{patient.Name} {patient.Surname}",saveTask.TreatmentCode );
-         Helper.SendMail(toUsers, mailBodyFormat, null, _localizer["PricerTask:MailSubject"]);
-     }
+
+    private async Task SendEMailToPricerUsers(List<string> toUsers, SaveHTSTaskDto saveTask)
+    {
+        //Send mail to hospital consultations
+        var patient = await _patientRepository.FirstOrDefaultAsync(p => p.Id == saveTask.PatientId);
+        string mailBodyFormat = string.Format(_localizer["PricerTask:MailBody"],
+            $"{patient.Name} {patient.Surname}", saveTask.TreatmentCode);
+        Helper.SendMail(toUsers, mailBodyFormat, null, _localizer["PricerTask:MailSubject"]);
+    }
+    
+    private async Task SendEMailToPatientApprovalTaskUsers(List<string> toUsers, SaveHTSTaskDto saveTask)
+    {
+        //Send mail
+        var patient = await _patientRepository.FirstOrDefaultAsync(p => p.Id == saveTask.PatientId);
+        string mailBodyFormat = string.Format(_localizer["PatientApprovalTask:MailBody"],
+            $"{patient.Name} {patient.Surname}", saveTask.TreatmentCode);
+        Helper.SendMail(toUsers, mailBodyFormat, null, _localizer["PatientApprovalTask:MailSubject"]);
+    }
 
 }

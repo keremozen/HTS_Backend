@@ -32,7 +32,7 @@ public class ProformaService : ApplicationService, IProformaService
     private readonly IRepository<PatientTreatmentProcess, int> _patientTreatmentProcessRepository;
     private readonly IRepository<Operation, int> _operationRepository;
     private readonly IStringLocalizer<HTSResource> _localizer;
-     private readonly IHTSTaskService _htsTaskService;
+    private readonly IHTSTaskService _htsTaskService;
 
     public ProformaService(IRepository<Proforma, int> proformaRepository,
         IRepository<ExchangeRateInformation, int> exchangeRateRepository,
@@ -155,6 +155,14 @@ public class ProformaService : ApplicationService, IProformaService
         proforma.Operation.PatientTreatmentProcess.TreatmentProcessStatusId = EntityEnum.PatientTreatmentStatusEnum
             .ProformaApprovedWillBeTransferredToPatient.GetHashCode();
         await _proformaRepository.UpdateAsync(proforma);
+        await _htsTaskService.CreateAsync(new SaveHTSTaskDto()
+        {
+            HospitalId = proforma.Operation.HospitalId,
+            RelatedEntityId = proforma.Operation.Id,
+            TaskType = TaskTypeEnum.PatientApproval,
+            TreatmentCode = proforma.Operation.PatientTreatmentProcess.TreatmentCode,
+            PatientId = proforma.Operation.PatientTreatmentProcess.PatientId
+        });
     }
 
     public async Task<Object> SaveAndApproveMFBAsync(SaveProformaDto proforma)
@@ -196,7 +204,7 @@ public class ProformaService : ApplicationService, IProformaService
         }
         else
         {
-            SendEMailToPatient(proforma, patientEmail);
+            await SendEMailToPatient(proforma, patientEmail);
         }
         proforma.ProformaStatusId = EntityEnum.ProformaStatusEnum.WaitingForPatientApproval.GetHashCode();
         proforma.Operation.OperationStatusId =
@@ -233,9 +241,21 @@ public class ProformaService : ApplicationService, IProformaService
         proforma.Operation.PatientTreatmentProcess.TreatmentProcessStatusId = EntityEnum.PatientTreatmentStatusEnum
             .ProformaApprovedWaitingForPayment.GetHashCode();
         await _proformaRepository.UpdateAsync(proforma);
+        //Close patient approval task
+        await ClosePatientApprovalTask(proforma);
     }
 
-
+    private async Task ClosePatientApprovalTask(Proforma proforma)
+    {
+        await _htsTaskService.CloseTask(new SaveHTSTaskDto()
+        {
+            HospitalId = proforma.Operation.HospitalId,
+            RelatedEntityId = proforma.Operation.Id,
+            TaskType = TaskTypeEnum.PatientApproval,
+            TreatmentCode = proforma.Operation.PatientTreatmentProcess.TreatmentCode,
+            PatientId = proforma.Operation.PatientTreatmentProcess.PatientId
+        });
+    }
 
     public async Task RejectPatientAsync(RejectProformaDto rejectProforma)
     {
@@ -252,6 +272,8 @@ public class ProformaService : ApplicationService, IProformaService
             .PatientRejectedProforma.GetHashCode();
         proforma.RejectReasonId = rejectProforma.RejectReasonId;
         await _proformaRepository.UpdateAsync(proforma);
+        //Close patient approval task
+        await ClosePatientApprovalTask(proforma);
     }
 
     private async Task<int> GetVersion(Proforma entity)

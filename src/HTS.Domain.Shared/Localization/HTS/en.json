@@ -656,6 +656,8 @@
     "SendToTik:MailBody": "Sayın İlgili,</br>{0} hastası tıbbi koordinasyon sağlanması amacıyla tarafınıza devredilmiştir.",
     "SendToTik:MailSubject": "Tıbbi Koordinasyon",
     "PricerTask:MailBody": "Sayın İlgili,</br>{0} hastası adına {1} kodlu tedavi kaydında bulunan operasyonun fiyatlandırılması bekleniyor.",
-    "PricerTask:MailSubject": "USHAŞ HTS - Fiyatlandırma Görevi"
+    "PricerTask:MailSubject": "USHAŞ HTS - Fiyatlandırma Görevi",
+    "PatientApprovalTask:MailBody": "Sayın İlgili,</br>{0} hastası adına {1} kodlu tedavi kaydında oluşturulan proformanın hastaya iletilmesi bekleniyor.",
+    "PatientApprovalTask:MailSubject": "USHAŞ HTS - Proformanın İletilmesi Görevi"
   }
 }

@@ -155,6 +155,25 @@ public class HTSTaskService : ApplicationService, IHTSTaskService
         }
     }
 
+    public async Task CloseTask(SaveHTSTaskDto saveTask)
+    {
+        //Close tasks
+        var tasks = (await _taskRepository.GetQueryableAsync()).Where(t =>
+            t.TaskTypeId == saveTask.TaskType.GetHashCode()
+            && t.RelatedEntityId == saveTask.RelatedEntityId
+            && t.IsActive == true)
+            .ToList();
+        if (tasks?.Any() ?? false)
+        {
+            tasks = tasks.Select(t =>
+            {
+                t.IsActive = false;
+                return t;
+            }).ToList();
+            await _taskRepository.UpdateManyAsync(tasks);
+        }
+    }
+
 
     /// <summary>
     /// Checks if data is valid to assign to tik

@@ -47,5 +47,12 @@ namespace HTS.Interface
         /// <returns></returns>
         Task CreateAsync(SaveHTSTaskDto saveTask);
 
+        /// <summary>
+        /// Close task
+        /// </summary>
+        /// <param name="saveTask">To be closed task info</param>
+        /// <returns></returns>
+         Task CloseTask(SaveHTSTaskDto saveTask);
+
     }
 }

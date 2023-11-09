@@ -17,4 +17,5 @@ public class HTSTaskDto: EntityDto<int>
     public TaskTypeDto TaskType { get; set; }
     public PatientDto Patient { get; set; }
     public IdentityUserDto User { get; set; }
+    public DateTime CreationTime { get; set; }
 }

@@ -62,11 +62,10 @@
     "HTS:30": "Geçersiz bir işlem yaptınız.",
     "HTS:31": "Aynı tedavi koduna sahip tedavi kalemi mevcuttur.",
     "HTS:32": "Sistemde kayıtlı ödemesi tamamlanmış proforma bulunmamaktadır.",
-    "HTS:33":"Hasta zaten TIK e devredilmiş.",
-    "HTS:34":"TIK rolüne atanmış kullanıcı bulunmamaktadır",
-    "HTS:35":"Hasta TIK e devredilmediği için geri alma işlemi yapılamaz.",
-
-
+    "HTS:33": "Hasta zaten TIK e devredilmiş.",
+    "HTS:34": "TIK rolüne atanmış kullanıcı bulunmamaktadır",
+    "HTS:35": "Hasta TIK e devredilmediği için geri alma işlemi yapılamaz.",
+    "HTS:36": "Hastane fiyatlandırıcısı bulunamadı.",
 
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Başarılı",
@@ -421,9 +420,11 @@
     "PatientDetail:EditTitle": "Hasta Detayları",
     "PatientDetail:NewTitle": "Yeni Hasta",
     "PatientDetail:SaveSuccessful": "Hasta başarıyla kaydedildi",
+    "PatientDetail:SentToTikSuccessful": "TİK'e başarıyla devredildi",
+    "PatientDetail:ReturnSuccessful": "Başarıyla iade edildi",
     "PatientDetail:SendToTIK": "TİK'e Devret",
     "PatientDetail:SentToTIK": "TİK'e Devredildi",
-    "PatientDetail:Return": "İade Et",
+    "PatientDetail:ReturnFromTIK": "İade Et",
 
     /*NOTES*/
     "Notes:NameSingular": "Not",

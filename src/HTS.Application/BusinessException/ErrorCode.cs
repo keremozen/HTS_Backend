@@ -35,5 +35,5 @@ public static class  ErrorCode
     public const string AlreadyAssignedToTik = "HTS:33";
     public const string NoAssignedUserToTickRole = "HTS:34";
     public const string PatinentNotSetAsAssignedToTik = "HTS:35";
-     public const string NoUserInHospitalPricer = "HTS:36";
+    public const string NoUserInHospitalPricer = "HTS:36";
 }

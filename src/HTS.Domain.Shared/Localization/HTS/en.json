@@ -62,9 +62,10 @@
     "HTS:30": "Invalid operation.",
     "HTS:31": "Treatment items has an item with the same treatment code.",
     "HTS:32": "No payment completed proforma in system",
-    "HTS:33":"Already assigned to Tik",
-    "HTS:34":"No user assigned to TIK role.",
-    "HTS:35":"Patient not set as assigned to tik. Process can not be done.",
+    "HTS:33": "Already assigned to Tik",
+    "HTS:34": "No user assigned to TIK role.",
+    "HTS:35": "Patient not set as assigned to tik. Process can not be done.",
+    "HTS:36": "No hospital pricer found.",
 
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Successful",
@@ -418,9 +419,11 @@
     "PatientDetail:EditTitle": "Patient Details",
     "PatientDetail:NewTitle": "New Patient",
     "PatientDetail:SaveSuccessful": "Patient is saved successfully",
+    "PatientDetail:SentToTikSuccessful": "Successfully assigned to TİK",
+    "PatientDetail:ReturnSuccessful": "Successfully returned from TİK",
     "PatientDetail:SendToTIK": "Send To TİK",
     "PatientDetail:SentToTIK": "Sent To TİK",
-    "PatientDetail:Return": "Return",
+    "PatientDetail:ReturnFromTIK": "Return",
 
     /*NOTES*/
     "Notes:NameSingular": "Note",

@@ -50,7 +50,7 @@ public class HTSTaskService : ApplicationService, IHTSTaskService
     {
         //Get all entities
         var query = (await _taskRepository.WithDetailsAsync())
-            .Where(t => t.UserId == _currentUser.Id);
+            .Where(t => t.UserId == _currentUser.Id && t.IsActive);
         var responseList = ObjectMapper.Map<List<HTSTask>, List<HTSTaskDto>>(await AsyncExecuter.ToListAsync(query));
         var totalCount = await _taskRepository.CountAsync();//item count
         return new PagedResultDto<HTSTaskDto>(totalCount, responseList);
@@ -152,6 +152,7 @@ public class HTSTaskService : ApplicationService, IHTSTaskService
                     UserId = pricer.UserId,
                     IsActive = true,
                     PatientId = saveTask.PatientId,
+                    RelatedEntityId = saveTask.RelatedEntityId,
                     Url = "https://webhts.ushas.com.tr/patient/edit/" + saveTask.PatientId
                 });
             }
@@ -201,6 +202,7 @@ public class HTSTaskService : ApplicationService, IHTSTaskService
                     UserId = user,
                     IsActive = true,
                     PatientId = saveTask.PatientId,
+                    RelatedEntityId = saveTask.RelatedEntityId,
                     Url = "https://webhts.ushas.com.tr/patient/edit/" + saveTask.PatientId
                 });
             }

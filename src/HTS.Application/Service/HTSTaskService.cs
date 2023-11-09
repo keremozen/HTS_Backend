@@ -12,6 +12,7 @@ using HTS.Interface;
 using HTS.Localization;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Localization;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
@@ -29,13 +30,15 @@ public class HTSTaskService : ApplicationService, IHTSTaskService
     private readonly ICurrentUser _currentUser;
     private readonly IUserService _userService;
     private readonly IStringLocalizer<HTSResource> _localizer;
+    private IConfiguration _config;
     public HTSTaskService(IRepository<HTSTask, int> taskRepository,
         IRepository<HospitalPricer, int> hospitalPricerRepository,
         IRepository<Patient, int> patientRepository,
         IRepository<Operation, int> operationRepository,
         ICurrentUser currentUser,
         IUserService userService,
-        IStringLocalizer<HTSResource> localizer)
+        IStringLocalizer<HTSResource> localizer,
+        IConfiguration config)
     {
         _taskRepository = taskRepository;
         _currentUser = currentUser;
@@ -44,6 +47,7 @@ public class HTSTaskService : ApplicationService, IHTSTaskService
         _operationRepository = operationRepository;
         _userService = userService;
         _localizer = localizer;
+        _config = config;
     }
 
     public async Task<PagedResultDto<HTSTaskDto>> GetListAsync()
@@ -69,6 +73,8 @@ public class HTSTaskService : ApplicationService, IHTSTaskService
 
         //Create task
         List<HTSTask> tasks = new List<HTSTask>();
+        string urlFormat = _config["ServiceURL:TaskUrlFormat"];
+        string taskUrl = string.Format(urlFormat, patient.Id);
         foreach (var tik in tikUsers)
         {
             tasks.Add(new HTSTask()
@@ -77,7 +83,7 @@ public class HTSTaskService : ApplicationService, IHTSTaskService
                 UserId = tik.Id,
                 IsActive = true,
                 PatientId = patient.Id,
-                Url = "https://webhts.ushas.com.tr/patient/edit/" + patient.Id
+                Url = taskUrl
             });
         }
         await _taskRepository.InsertManyAsync(tasks);
@@ -108,6 +114,9 @@ public class HTSTaskService : ApplicationService, IHTSTaskService
             }).ToList();
             await _taskRepository.UpdateManyAsync(tasks);
         }
+
+        //Send email to assigner
+        SendEMailToTikAssigner(patient);
 
         //Update patient
         patient.IsAssignedToTik = false;
@@ -144,6 +153,8 @@ public class HTSTaskService : ApplicationService, IHTSTaskService
             }
             //Create Task
             List<HTSTask> tasks = new List<HTSTask>();
+            string urlFormat = _config["ServiceURL:TaskUrlFormat"];
+            string taskUrl = string.Format(urlFormat, saveTask.PatientId);
             foreach (var pricer in pricers)
             {
                 tasks.Add(new HTSTask()
@@ -153,7 +164,7 @@ public class HTSTaskService : ApplicationService, IHTSTaskService
                     IsActive = true,
                     PatientId = saveTask.PatientId,
                     RelatedEntityId = saveTask.RelatedEntityId,
-                    Url = "https://webhts.ushas.com.tr/patient/edit/" + saveTask.PatientId
+                    Url = taskUrl
                 });
             }
             await _taskRepository.InsertManyAsync(tasks);
@@ -194,6 +205,8 @@ public class HTSTaskService : ApplicationService, IHTSTaskService
         if (taskUsers?.Any() ?? false)
         {
             List<HTSTask> tasks = new List<HTSTask>();
+            string urlFormat = _config["ServiceURL:TaskUrlFormat"];
+            string taskUrl = string.Format(urlFormat, saveTask.PatientId);
             foreach (var user in taskUsers)
             {
                 tasks.Add(new HTSTask()
@@ -203,7 +216,7 @@ public class HTSTaskService : ApplicationService, IHTSTaskService
                     IsActive = true,
                     PatientId = saveTask.PatientId,
                     RelatedEntityId = saveTask.RelatedEntityId,
-                    Url = "https://webhts.ushas.com.tr/patient/edit/" + saveTask.PatientId
+                    Url =taskUrl
                 });
             }
             await _taskRepository.InsertManyAsync(tasks);
@@ -273,6 +286,18 @@ public class HTSTaskService : ApplicationService, IHTSTaskService
         string mailBodyFormat = string.Format(_localizer["SendToTik:MailBody"],
                                     $"{patient.Name} {patient.Surname}");
         Helper.SendMail(toUsers, mailBodyFormat, null, _localizer["SendToTik:MailSubject"]);
+    }
+
+    private async Task SendEMailToTikAssigner(Patient patient)
+    {
+        if (patient.UserIdAssignedToTik.HasValue)
+        {
+            var assigner= await  _userService.GetById(patient.UserIdAssignedToTik.ToString());
+            //Send mail to user assign to tik
+            string mailBodyFormat = string.Format(_localizer["ReturnToTik:MailBody"],
+                $"{patient.Name} {patient.Surname}");
+            Helper.SendMail(assigner.Email, mailBodyFormat, null, _localizer["ReturnToTik:MailSubject"]);
+        }
     }
 
     private async Task SendEMailToPricerUsers(List<string> toUsers, SaveHTSTaskDto saveTask)

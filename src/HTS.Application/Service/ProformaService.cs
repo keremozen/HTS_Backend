@@ -212,6 +212,8 @@ public class ProformaService : ApplicationService, IProformaService
         proforma.Operation.PatientTreatmentProcess.TreatmentProcessStatusId = EntityEnum.PatientTreatmentStatusEnum
             .ProformaTransferredWaitingForPatientApproval.GetHashCode();
         await _proformaRepository.UpdateAsync(proforma);
+         //Close patient approval task
+        await ClosePatientApprovalTask(proforma);
     }
 
     private async Task SendEMailToPatient(Proforma proforma, string eMail)
@@ -241,8 +243,6 @@ public class ProformaService : ApplicationService, IProformaService
         proforma.Operation.PatientTreatmentProcess.TreatmentProcessStatusId = EntityEnum.PatientTreatmentStatusEnum
             .ProformaApprovedWaitingForPayment.GetHashCode();
         await _proformaRepository.UpdateAsync(proforma);
-        //Close patient approval task
-        await ClosePatientApprovalTask(proforma);
     }
 
     private async Task ClosePatientApprovalTask(Proforma proforma)
@@ -272,8 +272,6 @@ public class ProformaService : ApplicationService, IProformaService
             .PatientRejectedProforma.GetHashCode();
         proforma.RejectReasonId = rejectProforma.RejectReasonId;
         await _proformaRepository.UpdateAsync(proforma);
-        //Close patient approval task
-        await ClosePatientApprovalTask(proforma);
     }
 
     private async Task<int> GetVersion(Proforma entity)
@@ -434,7 +432,7 @@ public class ProformaService : ApplicationService, IProformaService
                 || (proformaProcess.Change != 0 &&
                     Math.Abs(Math.Round((proformaProcess.ProformaPrice + Decimal.Divide(proformaProcess.ProformaPrice * proformaProcess.Change, 100)), 2) - proformaProcess.ProformaFinalPrice) > 1)
                 || (proformaProcess.Change == 0 &&
-                    Math.Round(proformaProcess.ProformaPrice, 2) != proformaProcess.ProformaFinalPrice))
+                    Math.Abs(Math.Round(proformaProcess.ProformaPrice, 2) - proformaProcess.ProformaFinalPrice) > 1 ))
             {
                 throw new HTSBusinessException(ErrorCode.InvalidCalculationsInProforma);
             }

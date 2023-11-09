@@ -27,7 +27,7 @@ public static class Helper
         MailMessage message = new MailMessage(fromEmail, string.Join(',', toList));
 
         message.From = new MailAddress(fromEmail, "Info USHAŞ");
-        message.Subject = "USHAŞ Tedavi Planı Talebi";
+        message.Subject = subject ?? "USHAŞ Tedavi Planı Talebi";
         message.IsBodyHtml = true;
         message.Body = body;
 #if !DEBUG

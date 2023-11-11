@@ -61,6 +61,11 @@
     "HTS:29": "One default hospital pricer already exits. Multiple default hospital pricers are not allowed.",
     "HTS:30": "Invalid operation.",
     "HTS:31": "Treatment items has an item with the same treatment code.",
+    "HTS:32": "No payment completed proforma in system",
+    "HTS:33": "Already assigned to Tik",
+    "HTS:34": "No user assigned to TIK role.",
+    "HTS:35": "Patient not set as assigned to tik. Process can not be done.",
+    "HTS:36": "No hospital pricer found.",
 
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Successful",
@@ -114,6 +119,7 @@
     "Menu:Home": "Home",
     "Menu:Patients": "Patients",
     "Menu:Admin": "Admin",
+    "Menu:Tasks": "Tasks",
     "Menu:Admin:Hospital": "Hospital Management",
     "Menu:Admin:Nationality": "Country Management",
     "Menu:Admin:City": "City Management",
@@ -378,6 +384,14 @@
     "Admin:PaymentReason:Column:IsActive": "Is Active?",
     "Admin:PaymentReason:PaymentReasonDetails": "Payment Reason Details",
 
+    /*TASKS*/
+    "Tasks:Title": "Tasks",
+    "Tasks:Column:TaskName": "Task",
+    "Tasks:Column:PatientNameSurname": "patient Name Surame",
+    "Tasks:Column:TaskDate": "Task Date",
+    "Tasks:Column:TimeElapsed": "Time Elpased",
+    "Tasks:Column:PatientCreatedBy": "Patient Created By",
+
     /*PATIENTS*/
     "Patients:Title": "Patients",
     "Patients:NewPatient": "New Patient",
@@ -405,6 +419,11 @@
     "PatientDetail:EditTitle": "Patient Details",
     "PatientDetail:NewTitle": "New Patient",
     "PatientDetail:SaveSuccessful": "Patient is saved successfully",
+    "PatientDetail:SentToTikSuccessful": "Successfully assigned to TİK",
+    "PatientDetail:ReturnSuccessful": "Successfully returned from TİK",
+    "PatientDetail:SendToTIK": "Send To TİK",
+    "PatientDetail:SentToTIK": "Sent To TİK",
+    "PatientDetail:ReturnFromTIK": "Return",
 
     /*NOTES*/
     "Notes:NameSingular": "Note",
@@ -636,6 +655,14 @@
     /*Mail Body*/
     "HospitalConsultation:MailBody": "Dear UHB Staff,</br>To Create Treatment Process for the patient, please follow the link below.</br> {0}",
     "HospitalResponseCompleted:MailBody": "Dear sir/madam,<br>The hospital consultation requested for {0} is responded by {1}.<br>Hospital Response: {2}<br>Have a nice day.",
-    "HospitalResponseCompleted:MailSubject": "HTS - Hospital Response"
+    "HospitalResponseCompleted:MailSubject": "HTS - Hospital Response",
+    "SendToTik:MailBody": "Sayın İlgili,</br>{0} hastası tıbbi koordinasyon sağlanması amacıyla tarafınıza devredilmiştir.",
+    "SendToTik:MailSubject": "Tıbbi Koordinasyon",
+    "ReturnToTik:MailBody": "Sayın İlgili,</br>TİK'e devredilen {0} hastası tarafınıza iade edilmiştir.</br>İyi günler dileriz.",
+    "ReturnToTik:MailSubject": "USHAŞ HTS - Hastanın Devredilmesi",
+    "PricerTask:MailBody": "Sayın İlgili,</br>{0} hastası adına {1} kodlu tedavi kaydında bulunan operasyonun fiyatlandırılması bekleniyor.",
+    "PricerTask:MailSubject": "USHAŞ HTS - Fiyatlandırma Görevi",
+    "PatientApprovalTask:MailBody": "Sayın İlgili,</br>{0} hastası adına {1} kodlu tedavi kaydında oluşturulan proformanın hastaya iletilmesi bekleniyor.",
+    "PatientApprovalTask:MailSubject": "USHAŞ HTS - Proformanın İletilmesi Görevi"
   }
 }

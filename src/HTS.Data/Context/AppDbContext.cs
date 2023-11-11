@@ -77,7 +77,9 @@ namespace HTS.Data
         public DbSet<PaymentStatus> PaymentStatuses { get; set; }
         public DbSet<ENabizProcess> ENabizProcesses { get; set; }
 
-
+        public DbSet<TaskType>  TaskTypes { get; set; }
+        public DbSet<HTSTask> HTSTasks { get; set; }
+        
         public DbSet<IdentityUser> Users { get; set; }
 
         public DbSet<IdentityRole> Roles { get; set; }

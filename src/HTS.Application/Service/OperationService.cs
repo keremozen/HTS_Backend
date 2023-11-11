@@ -6,10 +6,12 @@ using System.Xml.Linq;
 using HTS.BusinessException;
 using HTS.Data.Entity;
 using HTS.Dto.HospitalConsultation;
+using HTS.Dto.HTSTask;
 using HTS.Dto.Operation;
 using HTS.Enum;
 using HTS.Interface;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
@@ -24,16 +26,19 @@ public class OperationService : ApplicationService, IOperationService
     private readonly IRepository<PatientTreatmentProcess, int> _patientTreatmentProcessRepository;
     private readonly IRepository<HospitalResponseBranch, int> _hospitalResponseBranchRepository;
     private readonly IRepository<HospitalResponseProcess, int> _hospitalResponseProcessRepository;
+    private readonly IHTSTaskService _htsTaskService;
 
     public OperationService(IRepository<Operation, int> operationRepository,
         IRepository<PatientTreatmentProcess, int> patientTreatmentProcessRepository,
         IRepository<HospitalResponseBranch, int> hospitalResponseBranchRepository,
-        IRepository<HospitalResponseProcess, int> hospitalResponseProcessRepository)
+        IRepository<HospitalResponseProcess, int> hospitalResponseProcessRepository,
+        IHTSTaskService htsTaskService)
     {
         _operationRepository = operationRepository;
         _patientTreatmentProcessRepository = patientTreatmentProcessRepository;
         _hospitalResponseBranchRepository = hospitalResponseBranchRepository;
         _hospitalResponseProcessRepository = hospitalResponseProcessRepository;
+        _htsTaskService = htsTaskService;
     }
 
     public async Task<OperationDto> GetAsync(int id)
@@ -89,6 +94,16 @@ public class OperationService : ApplicationService, IOperationService
         IsDataValidToSendToPricing(entity);
         entity.OperationStatusId = OperationStatusEnum.PriceExpecting.GetHashCode();
         await _operationRepository.UpdateAsync(entity);
+       //Create Task
+       var relatedEntity = (await _operationRepository.WithDetailsAsync((o => o.PatientTreatmentProcess))).FirstOrDefault(o => o.Id == id);
+       await _htsTaskService.CreateAsync(new SaveHTSTaskDto()
+       {
+           HospitalId = entity.HospitalId,
+           RelatedEntityId = id,
+           TaskType = TaskTypeEnum.Pricing,
+           TreatmentCode = relatedEntity.PatientTreatmentProcess.TreatmentCode,
+           PatientId = relatedEntity.PatientTreatmentProcess.PatientId
+       });
     }
 
     /// <summary>

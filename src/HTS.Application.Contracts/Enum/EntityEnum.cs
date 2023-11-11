@@ -318,5 +318,21 @@ namespace HTS.Enum
             CreditCard = 3
 
         }
+        
+        public enum  TaskTypeEnum
+        {
+            /// <summary>
+            /// Fiyatlandırma
+            /// </summary>
+            Pricing = 1,
+            /// <summary>
+            ///Hasta Onayı 
+            /// </summary>
+            PatientApproval = 2,
+            /// <summary>
+            /// Tike devret- tıbbi koordinasyon
+            /// </summary>
+            Tik = 3
+        }
     }
 }

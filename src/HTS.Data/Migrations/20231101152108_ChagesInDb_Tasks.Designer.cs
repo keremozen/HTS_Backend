@@ -3,6 +3,7 @@ using System;
 using HTS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Volo.Abp.EntityFrameworkCore;
@@ -12,9 +13,11 @@ using Volo.Abp.EntityFrameworkCore;
 namespace HTS.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231101152108_ChagesInDb_Tasks")]
+    partial class ChagesInDb_Tasks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -528,108 +531,6 @@ namespace HTS.Data.Migrations
                     b.HasIndex("LastModifierId");
 
                     b.ToTable("DocumentTypes");
-                });
-
-            modelBuilder.Entity("HTS.Data.Entity.ENabizProcess", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ADET")
-                        .HasColumnType("text");
-
-                    b.Property<string>("CIHAZ_NUMARASI")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("CreationTime");
-
-                    b.Property<Guid?>("CreatorId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("CreatorId");
-
-                    b.Property<Guid?>("DeleterId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("DeleterId");
-
-                    b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("DeletionTime");
-
-                    b.Property<string>("GERCEKLESME_ZAMANI")
-                        .HasColumnType("text");
-
-                    b.Property<string>("GIRISIMSEL_ISLEM_KODU")
-                        .HasColumnType("text");
-
-                    b.Property<string>("HASTA_TUTARI")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ISLEM_ADI")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ISLEM_KODU")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ISLEM_PUAN_BILGISI")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ISLEM_REFERANS_NUMARASI")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ISLEM_TURU")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ISLEM_ZAMANI")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IsDeleted");
-
-                    b.Property<string>("KLINIK_KODU")
-                        .HasColumnType("text");
-
-                    b.Property<string>("KULLANICI_KIMLIK_NUMARASI")
-                        .HasColumnType("text");
-
-                    b.Property<string>("KURUM_TUTARI")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("LastModificationTime");
-
-                    b.Property<Guid?>("LastModifierId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("LastModifierId");
-
-                    b.Property<string>("RANDEVU_ZAMANI")
-                        .HasColumnType("text");
-
-                    b.Property<string>("SysTrackingNumber")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("TreatmentCode")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatorId");
-
-                    b.HasIndex("DeleterId");
-
-                    b.HasIndex("LastModifierId");
-
-                    b.ToTable("ENabizProcesses");
                 });
 
             modelBuilder.Entity("HTS.Data.Entity.ExchangeRateInformation", b =>
@@ -1508,9 +1409,6 @@ namespace HTS.Data.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
 
-                    b.Property<bool?>("IsAssignedToTik")
-                        .HasColumnType("boolean");
-
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
@@ -1555,18 +1453,6 @@ namespace HTS.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<DateTime?>("TikAssignmentDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("TikReturnDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid?>("TikUserIdReturned")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("UserIdAssignedToTik")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CreatorId");
@@ -1584,10 +1470,6 @@ namespace HTS.Data.Migrations
                     b.HasIndex("PhoneCountryCodeId");
 
                     b.HasIndex("SecondTongueId");
-
-                    b.HasIndex("TikUserIdReturned");
-
-                    b.HasIndex("UserIdAssignedToTik");
 
                     b.ToTable("Patients");
                 });
@@ -3501,27 +3383,6 @@ namespace HTS.Data.Migrations
                     b.Navigation("LastModifier");
                 });
 
-            modelBuilder.Entity("HTS.Data.Entity.ENabizProcess", b =>
-                {
-                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Creator")
-                        .WithMany()
-                        .HasForeignKey("CreatorId");
-
-                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Deleter")
-                        .WithMany()
-                        .HasForeignKey("DeleterId");
-
-                    b.HasOne("Volo.Abp.Identity.IdentityUser", "LastModifier")
-                        .WithMany()
-                        .HasForeignKey("LastModifierId");
-
-                    b.Navigation("Creator");
-
-                    b.Navigation("Deleter");
-
-                    b.Navigation("LastModifier");
-                });
-
             modelBuilder.Entity("HTS.Data.Entity.ExchangeRateInformation", b =>
                 {
                     b.HasOne("HTS.Data.Entity.Currency", "Currency")
@@ -3970,14 +3831,6 @@ namespace HTS.Data.Migrations
                         .WithMany()
                         .HasForeignKey("SecondTongueId");
 
-                    b.HasOne("Volo.Abp.Identity.IdentityUser", "TikUserReturned")
-                        .WithMany()
-                        .HasForeignKey("TikUserIdReturned");
-
-                    b.HasOne("Volo.Abp.Identity.IdentityUser", "UserAssignedToTik")
-                        .WithMany()
-                        .HasForeignKey("UserIdAssignedToTik");
-
                     b.Navigation("Creator");
 
                     b.Navigation("Deleter");
@@ -3993,10 +3846,6 @@ namespace HTS.Data.Migrations
                     b.Navigation("PhoneCountryCode");
 
                     b.Navigation("SecondTongue");
-
-                    b.Navigation("TikUserReturned");
-
-                    b.Navigation("UserAssignedToTik");
                 });
 
             modelBuilder.Entity("HTS.Data.Entity.PatientAdmissionMethod", b =>

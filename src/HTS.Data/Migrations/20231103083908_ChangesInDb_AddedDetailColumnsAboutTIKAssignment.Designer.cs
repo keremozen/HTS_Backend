@@ -3,6 +3,7 @@ using System;
 using HTS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Volo.Abp.EntityFrameworkCore;
@@ -12,9 +13,11 @@ using Volo.Abp.EntityFrameworkCore;
 namespace HTS.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231103083908_ChangesInDb_AddedDetailColumnsAboutTIKAssignment")]
+    partial class ChangesInDb_AddedDetailColumnsAboutTIKAssignment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -528,108 +531,6 @@ namespace HTS.Data.Migrations
                     b.HasIndex("LastModifierId");
 
                     b.ToTable("DocumentTypes");
-                });
-
-            modelBuilder.Entity("HTS.Data.Entity.ENabizProcess", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ADET")
-                        .HasColumnType("text");
-
-                    b.Property<string>("CIHAZ_NUMARASI")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("CreationTime");
-
-                    b.Property<Guid?>("CreatorId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("CreatorId");
-
-                    b.Property<Guid?>("DeleterId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("DeleterId");
-
-                    b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("DeletionTime");
-
-                    b.Property<string>("GERCEKLESME_ZAMANI")
-                        .HasColumnType("text");
-
-                    b.Property<string>("GIRISIMSEL_ISLEM_KODU")
-                        .HasColumnType("text");
-
-                    b.Property<string>("HASTA_TUTARI")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ISLEM_ADI")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ISLEM_KODU")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ISLEM_PUAN_BILGISI")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ISLEM_REFERANS_NUMARASI")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ISLEM_TURU")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ISLEM_ZAMANI")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IsDeleted");
-
-                    b.Property<string>("KLINIK_KODU")
-                        .HasColumnType("text");
-
-                    b.Property<string>("KULLANICI_KIMLIK_NUMARASI")
-                        .HasColumnType("text");
-
-                    b.Property<string>("KURUM_TUTARI")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("LastModificationTime");
-
-                    b.Property<Guid?>("LastModifierId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("LastModifierId");
-
-                    b.Property<string>("RANDEVU_ZAMANI")
-                        .HasColumnType("text");
-
-                    b.Property<string>("SysTrackingNumber")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("TreatmentCode")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatorId");
-
-                    b.HasIndex("DeleterId");
-
-                    b.HasIndex("LastModifierId");
-
-                    b.ToTable("ENabizProcesses");
                 });
 
             modelBuilder.Entity("HTS.Data.Entity.ExchangeRateInformation", b =>
@@ -3481,27 +3382,6 @@ namespace HTS.Data.Migrations
                 });
 
             modelBuilder.Entity("HTS.Data.Entity.DocumentType", b =>
-                {
-                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Creator")
-                        .WithMany()
-                        .HasForeignKey("CreatorId");
-
-                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Deleter")
-                        .WithMany()
-                        .HasForeignKey("DeleterId");
-
-                    b.HasOne("Volo.Abp.Identity.IdentityUser", "LastModifier")
-                        .WithMany()
-                        .HasForeignKey("LastModifierId");
-
-                    b.Navigation("Creator");
-
-                    b.Navigation("Deleter");
-
-                    b.Navigation("LastModifier");
-                });
-
-            modelBuilder.Entity("HTS.Data.Entity.ENabizProcess", b =>
                 {
                     b.HasOne("Volo.Abp.Identity.IdentityUser", "Creator")
                         .WithMany()

@@ -31,4 +31,9 @@ public static class  ErrorCode
     public const string ThereCanOnlyBeOneDocument = "HTS:27";
     public const string PricerAlreadyExist = "HTS:28";
     public const string DefaultPricerAlreadyExist = "HTS:29";
+    public const string NoPaymentCompletedProforma = "HTS:32";
+    public const string AlreadyAssignedToTik = "HTS:33";
+    public const string NoAssignedUserToTickRole = "HTS:34";
+    public const string PatinentNotSetAsAssignedToTik = "HTS:35";
+    public const string NoUserInHospitalPricer = "HTS:36";
 }

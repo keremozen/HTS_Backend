@@ -11,8 +11,10 @@ using HTS.Dto.Language;
 using HTS.Dto.Nationality;
 using HTS.Dto.PatientNote;
 using HTS.Dto.PatientTreatmentProcess;
+using HTS.Enum;
 using HTS.Interface;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
@@ -24,15 +26,18 @@ namespace HTS.Service;
 public class PatientTreatmentProcessService : ApplicationService, IPatientTreatmentProcessService
 {
     private readonly IRepository<PatientTreatmentProcess, int> _patientTreatmentProcessRepository;
+    private readonly IRepository<Proforma, int> _proformaRepository;
     private readonly IIdentityUserRepository _userRepository;
     private readonly IUSSService _ussService;
     public PatientTreatmentProcessService(IRepository<PatientTreatmentProcess, int> patientTreatmentProcessRepository,
+        IRepository<Proforma, int> proformaRepository,
         IIdentityUserRepository userRepository,
         IUSSService ussService)
     {
         _patientTreatmentProcessRepository = patientTreatmentProcessRepository;
         _userRepository = userRepository;
         _ussService = ussService;
+        _proformaRepository = proformaRepository;
     }
 
     [Authorize]
@@ -62,8 +67,24 @@ public class PatientTreatmentProcessService : ApplicationService, IPatientTreatm
     
     public async Task<bool> SetSysTrackingNumber(string treatmentCode)
     {
+        await IsDataValidToSetSysTrackingNumber(treatmentCode);
         ExternalApiResult result = await _ussService.GetSysTrackingNumber(treatmentCode);
-        return true;
+        if (result.durum != 1)
+        {
+            return false;
+        }
+        List<GetSysTrackingNumberObject> trackingNumbers = (List<GetSysTrackingNumberObject>)result.sonuc;
+        if (trackingNumbers?.Any() ?? false )
+        {
+            var lastTrackingNumber = trackingNumbers.Last();
+
+            var ptp = await _patientTreatmentProcessRepository.FirstOrDefaultAsync(ptp =>
+                ptp.TreatmentCode == treatmentCode);
+         //   ptp.SysTrackingNumber = lastTrackingNumber.sysTakipNo;
+            await _patientTreatmentProcessRepository.UpdateAsync(ptp);
+            return true;
+        }
+        return false;
     }
 
     /// <summary>
@@ -90,5 +111,24 @@ public class PatientTreatmentProcessService : ApplicationService, IPatientTreatm
             }
         }
         throw new HTSBusinessException(ErrorCode.TreatmentNumberCouldNotBeGenerated);
+    }
+    
+    /// <summary>
+    /// Checks if data is valid to set systrackingnumber
+    /// </summary>
+    /// <param name="treatmentCode">Treatment code</param>
+    /// <exception cref="HTSBusinessException">Check response exceptions</exception>
+    private async Task IsDataValidToSetSysTrackingNumber(string treatmentCode)
+    {
+
+        //Check proforma
+        var proforma =  (await _proformaRepository.GetQueryableAsync())
+            .FirstOrDefault(p => p.Operation.PatientTreatmentProcess.TreatmentCode == treatmentCode
+                                 && p.ProformaStatusId == ProformaStatusEnum.PaymentCompleted.GetHashCode());
+        if (proforma == null)
+        {//No payment completed proforma in db
+            throw new HTSBusinessException(ErrorCode.NoPaymentCompletedProforma);
+        }
+     
     }
 }

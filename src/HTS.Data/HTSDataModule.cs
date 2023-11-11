@@ -157,6 +157,14 @@ namespace HTS.Data
                     entityOptions.DefaultWithDetailsFunc = query => query.Include(p => p.Currency)
                         .Include(p => p.PaymentKind);
                 });
+                
+                options.Entity<HTSTask>(entityOptions =>
+                {
+                    entityOptions.DefaultWithDetailsFunc = query => query.Include(t => t.Patient)
+                        .Include(t => t.User)
+                        .Include(t => t.TaskType);
+                });
+                
             });
         }
     }

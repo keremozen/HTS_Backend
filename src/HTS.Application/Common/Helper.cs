@@ -11,7 +11,7 @@ namespace HTS.Common;
 
 public static class Helper
 {
-    public static void SendMail(List<string> toList, string body)
+    public static void SendMail(List<string> toList, string body, byte[] file=null, string subject = null)
     {
         string fromEmail = "info@ushas.com.tr";
         string password = "VWhb8Jo4UZ";
@@ -27,7 +27,7 @@ public static class Helper
         MailMessage message = new MailMessage(fromEmail, string.Join(',', toList));
 
         message.From = new MailAddress(fromEmail, "Info USHAŞ");
-        message.Subject = "USHAŞ Tedavi Planı Talebi";
+        message.Subject = subject ?? "USHAŞ Tedavi Planı Talebi";
         message.IsBodyHtml = true;
         message.Body = body;
 #if !DEBUG

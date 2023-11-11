@@ -113,3 +113,9 @@ INSERT INTO "PaymentKinds"("Id", "Name") VALUES (3, 'Kredi Kartı');
 --Payment Status Table
 INSERT INTO "PaymentStatuses"("Id", "Name") VALUES (1, 'Yeni Kayıt');
 INSERT INTO "PaymentStatuses"("Id", "Name") VALUES (2, 'Tahsil Edildi');
+
+
+--TaskType Table
+INSERT INTO "TaskTypes"("Id", "Name") VALUES (1, 'Fiyatlandırma');
+INSERT INTO "TaskTypes"("Id", "Name") VALUES (2, 'Proformanın İletilmesi');
+INSERT INTO "TaskTypes"("Id", "Name") VALUES (3, 'Tıbbi Koordinasyon');

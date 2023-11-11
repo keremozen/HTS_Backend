@@ -28,7 +28,7 @@ public class PatientInfo
 
 }
 
-public class HTSCodeResult
+public class GetSysTrackingNumberObject
 {
     public string sysTakipNo { get; set; }
     public string uyruk { get; set; }

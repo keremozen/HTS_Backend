@@ -11,8 +11,10 @@ using Volo.Abp.DependencyInjection;
 
 namespace HTS.Interface
 {
-    public interface IUSSService
+    public interface IUSSService : IApplicationService
     {
-        public Task<ExternalApiResult> GetSysTrackingNumber(string treatmentCode);
+        Task<ExternalApiResult> GetSysTrackingNumber(string treatmentCode);
+        Task<ExternalApiResult> GetSysTrackingNumberDetail(string sysTrackingNumber, string treatmentCode);
+        Task SetENabizProcess(string treatmentCode);
     }
 }

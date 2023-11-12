@@ -106,7 +106,7 @@ public class USSService : ApplicationService, IUSSService
         ExternalApiResult trackingNumberResult = await GetSysTrackingNumber(treatmentCode);
         if (trackingNumberResult != null && trackingNumberResult.durum == 1)
         {
-            List<HTSCodeResult> sysCodes = System.Text.Json.JsonSerializer.Deserialize<List<HTSCodeResult>>((JsonElement)trackingNumberResult.sonuc);
+            List<GetSysTrackingNumberObject> sysCodes = System.Text.Json.JsonSerializer.Deserialize<List<GetSysTrackingNumberObject>>((JsonElement)trackingNumberResult.sonuc);
             foreach (var sysCode in sysCodes)
             {
                 await GetSysTrackingNumberDetail(sysCode.sysTakipNo, treatmentCode);

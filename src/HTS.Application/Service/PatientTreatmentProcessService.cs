@@ -64,28 +64,6 @@ public class PatientTreatmentProcessService : ApplicationService, IPatientTreatm
         var newEntityQuery = (await _patientTreatmentProcessRepository.WithDetailsAsync()).Where(p => p.Id == entity.Id);
         return ObjectMapper.Map<PatientTreatmentProcess, PatientTreatmentProcessDto>(await AsyncExecuter.FirstOrDefaultAsync(newEntityQuery));
     }
-    
-    public async Task<bool> SetSysTrackingNumber(string treatmentCode)
-    {
-        await IsDataValidToSetSysTrackingNumber(treatmentCode);
-        ExternalApiResult result = await _ussService.GetSysTrackingNumber(treatmentCode);
-        if (result.durum != 1)
-        {
-            return false;
-        }
-        List<GetSysTrackingNumberObject> trackingNumbers = (List<GetSysTrackingNumberObject>)result.sonuc;
-        if (trackingNumbers?.Any() ?? false )
-        {
-            var lastTrackingNumber = trackingNumbers.Last();
-
-            var ptp = await _patientTreatmentProcessRepository.FirstOrDefaultAsync(ptp =>
-                ptp.TreatmentCode == treatmentCode);
-         //   ptp.SysTrackingNumber = lastTrackingNumber.sysTakipNo;
-            await _patientTreatmentProcessRepository.UpdateAsync(ptp);
-            return true;
-        }
-        return false;
-    }
 
     /// <summary>
     /// Try to generate unique 10 character treatment code in UNNNNNNNNN format
@@ -113,22 +91,4 @@ public class PatientTreatmentProcessService : ApplicationService, IPatientTreatm
         throw new HTSBusinessException(ErrorCode.TreatmentNumberCouldNotBeGenerated);
     }
     
-    /// <summary>
-    /// Checks if data is valid to set systrackingnumber
-    /// </summary>
-    /// <param name="treatmentCode">Treatment code</param>
-    /// <exception cref="HTSBusinessException">Check response exceptions</exception>
-    private async Task IsDataValidToSetSysTrackingNumber(string treatmentCode)
-    {
-
-        //Check proforma
-        var proforma =  (await _proformaRepository.GetQueryableAsync())
-            .FirstOrDefault(p => p.Operation.PatientTreatmentProcess.TreatmentCode == treatmentCode
-                                 && p.ProformaStatusId == ProformaStatusEnum.PaymentCompleted.GetHashCode());
-        if (proforma == null)
-        {//No payment completed proforma in db
-            throw new HTSBusinessException(ErrorCode.NoPaymentCompletedProforma);
-        }
-     
-    }
 }

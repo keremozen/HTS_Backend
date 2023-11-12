@@ -28,12 +28,5 @@ namespace HTS.Interface
         /// <returns>Inserted patient treatment process</returns>
         Task<PatientTreatmentProcessDto> StartAsync(int patientId);
 
-        /// <summary>
-        /// Set sysTrackingNumber of treatment
-        /// </summary>
-        /// <param name="treatmentCode">TreatmentCode to be related</param>
-        /// <returns>Setting tracking number response</returns>
-        Task<bool> SetSysTrackingNumber(string treatmentCode);
-        
     }
 }

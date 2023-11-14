@@ -54,3 +54,12 @@ public class ENabizProcessDto
     public string KLINIK_KODU { get; set; }
     public string ISLEM_PUAN_BILGISI { get; set; }
 }
+
+public class ListENabizProcessDto : ENabizProcessDto
+{
+    public string TreatmentCode { get; set; }
+    public string SysTrackingNumber { get; set; }
+    public int? ProcessId { get; set; }
+    public bool IsCancelled { get; set; }
+    public bool IsUsedInProforma { get; set; }
+}

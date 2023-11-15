@@ -134,7 +134,7 @@ public class USSService : ApplicationService, IUSSService
         }
     }
 
-    public async Task GetENabizProcesses(string treatmentCode)
+    public async Task<List<ListENabizProcessDto>> GetENabizProcesses(string treatmentCode)
     {
         List<int> notApplicableStatuses = new List<int>()
         {
@@ -190,5 +190,6 @@ public class USSService : ApplicationService, IUSSService
             }
             responseList.Add(listENabizProcess);
         }
+        return responseList;
     }
 }

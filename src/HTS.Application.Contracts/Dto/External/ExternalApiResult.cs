@@ -59,6 +59,8 @@ public class ListENabizProcessDto : ENabizProcessDto
 {
     public string TreatmentCode { get; set; }
     public string SysTrackingNumber { get; set; }
+    public decimal? UshasPrice { get; set; }
+    public decimal? HospitalPrice { get; set; }
     public int? ProcessId { get; set; }
     public bool IsCancelled { get; set; }
     public bool IsUsedInProforma { get; set; }

@@ -51,6 +51,15 @@ public class PatientTreatmentProcessService : ApplicationService, IPatientTreatm
         return new PagedResultDto<PatientTreatmentProcessDto>(totalCount, responseList);
     }
 
+    [Authorize]
+    public async Task<PatientTreatmentProcessDto> GetByPatientTreatmentProcessIdAsync(int patientTreatmentProcessId)
+    {
+        //Get all entities
+        var query = (await _patientTreatmentProcessRepository.WithDetailsAsync())
+                                                .FirstOrDefault(t => t.Id == patientTreatmentProcessId);
+        return ObjectMapper.Map<PatientTreatmentProcess, PatientTreatmentProcessDto>(query);
+    }
+
     [Authorize("HTS.PatientManagement")]
     public async Task<PatientTreatmentProcessDto> StartAsync(int patientId)
     {

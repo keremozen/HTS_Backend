@@ -175,6 +175,7 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<PaymentDocument, PaymentDocumentDto>();
 
         CreateMap<ENabizProcessDto, ENabizProcess>();
+        CreateMap<ENabizProcess, ListENabizProcessDto>();
 
         CreateMap<HTSTask, HTSTaskDto>();
         CreateMap<TaskType, TaskTypeDto>();

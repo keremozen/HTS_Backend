@@ -136,14 +136,17 @@ public class USSService : ApplicationService, IUSSService
 
     public async Task<List<ListENabizProcessDto>> GetENabizProcesses(string treatmentCode)
     {
+        //TODO:Hopsy child processler
         List<int> notApplicableStatuses = new List<int>()
         {
              EntityEnum.ProformaStatusEnum.MFBRejected.GetHashCode(),
               EntityEnum.ProformaStatusEnum.PatientRejected.GetHashCode(),
         };
         var eNabizProcesses = (await _eNabizProcessRepository.WithDetailsAsync(p => p.Process)).Where(p => p.TreatmentCode == treatmentCode).ToList();
-        var proformaProcesses = (await _proformaRepository.WithDetailsAsync(p => p.ProformaProcesses)).Where(p => p.Operation.PatientTreatmentProcess.TreatmentCode == treatmentCode
-         && !notApplicableStatuses.Contains(p.ProformaStatusId)).SelectMany(p => p.ProformaProcesses).ToList();
+        var proformaProcesses = (await _proformaRepository.WithDetailsAsync())
+                                .Where(p => p.Operation.PatientTreatmentProcess.TreatmentCode == treatmentCode
+                                            && !notApplicableStatuses.Contains(p.ProformaStatusId))
+                                .SelectMany(p => p.ProformaProcesses).ToList();
         Dictionary<int, int> processCountLookUp = new Dictionary<int, int>();
         foreach (var pProcess in proformaProcesses)
         {
@@ -169,6 +172,7 @@ public class USSService : ApplicationService, IUSSService
                 var proformaProcess = proformaProcesses.FirstOrDefault(p => p.ProcessId == listENabizProcess.ProcessId);
                 if (proformaProcess != null)
                 {
+                    listENabizProcess.UshasPrice = proformaProcess.UnitPrice;
                     int proformaCount = processCountLookUp[listENabizProcess.ProcessId.Value];
                     int eNabizCount = Convert.ToInt32(listENabizProcess.ADET);
                     if (eNabizCount <= proformaCount)
@@ -186,6 +190,22 @@ public class USSService : ApplicationService, IUSSService
                         listENabizProcess.IsUsedInProforma = false;
                         listENabizProcess.ADET = (eNabizCount - proformaCount).ToString();
                     }
+                }
+                else{//processId is not in proforma
+                   
+                   var process = (await _processRepository.WithDetailsAsync(p => p.ProcessCosts))
+                       .FirstOrDefault(p => p.Id == listENabizProcess.ProcessId);
+                   if (process != null)
+                   {
+                       DateTime today = DateTime.Now.Date;
+                       if (process.ProcessCosts.Any(c => c.ValidityStartDate.Date <= today
+                                                          && c.ValidityEndDate >= today))
+                       {
+                           listENabizProcess.UshasPrice = process.ProcessCosts
+                               .FirstOrDefault(c => c.ValidityStartDate.Date <= today && c.ValidityEndDate >= today)?
+                               .UshasPrice;
+                       }
+                   }
                 }
             }
             responseList.Add(listENabizProcess);

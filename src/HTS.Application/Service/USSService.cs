@@ -104,7 +104,7 @@ public class USSService : ApplicationService, IUSSService
             if (!await _eNabizProcessRepository.AnyAsync(p => p.ISLEM_REFERANS_NUMARASI == entity.ISLEM_REFERANS_NUMARASI))
             {//New record, insert
              //Get related process 
-                var process = await _processRepository.FirstOrDefaultAsync(p => p.Code == entity.ISLEM_KODU && p.IsDeleted == false);
+                var process = await _processRepository.FirstOrDefaultAsync(p => p.Code.Contains(entity.ISLEM_KODU) && p.IsDeleted == false);
                 if (process != null)
                 {
                     entity.ProcessId = process.Id;

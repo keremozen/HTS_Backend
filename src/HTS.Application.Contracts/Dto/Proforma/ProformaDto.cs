@@ -30,6 +30,7 @@ public class ProformaDto : AuditedEntityWithUserDto<int, IdentityUserDto>
     public int? RejectReasonId { get; set; }
     public string RejectReasonMFB { get; set; }
     public bool? SendToPatientManually { get; set; }
+    public bool IsENabiz { get; set; }
 
     public RejectReasonDto RejectReason { get; set; }
     public CurrencyDto Currency { get; set; }

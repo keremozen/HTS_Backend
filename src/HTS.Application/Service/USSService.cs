@@ -125,7 +125,7 @@ public class USSService : ApplicationService, IUSSService
     public async Task SetENabizProcess(string treatmentCode)
     {
         ExternalApiResult trackingNumberResult = await GetSysTrackingNumber(treatmentCode);
-        if (trackingNumberResult != null && trackingNumberResult.durum == 1)
+        if (trackingNumberResult != null && trackingNumberResult.sonuc != null && trackingNumberResult.durum == 1)
         {
             List<GetSysTrackingNumberObject> sysCodes = System.Text.Json.JsonSerializer.Deserialize<List<GetSysTrackingNumberObject>>((JsonElement)trackingNumberResult.sonuc);
             foreach (var sysCode in sysCodes)

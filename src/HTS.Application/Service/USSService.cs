@@ -143,13 +143,16 @@ public class USSService : ApplicationService, IUSSService
              EntityEnum.ProformaStatusEnum.MFBRejected.GetHashCode(),
               EntityEnum.ProformaStatusEnum.PatientRejected.GetHashCode(),
         };
+        //Get enabiz items from db
         var eNabizProcesses = (await _eNabizProcessRepository.WithDetailsAsync(p => p.Process)).Where(p => p.TreatmentCode == treatmentCode).ToList();
 
+//Get proformas of treatmentcode
         var proformas = (await _proformaRepository.WithDetailsAsync())
                                .Where(p => p.Operation.PatientTreatmentProcess.TreatmentCode == treatmentCode
                                            && !notApplicableStatuses.Contains(p.ProformaStatusId))
                                            .ToList();
 
+        //Group to get latest proforma
         var groupList = from p in proformas
                         group p by p.OperationId into g
                         select new
@@ -160,7 +163,7 @@ public class USSService : ApplicationService, IUSSService
         proformas = proformas.Where(p => groupList.Any(pp => pp.OperationId == p.OperationId && pp.Version == p.Version)).ToList();
         var proformaProcesses = proformas.SelectMany(p => p.ProformaProcesses).ToList();
 
-
+        //Calculate proforma process counts
         Dictionary<int, int> processCountLookUp = new Dictionary<int, int>();
         foreach (var pProcess in proformaProcesses)
         {
@@ -187,10 +190,10 @@ public class USSService : ApplicationService, IUSSService
                 if (proformaProcess != null)
                 {
                     listENabizProcess.UshasPrice = proformaProcess.UnitPrice;
-                    int proformaCount = processCountLookUp[listENabizProcess.ProcessId.Value];
-                    int eNabizCount = Convert.ToInt32(listENabizProcess.ADET);
+                    int proformaCount = processCountLookUp[listENabizProcess.ProcessId.Value];//Count left in proforma
+                    int eNabizCount = Convert.ToInt32(listENabizProcess.ADET);//Count come from enabiz
                     if (eNabizCount <= proformaCount)
-                    {
+                    {//There is enough count. Mark as usedinproforma
                         listENabizProcess.IsUsedInProforma = true;
                         processCountLookUp[listENabizProcess.ProcessId.Value] -= eNabizCount;
                     }
@@ -203,6 +206,7 @@ public class USSService : ApplicationService, IUSSService
                         listENabizProcess = ObjectMapper.Map<ENabizProcess, ListENabizProcessDto>(eNabizProcess);
                         listENabizProcess.IsUsedInProforma = false;
                         listENabizProcess.ADET = (eNabizCount - proformaCount).ToString();
+                        listENabizProcess.UshasPrice = proformaProcess.UnitPrice;
                     }
                 }
                 else

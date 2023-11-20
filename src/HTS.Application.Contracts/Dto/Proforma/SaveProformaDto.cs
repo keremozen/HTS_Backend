@@ -30,6 +30,7 @@ public class SaveProformaDto
     public string Description { get; set; }
     public string? TPDescription { get; set; }
     public int Version { get; set; }
+    public bool IsENabiz { get; set; } = false;
 
     public virtual ICollection<SaveProformaProcessDto> ProformaProcesses { get; set; }
     public virtual ICollection<SaveProformaAdditionalServiceDto> ProformaAdditionalServices { get; set; }

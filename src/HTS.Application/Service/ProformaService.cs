@@ -95,6 +95,33 @@ public class ProformaService : ApplicationService, IProformaService
         await IsDataValidToSave(proforma);
         var operation = (await _operationRepository.WithDetailsAsync()).Include(o => o.PatientTreatmentProcess).FirstOrDefault(o => o.Id == proforma.OperationId);
         var entity = ObjectMapper.Map<SaveProformaDto, Proforma>(proforma);
+        entity.IsENabiz = false;
+        entity.Version = await GetVersion(entity);
+        entity.CreationDate = DateTime.Now;
+        if (operation.PatientTreatmentProcess.TreatmentProcessStatusId == EntityEnum.PatientTreatmentStatusEnum.ProformaCreatedWaitingForMFBApproval.GetHashCode())
+        {
+            entity.ProformaStatusId = EntityEnum.ProformaStatusEnum.MFBWaitingApproval.GetHashCode();
+
+            var previousProforma = await _proformaRepository.FirstOrDefaultAsync(p => p.OperationId == proforma.OperationId && p.Version == entity.Version - 1);
+            previousProforma.ProformaStatusId = EntityEnum.ProformaStatusEnum.MFBUpdatedCancelled.GetHashCode();
+            await _proformaRepository.UpdateAsync(previousProforma, true);
+        }
+        else
+        {
+            entity.ProformaStatusId = EntityEnum.ProformaStatusEnum.NewRecord.GetHashCode();
+        }
+        entity.ProformaCode = await GenerateProformaCode(entity.OperationId, entity.Version);
+        await _proformaRepository.InsertAsync(entity, true);
+        return entity.Id;
+    }
+
+
+    public async Task<int> SaveENabizAsync(SaveProformaDto proforma)
+    {
+        await IsDataValidToSave(proforma);
+        var operation = (await _operationRepository.WithDetailsAsync()).Include(o => o.PatientTreatmentProcess).FirstOrDefault(o => o.Id == proforma.OperationId);
+        var entity = ObjectMapper.Map<SaveProformaDto, Proforma>(proforma);
+        entity.IsENabiz = true;
         entity.Version = await GetVersion(entity);
         entity.CreationDate = DateTime.Now;
         if (operation.PatientTreatmentProcess.TreatmentProcessStatusId == EntityEnum.PatientTreatmentStatusEnum.ProformaCreatedWaitingForMFBApproval.GetHashCode())
@@ -277,7 +304,8 @@ public class ProformaService : ApplicationService, IProformaService
     private async Task<int> GetVersion(Proforma entity)
     {
         var query = await _proformaRepository.GetQueryableAsync();
-        int version = query.Where(p => p.OperationId == entity.OperationId)
+        int version = query.Where(p => p.OperationId == entity.OperationId 
+                                    && p.IsENabiz == entity.IsENabiz)
             .DefaultIfEmpty()
             .Max(p => p == null ? 0 : p.Version);
         return ++version;
@@ -300,19 +328,20 @@ public class ProformaService : ApplicationService, IProformaService
     {
         //TODO:Hopsy mfd onayı bekleyen case de, sadece mfd yeni versiyon çıkabilir.
         //Status that not valid to save proforma
-        List<int> notSuitableStatus = new List<int>
-        {
-            EntityEnum.ProformaStatusEnum.PaymentCompleted.GetHashCode(),
-            EntityEnum.ProformaStatusEnum.WaitingForPayment.GetHashCode(),
-            EntityEnum.ProformaStatusEnum.WaitingForPatientApproval.GetHashCode(),
-            EntityEnum.ProformaStatusEnum.WillBeTransferedToPatient.GetHashCode()
-        };
+        //Commented because there can be proforma from enabiz
+        // List<int> notSuitableStatus = new List<int>
+        // {
+        //     EntityEnum.ProformaStatusEnum.PaymentCompleted.GetHashCode(),
+        //     EntityEnum.ProformaStatusEnum.WaitingForPayment.GetHashCode(),
+        //     EntityEnum.ProformaStatusEnum.WaitingForPatientApproval.GetHashCode(),
+        //     EntityEnum.ProformaStatusEnum.WillBeTransferedToPatient.GetHashCode()
+        // };
 
-        if (await _proformaRepository.AnyAsync(p => p.OperationId == proforma.OperationId
-                                                     && notSuitableStatus.Contains(p.ProformaStatusId)))
-        {
-            throw new HTSBusinessException(ErrorCode.ProformaStatusNotValid);
-        }
+        // if (await _proformaRepository.AnyAsync(p => p.OperationId == proforma.OperationId
+        //                                              && notSuitableStatus.Contains(p.ProformaStatusId)))
+        // {
+        //     throw new HTSBusinessException(ErrorCode.ProformaStatusNotValid);
+        // }
 
         //First proforma
         if (!await _proformaRepository.AnyAsync(p => p.OperationId == proforma.OperationId))

@@ -42,6 +42,13 @@ namespace HTS.Interface
         Task<int> SaveAsync(SaveProformaDto proforma);
 
         /// <summary>
+        /// Save proforma for enabiz
+        /// </summary>
+        /// <param name="proforma">To be inserted object</param>
+        /// <returns>Proforma id</returns>
+        Task<int> SaveENabizAsync(SaveProformaDto proforma);
+
+        /// <summary>
         /// Proforma send to mfb
         /// </summary>
         /// <param name="id">Proforma Id to be send</param>

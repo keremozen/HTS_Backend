@@ -603,6 +603,7 @@
     "Quotation:ProformaTable:Button:Reject": "Red",
     "Quotation:ProformaTable:Button:Payment": "Tahsil Et",
     "Quotation:ProformaTable:Message:ConfirmApprove": "Proformayı onaylamak istediğinizden emin misiniz?",
+    "Quotation:HBYSTable:CreateProforma": "Proforma Oluştur",
     "Quotation:HBYSTable:Column:SutCode": "SUT Kodu",
     "Quotation:HBYSTable:Column:CreationDate": "Giriş Tarihi",
     "Quotation:HBYSTable:Column:HospitalPrice": "Hastane Fiyatı",

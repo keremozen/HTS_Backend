@@ -602,6 +602,7 @@
     "Quotation:ProformaTable:Button:Reject": "Reject",
     "Quotation:ProformaTable:Button:Payment": "Payment",
     "Quotation:ProformaTable:Message:ConfirmApprove": "Are you sure you want to approve proforma?",
+    "Quotation:HBYSTable:CreateProforma": "Create Proforma",
     "Quotation:HBYSTable:Column:SutCode": "SUT Code",
     "Quotation:HBYSTable:Column:CreationDate": "Creation Date",
     "Quotation:HBYSTable:Column:HospitalPrice": "Hospital Price",

@@ -13,12 +13,14 @@ using Volo.Abp.Identity;
 
 namespace HTS.Dto.Proforma;
 
-public class SaveProformaDto
+public class SaveENabizProformaDto
 {
     [Required]
-    public int OperationId { get; set; }
-    [Required]
     public int CurrencyId { get; set; }
+
+    [Required]
+    public int PTPId { get; set; }
+    public int? OperationId { get; set; }
     [Required]
     public EntityEnum.ProformaStatusEnum ProformaStatusId { get; set; }
     [Required]
@@ -30,9 +32,6 @@ public class SaveProformaDto
     public string Description { get; set; }
     public string? TPDescription { get; set; }
     public int Version { get; set; }
-
     public virtual ICollection<SaveProformaProcessDto> ProformaProcesses { get; set; }
-    public virtual ICollection<SaveProformaAdditionalServiceDto> ProformaAdditionalServices { get; set; }
-    public virtual ICollection<SaveProformaNotIncludingServiceDto> ProformaNotIncludingServices { get; set; }
 
 }

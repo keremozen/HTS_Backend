@@ -36,6 +36,7 @@ namespace HTS.Data.Entity
         public Hospital? Hospital { get; set; }
         [ForeignKey("PatientTreatmentProcessId")]
         public PatientTreatmentProcess? PatientTreatmentProcess { get; set; }
+        public virtual ICollection<Proforma> Proformas { get; set; }
         
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using HTS.BusinessException;
 using HTS.Common;
@@ -114,13 +115,20 @@ public class ProformaService : ApplicationService, IProformaService
         await _proformaRepository.InsertAsync(entity, true);
         return entity.Id;
     }
-
-
-    public async Task<int> SaveENabizAsync(SaveProformaDto proforma)
+    
+    public async Task<int> SaveENabizAsync(SaveENabizProformaDto proforma)
     {
-        await IsDataValidToSave(proforma);
-        var operation = (await _operationRepository.WithDetailsAsync()).Include(o => o.PatientTreatmentProcess).FirstOrDefault(o => o.Id == proforma.OperationId);
-        var entity = ObjectMapper.Map<SaveProformaDto, Proforma>(proforma);
+        await IsDataValidToSaveENabiz(proforma);
+        
+        if (!proforma.OperationId.HasValue)
+        {//Set operation
+           int operationId= await GetOperationId(proforma);
+           proforma.OperationId = operationId;
+        }
+        var operation = (await _operationRepository.WithDetailsAsync())
+            .Include(o => o.PatientTreatmentProcess)
+            .FirstOrDefault(o => o.Id == proforma.OperationId);
+        var entity = ObjectMapper.Map<SaveENabizProformaDto, Proforma>(proforma);
         entity.IsENabiz = true;
         entity.Version = await GetVersion(entity);
         entity.CreationDate = DateTime.Now;
@@ -304,8 +312,7 @@ public class ProformaService : ApplicationService, IProformaService
     private async Task<int> GetVersion(Proforma entity)
     {
         var query = await _proformaRepository.GetQueryableAsync();
-        int version = query.Where(p => p.OperationId == entity.OperationId 
-                                    && p.IsENabiz == entity.IsENabiz)
+        int version = query.Where(p => p.OperationId == entity.OperationId)
             .DefaultIfEmpty()
             .Max(p => p == null ? 0 : p.Version);
         return ++version;
@@ -474,6 +481,69 @@ public class ProformaService : ApplicationService, IProformaService
     }
 
 
+     /// <summary>
+    /// Checks if data is valid to save for enabiz
+    /// </summary>
+    /// <param name="proforma">To be saved object</param>
+    /// <exception cref="HTSBusinessException">Check response exceptions</exception>
+    private async Task IsDataValidToSaveENabiz(SaveENabizProformaDto proforma)
+    {
+
+        //First proforma
+        if (proforma.OperationId == null)
+        {
+            //check exchange rate
+            if (proforma.CurrencyId != 1)
+            {
+               
+            }
+            else
+            {
+                if (proforma.ExchangeRate != 1)
+                {
+                    throw new HTSBusinessException(ErrorCode.ExchangeRateInformationNotMatch);
+                }
+            }
+        }
+
+        //Get process prices
+        var processIds = proforma.ProformaProcesses.Select(p => p.ProcessId).ToList();
+        var processes = (await _processRepository.WithDetailsAsync(p => p.ProcessCosts)).Where(b => b.IsActive == true
+        && processIds.Contains(b.Id)).ToList();
+        //Check each process price
+        foreach (var proformaProcess in proforma.ProformaProcesses)
+        {
+            var process = processes.FirstOrDefault(p => p.Id == proformaProcess.ProcessId);
+            if (process == null)
+            {
+                throw new HTSBusinessException(ErrorCode.InvalidProcessInProforma);
+            }
+
+            DateTime today = DateTime.Now.Date;
+            if (!process.ProcessCosts.Any(c => c.ValidityStartDate.Date <= today
+                && c.ValidityEndDate >= today
+                && c.UshasPrice == proformaProcess.UnitPrice))
+            {
+                throw new HTSBusinessException(ErrorCode.InvalidProcessUnitPriceInProforma);
+            }
+
+            if ((proformaProcess.UnitPrice * proformaProcess.TreatmentCount) != proformaProcess.TotalPrice
+                || Math.Round(Decimal.Divide(proformaProcess.TotalPrice, proforma.ExchangeRate), 2) != proformaProcess.ProformaPrice
+                || (proformaProcess.Change != 0 &&
+                    Math.Abs(Math.Round((proformaProcess.ProformaPrice + Decimal.Divide(proformaProcess.ProformaPrice * proformaProcess.Change, 100)), 2) - proformaProcess.ProformaFinalPrice) > 1)
+                || (proformaProcess.Change == 0 &&
+                    Math.Abs(Math.Round(proformaProcess.ProformaPrice, 2) - proformaProcess.ProformaFinalPrice) > 1 ))
+            {
+                throw new HTSBusinessException(ErrorCode.InvalidCalculationsInProforma);
+            }
+        }
+        if (proforma.TotalProformaPrice != proforma.ProformaProcesses.Sum(p => p.ProformaFinalPrice))
+        {
+            throw new HTSBusinessException(ErrorCode.InvalidCalculationsInProforma);
+        }
+    }
+
+    
     /// <summary>
     /// Checks if data is valid to send to mfb
     /// </summary>
@@ -687,6 +757,16 @@ public class ProformaService : ApplicationService, IProformaService
         return bytes;
     }
 
-
+    private async Task<int> GetOperationId(SaveENabizProformaDto proforma)
+    {
+        var operation= await (await _operationRepository.GetQueryableAsync()).FirstOrDefaultAsync(o =>
+            o.PatientTreatmentProcessId == proforma.PTPId 
+            && (o.Proformas== null || o.Proformas.Any()== false));
+        if (operation == null)
+        {//There is not any operation without proforma
+            throw new HTSBusinessException(ErrorCode.NoOperationWithoutProforma);
+        }
+        return operation.Id;
+    }
 
 }

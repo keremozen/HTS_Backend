@@ -103,7 +103,7 @@ namespace HTS.Interface
         /// </summary>
         /// <param name="id">Proforma id</param>
         /// <returns></returns>
-        Task<byte[]> CreateProformaPdf(int id);
+        Task<ProformaPdfDto> CreateProformaPdf(int id);
 
     }
 }

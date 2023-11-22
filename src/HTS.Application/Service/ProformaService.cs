@@ -263,7 +263,7 @@ public class ProformaService : ApplicationService, IProformaService
         $"We wish you a nice days.</br></br>Regards.";
         var proformaReceipt = await CreateProformaPdf(proforma.Id);
         var mailSubject = $"Treatment Plan is Ready | {proforma.ProformaCode}";
-        Helper.SendMail(eMail, mailBody, proformaReceipt, subject: mailSubject);
+        Helper.SendMail(eMail, mailBody, proformaReceipt.File, subject: mailSubject);
     }
 
     public async Task ApprovePatientAsync(int id)
@@ -794,10 +794,13 @@ public class ProformaService : ApplicationService, IProformaService
         }
     }
 
-    public async Task<byte[]> CreateProformaPdf(int id)
+    public async Task<ProformaPdfDto> CreateProformaPdf(int id)
     {
+        
         byte[] bytes = null;
-        var proforma = (await _proformaRepository.WithDetailsAsync()).FirstOrDefault(p => p.Id == id);
+        var proforma = (await _proformaRepository.WithDetailsAsync()).AsNoTracking().FirstOrDefault(p => p.Id == id);
+        var patient = (await _proformaRepository.GetQueryableAsync()).AsNoTracking().FirstOrDefault(p => p.Id == id)?
+            .Operation?.PatientTreatmentProcess?.Patient;
         ProformaDocument document = null;
         if (proforma != null)
         {
@@ -806,7 +809,13 @@ public class ProformaService : ApplicationService, IProformaService
             document = new ProformaDocument(proforma);
             bytes = document.GeneratePdf();
         }
-        return bytes;
+
+        ProformaPdfDto response = new ProformaPdfDto()
+        {
+            File = bytes,
+            PatientNameSurname = patient != null ? $"{{patient.Name}}-{patient.Surname}" : string.Empty
+        };
+        return response;
     }
 
     private async Task<int> GetOperationId(SaveENabizProformaDto proforma)

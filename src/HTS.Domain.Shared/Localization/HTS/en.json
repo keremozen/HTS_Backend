@@ -66,6 +66,7 @@
     "HTS:34": "No user assigned to TIK role.",
     "HTS:35": "Patient not set as assigned to tik. Process can not be done.",
     "HTS:36": "No hospital pricer found.",
+    "HTS:37": "Operation without a proforma couldn't be found.",
 
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Successful",

@@ -66,6 +66,7 @@
     "HTS:34": "TIK rolüne atanmış kullanıcı bulunmamaktadır",
     "HTS:35": "Hasta TIK e devredilmediği için geri alma işlemi yapılamaz.",
     "HTS:36": "Hastane fiyatlandırıcısı bulunamadı.",
+    "HTS:37": "Proforma oluşturulmamış bir operasyon kaydı bulunamadı.",
 
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Başarılı",

@@ -115,19 +115,22 @@ public class ProformaService : ApplicationService, IProformaService
         await _proformaRepository.InsertAsync(entity, true);
         return entity.Id;
     }
-    
+
     public async Task<int> SaveENabizAsync(SaveENabizProformaDto proforma)
     {
         await IsDataValidToSaveENabiz(proforma);
-        
+
         if (!proforma.OperationId.HasValue)
         {//Set operation
-           int operationId= await GetOperationId(proforma);
-           proforma.OperationId = operationId;
+            int operationId = await GetOperationId(proforma);
+            proforma.OperationId = operationId;
         }
         var operation = (await _operationRepository.WithDetailsAsync())
             .Include(o => o.PatientTreatmentProcess)
             .FirstOrDefault(o => o.Id == proforma.OperationId);
+        operation.OperationStatusId = EntityEnum.OperationStatusEnum.PriceExpecting.GetHashCode();
+        await _operationRepository.UpdateAsync(operation);
+
         var entity = ObjectMapper.Map<SaveENabizProformaDto, Proforma>(proforma);
         entity.IsENabiz = true;
         entity.Version = await GetVersion(entity);
@@ -247,7 +250,7 @@ public class ProformaService : ApplicationService, IProformaService
         proforma.Operation.PatientTreatmentProcess.TreatmentProcessStatusId = EntityEnum.PatientTreatmentStatusEnum
             .ProformaTransferredWaitingForPatientApproval.GetHashCode();
         await _proformaRepository.UpdateAsync(proforma);
-         //Close patient approval task
+        //Close patient approval task
         await ClosePatientApprovalTask(proforma);
     }
 
@@ -468,7 +471,7 @@ public class ProformaService : ApplicationService, IProformaService
                 || (proformaProcess.Change != 0 &&
                     Math.Abs(Math.Round((proformaProcess.ProformaPrice + Decimal.Divide(proformaProcess.ProformaPrice * proformaProcess.Change, 100)), 2) - proformaProcess.ProformaFinalPrice) > 1)
                 || (proformaProcess.Change == 0 &&
-                    Math.Abs(Math.Round(proformaProcess.ProformaPrice, 2) - proformaProcess.ProformaFinalPrice) > 1 ))
+                    Math.Abs(Math.Round(proformaProcess.ProformaPrice, 2) - proformaProcess.ProformaFinalPrice) > 1))
             {
                 throw new HTSBusinessException(ErrorCode.InvalidCalculationsInProforma);
             }
@@ -481,7 +484,7 @@ public class ProformaService : ApplicationService, IProformaService
     }
 
 
-     /// <summary>
+    /// <summary>
     /// Checks if data is valid to save for enabiz
     /// </summary>
     /// <param name="proforma">To be saved object</param>
@@ -495,7 +498,7 @@ public class ProformaService : ApplicationService, IProformaService
             //check exchange rate
             if (proforma.CurrencyId != 1)
             {
-               
+
             }
             else
             {
@@ -503,6 +506,55 @@ public class ProformaService : ApplicationService, IProformaService
                 {
                     throw new HTSBusinessException(ErrorCode.ExchangeRateInformationNotMatch);
                 }
+            }
+        }
+
+        //Check additional service data
+        bool invalidData = false;
+        foreach (var additionalService in proforma.ProformaAdditionalServices)
+        {
+            if (invalidData)
+            {
+                throw new HTSBusinessException(ErrorCode.ProformaAdditionalServiceNotValid);
+            }
+            switch (additionalService.AdditionalServiceId)
+            {
+                case EntityEnum.AdditionalServiceEnum.ServiceAdmission:
+                    if (additionalService.DayCount == null
+                        || additionalService.DayCount.Value < 1
+                        || additionalService.RoomTypeId == null)
+                    {
+                        invalidData = true;
+                    }
+                    break;
+                case EntityEnum.AdditionalServiceEnum.IntensiveCare:
+                    if (additionalService.DayCount == null
+                        || additionalService.DayCount.Value < 1)
+                    {
+                        invalidData = true;
+                    }
+                    break;
+                case EntityEnum.AdditionalServiceEnum.Accomodation:
+                    if (additionalService.DayCount == null
+                        || additionalService.DayCount.Value < 1
+                        || additionalService.CompanionCount < 1)
+                    {
+                        invalidData = true;
+                    }
+                    break;
+                case EntityEnum.AdditionalServiceEnum.Trip:
+                    if (additionalService.CompanionCount < 0)
+                    {
+                        invalidData = true;
+                    }
+                    break;
+                case EntityEnum.AdditionalServiceEnum.PhysicalExamination:
+                    if (additionalService.ItemCount == null
+                        || additionalService.ItemCount.Value < 1)
+                    {
+                        invalidData = true;
+                    }
+                    break;
             }
         }
 
@@ -532,7 +584,7 @@ public class ProformaService : ApplicationService, IProformaService
                 || (proformaProcess.Change != 0 &&
                     Math.Abs(Math.Round((proformaProcess.ProformaPrice + Decimal.Divide(proformaProcess.ProformaPrice * proformaProcess.Change, 100)), 2) - proformaProcess.ProformaFinalPrice) > 1)
                 || (proformaProcess.Change == 0 &&
-                    Math.Abs(Math.Round(proformaProcess.ProformaPrice, 2) - proformaProcess.ProformaFinalPrice) > 1 ))
+                    Math.Abs(Math.Round(proformaProcess.ProformaPrice, 2) - proformaProcess.ProformaFinalPrice) > 1))
             {
                 throw new HTSBusinessException(ErrorCode.InvalidCalculationsInProforma);
             }
@@ -543,7 +595,7 @@ public class ProformaService : ApplicationService, IProformaService
         }
     }
 
-    
+
     /// <summary>
     /// Checks if data is valid to send to mfb
     /// </summary>
@@ -759,9 +811,9 @@ public class ProformaService : ApplicationService, IProformaService
 
     private async Task<int> GetOperationId(SaveENabizProformaDto proforma)
     {
-        var operation= await (await _operationRepository.GetQueryableAsync()).FirstOrDefaultAsync(o =>
-            o.PatientTreatmentProcessId == proforma.PTPId 
-            && (o.Proformas== null || o.Proformas.Any()== false));
+        var operation = await (await _operationRepository.GetQueryableAsync()).FirstOrDefaultAsync(o =>
+            o.PatientTreatmentProcessId == proforma.PTPId
+            && (o.Proformas == null || o.Proformas.Any() == false));
         if (operation == null)
         {//There is not any operation without proforma
             throw new HTSBusinessException(ErrorCode.NoOperationWithoutProforma);

@@ -48,12 +48,12 @@ public class PatientService : ApplicationService, IPatientService
     public async Task<PagedResultDto<PatientDto>> GetListAsync()
     {
         //Get all entities
-        var patientList = (await _patientRepository.WithDetailsAsync()).ToList();
+        var patientList = (await _patientRepository.WithDetailsAsync()).AsNoTracking().ToList();
 
         bool isAllowedToViewAll = await _authorizationService.IsGrantedAsync("HTS.PatientViewAll");
         if (!isAllowedToViewAll)
         {
-            var hospitals = (await _hospitalRepository.WithDetailsAsync()).Where(h => h.HospitalStaffs.Any(hs => hs.UserId == _currentUser.Id) || h.HospitalPricers.Any(hs => hs.UserId == _currentUser.Id));
+            var hospitals = (await _hospitalRepository.WithDetailsAsync()).AsNoTracking().Where(h => h.HospitalStaffs.Any(hs => hs.UserId == _currentUser.Id) || h.HospitalPricers.Any(hs => hs.UserId == _currentUser.Id));
             List<Guid> authorizedHospitalStaffIds = hospitals.SelectMany(h=>h.HospitalStaffs).Select(hs=>hs.UserId).ToList().Union(hospitals.SelectMany(h => h.HospitalPricers).Select(hs => hs.UserId).ToList()).ToList();
             patientList = patientList.Where(p => authorizedHospitalStaffIds.Contains(p.CreatorId.Value)).ToList();
         }
@@ -70,7 +70,7 @@ public class PatientService : ApplicationService, IPatientService
     [Authorize("HTS.PatientList")]
     public async Task<PagedResultDto<PatientDto>> FilterListAsync(FilterPatientDto filter)
     {
-        var query = await _patientRepository.WithDetailsAsync();
+        var query = (await _patientRepository.WithDetailsAsync()).AsQueryable().AsNoTracking();
         if (!string.IsNullOrEmpty(filter.Name))
         {
             query = query.Where(p => EF.Functions.ILike(p.Name, $"%{filter.Name}%"));

@@ -15,7 +15,7 @@ using static HTS.Enum.EntityEnum;
 
 namespace HTS.Service;
 
-public class HospitalAgentNoteService : ApplicationService//, IPatientNoteService
+public class HospitalAgentNoteService : ApplicationService, IHospitalAgentNoteService
 {
     private readonly IRepository<HospitalAgentNote, int> _hospitalAgentNoteRepository;
     private readonly ICurrentUser _currentUser;

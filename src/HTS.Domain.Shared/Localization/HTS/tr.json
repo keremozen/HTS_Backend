@@ -67,6 +67,8 @@
     "HTS:35": "Hasta TIK e devredilmediği için geri alma işlemi yapılamaz.",
     "HTS:36": "Hastane fiyatlandırıcısı bulunamadı.",
     "HTS:37": "Proforma oluşturulmamış bir operasyon kaydı bulunamadı.",
+    "HTS:38":"Sistemde proforması olmayan operasyon kaydı olmadığı için işlem yapılamaz",
+    "HTS:39":"Hastane temsilcisi notunu sadece oluşturan kişi geri çekebilir",
 
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Başarılı",

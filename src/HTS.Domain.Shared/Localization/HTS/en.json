@@ -67,6 +67,9 @@
     "HTS:35": "Patient not set as assigned to tik. Process can not be done.",
     "HTS:36": "No hospital pricer found.",
     "HTS:37": "Operation without a proforma couldn't be found.",
+    "HTS:38":"There is not any proforma without operation. Process can not be done.",
+    "HTS:39":"Only creator can revoke hospital agent note.",
+
 
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Successful",

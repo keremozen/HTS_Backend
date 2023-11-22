@@ -28,6 +28,7 @@ namespace HTS.Data.Entity
         public HospitalizationType? HospitalizationType { get; set; }
         public virtual ICollection<HospitalResponseBranch> HospitalResponseBranches { get; set; }
         public virtual ICollection<HospitalResponseProcess> HospitalResponseProcesses { get; set; }
+        public virtual ICollection<HospitalAgentNote> HospitalAgentNotes { get; set; }
      
     }
 }

@@ -52,6 +52,8 @@ namespace HTS.Data
         public DbSet<HospitalResponseBranch> HospitalResponseBranches { get; set; }
         public DbSet<HospitalResponseProcess> HospitalResponseProcesses { get; set; }
         public DbSet<Operation> Operations { get; set; }
+        public DbSet<HospitalAgentNote> HospitalAgentNotes { get; set; }
+        public DbSet<HospitalAgentNoteStatus> HospitalAgentNoteStatuses { get; set; }
 
         public DbSet<ProcessRelation> IncludingProcesses { get; set; }
         public DbSet<Branch> Branches { get; set; }

@@ -14,6 +14,7 @@ using HTS.Dto.ExchangeRateInformation;
 using HTS.Dto.External;
 using HTS.Dto.Gender;
 using HTS.Dto.Hospital;
+using HTS.Dto.HospitalAgentNote;
 using HTS.Dto.HospitalConsultation;
 using HTS.Dto.HospitalConsultationDocument;
 using HTS.Dto.HospitalConsultationStatus;
@@ -174,6 +175,8 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<SavePaymentItemDto, PaymentItem>();
         CreateMap<SavePaymentDocumentDto, PaymentDocument>();
         CreateMap<PaymentDocument, PaymentDocumentDto>();
+        CreateMap<HospitalAgentNote, HospitalAgentNoteDto>();
+        CreateMap<SaveHospitalAgentNoteDto, HospitalAgentNote>();
 
         CreateMap<ENabizProcessDto, ENabizProcess>();
         CreateMap<ENabizProcess, ListENabizProcessDto>();

@@ -37,4 +37,5 @@ public static class  ErrorCode
     public const string PatinentNotSetAsAssignedToTik = "HTS:35";
     public const string NoUserInHospitalPricer = "HTS:36";
     public const string NoOperationWithoutProforma = "HTS:37";
+    public const string CreatorCanRevokeHospitalAgentNote = "HTS:38";
 }

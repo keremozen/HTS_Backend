@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using HTS.Dto.HospitalAgentNote;
 using HTS.Dto.HospitalConsultation;
 using HTS.Dto.HospitalizationType;
 using HTS.Dto.HospitalResponseBranch;
@@ -22,5 +23,6 @@ public class HospitalResponseDto : EntityDto<int>
     public HospitalizationTypeDto HospitalizationType { get; set; }
     public ICollection<HospitalResponseBranchDto> HospitalResponseBranches { get; set; }
     public ICollection<HospitalResponseProcessDto> HospitalResponseProcesses { get; set; }
+    public ICollection<HospitalAgentNoteDto> HospitalAgentNotes { get; set; }
     public HospitalConsultationDto  HospitalConsultation { get; set; }
 }

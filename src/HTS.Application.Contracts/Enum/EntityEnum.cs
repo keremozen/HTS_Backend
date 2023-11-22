@@ -29,6 +29,12 @@ namespace HTS.Enum
             NewRecord = 1,
             Revoked = 2
         }
+        
+        public enum HospitalAgentNoteStatusEnum
+        {
+            NewRecord = 1,
+            Revoked = 2
+        }
 
         public enum PatientTreatmentStatusEnum
         {

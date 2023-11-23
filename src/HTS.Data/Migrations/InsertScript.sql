@@ -119,3 +119,7 @@ INSERT INTO "PaymentStatuses"("Id", "Name") VALUES (2, 'Tahsil Edildi');
 INSERT INTO "TaskTypes"("Id", "Name") VALUES (1, 'Fiyatlandırma');
 INSERT INTO "TaskTypes"("Id", "Name") VALUES (2, 'Proformanın İletilmesi');
 INSERT INTO "TaskTypes"("Id", "Name") VALUES (3, 'Tıbbi Koordinasyon');
+
+--Agent Note Status
+INSERT INTO "HospitalAgentNoteStatuses"("Id", "Name") VALUES (1, 'Yeni Kayıt');
+INSERT INTO "HospitalAgentNoteStatuses"("Id", "Name") VALUES (2, 'İptal');

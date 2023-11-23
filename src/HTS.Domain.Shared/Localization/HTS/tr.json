@@ -67,8 +67,8 @@
     "HTS:35": "Hasta TIK e devredilmediği için geri alma işlemi yapılamaz.",
     "HTS:36": "Hastane fiyatlandırıcısı bulunamadı.",
     "HTS:37": "Proforma oluşturulmamış bir operasyon kaydı bulunamadı.",
-    "HTS:38":"Sistemde proforması olmayan operasyon kaydı olmadığı için işlem yapılamaz",
-    "HTS:39":"Hastane temsilcisi notunu sadece oluşturan kişi geri çekebilir",
+    "HTS:38": "Sistemde proforması olmayan operasyon kaydı olmadığı için işlem yapılamaz",
+    "HTS:39": "Hastane temsilcisi notunu sadece oluşturan kişi geri çekebilir",
 
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Başarılı",
@@ -438,6 +438,15 @@
     "Notes:Column:Created": "Eklenme Tarihi",
     "Notes:NoteDetails": "Not Detayları",
 
+    /*AGENT NOTES*/
+    "HospitalAgentNotes:NameSingular": "Not",
+    "HospitalAgentNotes:NamePlural": "TİK/Hastane Temsilcisi Notları",
+    "HospitalAgentNotes:Title": "TİK/Hastane Temsilcisi Notları",
+    "HospitalAgentNotes:Column:Note": "Not",
+    "HospitalAgentNotes:Column:CreatedBy": "Ekleyen Kullanıcı",
+    "HospitalAgentNotes:Column:Created": "Eklenme Tarihi",
+    "HospitalAgentNotes:NoteDetails": "Not Detayları",
+
     /*DOCUMENTS*/
     "Documents:NameSingular": "Doküman",
     "Documents:NamePlural": "Dokümanlar",
@@ -558,6 +567,7 @@
     "Proforma:Field:ExcludedServices": "Dahil Olmayan Hizmetler",
     "Proforma:Field:Materials": "Ön Görülen Sarf Malzemeleri",
     "Proforma:Field:HospitalDescription": "Hastane Açıklaması",
+    "Proforma:Field:HospitalAgentNote": "TİK / Hastane Yetkilisi Notu",
     "Proforma:Button:Save": "Kaydet",
     "Proforma:Button:Send": "Gönder",
     "Proforma:TreatmentItem:Column:Code": "Tedavi Kodu",

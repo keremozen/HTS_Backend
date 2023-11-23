@@ -68,6 +68,7 @@ public class HospitalResponseService : ApplicationService, IHospitalResponseServ
     public async Task CreateAsync(SaveHospitalResponseDto hospitalResponse)
     {
         await IsDataValidToSave(hospitalResponse);
+
         var entity = ObjectMapper.Map<SaveHospitalResponseDto, HospitalResponse>(hospitalResponse);
 
         var hConsultation = hospitalResponse.HospitalConsultationId.HasValue ?
@@ -88,6 +89,8 @@ public class HospitalResponseService : ApplicationService, IHospitalResponseServ
         //Update patient treatment process entity status clm - "Hastanelere Danışıldı - Değerlendirme Bekliyor"
         hConsultation.PatientTreatmentProcess.TreatmentProcessStatusId =
            PatientTreatmentStatusEnum.HospitalAskedWaitingAssessment.GetHashCode();
+
+
 
         hConsultation.HospitalResponses.Add(entity);
         await _hcRepository.UpdateAsync(hConsultation);

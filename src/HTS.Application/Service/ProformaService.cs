@@ -799,7 +799,7 @@ public class ProformaService : ApplicationService, IProformaService
         
         byte[] bytes = null;
         var proforma = (await _proformaRepository.WithDetailsAsync()).AsNoTracking().FirstOrDefault(p => p.Id == id);
-        var patient = (await _proformaRepository.GetQueryableAsync()).AsNoTracking().FirstOrDefault(p => p.Id == id)?
+        var patient = (await _proformaRepository.WithDetailsAsync()).AsNoTracking().FirstOrDefault(p => p.Id == id)?
             .Operation?.PatientTreatmentProcess?.Patient;
         ProformaDocument document = null;
         if (proforma != null)
@@ -813,7 +813,7 @@ public class ProformaService : ApplicationService, IProformaService
         ProformaPdfDto response = new ProformaPdfDto()
         {
             File = bytes,
-            PatientNameSurname = patient != null ? $"{{patient.Name}}-{patient.Surname}" : string.Empty
+            PatientNameSurname = patient != null ? $"{patient.Name}-{patient.Surname}" : string.Empty
         };
         return response;
     }

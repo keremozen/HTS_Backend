@@ -21,5 +21,12 @@ namespace HTS.Interface
         /// <returns></returns>
         Task SendEMailToPatient(int salesMethodId);
 
+        /// <summary>
+        /// Created invitation letter pdf
+        /// </summary>
+        /// <param name="salesMethodId"></param>
+        /// <returns></returns>
+        Task<byte[]> CreateInvitationLetter(int salesMethodId);
+
     }
 }

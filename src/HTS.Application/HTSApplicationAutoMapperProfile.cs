@@ -27,6 +27,7 @@ using HTS.Dto.HospitalResponseType;
 using HTS.Dto.HospitalStaff;
 using HTS.Dto.HospitalUHBStaff;
 using HTS.Dto.HTSTask;
+using HTS.Dto.InvitationLetterDocument;
 using HTS.Dto.Language;
 using HTS.Dto.Nationality;
 using HTS.Dto.Operation;
@@ -124,6 +125,7 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<PatientTreatmentProcess, PatientTreatmentProcessDto>();
         CreateMap<SaveSalesMethodAndCompanionInfoDto, SalesMethodAndCompanionInfo>();
         CreateMap<SalesMethodAndCompanionInfo, SalesMethodAndCompanionInfoDto>();
+        CreateMap<SaveDocumentDto, InvitationLetterDocument>();
         CreateMap<Process, ProcessDto>();
         CreateMap<SaveProcessDto, Process>();
         CreateMap<ProcessCost, ProcessCostDto>();

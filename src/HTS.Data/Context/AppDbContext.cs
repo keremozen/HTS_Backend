@@ -81,6 +81,7 @@ namespace HTS.Data
 
         public DbSet<TaskType>  TaskTypes { get; set; }
         public DbSet<HTSTask> HTSTasks { get; set; }
+        public DbSet<InvitationLetterDocument> InvitationLetterDocuments { get; set; }
         
         public DbSet<IdentityUser> Users { get; set; }
 

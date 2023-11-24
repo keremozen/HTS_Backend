@@ -38,5 +38,6 @@ namespace HTS.Data.Entity
         public Nationality? PhoneCountryCode { get; set; }
         [ForeignKey("CompanionNationalityId")]
         public Nationality? CompanionNationality { get; set; }
+        public virtual ICollection<InvitationLetterDocument> InvitationLetterDocuments { get; set; }
     }
 }

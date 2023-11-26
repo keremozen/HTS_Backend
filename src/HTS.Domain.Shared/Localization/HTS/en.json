@@ -68,12 +68,8 @@
     "HTS:36": "No hospital pricer found.",
     "HTS:37": "Operation without a proforma couldn't be found.",
     "HTS:38": "Only creator can revoke hospital agent note.",
-<<<<<<< HEAD
-    "HTS:39": "There should be approved proforma and hospital information for invitation letter.",
-
-=======
     "HTS:39": "The payment cannot be edited for a completed proforma.",
->>>>>>> 15c359d (minor changes)
+    "HTS:40": "There should be approved proforma and hospital information for invitation letter.",
 
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Successful",

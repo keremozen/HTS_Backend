@@ -67,13 +67,9 @@
     "HTS:35": "Hasta TIK e devredilmediği için geri alma işlemi yapılamaz.",
     "HTS:36": "Hastane fiyatlandırıcısı bulunamadı.",
     "HTS:37": "Proforma oluşturulmamış bir operasyon kaydı bulunamadı.",
-<<<<<<< HEAD
     "HTS:38": "Hastane temsilcisi notunu sadece oluşturan kişi geri çekebilir",
-    "HTS:39": "Davet mektubu işlemi için onaylanmış proforma ve hastane bilgisi olmalıdır.",
-=======
-    "HTS:38": "Hastane temsilcisi notunu sadece oluşturan kişi geri çekebilir.",
     "HTS:39": "Ödemesi tamamlanmış proforma için ödeme bilgisi değiştirilemez.",
->>>>>>> 15c359d (minor changes)
+    "HTS:40": "Davet mektubu işlemi için onaylanmış proforma ve hastane bilgisi olmalıdır.",
 
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Başarılı",

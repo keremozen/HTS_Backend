@@ -17,6 +17,7 @@ public class SavePaymentDto
     public string PayerNameSurname { get; set; }
     [Required]
     public int PaymentReasonId { get; set; }
+    public string GeneratedRowNumber { get; set; }
     [Required]
     public DateTime PaymentDate { get; set; }
     public string ProcessingNumber { get; set; }

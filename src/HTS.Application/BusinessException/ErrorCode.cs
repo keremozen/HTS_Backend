@@ -38,4 +38,9 @@ public static class  ErrorCode
     public const string NoUserInHospitalPricer = "HTS:36";
     public const string NoOperationWithoutProforma = "HTS:37";
     public const string CreatorCanRevokeHospitalAgentNote = "HTS:38";
+<<<<<<< HEAD
+    public const string ThereIsNoHospitalOrApprovedProforma = "HTS:39";
+=======
+    public const string CannotEditCompletedPayment = "HTS:39";
+>>>>>>> 15c359d (minor changes)
 }

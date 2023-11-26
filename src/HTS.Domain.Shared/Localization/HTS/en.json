@@ -67,9 +67,13 @@
     "HTS:35": "Patient not set as assigned to tik. Process can not be done.",
     "HTS:36": "No hospital pricer found.",
     "HTS:37": "Operation without a proforma couldn't be found.",
-    "HTS:38": "There is not any proforma without operation. Process can not be done.",
-    "HTS:39": "Only creator can revoke hospital agent note.",
+    "HTS:38": "Only creator can revoke hospital agent note.",
+<<<<<<< HEAD
+    "HTS:39": "There should be approved proforma and hospital information for invitation letter.",
 
+=======
+    "HTS:39": "The payment cannot be edited for a completed proforma.",
+>>>>>>> 15c359d (minor changes)
 
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Successful",
@@ -348,6 +352,9 @@
     "Admin:Process:Column:Name": "Name",
     "Admin:Process:Column:EnglishName": "English Name",
     "Admin:Process:Column:Description": "Description",
+    "Admin:Process:Column:UshasPrice": "USHAS Price",
+    "Admin:Process:Column:ValidityStart": "Validity Start",
+    "Admin:Process:Column:ValidityEnd": "Validity End",
     "Admin:Process:Column:Type": "Type",
     "Admin:Process:Column:Kind": "Kind",
     "Admin:Process:Column:IsActive": "Is Active?",

@@ -18,7 +18,6 @@ using QuestPDF.Fluent;
 using QuestPDF.Infrastructure;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
-using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Localization;
 using Volo.Abp.Users;
@@ -72,67 +71,47 @@ public class PaymentService : ApplicationService, IPaymentService
 
     public async Task CreateAsync(SavePaymentDto payment)
     {
-        Payment entity = null;
-        if (!string.IsNullOrEmpty(payment.GeneratedRowNumber))
+        await IsDataValidToCreate(payment);
+        var entity = ObjectMapper.Map<SavePaymentDto, Payment>(payment);
+        entity.CollectorNameSurname = $"{_currentUser.Name} {_currentUser.SurName}";
+        //Set hospitalid and proforma number from proforma
+        var query = (await _proformaRepository.WithDetailsAsync((p => p.Operation),
+            (p => p.Operation.HospitalResponse),
+            (p => p.Operation.HospitalResponse.HospitalConsultation)))
+            .Where(p => p.Id == payment.ProformaId);
+        var proforma = await AsyncExecuter.FirstAsync(query);
+        if (proforma.Operation.OperationTypeId == EntityEnum.OperationTypeEnum.Manual.GetHashCode())//Manuel operation
         {
-            entity = (await _paymentRepository.WithDetailsAsync()).Include(p => p.PaymentReason)
-            .FirstOrDefault(p => p.GeneratedRowNumber == payment.GeneratedRowNumber);
+            entity.HospitalId = proforma.Operation.HospitalId.Value;
         }
-
-        if (!string.IsNullOrEmpty(payment.GeneratedRowNumber) && entity != null) // update
+        else
         {
-            await IsDataValidToUpdate(payment, entity);
-            ObjectMapper.Map(payment, entity);
-            entity.CollectorNameSurname = $"{_currentUser.Name} {_currentUser.SurName}";
-            await SetPaymentItems(entity);
-            await _paymentRepository.UpdateAsync(entity);
+            entity.HospitalId = proforma.Operation.HospitalResponse.HospitalConsultation.HospitalId;
         }
-        else // create
-        {
-            await IsDataValidToCreate(payment);
-            entity = ObjectMapper.Map<SavePaymentDto, Payment>(payment);
-            entity.CollectorNameSurname = $"{_currentUser.Name} {_currentUser.SurName}";
-            //Set hospitalid and proforma number from proforma
-            var query = (await _proformaRepository.WithDetailsAsync((p => p.Operation),
-                (p => p.Operation.HospitalResponse),
-                (p => p.Operation.HospitalResponse.HospitalConsultation)))
-                .Where(p => p.Id == payment.ProformaId);
-            var proforma = await AsyncExecuter.FirstAsync(query);
-            if (proforma.Operation.OperationTypeId == EntityEnum.OperationTypeEnum.Manual.GetHashCode())//Manuel operation
-            {
-                entity.HospitalId = proforma.Operation.HospitalId.Value;
-            }
-            else
-            {
-                entity.HospitalId = proforma.Operation.HospitalResponse.HospitalConsultation.HospitalId;
-            }
-            entity.ProformaNumber = proforma.ProformaCode;
-            entity.PaymentStatusId = Enum.EntityEnum.PaymentStatusEnum.NewRecord.GetHashCode();
-            //Set patient information
-            var ptp = await (await _ptpRepository.WithDetailsAsync(p => p.Patient))
-               .FirstOrDefaultAsync(p => p.Id == payment.PtpId);
-            entity.PatientNameSurname = $"{ptp.Patient.Name} {ptp.Patient.Surname}";
-            //Set linenumber
-            entity = await SetLineNumber(entity);
-            //set item exchangerate TL set 1
-            await SetPaymentItems(entity);
-            await _paymentRepository.InsertAsync(entity);
-        }
+        entity.ProformaNumber = proforma.ProformaCode;
+        entity.PaymentStatusId = Enum.EntityEnum.PaymentStatusEnum.NewRecord.GetHashCode();
+        //Set patient information
+        var ptp = await (await _ptpRepository.WithDetailsAsync(p => p.Patient))
+           .FirstOrDefaultAsync(p => p.Id == payment.PtpId);
+        entity.PatientNameSurname = $"{ptp.Patient.Name} {ptp.Patient.Surname}";
+        //Set linenumber
+        entity = await SetLineNumber(entity);
+        //set item exchangerate TL set 1
+        await SetPaymentItems(entity);
+        await _paymentRepository.InsertAsync(entity);
     }
-
     
-
     public async Task FinalizePayment(int id)
     {
         //If proforma amount and items amount equal mark as paied
         //Get entity from db
         var payment =
-            (await _paymentRepository.WithDetailsAsync((p => p.Proforma),
+            (await _paymentRepository.WithDetailsAsync( (p => p.Proforma),
                 (p => p.Proforma.Operation),
                 (p => p.Proforma.Operation.PatientTreatmentProcess),
                 (p => p.PaymentDocuments),
                 (p => p.PaymentItems)))
-            .FirstOrDefault(p => p.Id == id);
+            .FirstOrDefault(p => p.Id == id); 
         IsDataValidToFinalizePayment(payment);
         payment.PaymentStatusId = EntityEnum.PaymentStatusEnum.PaymentCompleted.GetHashCode();
         payment.Proforma.ProformaStatusId = EntityEnum.ProformaStatusEnum.PaymentCompleted.GetHashCode();
@@ -182,7 +161,7 @@ public class PaymentService : ApplicationService, IPaymentService
                 }
                 else
                 {
-                    var processingER = (await _erRepository.GetListAsync(er => er.CurrencyId == paymentItem.CurrencyId && er.CreationTime <= payment.PaymentDate)).OrderByDescending(er => er.CreationTime).FirstOrDefault();
+                    var processingER = (await _erRepository.GetListAsync(er=>er.CurrencyId == paymentItem.CurrencyId && er.CreationTime <= payment.PaymentDate)).OrderByDescending(er=>er.CreationTime).FirstOrDefault();
                     if (processingER == null) //No exchange rate
                     {
                         throw new HTSBusinessException(ErrorCode.NoExchangeRateInformation);
@@ -213,7 +192,7 @@ public class PaymentService : ApplicationService, IPaymentService
     /// <summary>
     /// Checks if data is valid to create payment
     /// </summary>
-    /// <param name="payment">To be created payment</param>
+    /// <param name="payment">To be saved payment</param>
     /// <exception cref="HTSBusinessException"></exception>
     private async Task IsDataValidToCreate(SavePaymentDto payment)
     {
@@ -223,18 +202,6 @@ public class PaymentService : ApplicationService, IPaymentService
         }
     }
 
-    /// <summary>
-    /// Checks if data is valid to update payment
-    /// </summary>
-    /// <param name="payment">To be update payment</param>
-    /// <exception cref="HTSBusinessException"></exception>
-    private async Task IsDataValidToUpdate(SavePaymentDto payment, Payment dbEntity)
-    {
-        if (dbEntity.PaymentStatusId == EntityEnum.ProformaStatusEnum.PaymentCompleted.GetHashCode())
-        {
-            throw new HTSBusinessException(ErrorCode.CannotEditCompletedPayment);
-        }
-    }
 
     public async Task<byte[]> CreateInvoicePdf(int id)
     {

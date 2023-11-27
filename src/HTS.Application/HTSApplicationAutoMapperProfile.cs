@@ -126,6 +126,7 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<SaveSalesMethodAndCompanionInfoDto, SalesMethodAndCompanionInfo>();
         CreateMap<SalesMethodAndCompanionInfo, SalesMethodAndCompanionInfoDto>();
         CreateMap<SaveDocumentDto, InvitationLetterDocument>();
+        CreateMap<InvitationLetterDocument, SaveDocumentDto>();
         CreateMap<Process, ProcessDto>();
         CreateMap<SaveProcessDto, Process>();
         CreateMap<ProcessCost, ProcessCostDto>();

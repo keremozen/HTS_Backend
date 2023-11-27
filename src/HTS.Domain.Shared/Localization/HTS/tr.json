@@ -491,6 +491,10 @@
     "SalesAndCompanionInfo:Column:CompanionEmail": "Refakatçi E-Posta",
     "SalesAndCompanionInfo:Column:CompanionPhoneNumber": "Refakatçi Telefon",
     "SalesAndCompanionInfo:Column:CompanionRelationship": "Yakınlık Derecesi",
+    "SalesAndCompanionInfo:Column:WillInvitationLetterBePrepared": "Davet Mektubu Hazırlanacak",
+    "SalesAndCompanionInfo:InvitationLetters:NameSingular": "Davet Mektubu",
+    "SalesAndCompanionInfo:UploadInvitationLetterDialog:Title": "Davet Mektubu Yükleme",
+    "SalesAndCompanionInfo:UploadInvitationLetterDialog:Field:InvitationLetter": "Davet Mektubu",
 
     /*HOSPITAL CONSULTATION*/
     "HospitalConsultation:Title": "Hastane Danışma",

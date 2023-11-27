@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 using HTS.BusinessException;
 using HTS.Common;
 using HTS.Data.Entity;
+using HTS.Data.Migrations;
 using HTS.Dto.InvitationLetterDocument;
 using HTS.Dto.PatientDocument;
+using HTS.Dto.PaymentDocument;
 using HTS.Interface;
 using HTS.PDFDocument;
 using Microsoft.AspNetCore.Authorization;
@@ -43,6 +45,19 @@ public class InvitationLetterDocumentService : ApplicationService, IInvitationLe
         _proformaRepository = proformaRepository;
         _currentUser = currentUser;
         _configuration = configuration;
+    }
+
+    public async Task<SaveDocumentDto> GetBySalesInfoAsync(int salesInfoId)
+    {
+        var pd = await _documentRepository.FirstOrDefaultAsync(p => p.SalesMethodAndCompanionInfoId == salesInfoId);
+        if (pd != null)
+        {
+            var fileBytes = File.ReadAllBytes($"{pd.FilePath}");
+            var invitationDocument = ObjectMapper.Map<InvitationLetterDocument, SaveDocumentDto>(pd);
+            invitationDocument.File = Convert.ToBase64String(fileBytes);
+            return invitationDocument;
+        }
+        return null;
     }
 
 
@@ -122,15 +137,19 @@ public class InvitationLetterDocumentService : ApplicationService, IInvitationLe
         var proforma = await (await _proformaRepository.GetQueryableAsync())
             .Include(p => p.Operation)
             .ThenInclude(o => o.Hospital)
+            .Include(p => p.Operation)
+            .ThenInclude(o => o.HospitalResponse)
+            .ThenInclude(hr => hr.HospitalConsultation)
+            .ThenInclude(hc => hc.Hospital)
             .FirstOrDefaultAsync(p =>
                 p.Operation.PatientTreatmentProcessId == salesMethodEntity.PatientTreatmentProcessId
                 && (p.ProformaStatusId == ProformaStatusEnum.PaymentCompleted.GetHashCode() ||
                     p.ProformaStatusId == ProformaStatusEnum.WaitingForPayment.GetHashCode()));
-        if (proforma == null || proforma.Operation.HospitalId == null)
+        if (proforma == null || (proforma.Operation.HospitalId == null && proforma.Operation.HospitalResponse.HospitalConsultation.HospitalId == null))
         {
             throw new HTSBusinessException(ErrorCode.ThereIsNoHospitalOrApprovedProforma);
         }
-        
+
         QuestPDF.Settings.License = LicenseType.Community;
         QuestPDF.Settings.CheckIfAllTextGlyphsAreAvailable = false;
         var document = new InvitationLetterDocumentPdf(proforma, salesMethodEntity);

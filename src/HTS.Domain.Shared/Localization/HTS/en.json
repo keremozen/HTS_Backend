@@ -490,6 +490,10 @@
     "SalesAndCompanionInfo:Column:CompanionEmail": "Companion E-Mail",
     "SalesAndCompanionInfo:Column:CompanionPhoneNumber": "Companion Phone Number",
     "SalesAndCompanionInfo:Column:CompanionRelationship": "Companion Relationship",
+    "SalesAndCompanionInfo:Column:WillInvitationLetterBePrepared": "Invitation Letter Preparation",
+    "SalesAndCompanionInfo:InvitationLetters:NameSingular": "Invitation Letter",
+    "SalesAndCompanionInfo:UploadInvitationLetterDialog:Title": "Upload Invitation Letter",
+    "SalesAndCompanionInfo:UploadInvitationLetterDialog:Field:InvitationLetter": "Invitation Letter",
 
     /*HOSPITAL CONSULTATION*/
     "HospitalConsultation:Title": "Hospital Consultation",

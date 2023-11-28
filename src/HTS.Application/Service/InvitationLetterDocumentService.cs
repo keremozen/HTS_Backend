@@ -1,24 +1,17 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 using HTS.BusinessException;
 using HTS.Common;
 using HTS.Data.Entity;
-using HTS.Data.Migrations;
 using HTS.Dto.InvitationLetterDocument;
-using HTS.Dto.PatientDocument;
-using HTS.Dto.PaymentDocument;
 using HTS.Interface;
 using HTS.PDFDocument;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using QuestPDF.Fluent;
 using QuestPDF.Infrastructure;
-using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Users;
@@ -52,7 +45,7 @@ public class InvitationLetterDocumentService : ApplicationService, IInvitationLe
         var pd = await _documentRepository.FirstOrDefaultAsync(p => p.SalesMethodAndCompanionInfoId == salesInfoId);
         if (pd != null)
         {
-            var fileBytes = File.ReadAllBytes($"{pd.FilePath}");
+            var fileBytes = await File.ReadAllBytesAsync($"{pd.FilePath}");
             var invitationDocument = ObjectMapper.Map<InvitationLetterDocument, SaveDocumentDto>(pd);
             invitationDocument.File = Convert.ToBase64String(fileBytes);
             return invitationDocument;
@@ -64,10 +57,22 @@ public class InvitationLetterDocumentService : ApplicationService, IInvitationLe
     public async Task UploadAsync(SaveDocumentDto document)
     {
         var salesMethodEntity =
-            await (await _salesMethodAndCompanionInfoRepository.WithDetailsAsync(s => s.PatientTreatmentProcess))
+            await (await _salesMethodAndCompanionInfoRepository.WithDetailsAsync((s => s.PatientTreatmentProcess),
+                    (s => s.InvitationLetterDocuments)))
                 .AsNoTracking()
                 .FirstOrDefaultAsync(s => s.Id == document.SalesMethodAndCompanionInfoId);
+        if (salesMethodEntity == null)
+        {
+            throw new HTSBusinessException(ErrorCode.RelationalDataIsMissing);
+        }
 
+        if (salesMethodEntity.InvitationLetterDocuments?.Any() ?? false)
+        {//Delete current invitation letters
+            var currentDocuments = await (await _documentRepository.GetQueryableAsync())
+                .Where(d => d.SalesMethodAndCompanionInfoId == document.SalesMethodAndCompanionInfoId)
+                .ToListAsync();
+           await _documentRepository.DeleteManyAsync(currentDocuments);
+        }
         var entity = ObjectMapper.Map<SaveDocumentDto, InvitationLetterDocument>(document);
         entity.FilePath = string.Format(_configuration["FilePath:HospitalConsultationPath"],
             salesMethodEntity.PatientTreatmentProcess.PatientId,
@@ -105,10 +110,10 @@ public class InvitationLetterDocumentService : ApplicationService, IInvitationLe
         //Send mail
         string mailBody =
             $"Dear {salesMethodEntity.PatientTreatmentProcess.Patient.Name} {salesMethodEntity.PatientTreatmentProcess.Patient.Surname}," +
-            $"</br></br>First of all, thank you for choosing us. We invite you to {proforma.Operation.Hospital.Name}. " +
+            $"</br></br>First of all, thank you for choosing us. We invite you to {proforma.Operation.Hospital?.Name}. " +
             $"Hospital based on your treatment plan that we have given in the appendix. If you submit the documents we have requested from you, your treatment process will be initiated.</br>" +
             $"Thanks.</br>We wish you a nice day.</br>";
-        var fileBytes = File.ReadAllBytes($"{salesMethodEntity.InvitationLetterDocuments.FirstOrDefault()?.FilePath}");
+        var fileBytes =await File.ReadAllBytesAsync($"{salesMethodEntity.InvitationLetterDocuments.FirstOrDefault()?.FilePath}");
         var mailSubject = "Invitation Letter";
         Helper.SendMail(salesMethodEntity.PatientTreatmentProcess.Patient.Email,
             mailBody, fileBytes, subject: mailSubject);
@@ -116,7 +121,7 @@ public class InvitationLetterDocumentService : ApplicationService, IInvitationLe
 
     private static void SaveByteArrayToFileWithStaticMethod(string data, string filePath)
     {
-        FileInfo file = new System.IO.FileInfo(filePath);
+        FileInfo file = new FileInfo(filePath);
         file.Directory?.Create(); // If the directory already exists, this method does nothing.
         File.WriteAllBytes(file.FullName, Convert.FromBase64String(data.Split(',')[1]));
     }
@@ -145,7 +150,9 @@ public class InvitationLetterDocumentService : ApplicationService, IInvitationLe
                 p.Operation.PatientTreatmentProcessId == salesMethodEntity.PatientTreatmentProcessId
                 && (p.ProformaStatusId == ProformaStatusEnum.PaymentCompleted.GetHashCode() ||
                     p.ProformaStatusId == ProformaStatusEnum.WaitingForPayment.GetHashCode()));
-        if (proforma == null || (proforma.Operation.HospitalId == null && proforma.Operation.HospitalResponse.HospitalConsultation.HospitalId == null))
+        if (proforma == null 
+            || (proforma.Operation.HospitalId == null 
+                && proforma.Operation.HospitalResponse.HospitalConsultation?.HospitalId == null))
         {
             throw new HTSBusinessException(ErrorCode.ThereIsNoHospitalOrApprovedProforma);
         }

@@ -116,7 +116,7 @@ public class HTSTaskService : ApplicationService, IHTSTaskService
         }
 
         //Send email to assigner
-        SendEMailToTikAssigner(patient);
+        await SendEMailToTikAssigner(patient);
 
         //Update patient
         patient.IsAssignedToTik = false;

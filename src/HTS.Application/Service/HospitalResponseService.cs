@@ -151,7 +151,7 @@ public class HospitalResponseService : ApplicationService, IHospitalResponseServ
         var hr = (await _hospitalResponseRepository.WithDetailsAsync(hr => hr.HospitalConsultation))
             .Where(hr => hr.Id == hospitalResponseId);
         var entity = await AsyncExecuter.FirstOrDefaultAsync(hr);
-        await IsDataValidToReject(entity);
+        IsDataValidToReject(entity);
         entity.HospitalConsultation.HospitalConsultationStatusId = HospitalConsultationStatusEnum.OperationRejected.GetHashCode();
         await _hospitalResponseRepository.UpdateAsync(entity);
     }
@@ -182,7 +182,7 @@ public class HospitalResponseService : ApplicationService, IHospitalResponseServ
     /// Checks if entity valid to reject
     /// </summary>
     /// <param name="hospitalResponse">Hospital response entity</param>
-    private async Task IsDataValidToReject(HospitalResponse hospitalResponse)
+    private void IsDataValidToReject(HospitalResponse hospitalResponse)
     {
         if (hospitalResponse.HospitalResponseTypeId != EntityEnum.HospitalResponseTypeEnum.SuitableForTreatment.GetHashCode())
         {

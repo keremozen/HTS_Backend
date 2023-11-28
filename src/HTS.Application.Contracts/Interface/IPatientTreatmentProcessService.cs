@@ -20,7 +20,7 @@ namespace HTS.Interface
         /// </summary>
         /// <param name="patientId">Patient</param>
         /// <returns>Patient's treatment process list</returns>
-        public Task<PagedResultDto<PatientTreatmentProcessDto>> GetListByPatientIdAsync(int patientId);
+        public Task<PagedResultDto<PatientTreatmentProcessDetailedDto>> GetListByPatientIdAsync(int patientId);
         /// <summary>
         /// Starts patient treatment process
         /// </summary>

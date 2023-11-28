@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Text;
 using System.Threading.Tasks;
 using HTS.BusinessException;
@@ -27,10 +28,12 @@ public class PatientTreatmentProcessService : ApplicationService, IPatientTreatm
 {
     private readonly IRepository<PatientTreatmentProcess, int> _patientTreatmentProcessRepository;
     private readonly IRepository<Proforma, int> _proformaRepository;
+    private readonly IRepository<ENabizProcess, int> _eNabizProcessRepository;
     private readonly IIdentityUserRepository _userRepository;
     private readonly IUSSService _ussService;
     public PatientTreatmentProcessService(IRepository<PatientTreatmentProcess, int> patientTreatmentProcessRepository,
         IRepository<Proforma, int> proformaRepository,
+        IRepository<ENabizProcess, int> eNabizProcessRepository,
         IIdentityUserRepository userRepository,
         IUSSService ussService)
     {
@@ -38,17 +41,55 @@ public class PatientTreatmentProcessService : ApplicationService, IPatientTreatm
         _userRepository = userRepository;
         _ussService = ussService;
         _proformaRepository = proformaRepository;
+        _eNabizProcessRepository = eNabizProcessRepository;
     }
 
     [Authorize]
-    public async Task<PagedResultDto<PatientTreatmentProcessDto>> GetListByPatientIdAsync(int patientId)
+    public async Task<PagedResultDto<PatientTreatmentProcessDetailedDto>> GetListByPatientIdAsync(int patientId)
     {
         //Get all entities
-        var query = (await _patientTreatmentProcessRepository.WithDetailsAsync())
-                                                .Where(t => t.PatientId == patientId);
-        var responseList = ObjectMapper.Map<List<PatientTreatmentProcess>, List<PatientTreatmentProcessDto>>(await AsyncExecuter.ToListAsync(query));
+        var patientTreatmentProcesses = await (await _patientTreatmentProcessRepository.WithDetailsAsync())
+            .AsNoTracking()
+            .Where(t => t.PatientId == patientId)
+            .ToListAsync();
+        var proformas = await (await _proformaRepository.GetQueryableAsync()).AsNoTracking()
+            .Include(p => p.ProformaProcesses)
+            .Include(p => p.Payments)
+            .ThenInclude(p => p.PaymentItems)
+            .Where(p => patientTreatmentProcesses.Any(t => t.Id == p.Operation.PatientTreatmentProcessId)
+                        && (p.ProformaStatusId == ProformaStatusEnum.WaitingForPayment.GetHashCode() 
+                            || p.ProformaStatusId == ProformaStatusEnum.PaymentCompleted.GetHashCode()))
+            .ToListAsync();
+        //Group to get latest proforma
+        var groupList = from p in proformas
+            group p by p.OperationId into g
+            select new
+            {
+                Version = proformas.Where(p => p.OperationId == g.Key).Max(p => p.Version),
+                OperationId = g.Key,
+            };
+        proformas = proformas.Where(p => groupList.Any(pp => pp.OperationId == p.OperationId && pp.Version == p.Version)).ToList();
+
+       var eNabizList = await (await _eNabizProcessRepository.GetQueryableAsync()).AsNoTracking()
+           .Where(e =>patientTreatmentProcesses.Any(t => t.TreatmentCode == e.TreatmentCode))
+           .ToListAsync();
+        
+        var responseList = new List<PatientTreatmentProcessDetailedDto>();
+        foreach (var ptp in patientTreatmentProcesses)
+        {
+            var response=  ObjectMapper.Map<PatientTreatmentProcess, PatientTreatmentProcessDetailedDto>(ptp);
+            response.ProformaPrice = proformas.Where(p => p.Operation.PatientTreatmentProcessId == ptp.Id)
+                .Sum(p => p.TotalProformaPrice);
+            response.PaymentPrice = proformas.Where(p => p.Operation.PatientTreatmentProcessId == ptp.Id)
+                .SelectMany(p =>
+                    p.Payments.Where(
+                        payment => payment.PaymentStatusId == PaymentStatusEnum.PaymentCompleted.GetHashCode())).Sum(p => p.PaymentItems.Sum(i => i.Price));
+            response.UnPaidPrice = response.ProformaPrice - response.PaymentPrice;
+            responseList.Add(response);
+        }
+       
         var totalCount = responseList.Count();//item count
-        return new PagedResultDto<PatientTreatmentProcessDto>(totalCount, responseList);
+        return new PagedResultDto<PatientTreatmentProcessDetailedDto>(totalCount, responseList);
     }
 
     [Authorize]
@@ -56,7 +97,7 @@ public class PatientTreatmentProcessService : ApplicationService, IPatientTreatm
     {
         //Get all entities
         var query = (await _patientTreatmentProcessRepository.WithDetailsAsync())
-                                                .FirstOrDefault(t => t.Id == patientTreatmentProcessId);
+            .FirstOrDefault(t => t.Id == patientTreatmentProcessId);
         return ObjectMapper.Map<PatientTreatmentProcess, PatientTreatmentProcessDto>(query);
     }
 

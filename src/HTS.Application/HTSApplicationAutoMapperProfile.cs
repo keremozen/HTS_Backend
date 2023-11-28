@@ -123,6 +123,7 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<SaveHospitalUHBStaffDto, HospitalUHBStaff>();
         CreateMap<HospitalUHBStaff, HospitalUHBStaffDto>();
         CreateMap<PatientTreatmentProcess, PatientTreatmentProcessDto>();
+        CreateMap<PatientTreatmentProcess, PatientTreatmentProcessDetailedDto>();
         CreateMap<SaveSalesMethodAndCompanionInfoDto, SalesMethodAndCompanionInfo>();
         CreateMap<SalesMethodAndCompanionInfo, SalesMethodAndCompanionInfoDto>();
         CreateMap<SaveDocumentDto, InvitationLetterDocument>();

@@ -112,7 +112,7 @@ public class HTSTaskService : ApplicationService, IHTSTaskService
                 t.IsActive = false;
                 return t;
             }).ToList();
-            await _taskRepository.UpdateManyAsync(tasks);
+            await _taskRepository.UpdateManyAsync(tasks,true);
         }
 
         //Send email to assigner

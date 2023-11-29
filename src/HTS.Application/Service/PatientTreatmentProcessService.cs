@@ -56,7 +56,7 @@ public class PatientTreatmentProcessService : ApplicationService, IPatientTreatm
             .Include(p => p.ProformaProcesses)
             .Include(p => p.Payments)
             .ThenInclude(p => p.PaymentItems)
-            .Where(p => patientTreatmentProcesses.Any(t => t.Id == p.Operation.PatientTreatmentProcessId)
+            .Where(p => patientTreatmentProcesses.Select(t => t.Id).Contains(p.Operation.PatientTreatmentProcessId.Value)
                         && (p.ProformaStatusId == ProformaStatusEnum.WaitingForPayment.GetHashCode() 
                             || p.ProformaStatusId == ProformaStatusEnum.PaymentCompleted.GetHashCode()))
             .ToListAsync();
@@ -71,7 +71,7 @@ public class PatientTreatmentProcessService : ApplicationService, IPatientTreatm
         proformas = proformas.Where(p => groupList.Any(pp => pp.OperationId == p.OperationId && pp.Version == p.Version)).ToList();
 
        var eNabizList = await (await _eNabizProcessRepository.GetQueryableAsync()).AsNoTracking()
-           .Where(e =>patientTreatmentProcesses.Any(t => t.TreatmentCode == e.TreatmentCode))
+           .Where(e =>patientTreatmentProcesses.Select(t => t.TreatmentCode).Contains(e.TreatmentCode))
            .ToListAsync();
         
         var responseList = new List<PatientTreatmentProcessDetailedDto>();
@@ -83,7 +83,8 @@ public class PatientTreatmentProcessService : ApplicationService, IPatientTreatm
             response.PaymentPrice = proformas.Where(p => p.Operation.PatientTreatmentProcessId == ptp.Id)
                 .SelectMany(p =>
                     p.Payments.Where(
-                        payment => payment.PaymentStatusId == PaymentStatusEnum.PaymentCompleted.GetHashCode())).Sum(p => p.PaymentItems.Sum(i => i.Price));
+                        payment => payment.PaymentStatusId == PaymentStatusEnum.PaymentCompleted.GetHashCode()))
+                .Sum(p => p.PaymentItems.Sum(i => i.Price));
             response.UnPaidPrice = response.ProformaPrice - response.PaymentPrice;
             responseList.Add(response);
         }

@@ -54,6 +54,7 @@ public class PatientTreatmentProcessService : ApplicationService, IPatientTreatm
             .ToListAsync();
         var proformas = await (await _proformaRepository.GetQueryableAsync()).AsNoTracking()
             .Include(p => p.ProformaProcesses)
+            .Include(p => p.Operation)
             .Include(p => p.Payments)
             .ThenInclude(p => p.PaymentItems)
             .Where(p => patientTreatmentProcesses.Select(t => t.Id).Contains(p.Operation.PatientTreatmentProcessId.Value)
@@ -81,9 +82,7 @@ public class PatientTreatmentProcessService : ApplicationService, IPatientTreatm
             response.ProformaPrice = proformas.Where(p => p.Operation.PatientTreatmentProcessId == ptp.Id)
                 .Sum(p => p.TotalProformaPrice);
             response.PaymentPrice = proformas.Where(p => p.Operation.PatientTreatmentProcessId == ptp.Id)
-                .SelectMany(p =>
-                    p.Payments.Where(
-                        payment => payment.PaymentStatusId == PaymentStatusEnum.PaymentCompleted.GetHashCode()))
+                .SelectMany(p => p.Payments)
                 .Sum(p => p.PaymentItems.Sum(i => i.Price));
             response.UnPaidPrice = response.ProformaPrice - response.PaymentPrice;
             responseList.Add(response);

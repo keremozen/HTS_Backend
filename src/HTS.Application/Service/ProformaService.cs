@@ -21,7 +21,7 @@ using Volo.Abp.Domain.Repositories;
 using static HTS.Enum.EntityEnum;
 
 namespace HTS.Service;
-[Authorize]
+
 public class ProformaService : ApplicationService, IProformaService
 {
     private readonly IRepository<Proforma, int> _proformaRepository;
@@ -143,7 +143,7 @@ public class ProformaService : ApplicationService, IProformaService
         }
         else
         {
-            entity.ProformaStatusId = EntityEnum.ProformaStatusEnum.NewRecord.GetHashCode();
+            entity.ProformaStatusId = EntityEnum.ProformaStatusEnum.MFBWaitingApproval.GetHashCode();
         }
         entity.ProformaCode = await GenerateProformaCode(entity.OperationId, entity.Version);
         await _proformaRepository.InsertAsync(entity, true);

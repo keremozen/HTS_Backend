@@ -143,7 +143,7 @@ public class ProformaService : ApplicationService, IProformaService
         }
         else
         {
-            entity.ProformaStatusId = EntityEnum.ProformaStatusEnum.MFBWaitingApproval.GetHashCode();
+            entity.ProformaStatusId = EntityEnum.ProformaStatusEnum.NewRecord.GetHashCode();
         }
         entity.ProformaCode = await GenerateProformaCode(entity.OperationId, entity.Version);
         await _proformaRepository.InsertAsync(entity, true);

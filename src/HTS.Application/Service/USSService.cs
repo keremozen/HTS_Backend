@@ -13,6 +13,7 @@ using HTS.Dto.Nationality;
 using HTS.Enum;
 using HTS.Interface;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Volo.Abp.Application.Dtos;
@@ -144,10 +145,16 @@ public class USSService : ApplicationService, IUSSService
               EntityEnum.ProformaStatusEnum.PatientRejected.GetHashCode(),
         };
         //Get enabiz items from db
-        var eNabizProcesses = (await _eNabizProcessRepository.WithDetailsAsync(p => p.Process)).Where(p => p.TreatmentCode == treatmentCode).ToList();
+        var eNabizProcesses = await (await _eNabizProcessRepository.GetQueryableAsync())
+            .AsNoTracking()
+            .Include(p => p.Process)
+            .ThenInclude(p => p.ProcessCosts)
+            .Where(p => p.TreatmentCode == treatmentCode)
+            .ToListAsync();
 
-//Get proformas of treatmentcode
+        //Get proformas of treatmentcode
         var proformas = (await _proformaRepository.WithDetailsAsync())
+                               .AsNoTracking()
                                .Where(p => p.Operation.PatientTreatmentProcess.TreatmentCode == treatmentCode
                                            && !notApplicableStatuses.Contains(p.ProformaStatusId))
                                            .ToList();
@@ -185,16 +192,31 @@ public class USSService : ApplicationService, IUSSService
             if (!string.IsNullOrEmpty(listENabizProcess.ADET)
                 && listENabizProcess.ProcessId != null)
             {
+                DateTime today = DateTime.Now.Date;
+                decimal? ushasUnitPrice = 0, hospitalUnitPrice = 0;
+                if (eNabizProcess.Process.ProcessCosts.Any(c => c.ValidityStartDate.Date <= today
+                                                   && c.ValidityEndDate >= today))
+                {
+                    ushasUnitPrice = eNabizProcess.Process.ProcessCosts
+                        .FirstOrDefault(c => c.ValidityStartDate.Date <= today && c.ValidityEndDate >= today)?
+                        .UshasPrice;
+                    hospitalUnitPrice = eNabizProcess.Process.ProcessCosts
+                        .FirstOrDefault(c => c.ValidityStartDate.Date <= today && c.ValidityEndDate >= today)?
+                        .HospitalPrice;
+                }
+
                 //Get proforma process
                 var proformaProcess = proformaProcesses.FirstOrDefault(p => p.ProcessId == listENabizProcess.ProcessId);
                 if (proformaProcess != null)
                 {
-                    listENabizProcess.UshasPrice = proformaProcess.UnitPrice;
+
                     int proformaCount = processCountLookUp[listENabizProcess.ProcessId.Value];//Count left in proforma
                     int eNabizCount = Convert.ToInt32(listENabizProcess.ADET);//Count come from enabiz
                     if (eNabizCount <= proformaCount)
                     {//There is enough count. Mark as usedinproforma
                         listENabizProcess.IsUsedInProforma = true;
+                        listENabizProcess.UshasPrice = proformaProcess.UnitPrice * eNabizCount;
+                        listENabizProcess.HospitalPrice = hospitalUnitPrice * eNabizCount;
                         processCountLookUp[listENabizProcess.ProcessId.Value] -= eNabizCount;
                     }
                     else if (proformaCount > 0)
@@ -202,29 +224,26 @@ public class USSService : ApplicationService, IUSSService
                         listENabizProcess.ADET = proformaCount.ToString();
                         processCountLookUp[listENabizProcess.ProcessId.Value] = 0;
                         listENabizProcess.IsUsedInProforma = true;
+                        listENabizProcess.UshasPrice = proformaProcess.UnitPrice * proformaCount;
+                        listENabizProcess.HospitalPrice = hospitalUnitPrice * proformaCount;
                         responseList.Add(listENabizProcess);
                         listENabizProcess = ObjectMapper.Map<ENabizProcess, ListENabizProcessDto>(eNabizProcess);
                         listENabizProcess.IsUsedInProforma = false;
                         listENabizProcess.ADET = (eNabizCount - proformaCount).ToString();
-                        listENabizProcess.UshasPrice = proformaProcess.UnitPrice;
+                        listENabizProcess.UshasPrice = proformaProcess.UnitPrice * (eNabizCount - proformaCount);
+                        listENabizProcess.HospitalPrice = hospitalUnitPrice * (eNabizCount - proformaCount);
+                    }
+
+                    else if (proformaCount == 0)
+                    {
+                        listENabizProcess.UshasPrice = proformaProcess.UnitPrice * (eNabizCount - proformaCount);
+                        listENabizProcess.HospitalPrice = hospitalUnitPrice * (eNabizCount - proformaCount);
                     }
                 }
                 else
                 {//processId is not in proforma
-
-                    var process = (await _processRepository.WithDetailsAsync(p => p.ProcessCosts))
-                        .FirstOrDefault(p => p.Id == listENabizProcess.ProcessId);
-                    if (process != null)
-                    {
-                        DateTime today = DateTime.Now.Date;
-                        if (process.ProcessCosts.Any(c => c.ValidityStartDate.Date <= today
-                                                           && c.ValidityEndDate >= today))
-                        {
-                            listENabizProcess.UshasPrice = process.ProcessCosts
-                                .FirstOrDefault(c => c.ValidityStartDate.Date <= today && c.ValidityEndDate >= today)?
-                                .UshasPrice;
-                        }
-                    }
+                    listENabizProcess.UshasPrice = ushasUnitPrice * Convert.ToInt32(listENabizProcess.ADET);
+                    listENabizProcess.HospitalPrice = hospitalUnitPrice * Convert.ToInt32(listENabizProcess.ADET);
                 }
             }
             responseList.Add(listENabizProcess);

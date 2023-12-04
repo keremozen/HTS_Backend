@@ -71,7 +71,7 @@ public class InvitationLetterDocumentService : ApplicationService, IInvitationLe
             var currentDocuments = await (await _documentRepository.GetQueryableAsync())
                 .Where(d => d.SalesMethodAndCompanionInfoId == document.SalesMethodAndCompanionInfoId)
                 .ToListAsync();
-           await _documentRepository.DeleteManyAsync(currentDocuments);
+            await _documentRepository.DeleteManyAsync(currentDocuments);
         }
         var entity = ObjectMapper.Map<SaveDocumentDto, InvitationLetterDocument>(document);
         entity.FilePath = string.Format(_configuration["FilePath:HospitalConsultationPath"],
@@ -113,7 +113,7 @@ public class InvitationLetterDocumentService : ApplicationService, IInvitationLe
             $"</br></br>First of all, thank you for choosing us. We invite you to {proforma.Operation.Hospital?.Name}. " +
             $"Hospital based on your treatment plan that we have given in the appendix. If you submit the documents we have requested from you, your treatment process will be initiated.</br>" +
             $"Thanks.</br>We wish you a nice day.</br>";
-        var fileBytes =await File.ReadAllBytesAsync($"{salesMethodEntity.InvitationLetterDocuments.FirstOrDefault()?.FilePath}");
+        var fileBytes = await File.ReadAllBytesAsync($"{salesMethodEntity.InvitationLetterDocuments.FirstOrDefault()?.FilePath}");
         var mailSubject = "Invitation Letter";
         Helper.SendMail(salesMethodEntity.PatientTreatmentProcess.Patient.Email,
             mailBody, fileBytes, subject: mailSubject);
@@ -131,6 +131,7 @@ public class InvitationLetterDocumentService : ApplicationService, IInvitationLe
         var salesMethodEntity = await (await _salesMethodAndCompanionInfoRepository.WithDetailsAsync(
                 (s => s.PatientTreatmentProcess),
                 (s => s.PatientTreatmentProcess.Patient),
+                (s => s.ContractedInstitution),
                 (s => s.InvitationLetterDocuments)))
             .AsNoTracking()
             .FirstOrDefaultAsync(s => s.Id == salesMethodId);
@@ -150,8 +151,8 @@ public class InvitationLetterDocumentService : ApplicationService, IInvitationLe
                 p.Operation.PatientTreatmentProcessId == salesMethodEntity.PatientTreatmentProcessId
                 && (p.ProformaStatusId == ProformaStatusEnum.PaymentCompleted.GetHashCode() ||
                     p.ProformaStatusId == ProformaStatusEnum.WaitingForPayment.GetHashCode()));
-        if (proforma == null 
-            || (proforma.Operation.HospitalId == null 
+        if (proforma == null
+            || (proforma.Operation.HospitalId == null
                 && proforma.Operation.HospitalResponse.HospitalConsultation?.HospitalId == null))
         {
             throw new HTSBusinessException(ErrorCode.ThereIsNoHospitalOrApprovedProforma);

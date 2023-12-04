@@ -74,7 +74,7 @@ public class InvitationLetterDocumentService : ApplicationService, IInvitationLe
             await _documentRepository.DeleteManyAsync(currentDocuments);
         }
         var entity = ObjectMapper.Map<SaveDocumentDto, InvitationLetterDocument>(document);
-        entity.FilePath = string.Format(_configuration["FilePath:HospitalConsultationPath"],
+        entity.FilePath = string.Format(_configuration["FilePath:InvitationLetterDocumentPath"],
             salesMethodEntity.PatientTreatmentProcess.PatientId,
             document.FileName);
         SaveByteArrayToFileWithStaticMethod(document.File, entity.FilePath);

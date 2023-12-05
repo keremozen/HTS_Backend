@@ -18,6 +18,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
+using Volo.Abp.Auditing;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Identity;
 using Volo.Abp.Json;
@@ -29,16 +30,19 @@ public class USSService : ApplicationService, IUSSService
     private readonly IRepository<ENabizProcess, int> _eNabizProcessRepository;
     private readonly IRepository<Process, int> _processRepository;
     private readonly IRepository<Proforma, int> _proformaRepository;
-
+    private readonly IAuditingManager _auditingManager;
 
     public USSService(IRepository<ENabizProcess, int> eNabizProcessRepository,
         IRepository<Process, int> processRepository,
         IRepository<Proforma, int> proformaRepository,
-        IIdentityUserRepository userRepository)
+        IIdentityUserRepository userRepository,
+        IAuditingManager auditingManager)
     {
         _eNabizProcessRepository = eNabizProcessRepository;
         _processRepository = processRepository;
         _proformaRepository = proformaRepository;
+        _auditingManager = auditingManager;
+
     }
 
 
@@ -72,6 +76,26 @@ public class USSService : ApplicationService, IUSSService
             HttpResponseMessage messge = await client.GetAsync("https://ussservistest.saglik.gov.tr/api/Hts/HtsSysTakipNoDetay?sysTakipNo=" + sysTrackingNumber + "&htsKodu=" + treatmentCode);
             var serviceResponse = await messge.Content.ReadAsStringAsync();
             apiResult = JsonConvert.DeserializeObject<ExternalApiResult>(serviceResponse);
+
+            using (var auditingScope = _auditingManager.BeginScope())
+            {
+                _auditingManager.Current.Log.ApplicationName = "HTS.HttpApi.Host";
+                _auditingManager.Current.Log.ExecutionTime = DateTime.Now;
+                _auditingManager.Current.Log.ClientId = "HTS_App";
+                _auditingManager.Current.Log.HttpMethod = "GET";
+                _auditingManager.Current.Log.Url = "HtsSysTakipNoDetay";
+                _auditingManager.Current.Log.HttpStatusCode = 200;
+                _auditingManager.Current.Log.UserName = "Enabiz";
+
+                AuditLogActionInfo logAction = new AuditLogActionInfo();
+                logAction.ExtraProperties.Add("RESPONSE", serviceResponse);
+                //logAction.Parameters ="sysTrackingNumber=" + sysTrackingNumber + "&treatmentCode= " + treatmentCode + "##" + serviceResponse.Substring(0,1900);
+                logAction.ServiceName = "HtsSysTakipNoDetay";
+                logAction.ExecutionTime = DateTime.Now;
+                _auditingManager.Current.Log.Actions.Add(logAction);
+                await auditingScope.SaveAsync();
+
+            }
 
             if (apiResult.durum != 1)
             {
@@ -126,6 +150,27 @@ public class USSService : ApplicationService, IUSSService
     public async Task SetENabizProcess(string treatmentCode)
     {
         ExternalApiResult trackingNumberResult = await GetSysTrackingNumber(treatmentCode);
+      
+        using (var auditingScope = _auditingManager.BeginScope())
+        {
+            _auditingManager.Current.Log.ApplicationName = "HTS.HttpApi.Host";
+            _auditingManager.Current.Log.ExecutionTime = DateTime.Now;
+            _auditingManager.Current.Log.ClientId = "HTS_App";
+            _auditingManager.Current.Log.HttpMethod = "GET";
+            _auditingManager.Current.Log.Url =  "HtsKoduSorgula" ;
+            _auditingManager.Current.Log.HttpStatusCode= 200;
+            _auditingManager.Current.Log.UserName = "Enabiz";
+
+            AuditLogActionInfo logAction = new AuditLogActionInfo();
+            logAction.Parameters = "treatmentCode= "+ treatmentCode + "##" +  System.Text.Json.JsonSerializer.Serialize(trackingNumberResult.sonuc);
+            logAction.ServiceName = "HtsKoduSorgula";
+            logAction.ExecutionTime= DateTime.Now;
+            _auditingManager.Current.Log.Actions.Add(logAction);
+                await auditingScope.SaveAsync();
+          
+        }
+
+
         if (trackingNumberResult != null && trackingNumberResult.sonuc != null && trackingNumberResult.durum == 1)
         {
             List<GetSysTrackingNumberObject> sysCodes = System.Text.Json.JsonSerializer.Deserialize<List<GetSysTrackingNumberObject>>((JsonElement)trackingNumberResult.sonuc);

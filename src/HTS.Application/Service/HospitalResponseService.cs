@@ -107,7 +107,7 @@ public class HospitalResponseService : ApplicationService, IHospitalResponseServ
                                     consultation.PatientTreatmentProcess.Patient.Name + " " + consultation.PatientTreatmentProcess.Patient.Surname,
                                     consultation.Hospital.Name,
                                     responseType?.Name);
-        Helper.SendMail(consultation.Creator.Email, mailBodyFormat, null, _localizer["HospitalResponseCompleted:MailSubject"]);
+        Helper.SendMail(consultation.Creator.Email, mailBodyFormat, file:null, _localizer["HospitalResponseCompleted:MailSubject"]);
     }
 
     [Authorize]

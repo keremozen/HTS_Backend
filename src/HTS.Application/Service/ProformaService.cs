@@ -261,7 +261,7 @@ public class ProformaService : ApplicationService, IProformaService
         $"We wish you a nice days.</br></br>Regards.";
         var proformaReceipt = await CreateProformaPdf(proforma.Id);
         var mailSubject = $"Treatment Plan is Ready | {proforma.ProformaCode}";
-        Helper.SendMail(eMail, mailBody, proformaReceipt.File, subject: mailSubject);
+        Helper.SendMail(eMail, mailBody, proformaReceipt.File, subject: mailSubject, fileName:"Proforma.pdf");
     }
 
     public async Task ApprovePatientAsync(int id)

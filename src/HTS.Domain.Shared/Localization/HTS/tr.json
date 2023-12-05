@@ -88,6 +88,7 @@
     "Message:WrongEmailFormat": "E-posta formatı hatalı",
     "Message:ImportDocumentConfirmation": "Var olan dokümanların kaldırılıp hasta dokümanlarının aktarılmasını onaylıyor musunuz?",
     "Message:EndDateBeforeStartDate": "Bitiş tarihi başlangıç tarihinden önce olamaz.",
+    "Message:SuccessfulSendInvitationLetter": "Davet mektubu başarıyla gönderildi.",
 
     /*PERMISSIONS*/
     "Permission:Management": "Yönetim",

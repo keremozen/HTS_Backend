@@ -68,13 +68,13 @@ public class PatientTreatmentProcessService : ApplicationService, IPatientTreatm
             .ToListAsync();
         //Group to get latest proforma
         var groupList = from p in proformas
-                        group p by p.OperationId
+            group p by p.OperationId
             into g
-                        select new
-                        {
-                            Version = proformas.Where(p => p.OperationId == g.Key).Max(p => p.Version),
-                            OperationId = g.Key,
-                        };
+            select new
+            {
+                Version = proformas.Where(p => p.OperationId == g.Key).Max(p => p.Version),
+                OperationId = g.Key,
+            };
         proformas = proformas
             .Where(p => groupList.Any(pp => pp.OperationId == p.OperationId && pp.Version == p.Version)).ToList();
 
@@ -98,9 +98,9 @@ public class PatientTreatmentProcessService : ApplicationService, IPatientTreatm
                 .Sum(p => p.TotalProformaPrice);
             response.PaymentPrice = proformas.Where(p => p.Operation.PatientTreatmentProcessId == ptp.Id)
                 .SelectMany(p => p.Payments)
-                .Sum(p => p.PaymentItems.Sum(i => i.Price));
+                .Sum(p => p.PaymentItems.Sum(i => i.Price * i.ExchangeRate));
             response.UnPaidPrice = response.ProformaPrice - response.PaymentPrice;
-            response.HBYSPrice = await SetENabizPrice(proformas, ptp, eNabizList);
+            response.HBYSPrice = await SetENabizPrice(ptp, eNabizList);
             responseList.Add(response);
         }
 
@@ -108,90 +108,22 @@ public class PatientTreatmentProcessService : ApplicationService, IPatientTreatm
         return new PagedResultDto<PatientTreatmentProcessDetailedDto>(totalCount, responseList);
     }
 
-    private async Task<decimal> SetENabizPrice(List<Proforma> proformas, PatientTreatmentProcess ptp,
+    private async Task<decimal> SetENabizPrice(PatientTreatmentProcess ptp,
         List<ENabizProcess> eNabizProcesses)
     {
-        var ptpProformas = proformas.Where(p => p.Operation.PatientTreatmentProcessId == ptp.Id);
-        var proformaProcesses = proformas.SelectMany(p => p.ProformaProcesses).ToList();
-
-        //Calculate proforma process counts
-        Dictionary<int, int> processCountLookUp = new Dictionary<int, int>();
-        foreach (var pProcess in proformaProcesses)
-        {
-            if (processCountLookUp.ContainsKey(pProcess.ProcessId))
-            {
-                processCountLookUp[pProcess.ProcessId] += pProcess.TreatmentCount;
-            }
-            else
-            {
-                processCountLookUp.Add(pProcess.ProcessId, pProcess.TreatmentCount);
-            }
-        }
-
+        eNabizProcesses = eNabizProcesses.Where(p => p.TreatmentCode == ptp.TreatmentCode).ToList();
         Dictionary<int, int> responseLookUp = new Dictionary<int, int>();
         foreach (var eNabizProcess in eNabizProcesses)
         {
-            if (processCountLookUp.ContainsKey(eNabizProcess.ProcessId.Value))
-            {//In proforma
-                int proformaCount = processCountLookUp[eNabizProcess.ProcessId.Value];
-                int eNabizCount = string.IsNullOrEmpty(eNabizProcess.ADET) ? 0 : Convert.ToInt32(eNabizProcess.ADET);
-                if (proformaCount <= eNabizCount)
-                {
-                    processCountLookUp[eNabizProcess.ProcessId.Value] = 0;
-                    if (responseLookUp.ContainsKey(eNabizProcess.ProcessId.Value))
-                    {
-                        responseLookUp[eNabizProcess.ProcessId.Value] += eNabizCount - proformaCount;
-                    }
-                    else
-                    {
-                        responseLookUp.Add(eNabizProcess.ProcessId.Value, eNabizCount - proformaCount);
-                    }
-                }
-                else
-                {
-                    processCountLookUp[eNabizProcess.ProcessId.Value] -= eNabizCount;
-                }
+            int eNabizCount = string.IsNullOrEmpty(eNabizProcess.ADET) ? 0 : Convert.ToInt32(eNabizProcess.ADET);
+
+            if (responseLookUp.ContainsKey(eNabizProcess.ProcessId.Value))
+            {
+                responseLookUp[eNabizProcess.ProcessId.Value] += eNabizCount;
             }
             else
-            {//Not in proforma, Check enabiz process parent
-                if (!eNabizProcess.Process.ProcessRelationChildren?.Any() ?? false)
-                {//Parent
-                    var parent = eNabizProcess.Process.ProcessRelationChildren.FirstOrDefault();
-                    int parentProcessId = parent.Id;
-                    //If parent in profma
-                    if (processCountLookUp.ContainsKey(parentProcessId))
-                    {//In proforma
-                        int proformaCount = processCountLookUp[parentProcessId];
-                        int eNabizCount = string.IsNullOrEmpty(eNabizProcess.ADET) ? 0 : Convert.ToInt32(eNabizProcess.ADET);
-                        if (proformaCount <= eNabizCount)
-                        {
-                            processCountLookUp[parentProcessId] = 0;
-                            if (responseLookUp.ContainsKey(eNabizProcess.ProcessId.Value))
-                            {
-                                responseLookUp[eNabizProcess.ProcessId.Value] += eNabizCount - proformaCount;
-                            }
-                            else
-                            {
-                                responseLookUp.Add(eNabizProcess.ProcessId.Value, eNabizCount - proformaCount);
-                            }
-                        }
-                        else
-                        {
-                            processCountLookUp[eNabizProcess.ProcessId.Value] -= eNabizCount;
-                        }
-                    }
-                    else
-                    {//Not in proforma
-                        if (responseLookUp.ContainsKey(eNabizProcess.ProcessId.Value))
-                        {
-                            responseLookUp[eNabizProcess.ProcessId.Value] += string.IsNullOrEmpty(eNabizProcess.ADET) ? 0 : Convert.ToInt32(eNabizProcess.ADET);
-                        }
-                        else
-                        {
-                            responseLookUp.Add(eNabizProcess.ProcessId.Value, string.IsNullOrEmpty(eNabizProcess.ADET) ? 0 : Convert.ToInt32(eNabizProcess.ADET));
-                        }
-                    }
-                }
+            {
+                responseLookUp.Add(eNabizProcess.ProcessId.Value, eNabizCount);
             }
         }
 
@@ -200,7 +132,8 @@ public class PatientTreatmentProcessService : ApplicationService, IPatientTreatm
             var processCosts = await (await _pCostRepository.GetQueryableAsync())
                 .Where(p => responseLookUp.Keys.Contains(p.ProcessId))
                 .ToListAsync();
-            var cost = responseLookUp.Sum(l => l.Value * (processCosts.FirstOrDefault(c => c.ProcessId == l.Key)).UshasPrice);
+            var cost = responseLookUp.Sum(l =>
+                l.Value * (processCosts.FirstOrDefault(c => c.ProcessId == l.Key)).UshasPrice);
             return cost;
         }
 

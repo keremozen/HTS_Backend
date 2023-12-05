@@ -88,8 +88,8 @@ public class USSService : ApplicationService, IUSSService
                 _auditingManager.Current.Log.UserName = "Enabiz";
 
                 AuditLogActionInfo logAction = new AuditLogActionInfo();
-                logAction.ExtraProperties.Add("RESPONSE", serviceResponse);
-                //logAction.Parameters ="sysTrackingNumber=" + sysTrackingNumber + "&treatmentCode= " + treatmentCode + "##" + serviceResponse.Substring(0,1900);
+                //logAction.ExtraProperties.Add("RESPONSE", serviceResponse);
+                logAction.Parameters ="sysTrackingNumber=" + sysTrackingNumber + "&treatmentCode= " + treatmentCode + "##" + serviceResponse.Substring(0,1900);
                 logAction.ServiceName = "HtsSysTakipNoDetay";
                 logAction.ExecutionTime = DateTime.Now;
                 _auditingManager.Current.Log.Actions.Add(logAction);

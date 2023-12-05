@@ -16,5 +16,5 @@ public class FilterPatientDto
     public List<int> GenderIds { get; set; }
     public List<int> MotherTongueIds { get; set; }
     public List<int> SecondTongueIds { get; set; }
-    public List<int> PatientTreatmentProcessIds { get; set; }
+    public List<int> PatientTreatmentProcessStatusIds { get; set; }
 }

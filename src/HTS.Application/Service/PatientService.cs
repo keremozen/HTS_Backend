@@ -103,18 +103,18 @@ public class PatientService : ApplicationService, IPatientService
         {
             query = query.Where(p => p.SecondTongueId.HasValue && filter.SecondTongueIds.Contains(p.SecondTongueId.Value));
         }
-        if (filter.PatientTreatmentProcessIds?.Any() ?? false)
+        if (filter.PatientTreatmentProcessStatusIds?.Any() ?? false)
         {
-            query = query.Where(p => p.PatientTreatmentProcesses.Any(ptp => filter.PatientTreatmentProcessIds.Contains(ptp.Id)));
+            query = query.Where(p => p.PatientTreatmentProcesses.Any(ptp => filter.PatientTreatmentProcessStatusIds.Contains(ptp.TreatmentProcessStatusId)));
         }
 
         var patientList = await AsyncExecuter.ToListAsync(query);
         patientList = patientList.Select(p =>
             {
-                if (filter.PatientTreatmentProcessIds?.Any() ?? false)
+                if (filter.PatientTreatmentProcessStatusIds?.Any() ?? false)
                 {
                     p.PatientTreatmentProcesses =
-                        p.PatientTreatmentProcesses.Where(t => filter.PatientTreatmentProcessIds.Contains(t.Id)).ToList();
+                        p.PatientTreatmentProcesses.Where(t => filter.PatientTreatmentProcessStatusIds.Contains(t.TreatmentProcessStatusId)).ToList();
                 }
                 else
                 {

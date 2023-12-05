@@ -68,13 +68,13 @@ public class PatientTreatmentProcessService : ApplicationService, IPatientTreatm
             .ToListAsync();
         //Group to get latest proforma
         var groupList = from p in proformas
-            group p by p.OperationId
+                        group p by p.OperationId
             into g
-            select new
-            {
-                Version = proformas.Where(p => p.OperationId == g.Key).Max(p => p.Version),
-                OperationId = g.Key,
-            };
+                        select new
+                        {
+                            Version = proformas.Where(p => p.OperationId == g.Key).Max(p => p.Version),
+                            OperationId = g.Key,
+                        };
         proformas = proformas
             .Where(p => groupList.Any(pp => pp.OperationId == p.OperationId && pp.Version == p.Version)).ToList();
 
@@ -197,11 +197,11 @@ public class PatientTreatmentProcessService : ApplicationService, IPatientTreatm
 
         if (responseLookUp.Any())
         {
-           var processCosts = await (await _pCostRepository.GetQueryableAsync())
-               .Where(p => responseLookUp.Keys.Contains(p.ProcessId))
-               .ToListAsync();
-           var cost = responseLookUp.Sum(l => l.Value * (processCosts.FirstOrDefault(c => c.ProcessId == l.Key)).UshasPrice);
-           return cost;
+            var processCosts = await (await _pCostRepository.GetQueryableAsync())
+                .Where(p => responseLookUp.Keys.Contains(p.ProcessId))
+                .ToListAsync();
+            var cost = responseLookUp.Sum(l => l.Value * (processCosts.FirstOrDefault(c => c.ProcessId == l.Key)).UshasPrice);
+            return cost;
         }
 
         return 0;

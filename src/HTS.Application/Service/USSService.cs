@@ -14,6 +14,7 @@ using HTS.Enum;
 using HTS.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Volo.Abp.Application.Dtos;
@@ -33,12 +34,14 @@ public class USSService : ApplicationService, IUSSService
     private readonly IRepository<Proforma, int> _proformaRepository;
     private readonly IAuditingManager _auditingManager;
     private readonly ICurrentUser _currentUser;
+    private IConfiguration _config;
 
     public USSService(IRepository<ENabizProcess, int> eNabizProcessRepository,
         IRepository<Process, int> processRepository,
         IRepository<Proforma, int> proformaRepository,
         IIdentityUserRepository userRepository,
         IAuditingManager auditingManager,
+         IConfiguration config,
         ICurrentUser currentUser)
     {
         _eNabizProcessRepository = eNabizProcessRepository;
@@ -46,6 +49,7 @@ public class USSService : ApplicationService, IUSSService
         _proformaRepository = proformaRepository;
         _auditingManager = auditingManager;
         _currentUser = currentUser;
+        _config = config;
 
     }
 
@@ -55,11 +59,36 @@ public class USSService : ApplicationService, IUSSService
         System.Net.Http.HttpClient client = new System.Net.Http.HttpClient();
         client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-        client.DefaultRequestHeaders.Add("KullaniciAdi", "10000053");
-        client.DefaultRequestHeaders.Add("Sifre", "Htstest2023.");
-        client.DefaultRequestHeaders.Add("UygulamaKodu", "f688ab0e-f6f9-42ee-9c86-0c623ed02351");
+        client.DefaultRequestHeaders.Add("KullaniciAdi", _config["USSService:KullaniciAdi"]);
+        client.DefaultRequestHeaders.Add("Sifre", _config["USSService:Sifre"]);
+        client.DefaultRequestHeaders.Add("UygulamaKodu", _config["USSService:UygulamaKodu"]);
+       
+        HttpResponseMessage messge = await client.GetAsync(_config["USSService:GetSysTrackingNumberServisURL"] + treatmentCode);
 
-        HttpResponseMessage messge = await client.GetAsync("https://ussservistest.saglik.gov.tr/api/Hts/HtsKoduSorgula?htsKodu=" + treatmentCode);
+        using (var auditingScope = _auditingManager.BeginScope())
+        {
+            _auditingManager.Current.Log.ApplicationName = "HTS.HttpApi.Host";
+            _auditingManager.Current.Log.ExecutionTime = DateTime.Now;
+            _auditingManager.Current.Log.ClientId = "HTS_App";
+            _auditingManager.Current.Log.HttpMethod = "GET";
+            _auditingManager.Current.Log.Url = "USSService";
+            _auditingManager.Current.Log.HttpStatusCode = (int)messge.StatusCode;
+            _auditingManager.Current.Log.UserName = _currentUser.UserName;
+            _auditingManager.Current.Log.UserId = _currentUser.Id;
+
+
+            AuditLogActionInfo logAction = new AuditLogActionInfo();
+
+            logAction.Parameters = "treatmentCode= " + treatmentCode + "##" + await messge.Content.ReadAsStringAsync();
+            logAction.MethodName = "HtsKoduSorgula";
+            logAction.ServiceName = "USSService";
+            logAction.ExecutionTime = DateTime.Now;
+            _auditingManager.Current.Log.Actions.Add(logAction);
+
+            await auditingScope.SaveAsync();
+
+        }
+
         return System.Text.Json.JsonSerializer.Deserialize<ExternalApiResult>(await messge.Content.ReadAsStringAsync());
     }
 
@@ -73,11 +102,11 @@ public class USSService : ApplicationService, IUSSService
             System.Net.Http.HttpClient client = new System.Net.Http.HttpClient();
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-            client.DefaultRequestHeaders.Add("KullaniciAdi", "10000053");
-            client.DefaultRequestHeaders.Add("Sifre", "Htstest2023.");
-            client.DefaultRequestHeaders.Add("UygulamaKodu", "f688ab0e-f6f9-42ee-9c86-0c623ed02351");
+            client.DefaultRequestHeaders.Add("KullaniciAdi", _config["USSService:KullaniciAdi"]);
+            client.DefaultRequestHeaders.Add("Sifre", _config["USSService:Sifre"]);
+            client.DefaultRequestHeaders.Add("UygulamaKodu", _config["USSService:UygulamaKodu"]);
 
-            HttpResponseMessage messge = await client.GetAsync("https://ussservistest.saglik.gov.tr/api/Hts/HtsSysTakipNoDetay?sysTakipNo=" + sysTrackingNumber + "&htsKodu=" + treatmentCode);
+            HttpResponseMessage messge = await client.GetAsync(string.Format(_config["USSService:GetSysTrackingNumberDetailURL"] ,sysTrackingNumber ,treatmentCode));
             var serviceResponse = await messge.Content.ReadAsStringAsync();
             apiResult = JsonConvert.DeserializeObject<ExternalApiResult>(serviceResponse);
             

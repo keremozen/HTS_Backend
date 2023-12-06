@@ -13,23 +13,30 @@ using Microsoft.EntityFrameworkCore;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
+using Volo.Abp.Auditing;
+using Volo.Abp.Users;
+
 namespace HTS.Service
 {
-    [Authorize]
+
     public class ExternalService : ApplicationService, IExternalService
     {
 
         private readonly IRepository<PatientTreatmentProcess, int> _patientTreatmentProcessRepository;
         private readonly IRepository<Proforma, int> _proformaRepository;
         private readonly IRepository<Process, int> _processRepository;
+        private readonly IAuditingManager _auditingManager;
+     
 
         public ExternalService(IRepository<PatientTreatmentProcess, int> patientTreatmentProcessRepository,
         IRepository<Proforma, int> proformaRepository,
+         IAuditingManager auditingManager,
         IRepository<Process, int> processRepository)
         {
             _patientTreatmentProcessRepository = patientTreatmentProcessRepository;
             _proformaRepository = proformaRepository;
             _processRepository = processRepository;
+            _auditingManager = auditingManager;
         }
 
 
@@ -67,6 +74,30 @@ namespace HTS.Service
             {
                 result = GenerateTestData_HtsHizmetKoduKontrol(sutCodesRequest);
             }
+
+            using (var auditingScope = _auditingManager.BeginScope())
+            {
+                _auditingManager.Current.Log.ApplicationName = "HTS.HttpApi.Host";
+                _auditingManager.Current.Log.ExecutionTime = DateTime.Now;
+                _auditingManager.Current.Log.ClientId = "HTS_App";
+                _auditingManager.Current.Log.HttpMethod = "GET";
+                _auditingManager.Current.Log.Url = "ExternalService";
+                _auditingManager.Current.Log.HttpStatusCode = (int)result.durum;
+                _auditingManager.Current.Log.UserName = "enabiz";
+
+
+
+                AuditLogActionInfo logAction = new AuditLogActionInfo();
+                logAction.ExtraProperties.Add("Request", Newtonsoft.Json.JsonConvert.SerializeObject(sutCodesRequest));
+                logAction.Parameters = "treatmentCode= " + sutCodesRequest.HtsKodu + "##" + Newtonsoft.Json.JsonConvert.SerializeObject( result.sonuc);
+                logAction.MethodName = "HtsHizmetKoduKontrol";
+                logAction.ServiceName = "ExternalService";
+                logAction.ExecutionTime = DateTime.Now;
+                _auditingManager.Current.Log.Actions.Add(logAction);
+
+                await auditingScope.SaveAsync();
+
+            }
             return result;
         }
 
@@ -96,6 +127,31 @@ namespace HTS.Service
             {
                 result = GenerateTestData_HtsHastaBilgisi(htsCode);
             }
+
+            using (var auditingScope = _auditingManager.BeginScope())
+            {
+                _auditingManager.Current.Log.ApplicationName = "HTS.HttpApi.Host";
+                _auditingManager.Current.Log.ExecutionTime = DateTime.Now;
+                _auditingManager.Current.Log.ClientId = "HTS_App";
+                _auditingManager.Current.Log.HttpMethod = "GET";
+                _auditingManager.Current.Log.Url = "ExternalService";
+                _auditingManager.Current.Log.HttpStatusCode = (int)result.durum;
+                _auditingManager.Current.Log.UserName = "enabiz";
+              
+
+
+                AuditLogActionInfo logAction = new AuditLogActionInfo();
+
+                logAction.Parameters = "treatmentCode= " + htsCode + "##" + Newtonsoft.Json.JsonConvert.SerializeObject(result.sonuc);
+                logAction.MethodName = "HtsHastaBilgisi";
+                logAction.ServiceName = "ExternalService";
+                logAction.ExecutionTime = DateTime.Now;
+                _auditingManager.Current.Log.Actions.Add(logAction);
+
+                await auditingScope.SaveAsync();
+
+            }
+
             return result;
 
         }

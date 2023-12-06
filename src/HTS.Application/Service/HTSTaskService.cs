@@ -296,7 +296,7 @@ public class HTSTaskService : ApplicationService, IHTSTaskService
             //Send mail to user assign to tik
             string mailBodyFormat = string.Format(_localizer["ReturnToTik:MailBody"],
                 $"{patient.Name} {patient.Surname}");
-            Helper.SendMail(assigner.Email, mailBodyFormat, null, _localizer["ReturnToTik:MailSubject"]);
+            Helper.SendMail(assigner.Email, mailBodyFormat, file:null, _localizer["ReturnToTik:MailSubject"]);
         }
     }
 

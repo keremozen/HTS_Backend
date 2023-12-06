@@ -11,7 +11,7 @@ namespace HTS.Common;
 
 public static class Helper
 {
-    public static void SendMail(List<string> toList, string body, byte[] file=null, string subject = null)
+    public static void SendMail(List<string> toList, string body, byte[] file=null, string subject = null,string fileName = null)
     {
         string fromEmail = "info@ushas.com.tr";
         string password = "VWhb8Jo4UZ";
@@ -35,7 +35,7 @@ public static class Helper
 #endif
     }
 
-    public static void SendMail(string to, string body, byte[] file, string subject = null)
+    public static void SendMail(string to, string body, byte[] file, string subject = null, string fileName = null)
     {
         string fromEmail = "info@ushas.com.tr";
         string password = "VWhb8Jo4UZ";
@@ -59,7 +59,7 @@ public static class Helper
         {
             Attachment attachment = new Attachment(new MemoryStream(file), new ContentType(MediaTypeNames.Application.Pdf))
             {
-                Name = "Proforma.pdf"
+                Name = fileName ?? "Proforma.pdf"
             };
             message.Attachments.Add(attachment);
         }

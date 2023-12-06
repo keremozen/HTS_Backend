@@ -90,11 +90,12 @@ public class InvitationLetterDocumentService : ApplicationService, IInvitationLe
                 (s => s.InvitationLetterDocuments)))
             .AsNoTracking()
             .FirstOrDefaultAsync(s => s.Id == salesMethodId);
-        if (salesMethodEntity == null)
+        if (salesMethodEntity == null
+            || string.IsNullOrEmpty(salesMethodEntity.InvitationLetterDocuments.FirstOrDefault()?.FilePath))
         {
             throw new HTSBusinessException(ErrorCode.RelationalDataIsMissing);
         }
-
+        
         var proforma = await (await _proformaRepository.GetQueryableAsync())
             .Include(p => p.Operation)
             .ThenInclude(o => o.Hospital)
@@ -116,7 +117,7 @@ public class InvitationLetterDocumentService : ApplicationService, IInvitationLe
         var fileBytes = await File.ReadAllBytesAsync($"{salesMethodEntity.InvitationLetterDocuments.FirstOrDefault()?.FilePath}");
         var mailSubject = "Invitation Letter";
         Helper.SendMail(salesMethodEntity.PatientTreatmentProcess.Patient.Email,
-            mailBody, fileBytes, subject: mailSubject);
+            mailBody, fileBytes, subject: mailSubject, fileName:"InvitationLetter.pdf");
     }
 
     private static void SaveByteArrayToFileWithStaticMethod(string data, string filePath)

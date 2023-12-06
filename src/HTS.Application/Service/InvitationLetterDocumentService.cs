@@ -111,9 +111,9 @@ public class InvitationLetterDocumentService : ApplicationService, IInvitationLe
         //Send mail
         string mailBody =
             $"Dear {salesMethodEntity.PatientTreatmentProcess.Patient.Name} {salesMethodEntity.PatientTreatmentProcess.Patient.Surname}," +
-            $"</br></br>First of all, thank you for choosing us. We invite you to {proforma.Operation.Hospital?.Name}. " +
-            $"Hospital based on your treatment plan that we have given in the appendix. If you submit the documents we have requested from you, your treatment process will be initiated.</br>" +
-            $"Thanks.</br>We wish you a nice day.</br>";
+            $"<br><br>First of all, thank you for choosing us. We invite you to {proforma.Operation.Hospital?.Name}. " +
+            $"Hospital based on your treatment plan that we have given in the appendix. If you submit the documents we have requested from you, your treatment process will be initiated.<br><br>" +
+            $"Thanks.<br>We wish you a nice day.";
         var fileBytes = await File.ReadAllBytesAsync($"{salesMethodEntity.InvitationLetterDocuments.FirstOrDefault()?.FilePath}");
         var mailSubject = "Invitation Letter";
         Helper.SendMail(salesMethodEntity.PatientTreatmentProcess.Patient.Email,

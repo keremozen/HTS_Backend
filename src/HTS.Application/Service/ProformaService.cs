@@ -256,9 +256,9 @@ public class ProformaService : ApplicationService, IProformaService
     {
         //Send mail to hospital consultations
         string mailBody = $"Dear {proforma.Operation.PatientTreatmentProcess.Patient.Name} {proforma.Operation.PatientTreatmentProcess.Patient.Surname}," +
-                          $"</br></br>Your application has been reviewed and the necessary treatment plan has been prepared. " +
-                          $"You can find the details of your treatment process in the appendix.Proforma that is generated for your treatment is attached to email.</br>" +
-        $"We wish you a nice days.</br></br>Regards.";
+                          $"<br><br>Your application has been reviewed and the necessary treatment plan has been prepared. " +
+                          $"You can find the details of your treatment process in the appendix.Proforma that is generated for your treatment is attached to email.<br>" +
+                          $"We wish you a nice days.<br><br>Regards.";
         var proformaReceipt = await CreateProformaPdf(proforma.Id);
         var mailSubject = $"Treatment Plan is Ready | {proforma.ProformaCode}";
         Helper.SendMail(eMail, mailBody, proformaReceipt.File, subject: mailSubject, fileName:"Proforma.pdf");

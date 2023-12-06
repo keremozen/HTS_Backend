@@ -37,15 +37,15 @@ public static class Helper
 
     public static void SendMail(string to, string body, byte[] file, string subject = null, string fileName = null)
     {
-        string fromEmail = "info@ushas.com.tr";
-        string password = "VWhb8Jo4UZ";
-        string smtpServer = "mail.ushas.com.tr";
+        string fromEmail = "info@fakeushas.com";
+        string password = "123456";
+        string smtpServer = "localhost";
 
         var smtpClient = new SmtpClient(smtpServer, 587)
         {
             DeliveryMethod = SmtpDeliveryMethod.Network,
             UseDefaultCredentials = false,
-            EnableSsl = true
+            EnableSsl = false
         };
 
         smtpClient.Credentials = new NetworkCredential(fromEmail, password);
@@ -55,6 +55,7 @@ public static class Helper
         message.Subject = subject ?? "USHAŞ Proforma";
         message.IsBodyHtml = true;
         message.Body = body;
+
         if (file != null)
         {
             Attachment attachment = new Attachment(new MemoryStream(file), new ContentType(MediaTypeNames.Application.Pdf))
@@ -63,7 +64,7 @@ public static class Helper
             };
             message.Attachments.Add(attachment);
         }
-#if !DEBUG
+#if DEBUG
         smtpClient.Send(message);
 #endif
     }

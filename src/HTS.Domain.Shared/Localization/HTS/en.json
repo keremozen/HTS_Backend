@@ -687,16 +687,16 @@
     "Payment:Invoices:NameSingular": "Invoice",
 
     /*Mail Body*/
-    "HospitalConsultation:MailBody": "Dear UHB Staff,</br>To Create Treatment Process for the patient, please follow the link below.</br> {0}",
+    "HospitalConsultation:MailBody": "Dear UHB Staff,<br>To Create Treatment Process for the patient, please follow the link below.<br> {0}",
     "HospitalResponseCompleted:MailBody": "Dear sir/madam,<br>The hospital consultation requested for {0} is responded by {1}.<br>Hospital Response: {2}<br>Have a nice day.",
     "HospitalResponseCompleted:MailSubject": "HTS - Hospital Response",
-    "SendToTik:MailBody": "Sayın İlgili,</br>{0} hastası tıbbi koordinasyon sağlanması amacıyla tarafınıza devredilmiştir.",
+    "SendToTik:MailBody": "Sayın İlgili,<br>{0} hastası tıbbi koordinasyon sağlanması amacıyla tarafınıza devredilmiştir.",
     "SendToTik:MailSubject": "Tıbbi Koordinasyon",
-    "ReturnToTik:MailBody": "Sayın İlgili,</br>TİK'e devredilen {0} hastası tarafınıza iade edilmiştir.</br>İyi günler dileriz.",
+    "ReturnToTik:MailBody": "Sayın İlgili,<br>TİK'e devredilen {0} hastası tarafınıza iade edilmiştir.<br>İyi günler dileriz.",
     "ReturnToTik:MailSubject": "USHAŞ HTS - Hastanın Devredilmesi",
-    "PricerTask:MailBody": "Sayın İlgili,</br>{0} hastası adına {1} kodlu tedavi kaydında bulunan operasyonun fiyatlandırılması bekleniyor.",
+    "PricerTask:MailBody": "Sayın İlgili,<br>{0} hastası adına {1} kodlu tedavi kaydında bulunan operasyonun fiyatlandırılması bekleniyor.",
     "PricerTask:MailSubject": "USHAŞ HTS - Fiyatlandırma Görevi",
-    "PatientApprovalTask:MailBody": "Sayın İlgili,</br>{0} hastası adına {1} kodlu tedavi kaydında oluşturulan proformanın hastaya iletilmesi bekleniyor.",
+    "PatientApprovalTask:MailBody": "Sayın İlgili,<br>{0} hastası adına {1} kodlu tedavi kaydında oluşturulan proformanın hastaya iletilmesi bekleniyor.",
     "PatientApprovalTask:MailSubject": "USHAŞ HTS - Proformanın İletilmesi Görevi"
   }
 }

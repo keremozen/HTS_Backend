@@ -22,6 +22,7 @@ using Volo.Abp.Auditing;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Identity;
 using Volo.Abp.Json;
+using Volo.Abp.Users;
 using static SkiaSharp.HarfBuzz.SKShaper;
 
 namespace HTS.Service;
@@ -31,17 +32,20 @@ public class USSService : ApplicationService, IUSSService
     private readonly IRepository<Process, int> _processRepository;
     private readonly IRepository<Proforma, int> _proformaRepository;
     private readonly IAuditingManager _auditingManager;
+    private readonly ICurrentUser _currentUser;
 
     public USSService(IRepository<ENabizProcess, int> eNabizProcessRepository,
         IRepository<Process, int> processRepository,
         IRepository<Proforma, int> proformaRepository,
         IIdentityUserRepository userRepository,
-        IAuditingManager auditingManager)
+        IAuditingManager auditingManager,
+        ICurrentUser currentUser)
     {
         _eNabizProcessRepository = eNabizProcessRepository;
         _processRepository = processRepository;
         _proformaRepository = proformaRepository;
         _auditingManager = auditingManager;
+        _currentUser = currentUser;
 
     }
 
@@ -76,6 +80,7 @@ public class USSService : ApplicationService, IUSSService
             HttpResponseMessage messge = await client.GetAsync("https://ussservistest.saglik.gov.tr/api/Hts/HtsSysTakipNoDetay?sysTakipNo=" + sysTrackingNumber + "&htsKodu=" + treatmentCode);
             var serviceResponse = await messge.Content.ReadAsStringAsync();
             apiResult = JsonConvert.DeserializeObject<ExternalApiResult>(serviceResponse);
+            
 
             using (var auditingScope = _auditingManager.BeginScope())
             {
@@ -83,16 +88,14 @@ public class USSService : ApplicationService, IUSSService
                 _auditingManager.Current.Log.ExecutionTime = DateTime.Now;
                 _auditingManager.Current.Log.ClientId = "HTS_App";
                 _auditingManager.Current.Log.HttpMethod = "GET";
-                _auditingManager.Current.Log.Url = "HtsSysTakipNoDetay";
-                _auditingManager.Current.Log.HttpStatusCode = 200;
-                _auditingManager.Current.Log.UserName = "Enabiz";
+                _auditingManager.Current.Log.Url = "USSService";
+                _auditingManager.Current.Log.HttpStatusCode = apiResult.durum;
+                _auditingManager.Current.Log.UserName = _currentUser.UserName;
+                _auditingManager.Current.Log.UserId = _currentUser.Id;
 
-                AuditLogActionInfo logAction = new AuditLogActionInfo();
-                //logAction.ExtraProperties.Add("RESPONSE", serviceResponse);
-                logAction.Parameters ="sysTrackingNumber=" + sysTrackingNumber + "&treatmentCode= " + treatmentCode + "##" + serviceResponse.Substring(0,1900);
-                logAction.ServiceName = "HtsSysTakipNoDetay";
-                logAction.ExecutionTime = DateTime.Now;
-                _auditingManager.Current.Log.Actions.Add(logAction);
+
+                ParseLog(_auditingManager, serviceResponse, sysTrackingNumber, treatmentCode);
+               
                 await auditingScope.SaveAsync();
 
             }
@@ -146,6 +149,36 @@ public class USSService : ApplicationService, IUSSService
         return apiResult;
     }
 
+    private void ParseLog(IAuditingManager auditingScope, string message, string sysTrackingNumber, string treatmentCode)
+    {
+        int start = 0;
+        for (int i = 1; i * 1900 <= message.Length; i++)
+        {
+
+            AuditLogActionInfo logAction = new AuditLogActionInfo();
+
+            logAction.Parameters = "sysTrackingNumber=" + sysTrackingNumber + "&treatmentCode= " + treatmentCode + "##" + message.Substring(start, 1900);
+            logAction.MethodName = "HtsSysTakipNoDetay"+ i.ToString();
+            logAction.ServiceName = "USSService";
+            logAction.ExecutionTime = DateTime.Now;
+            _auditingManager.Current.Log.Actions.Add(logAction);
+
+            
+            start += 1900;
+        }
+        if (message.Length != start)
+        {
+
+            AuditLogActionInfo logAction = new AuditLogActionInfo();
+
+            logAction.Parameters = "sysTrackingNumber=" + sysTrackingNumber + "&treatmentCode= " + treatmentCode + "##" + message.Substring(start, message.Length - start - 1);
+            logAction.MethodName = "HtsSysTakipNoDetay_last" ;
+            logAction.ServiceName = "USSService";
+            logAction.ExecutionTime = DateTime.Now;
+            _auditingManager.Current.Log.Actions.Add(logAction);
+           
+        }
+    }
 
     public async Task SetENabizProcess(string treatmentCode)
     {

@@ -73,7 +73,7 @@ namespace HTS.PDFDocument
                     $"{patientName} is/are sent by " +
                     $"{_salesMethodAndCompanionInfo.ContractedInstitution?.Name} (please see annex) to visit Türkiye for medical purposes.").Style(textStyle).LineHeight((float)1.1);
 
-                column.Item().PaddingTop(5).Text($"{hospitalName} examined the first medical review of the relevant patient and the doctors of the hospital set" +
+                column.Item().PaddingTop(5).Text($"{hospitalName} examined the first medical review of the relevant patient and the doctors of the hospital set " +
                     $"the effective treatment plan by giving the second medical review. ").Style(textStyle).LineHeight((float)1.1);
 
                 column.Item().PaddingTop(5).Text($"Given below the information of the relevant patient and his/her companion.").Style(textStyle).Italic().LineHeight((float)1.1);

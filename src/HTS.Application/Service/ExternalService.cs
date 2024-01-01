@@ -60,7 +60,7 @@ namespace HTS.Service
                 bool containsProcess;
                 foreach (var sutCode in sutCodesRequest.SutKoduList)
                 {
-                    containsProcess = processes.Any(p => p.Code == sutCode);
+                    containsProcess = processes.Any(p => p.Code.Contains(sutCode));
                     ((List<SutCodeResult>)result.sonuc).Add(new SutCodeResult()
                     {
                         gecerliMi = containsProcess,
@@ -278,13 +278,23 @@ namespace HTS.Service
                 }
             }
             else
-            {
+            {//Test kaydı değil, proforması da yok
                 result = new ExternalApiResult()
                 {
-                    durum = 201,
-                    sonuc = null,
+                    durum = 200,
+                    sonuc = new List<SutCodeResult>(),
                     mesaj = null
                 };
+                foreach (var sutCode in sutCodesRequest.SutKoduList)
+                {
+                    ((List<SutCodeResult>)result.sonuc).Add(new SutCodeResult()
+                    {
+                        gecerliMi = false,
+                        sutKodu = sutCode,
+                        islemTarihi = DateTime.MinValue,
+                        klinikKodu = string.Empty
+                    });
+                }
             }
             return result;
         }

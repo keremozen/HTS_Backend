@@ -20,6 +20,7 @@ using Newtonsoft.Json.Linq;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Auditing;
+using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Identity;
 using Volo.Abp.Json;
@@ -62,7 +63,7 @@ public class USSService : ApplicationService, IUSSService
         client.DefaultRequestHeaders.Add("KullaniciAdi", _config["USSService:KullaniciAdi"]);
         client.DefaultRequestHeaders.Add("Sifre", _config["USSService:Sifre"]);
         client.DefaultRequestHeaders.Add("UygulamaKodu", _config["USSService:UygulamaKodu"]);
-       
+
         HttpResponseMessage messge = await client.GetAsync(_config["USSService:GetSysTrackingNumberServisURL"] + treatmentCode);
 
         using (var auditingScope = _auditingManager.BeginScope())
@@ -106,10 +107,10 @@ public class USSService : ApplicationService, IUSSService
             client.DefaultRequestHeaders.Add("Sifre", _config["USSService:Sifre"]);
             client.DefaultRequestHeaders.Add("UygulamaKodu", _config["USSService:UygulamaKodu"]);
 
-            HttpResponseMessage messge = await client.GetAsync(string.Format(_config["USSService:GetSysTrackingNumberDetailURL"] ,sysTrackingNumber ,treatmentCode));
+            HttpResponseMessage messge = await client.GetAsync(string.Format(_config["USSService:GetSysTrackingNumberDetailURL"], sysTrackingNumber, treatmentCode));
             var serviceResponse = await messge.Content.ReadAsStringAsync();
             apiResult = JsonConvert.DeserializeObject<ExternalApiResult>(serviceResponse);
-            
+
 
             using (var auditingScope = _auditingManager.BeginScope())
             {
@@ -124,7 +125,7 @@ public class USSService : ApplicationService, IUSSService
 
 
                 ParseLog(_auditingManager, serviceResponse, sysTrackingNumber, treatmentCode);
-               
+
                 await auditingScope.SaveAsync();
 
             }
@@ -141,33 +142,49 @@ public class USSService : ApplicationService, IUSSService
             }
 
             IDictionary<string, string> dic = new Dictionary<string, string>();
-            foreach (JProperty attributeProperty in att)
+            List<ENabizProcessDto> eNabizProcessDtos = new List<ENabizProcessDto>();
+            ENabizProcessDto islemBilgisi = null;
+            foreach (var item in att)
             {
-                var attribute = att[attributeProperty.Name];
-                if (attribute != null && attribute["@value"] != null)
+                foreach (JProperty attributeProperty in item)
                 {
-                    var my_data = attribute["@value"].Value<string>();
-                    dic.Add(attributeProperty.Name, my_data);
+                    var attribute = item[attributeProperty.Name];
+                    if (attribute != null && attribute["@value"] != null)
+                    {
+                        var my_data = attribute["@value"].Value<string>();
+                        dic.Add(attributeProperty.Name, my_data);
+                    }
+                }
+                if (dic.Any())
+                {
+                    var json = JsonConvert.SerializeObject(dic, Newtonsoft.Json.Formatting.Indented);
+                    islemBilgisi = JsonConvert.DeserializeObject<ENabizProcessDto>(json);
+                    eNabizProcessDtos.Add(islemBilgisi);
+                    dic = new Dictionary<string, string>();
                 }
             }
-            var json = JsonConvert.SerializeObject(dic, Newtonsoft.Json.Formatting.Indented);
-            ENabizProcessDto islemBilgisi = JsonConvert.DeserializeObject<ENabizProcessDto>(json);
-            var entity = ObjectMapper.Map<ENabizProcessDto, ENabizProcess>(islemBilgisi);
-            entity.TreatmentCode = treatmentCode;
-            entity.SysTrackingNumber = sysTrackingNumber;
-            entity.IsCancelled = false;
 
-            //Check with refnumber.
-            if (!await _eNabizProcessRepository.AnyAsync(p => p.ISLEM_REFERANS_NUMARASI == entity.ISLEM_REFERANS_NUMARASI))
-            {//New record, insert
-             //Get related process 
-                var process = await _processRepository.FirstOrDefaultAsync(p => p.Code.Contains(entity.ISLEM_KODU) && p.IsDeleted == false);
-                if (process != null)
-                {
-                    entity.ProcessId = process.Id;
+            List<ENabizProcess> entities = new List<ENabizProcess>();
+            foreach (var eNabizProcessDto in eNabizProcessDtos)
+            {
+                var entity = ObjectMapper.Map<ENabizProcessDto, ENabizProcess>(eNabizProcessDto);
+                entity.TreatmentCode = treatmentCode;
+                entity.SysTrackingNumber = sysTrackingNumber;
+                entity.IsCancelled = false;
+
+                //Check with refnumber.
+                if (!await _eNabizProcessRepository.AnyAsync(p => p.ISLEM_REFERANS_NUMARASI == entity.ISLEM_REFERANS_NUMARASI))
+                {//New record, insert
+                 //Get related process 
+                    var process = await _processRepository.FirstOrDefaultAsync(p => p.Code.Contains(entity.ISLEM_KODU) && p.IsDeleted == false);
+                    if (process != null)
+                    {
+                        entity.ProcessId = process.Id;
+                    }
+                    entities.Add(entity);
                 }
-                await _eNabizProcessRepository.InsertAsync(entity);
             }
+            await _eNabizProcessRepository.InsertManyAsync(entities);
         }
         catch (Exception ex)
         {
@@ -187,12 +204,12 @@ public class USSService : ApplicationService, IUSSService
             AuditLogActionInfo logAction = new AuditLogActionInfo();
 
             logAction.Parameters = "sysTrackingNumber=" + sysTrackingNumber + "&treatmentCode= " + treatmentCode + "##" + message.Substring(start, 1900);
-            logAction.MethodName = "HtsSysTakipNoDetay"+ i.ToString();
+            logAction.MethodName = "HtsSysTakipNoDetay" + i.ToString();
             logAction.ServiceName = "USSService";
             logAction.ExecutionTime = DateTime.Now;
             _auditingManager.Current.Log.Actions.Add(logAction);
 
-            
+
             start += 1900;
         }
         if (message.Length != start)
@@ -201,35 +218,35 @@ public class USSService : ApplicationService, IUSSService
             AuditLogActionInfo logAction = new AuditLogActionInfo();
 
             logAction.Parameters = "sysTrackingNumber=" + sysTrackingNumber + "&treatmentCode= " + treatmentCode + "##" + message.Substring(start, message.Length - start - 1);
-            logAction.MethodName = "HtsSysTakipNoDetay_last" ;
+            logAction.MethodName = "HtsSysTakipNoDetay_last";
             logAction.ServiceName = "USSService";
             logAction.ExecutionTime = DateTime.Now;
             _auditingManager.Current.Log.Actions.Add(logAction);
-           
+
         }
     }
 
     public async Task SetENabizProcess(string treatmentCode)
     {
         ExternalApiResult trackingNumberResult = await GetSysTrackingNumber(treatmentCode);
-      
+
         using (var auditingScope = _auditingManager.BeginScope())
         {
             _auditingManager.Current.Log.ApplicationName = "HTS.HttpApi.Host";
             _auditingManager.Current.Log.ExecutionTime = DateTime.Now;
             _auditingManager.Current.Log.ClientId = "HTS_App";
             _auditingManager.Current.Log.HttpMethod = "GET";
-            _auditingManager.Current.Log.Url =  "HtsKoduSorgula" ;
-            _auditingManager.Current.Log.HttpStatusCode= 200;
+            _auditingManager.Current.Log.Url = "HtsKoduSorgula";
+            _auditingManager.Current.Log.HttpStatusCode = 200;
             _auditingManager.Current.Log.UserName = "Enabiz";
 
             AuditLogActionInfo logAction = new AuditLogActionInfo();
-            logAction.Parameters = "treatmentCode= "+ treatmentCode + "##" +  System.Text.Json.JsonSerializer.Serialize(trackingNumberResult.sonuc);
+            logAction.Parameters = "treatmentCode= " + treatmentCode + "##" + System.Text.Json.JsonSerializer.Serialize(trackingNumberResult.sonuc);
             logAction.ServiceName = "HtsKoduSorgula";
-            logAction.ExecutionTime= DateTime.Now;
+            logAction.ExecutionTime = DateTime.Now;
             _auditingManager.Current.Log.Actions.Add(logAction);
-                await auditingScope.SaveAsync();
-          
+            await auditingScope.SaveAsync();
+
         }
 
 

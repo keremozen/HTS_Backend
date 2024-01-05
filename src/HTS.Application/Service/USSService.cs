@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net.Http;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -147,13 +148,14 @@ public class USSService : ApplicationService, IUSSService
             foreach (var item in att)
             {
                 foreach (JProperty attributeProperty in item)
-                {
-                    var attribute = item[attributeProperty.Name];
-                    if (attribute != null && attribute["@value"] != null)
-                    {
-                        var my_data = attribute["@value"].Value<string>();
-                        dic.Add(attributeProperty.Name, my_data);
-                    }
+                { 
+                        var attribute = item[attributeProperty.Name];
+                        if (attribute != null && ((Newtonsoft.Json.Linq.JContainer)attribute).Count == 1 && attribute["@value"] != null)
+                        {
+
+                            var my_data = attribute["@value"].Value<string>();
+                            dic.Add(attributeProperty.Name, my_data);
+                        }
                 }
                 if (dic.Any())
                 {
@@ -190,6 +192,7 @@ public class USSService : ApplicationService, IUSSService
         {
             apiResult.mesaj = ex.Message;
             apiResult.durum = 0;
+            return apiResult;
 
         }
         return apiResult;

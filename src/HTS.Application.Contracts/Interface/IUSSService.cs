@@ -15,6 +15,6 @@ namespace HTS.Interface
     {
         Task<ExternalApiResult> GetSysTrackingNumber(string treatmentCode);
         Task<ExternalApiResult> GetSysTrackingNumberDetail(string sysTrackingNumber, string treatmentCode);
-        Task SetENabizProcess(string treatmentCode);
+        Task<ExternalApiResult> SetENabizProcess(string treatmentCode);
     }
 }

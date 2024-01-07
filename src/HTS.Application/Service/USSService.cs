@@ -229,8 +229,11 @@ public class USSService : ApplicationService, IUSSService
         }
     }
 
-    public async Task SetENabizProcess(string treatmentCode)
+    public async Task<ExternalApiResult> SetENabizProcess(string treatmentCode)
     {
+        ExternalApiResult apiResult = new ExternalApiResult();
+        apiResult.durum = 1;
+
         ExternalApiResult trackingNumberResult = await GetSysTrackingNumber(treatmentCode);
 
         using (var auditingScope = _auditingManager.BeginScope())
@@ -249,18 +252,23 @@ public class USSService : ApplicationService, IUSSService
             logAction.ExecutionTime = DateTime.Now;
             _auditingManager.Current.Log.Actions.Add(logAction);
             await auditingScope.SaveAsync();
-
         }
-
 
         if (trackingNumberResult != null && trackingNumberResult.sonuc != null && trackingNumberResult.durum == 1)
         {
             List<GetSysTrackingNumberObject> sysCodes = System.Text.Json.JsonSerializer.Deserialize<List<GetSysTrackingNumberObject>>((JsonElement)trackingNumberResult.sonuc);
             foreach (var sysCode in sysCodes)
             {
-                await GetSysTrackingNumberDetail(sysCode.sysTakipNo, treatmentCode);
+                var result = await GetSysTrackingNumberDetail(sysCode.sysTakipNo, treatmentCode);
+                if (result.durum == 0)
+                {
+                    apiResult.mesaj += sysCode.sysTakipNo + " - " + result.mesaj + "<br>";
+                    apiResult.durum = 0;
+                }
             }
         }
+
+        return apiResult;
     }
 
     public async Task<List<ListENabizProcessDto>> GetENabizProcesses(string treatmentCode)

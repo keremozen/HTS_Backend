@@ -145,10 +145,12 @@ public class USSService : ApplicationService, IUSSService
             IDictionary<string, string> dic = new Dictionary<string, string>();
             List<ENabizProcessDto> eNabizProcessDtos = new List<ENabizProcessDto>();
             ENabizProcessDto islemBilgisi = null;
-            foreach (var item in att)
+            if (att.GetType() == typeof(JArray))
             {
-                foreach (JProperty attributeProperty in item)
-                { 
+                foreach (var item in att)
+                {
+                    foreach (JProperty attributeProperty in item)
+                    {
                         var attribute = item[attributeProperty.Name];
                         if (attribute != null && ((Newtonsoft.Json.Linq.JContainer)attribute).Count == 1 && attribute["@value"] != null)
                         {
@@ -156,6 +158,27 @@ public class USSService : ApplicationService, IUSSService
                             var my_data = attribute["@value"].Value<string>();
                             dic.Add(attributeProperty.Name, my_data);
                         }
+                    }
+                    if (dic.Any())
+                    {
+                        var json = JsonConvert.SerializeObject(dic, Newtonsoft.Json.Formatting.Indented);
+                        islemBilgisi = JsonConvert.DeserializeObject<ENabizProcessDto>(json);
+                        eNabizProcessDtos.Add(islemBilgisi);
+                        dic = new Dictionary<string, string>();
+                    }
+                }
+            }
+            else
+            {
+                foreach (JProperty attributeProperty in att)
+                {
+                    var attribute = att[attributeProperty.Name];
+                    if (attribute != null && ((Newtonsoft.Json.Linq.JContainer)attribute).Count == 1 && attribute["@value"] != null)
+                    {
+
+                        var my_data = attribute["@value"].Value<string>();
+                        dic.Add(attributeProperty.Name, my_data);
+                    }
                 }
                 if (dic.Any())
                 {
@@ -165,6 +188,7 @@ public class USSService : ApplicationService, IUSSService
                     dic = new Dictionary<string, string>();
                 }
             }
+
 
             List<ENabizProcess> entities = new List<ENabizProcess>();
             foreach (var eNabizProcessDto in eNabizProcessDtos)

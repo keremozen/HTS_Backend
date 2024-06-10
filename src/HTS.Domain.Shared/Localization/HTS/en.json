@@ -432,6 +432,7 @@
     "PatientDetail:SendToTIK": "Send To TİK",
     "PatientDetail:SentToTIK": "Sent To TİK",
     "PatientDetail:ReturnFromTIK": "Return",
+    "PatientDetail:NoTreatmentPlan": "No Treatment Plan",
 
     /*NOTES*/
     "Notes:NameSingular": "Note",

@@ -433,6 +433,7 @@
     "PatientDetail:SendToTIK": "TİK'e Devret",
     "PatientDetail:SentToTIK": "TİK'e Devredildi",
     "PatientDetail:ReturnFromTIK": "İade Et",
+    "PatientDetail:NoTreatmentPlan": "Tedavi Planı Hazırlanmayacak",
 
     /*NOTES*/
     "Notes:NameSingular": "Not",

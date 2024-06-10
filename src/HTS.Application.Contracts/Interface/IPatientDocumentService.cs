@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using HTS.Dto.PatientDocument;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
@@ -35,7 +36,7 @@ namespace HTS.Interface
         /// </summary>
         /// <param name="patientDocument">Patient document information to be insert</param>
         /// <returns>Inserted object</returns>
-        Task<PatientDocumentDto> CreateAsync(SavePatientDocumentDto patientDocument);
+        Task<List<PatientDocumentDto>> CreateAsync(List<SavePatientDocumentDto> patientDocuments);
 
         /// <summary>
         /// Updates patient document status

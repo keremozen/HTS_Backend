@@ -29,6 +29,7 @@ namespace HTS.Dto.Patient
         public int? GenderId { get; set; }
         public int? MotherTongueId { get; set; }
         public int? SecondTongueId { get; set; }
+        public bool? NoTreatmentPlan { get; set; }
 
         public IEnumerable<ValidationResult> Validate(
            ValidationContext validationContext)

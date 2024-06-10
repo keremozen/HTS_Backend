@@ -71,7 +71,7 @@ public class HospitalConsultationService : ApplicationService, IHospitalConsulta
     [Authorize("HTS.HospitalConsultation")]
     public async Task CreateAsync(SaveHospitalConsultationDto hospitalConsultation)
     {
-        await IsDataValidToSave(hospitalConsultation);
+        //await IsDataValidToSave(hospitalConsultation);
         int rowNumber = await GetRowNumber(hospitalConsultation.PatientTreatmentProcessId);
         List<HospitalConsultation> entityList = new List<HospitalConsultation>();
         HospitalConsultation entity;

@@ -35,6 +35,7 @@ namespace HTS.Data.Entity
         public DateTime? TikAssignmentDate { get; set; }
         public Guid? TikUserIdReturned { get; set; }
         public DateTime? TikReturnDate { get; set; }
+        public bool? NoTreatmentPlan { get; set; }
 
         [ForeignKey("PhoneCountryCodeId")]
         public Nationality? PhoneCountryCode { get; set; }

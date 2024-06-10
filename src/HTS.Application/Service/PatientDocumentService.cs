@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
+using Volo.Abp.ObjectMapping;
 using Volo.Abp.Users;
 using static HTS.Enum.EntityEnum;
 
@@ -76,15 +77,20 @@ public class PatientDocumentService : ApplicationService, IPatientDocumentServic
     }
 
     [Authorize("HTS.PatientManagement")]
-    public async Task<PatientDocumentDto> CreateAsync(SavePatientDocumentDto patientDocument)
+    public async Task<List<PatientDocumentDto>> CreateAsync(List<SavePatientDocumentDto> patientDocuments)
     {
-        var entity = ObjectMapper.Map<SavePatientDocumentDto, PatientDocument>(patientDocument);
-        entity.PatientDocumentStatusId = PatientDocumentStatusEnum.NewRecord.GetHashCode();
-        entity.FilePath = string.Format(_configuration["FilePath:PatientDocumentPath"], entity.PatientId,
-            patientDocument.FileName);
-        SaveByteArrayToFileWithStaticMethod(patientDocument.File, entity.FilePath);
-        await _patientDocumentRepository.InsertAsync(entity);
-        return ObjectMapper.Map<PatientDocument, PatientDocumentDto>(entity);
+        var entityList = new List<PatientDocument>();
+        foreach (var patientDocument in patientDocuments)
+        {
+            var entity = ObjectMapper.Map<SavePatientDocumentDto, PatientDocument>(patientDocument);
+            entity.PatientDocumentStatusId = PatientDocumentStatusEnum.NewRecord.GetHashCode();
+            entity.FilePath = string.Format(_configuration["FilePath:PatientDocumentPath"], entity.PatientId,
+                patientDocument.FileName);
+            SaveByteArrayToFileWithStaticMethod(patientDocument.File, entity.FilePath);
+            entityList.Add(entity);
+        }
+        await _patientDocumentRepository.InsertManyAsync(entityList);
+        return ObjectMapper.Map<List<PatientDocument>, List<PatientDocumentDto>>(entityList);
     }
 
     private static void SaveByteArrayToFileWithStaticMethod(string data, string filePath)

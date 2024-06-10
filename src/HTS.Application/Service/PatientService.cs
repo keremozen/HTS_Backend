@@ -161,6 +161,10 @@ public class PatientService : ApplicationService, IPatientService
     /// <exception cref="HTSBusinessException">Check response exceptions</exception>
     private async Task IsDataValidToSave(SavePatientDto patient, int? id = null)
     {
+        if (string.IsNullOrEmpty(patient.PhoneNumber) || !patient.PhoneCountryCodeId.HasValue)
+        {
+            throw new HTSBusinessException(ErrorCode.BadRequest);
+        }
         //Check nationality and passportnumber is unique
         var query = await _patientRepository.GetQueryableAsync();
         query = query.Where(p => p.NationalityId == patient.NationalityId

@@ -67,6 +67,19 @@ public class HospitalConsultationService : ApplicationService, IHospitalConsulta
 
         return new PagedResultDto<HospitalConsultationDto>(totalCount, responseList);
     }
+    
+    public async Task<PagedResultDto<HospitalConsultationDto>> GetByHospitalIdAsync(int hospitalId)
+    {
+        var entity = await (await _hcRepository.WithDetailsAsync())
+            .AsNoTracking()
+            .Where(hc => hc.PatientTreatmentProcessId == hospitalId)
+            .ToListAsync();
+
+        var responseList = ObjectMapper.Map<List<HospitalConsultation>, List<HospitalConsultationDto>>(entity);
+        var totalCount = await _hcRepository.CountAsync(hc => hc.PatientTreatmentProcessId == hospitalId);
+
+        return new PagedResultDto<HospitalConsultationDto>(totalCount, responseList);
+    }
 
     [Authorize("HTS.HospitalConsultation")]
     public async Task CreateAsync(SaveHospitalConsultationDto hospitalConsultation)

@@ -29,6 +29,14 @@ namespace HTS.Interface
         /// <param name="ptpId">Patient treatment process id</param>
         /// <returns>HospitalConsultation list by ptp</returns>
         public Task<PagedResultDto<HospitalConsultationDto>> GetByPatientTreatmenProcessAsync(int ptpId);
+
+        /// <summary>
+        /// Get entity list by hospital id.
+        /// Readonly list
+        /// </summary>
+        /// <param name="hospitalId">Hospital id</param>
+        /// <returns>Hospital consultation list of desired hospital</returns>
+        public Task<PagedResultDto<HospitalConsultationDto>> GetByHospitalIdAsync(int hospitalId);
         
         /// <summary>
         /// Saves hospital consultation data with documents

@@ -15,10 +15,15 @@ namespace HTS.Data.Entity
         public int PatientId { get; set; }
         [Required]
         public int TreatmentProcessStatusId { get; set; }
+
+        public int? FinalizationTypeId { get; set; }
+        public string? FinalizationDescription { get; set; }
         [ForeignKey("PatientId")]
         public Patient Patient { get; set; }
         [ForeignKey("TreatmentProcessStatusId")]
         public TreatmentProcessStatus TreatmentProcessStatus { get; set; }
+        [ForeignKey("FinalizationTypeId")]
+        public FinalizationType FinalizationType { get; set; }
         public virtual ICollection<HospitalConsultation> HospitalConsultations { get; set; }
     }
 }

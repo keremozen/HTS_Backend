@@ -37,7 +37,8 @@ namespace HTS.Data
                 options.Entity<PatientTreatmentProcess>(entityOptions =>
                 {
                     entityOptions.DefaultWithDetailsFunc = query => query.Include(t => t.Creator)
-                                                                         .Include(t => t.TreatmentProcessStatus);
+                                                                         .Include(t => t.TreatmentProcessStatus)
+                                                                         .Include(t => t.FinalizationType);
                 });
 
                 options.Entity<Operation>(entityOptions =>

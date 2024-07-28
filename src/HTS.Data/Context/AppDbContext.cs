@@ -63,6 +63,8 @@ namespace HTS.Data
         public DbSet<ProcessKind> ProcessKinds { get; set; }
         public DbSet<TreatmentType> TreatmentTypes { get; set; }
         public DbSet<RejectReason> RejectReasons { get; set; }
+        public DbSet<FinalizationType> FinalizationTypes { get; set; }
+
         
         public DbSet<Proforma>  Proformas { get; set; }
         public DbSet<ProformaProcess>  ProformaProcesses { get; set; }

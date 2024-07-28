@@ -29,6 +29,7 @@ public class HTSPermissionDefinitionProvider : PermissionDefinitionProvider
         managementPermission.AddChild(HTSPermissions.MaterialManagement, L("Permission:MaterialManagement"));
         managementPermission.AddChild(HTSPermissions.RejectReasonManagement, L("Permission:RejectReasonManagement"));
         managementPermission.AddChild(HTSPermissions.PaymentReasonManagement, L("Permission:PaymentReasonManagement"));
+        managementPermission.AddChild(HTSPermissions.FinalizationTypeManagement, L("Permission:FinalizationTypeManagement"));
 
         htsGroup.AddPermission(HTSPermissions.PatientList, L("Permission:PatientList"));
         htsGroup.AddPermission(HTSPermissions.PatientManagement, L("Permission:PatientManagement"));

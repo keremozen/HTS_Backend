@@ -102,6 +102,7 @@
     "Permission:ContractedInstitutionKindManagement": "Contracted Institution Kind Management",
     "Permission:ContractedInstitutionManagement": "Contracted Institution Management",
     "Permission:BranchManagement": "Branch Management",
+    "Permission:FinalizationTypeManagement": "Finalization Type Management",
     "Permission:TreatmentTypeManagement": "Treatment Type Management",
     "Permission:ProcessTypeManagement": "Process Type Management",
     "Permission:ProcessKindManagement": "Process Kind Management",
@@ -139,6 +140,7 @@
     "Menu:Admin:ContractedInstitution": "Contracted Institution Management",
     "Menu:Admin:HospitalConsultationStatus": "Hospital Consultation Status Management",
     "Menu:Admin:Branch": "Branch Management",
+    "Menu:Admin:FinalizationType": "Finalization Type Management",
     "Menu:Admin:TreatmentType": "Treatment Type Management",
     "Menu:Admin:ProcessType": "Process Type Management",
     "Menu:Admin:ProcessKind": "Process Kind Management",
@@ -391,6 +393,13 @@
     "Admin:PaymentReason:Column:Reason": "Reason",
     "Admin:PaymentReason:Column:IsActive": "Is Active?",
     "Admin:PaymentReason:PaymentReasonDetails": "Payment Reason Details",
+
+    /*FINALIZATION TYPE MANAGEMENT*/
+    "Admin:FinalizationType:Name": "Finalization Type",
+    "Admin:FinalizationType:FinalizationTypeManagement": "Finalization Type Management",
+    "Admin:FinalizationType:NewFinalizationType": "New Finalization Type",
+    "Admin:FinalizationType:Column:Name": "Name",
+    "Admin:FinalizationType:FinalizationTypeDetails": "Finalization Type Details",
 
     /*TASKS*/
     "Tasks:Title": "Tasks",

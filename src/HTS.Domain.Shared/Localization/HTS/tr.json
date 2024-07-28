@@ -102,6 +102,7 @@
     "Permission:ContractedInstitutionKindManagement": "Anlaşmalı Kurum Türü Yönetimi",
     "Permission:ContractedInstitutionManagement": "Anlaşmalı Kurum Yönetimi",
     "Permission:BranchManagement": "Branş Yönetimi",
+    "Permission:FinalizationTypeManagement": "Sonuçlandırma Tipi Yönetimi",
     "Permission:TreatmentTypeManagement": "Tedavi Tipi Yönetimi",
     "Permission:ProcessTypeManagement": "İşlem Tipi Yönetimi",
     "Permission:ProcessKindManagement": "İşlem Türü Yönetimi",
@@ -139,6 +140,7 @@
     "Menu:Admin:ContractedInstitution": "Anlaşmalı Kurum Yönetimi",
     "Menu:Admin:HospitalConsultationStatus": "Hastane Danışma Durumu Yönetimi",
     "Menu:Admin:Branch": "Branş Yönetimi",
+    "Menu:Admin:FinalizationType": "Sonuçlandırma Tipi Yönetimi",
     "Menu:Admin:TreatmentType": "Tedavi Tipi Yönetimi",
     "Menu:Admin:ProcessType": "İşlem Tipi Yönetimi",
     "Menu:Admin:ProcessKind": "İşlem Türü Yönetimi",
@@ -392,6 +394,13 @@
     "Admin:PaymentReason:Column:Reason": "Neden",
     "Admin:PaymentReason:Column:IsActive": "Aktif mi?",
     "Admin:PaymentReason:PaymentReasonDetails": "Ödeme Nedeni Detayları",
+
+    /*FINALIZATION TYPE MANAGEMENT*/
+    "Admin:FinalizationType:Name": "Sonuçlandırma Tipi",
+    "Admin:FinalizationType:FinalizationTypeManagement": "Sonuçlandırma Tipi Yönetimi",
+    "Admin:FinalizationType:NewFinalizationType": "Yeni Sonuçlandırma Tipi",
+    "Admin:FinalizationType:Column:Name": "İsim",
+    "Admin:FinalizationType:FinalizationTypeDetails": "Sonuçlandırma Tipi Detayları",
 
     /*TASKS*/
     "Tasks:Title": "Görevler",

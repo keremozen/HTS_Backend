@@ -23,7 +23,7 @@ namespace HTS.Data.Entity
         [ForeignKey("TreatmentProcessStatusId")]
         public TreatmentProcessStatus TreatmentProcessStatus { get; set; }
         [ForeignKey("FinalizationTypeId")]
-        public FinalizationType FinalizationType { get; set; }
+        public FinalizationType? FinalizationType { get; set; }
         public virtual ICollection<HospitalConsultation> HospitalConsultations { get; set; }
     }
 }

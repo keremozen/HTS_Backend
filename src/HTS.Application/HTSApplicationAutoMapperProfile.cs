@@ -12,6 +12,7 @@ using HTS.Dto.Currency;
 using HTS.Dto.DocumentType;
 using HTS.Dto.ExchangeRateInformation;
 using HTS.Dto.External;
+using HTS.Dto.FinalizationType;
 using HTS.Dto.Gender;
 using HTS.Dto.Hospital;
 using HTS.Dto.HospitalAgentNote;
@@ -84,7 +85,9 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<SaveDocumentTypeDto, DocumentType>();
         CreateMap<TreatmentProcessStatus, TreatmentProcessStatusDto>();
         CreateMap<HospitalizationType, HospitalizationTypeDto>();
-     
+        CreateMap<FinalizationType, FinalizationTypeDto>();
+        CreateMap<SaveFinalizationTypeDto, FinalizationType>();
+
         CreateMap<Branch, BranchDto>();
         CreateMap<SaveBranchDto, Branch>();
         CreateMap<ProcessType, ProcessTypeDto>();

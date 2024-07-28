@@ -22,8 +22,8 @@ namespace HTS.Data.Migrations
                 name: "FinalizationTypeId",
                 table: "PatientTreatmentProcesses",
                 type: "integer",
-                nullable: false,
-                defaultValue: 0);
+                nullable: true,
+                defaultValue: null);
 
             migrationBuilder.CreateTable(
                 name: "FinalizationTypes",
@@ -86,7 +86,7 @@ namespace HTS.Data.Migrations
                 column: "FinalizationTypeId",
                 principalTable: "FinalizationTypes",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.Restrict);
         }
 
         /// <inheritdoc />

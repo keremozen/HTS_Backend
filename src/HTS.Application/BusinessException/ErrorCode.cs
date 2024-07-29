@@ -40,4 +40,6 @@ public static class  ErrorCode
     public const string CreatorCanRevokeHospitalAgentNote = "HTS:38";
     public const string CannotEditCompletedPayment = "HTS:39";
     public const string ThereIsNoHospitalOrApprovedProforma = "HTS:40";
+    public const string PtpAlreadyFinalized = "HTS:41";
+    public const string PtpAlreadyDeFinalized = "HTS:42";
 }

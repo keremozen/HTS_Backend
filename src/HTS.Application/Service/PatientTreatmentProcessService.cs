@@ -165,6 +165,76 @@ public class PatientTreatmentProcessService : ApplicationService, IPatientTreatm
             await AsyncExecuter.FirstOrDefaultAsync(newEntityQuery));
     }
 
+    [Authorize("HTS.PatientManagement")]
+    public async Task FinalizeAsync(int id, FinalizePtpDto finalizePtp)
+    {
+        // Fetch the entity from the repository
+        var entity = await _patientTreatmentProcessRepository.GetAsync(id);
+        IsDataValidToFinalize(entity);
+     
+        // Update the entity with the finalization details
+        entity.IsFinalized = true;
+        entity.FinalizationTypeId = finalizePtp.FinalizationTypeId;
+        entity.FinalizationDescription = finalizePtp.Description;
+
+        // Save the changes to the repository
+        await _patientTreatmentProcessRepository.UpdateAsync(entity);
+    }
+    
+    /// <summary>
+    /// Checks if data is valid to finalize
+    /// </summary>
+    /// <param name="entity">To be finalized entity</param>
+    /// <exception cref="HTSBusinessException"></exception>
+    private void IsDataValidToFinalize(PatientTreatmentProcess entity)
+    {
+        if (entity == null)
+        {
+            throw new HTSBusinessException(ErrorCode.BadRequest);
+        }
+
+        if (entity.IsFinalized)
+        {
+            throw new HTSBusinessException(ErrorCode.PtpAlreadyFinalized);
+        }
+    }
+
+
+    [Authorize("HTS.PatientManagement")]
+    public async Task DeFinalizeAsync(int id)
+    {
+        // Fetch the entity from the repository
+        var entity = await _patientTreatmentProcessRepository.GetAsync(id);
+        IsDataValidToDeFinalize(entity);
+
+        // Update the entity with the definalization details
+        entity.IsFinalized = false;
+        entity.FinalizationTypeId = null;
+        entity.FinalizationDescription = null;
+
+        // Save the changes to the repository
+        await _patientTreatmentProcessRepository.UpdateAsync(entity);
+
+    }
+    
+    /// <summary>
+    /// Checks if data is valid to de finalize
+    /// </summary>
+    /// <param name="entity">To be de finalized entity</param>
+    /// <exception cref="HTSBusinessException"></exception>
+    private void IsDataValidToDeFinalize(PatientTreatmentProcess entity)
+    {
+        if (entity == null)
+        {
+            throw new HTSBusinessException(ErrorCode.BadRequest);
+        }
+
+        if (!entity.IsFinalized)
+        {
+            throw new HTSBusinessException(ErrorCode.PtpAlreadyDeFinalized);
+        }
+    }
+
     /// <summary>
     /// Try to generate unique 10 character treatment code in UNNNNNNNNN format
     /// </summary>

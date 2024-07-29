@@ -70,6 +70,8 @@
     "HTS:38": "Only creator can revoke hospital agent note.",
     "HTS:39": "The payment cannot be edited for a completed proforma.",
     "HTS:40": "There should be approved proforma and hospital information for invitation letter.",
+    "HTS:41": "Patient treatment process is already finalized. ",
+    "HTS:42": "Patient treatment process is already re finalized.",
 
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Successful",

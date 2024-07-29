@@ -119,6 +119,21 @@ INSERT INTO "PaymentStatuses"("Id", "Name") VALUES (2, 'Tahsil Edildi');
 INSERT INTO "TaskTypes"("Id", "Name") VALUES (1, 'Fiyatlandırma');
 INSERT INTO "TaskTypes"("Id", "Name") VALUES (2, 'Proformanın İletilmesi');
 INSERT INTO "TaskTypes"("Id", "Name") VALUES (3, 'Tıbbi Koordinasyon');
+INSERT INTO "TaskTypes"("Id", "Name") VALUES (4, 'Tedavi Planı Hazırlanması');
+INSERT INTO "TaskTypes"("Id", "Name") VALUES (5, 'Dokümanların Çevrilmesi');
+INSERT INTO "TaskTypes"("Id", "Name") VALUES (6, 'Hastane Cevabının Değerlendirilmesi');
+INSERT INTO "TaskTypes"("Id", "Name") VALUES (7, 'Fiyatlandırmaya Gönderilmesi Bekleniyor');
+INSERT INTO "TaskTypes"("Id", "Name") VALUES (8, 'MFB Onayı');
+INSERT INTO "TaskTypes"("Id", "Name") VALUES (9, 'Proformanın Cevaplanması');
+INSERT INTO "TaskTypes"("Id", "Name") VALUES (10, 'Tahsilat');
+INSERT INTO "TaskTypes"("Id", "Name") VALUES (11, 'Tahsilat Makbuzunun Yüklenmesi');
+INSERT INTO "TaskTypes"("Id", "Name") VALUES (12, 'Ön Ödemenin Talep Edilmesi');
+INSERT INTO "TaskTypes"("Id", "Name") VALUES (13, 'Ön Ödemenin Girilmesi');
+INSERT INTO "TaskTypes"("Id", "Name") VALUES (14, 'Davet Mektubu Gönderilmesi');
+INSERT INTO "TaskTypes"("Id", "Name") VALUES (15, 'Seyahat ve Konaklama Planı Girilmesi');
+INSERT INTO "TaskTypes"("Id", "Name") VALUES (16, 'Randevu Planlama');
+
+
 
 --Agent Note Status
 INSERT INTO "HospitalAgentNoteStatuses"("Id", "Name") VALUES (1, 'Yeni Kayıt');

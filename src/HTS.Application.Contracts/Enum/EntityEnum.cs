@@ -338,7 +338,59 @@ namespace HTS.Enum
             /// <summary>
             /// Tike devret- tıbbi koordinasyon
             /// </summary>
-            Tik = 3
+            Tik = 3,
+             /// <summary>
+             /// Tedavi Planı Hazırlanması
+             /// </summary>
+            PTP = 4,
+            /// <summary>
+            /// Dokümanların Çevrilmesi
+            /// </summary>
+            DocumentTranslate = 5,
+            /// <summary>
+            /// Hastane Cevabının Değerlendirilmesi
+            /// </summary>
+            EvaluationOfHospitalResponse = 6,
+            /// <summary>
+            /// Fiyatlandırmaya Gönderilmesi Bekleniyor
+            /// </summary>
+            WaitingSentPricing = 7,
+            /// <summary>
+            ///MFB Onayı
+            /// </summary>
+            MFBApproval = 8,
+            /// <summary>
+            ///Proformanın Cevaplanması
+            /// </summary>
+            AnsweringProforma = 9,
+            /// <summary>
+            ///Tahsilat 
+            /// </summary>
+            Collection = 10,
+            /// <summary>
+            ///Tahsilat Makbuzunun Yüklenmesi
+            /// </summary>
+            UploadingCollectionReceipt = 11,
+            /// <summary>
+            ///Ön Ödemenin Talep Edilmesi
+            /// </summary>
+            RequestingDownPayment=12,
+            /// <summary>
+            ///Ön Ödemenin Girilmesi
+            /// </summary>
+            EnteringDownPayment = 13,
+            /// <summary>
+            ///Davet Mektubu Gönderilmesi
+            /// </summary>
+            SendingInvitationLetter=14,
+            /// <summary>
+            ///Seyahat ve Konaklama Planı Girilmesi
+            /// </summary>
+            EnteringTravelAccommodationPlan=15,
+            /// <summary>
+            ///Randevu Planlama
+            /// </summary>
+            AppointmentScheduling = 16
         }
     }
 }

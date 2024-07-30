@@ -22,6 +22,7 @@
     "Revoked": "İptal",
     "Import": "Aktar",
     "Send": "Gönder",
+    "Finalize": "Sonuçlandır",
     "ApproveResponse": "Onayla",
     "RejectResponse": "Reddet",
     "ShowRevokedRecords": "İptal edilenleri göster",
@@ -488,12 +489,19 @@
     "TreatmentProcess:Column:ProformaPrice": "Proforma Tutarı",
     "TreatmentProcess:Column:PaymentPrice": "Tahsilat Tutarı",
     "TreatmentProcess:Column:UnpaidPrice": "Bakiye",
+    "TreatmentProcess:Column:Finalization": "Sonuçlandırma",
     "TreatmentProcess:Step:SalesAndAttendantInfo": "Satış Yönetimi ve Refakatçi Bilgileri",
     "TreatmentProcess:Step:HospitalConsultation": "Hastane Danışma",
     "TreatmentProcess:Step:OperationalInformation": "Operasyonel Bilgiler",
     "TreatmentProcess:Step:ProcessQuotationRevenue": "İşlem, Fiyatlandırma, Tahsilat",
     "TreatmentProcess:Message:StartConfirmation": "Tedavi süreci başlatmak istediğinizden emin misiniz?",
     "TreatmentProcess:Message:SuccessfulStart": "Tedavi süreci başarıyla başlatılmıştır.",
+    "TreatmentProcess:FinalizationTypeModal:Title": "Tedavi Süreci Sonuçlandırma",
+    "TreatmentProcess:FinalizationTypeModal:Type": "Sonuçlandırma Tipi",
+    "TreatmentProcess:FinalizationTypeModal:Description": "Açıklama",
+    "TreatmentProcess:Message:DefinalizeConfirmation": "Tedavi süreci sonuçlandırmasını iptal etmek istediğinizden emin misiniz?",
+    "TreatmentProcess:Message:SuccessfulDefinalize": "Tedavi sürecinin sonuçlandırılması başarıyla iptal edilmiştir.",
+    "TreatmentProcess:Message:SuccessfulFinalize": "Tedavi süreci başarıyla sonuçlandırılmıştır.",
 
     /*SALES AND COMPANION INFORMATION*/
     "SalesAndCompanionInfo:Name": "Satış Yöntemi ve Refakatçi Bilgileri",
@@ -559,6 +567,7 @@
     "HospitalResponse:Message:SaveConfirm": "Hastane cevabını kaydetmek istediğinizden emin misiniz?",
     "HospitalResponse:Message:SuccessfulApprove": "Hastane cevabı başarıyla onaylanmıştır.",
     "HospitalResponse:Message:SuccessfulReject": "Hastane cevabı başarıyla reddedilmiştir.",
+    "HospitalResponse:Button:AllConsultations": "Tüm Danışmalar",
 
     /*OPERATIONAL INFO*/
     "OperationalInfo:Title": "Operasyon",

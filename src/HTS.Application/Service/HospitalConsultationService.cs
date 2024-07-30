@@ -72,7 +72,7 @@ public class HospitalConsultationService : ApplicationService, IHospitalConsulta
     {
         var entity = await (await _hcRepository.WithDetailsAsync())
             .AsNoTracking()
-            .Where(hc => hc.PatientTreatmentProcessId == hospitalId)
+            .Where(hc => hc.HospitalId == hospitalId)
             .ToListAsync();
 
         var responseList = ObjectMapper.Map<List<HospitalConsultation>, List<HospitalConsultationDto>>(entity);

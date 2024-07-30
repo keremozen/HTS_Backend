@@ -22,6 +22,7 @@
     "Revoked": "Revoked",
     "Import": "Import",
     "Send": "Send",
+    "Finalize": "Finalize",
     "ApproveResponse": "Approve",
     "RejectResponse": "Reject",
     "ShowRevokedRecords": "Show revoked",
@@ -487,12 +488,17 @@
     "TreatmentProcess:Column:ProformaPrice": "Proforma Price",
     "TreatmentProcess:Column:PaymentPrice": "Payment Price",
     "TreatmentProcess:Column:UnpaidPrice": "Unpaid Price",
+    "TreatmentProcess:Column:Finalization": "Finalization",
     "TreatmentProcess:Step:SalesAndAttendantInfo": "Sales Management and Attendant Information",
     "TreatmentProcess:Step:HospitalConsultation": "Hospital Consultation",
     "TreatmentProcess:Step:OperationalInformation": "Operational Information",
     "TreatmentProcess:Step:ProcessQuotationRevenue": "Process, Quotation, Revenue",
     "TreatmentProcess:Message:StartConfirmation": "Are you sure you want to start treatment process?",
-    "TreatmentProcess:Message:SuccessfulStart": "Treatment process started successfully",
+    "TreatmentProcess:Message:SuccessfulStart": "Treatment process started successfully.",
+    "TreatmentProcess:FinalizationTypeModal:Title": "Finalize Treatment Process",
+    "TreatmentProcess:Message:DefinalizeConfirmation": "Are you sure you want to cancel finalization of the treatment process?",
+    "TreatmentProcess:Message:SuccessfulDefinalize": "Treatment process finalization is cancelled successfully.",
+    "TreatmentProcess:Message:SuccessfulFinalize": "Treatment process is successfully finalized.",
 
     /*SALES AND COMPANION INFORMATION*/
     "SalesAndCompanionInfo:Name": "Sales and Companion Information",
@@ -558,6 +564,7 @@
     "HospitalResponse:Message:SaveConfirm": "Are you sure you want to save hospital response?",
     "HospitalResponse:Message:SuccessfulApprove": "Hospital response is successfully approved.",
     "HospitalResponse:Message:SuccessfulReject": "Hospital response is successfully rejected.",
+    "HospitalResponse:Button:AllConsultations": "All Consultations",
 
     /*OPERATIONAL INFO*/
     "OperationalInfo:Title": "Operation",

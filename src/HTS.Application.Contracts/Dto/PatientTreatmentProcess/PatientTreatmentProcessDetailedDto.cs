@@ -14,6 +14,9 @@ public class PatientTreatmentProcessDetailedDto  : AuditedEntityWithUserDto<int,
     public decimal ProformaPrice { get; set; }
     public decimal PaymentPrice { get; set; }
     public decimal UnPaidPrice { get; set; }
+    public bool IsFinalized { get; set; }
+    public int? FinalizationTypeId { get; set; }
+    public string? FinalizationDescription { get; set; }
     public PatientTreatmentStatusEnum TreatmentProcessStatusId { get; set; }
     public TreatmentProcessStatusDto TreatmentProcessStatus { get; set; }
 }

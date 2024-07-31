@@ -94,6 +94,10 @@ namespace HTS.Data
                 {
                     entityOptions.DefaultWithDetailsFunc = query => query.Include(s => s.User);
                 });
+                options.Entity<HospitalInterpreter>(entityOptions =>
+                {
+                    entityOptions.DefaultWithDetailsFunc = query => query.Include(s => s.User);
+                });
 
                 options.Entity<Process>(entityOptions =>
                 {

@@ -33,5 +33,6 @@ namespace HTS.Data.Entity
         public virtual ICollection<HospitalPricer> HospitalPricers { get; set; }
         public virtual ICollection<HospitalStaff> HospitalStaffs { get; set; }
         public virtual ICollection<HospitalUHBStaff> HospitalUHBStaffs { get; set; }
+        public virtual ICollection<HospitalInterpreter> HospitalInterpreters { get; set; }
     }
 }

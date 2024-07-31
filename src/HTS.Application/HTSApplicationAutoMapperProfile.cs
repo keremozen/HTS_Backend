@@ -19,6 +19,7 @@ using HTS.Dto.HospitalAgentNote;
 using HTS.Dto.HospitalConsultation;
 using HTS.Dto.HospitalConsultationDocument;
 using HTS.Dto.HospitalConsultationStatus;
+using HTS.Dto.HospitalInterpreter;
 using HTS.Dto.HospitalizationType;
 using HTS.Dto.HospitalPricer;
 using HTS.Dto.HospitalResponse;
@@ -125,6 +126,8 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<HospitalPricer, HospitalPricerDto>();
         CreateMap<SaveHospitalUHBStaffDto, HospitalUHBStaff>();
         CreateMap<HospitalUHBStaff, HospitalUHBStaffDto>();
+        CreateMap<SaveHospitalInterpreterDto, HospitalInterpreter>();
+        CreateMap<HospitalInterpreter, HospitalInterpreterDto>();
         CreateMap<PatientTreatmentProcess, PatientTreatmentProcessDto>();
         CreateMap<PatientTreatmentProcess, PatientTreatmentProcessDetailedDto>();
         CreateMap<SaveSalesMethodAndCompanionInfoDto, SalesMethodAndCompanionInfo>();

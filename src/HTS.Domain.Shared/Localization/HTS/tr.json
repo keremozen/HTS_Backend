@@ -73,6 +73,8 @@
     "HTS:40": "Davet mektubu işlemi için onaylanmış proforma ve hastane bilgisi olmalıdır.",
     "HTS:41": "Tedavi sürecinin durumu zaten sonlandırıldığı için tekrar sonlandırılamaz.",
     "HTS:42": "Tedavi sürecinin durumu zaten aktif için sonlandırma geri alınamaz.",
+    "HTS:43": "Eklenmeye çalışılan tercuman mevcuttur.",
+    "HTS:44": "Varsayılan bir tercuman mevcuttur. Birden çok varsayılan tercuman eklenemez.",
 
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Başarılı",

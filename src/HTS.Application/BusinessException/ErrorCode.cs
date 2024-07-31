@@ -42,4 +42,6 @@ public static class  ErrorCode
     public const string ThereIsNoHospitalOrApprovedProforma = "HTS:40";
     public const string PtpAlreadyFinalized = "HTS:41";
     public const string PtpAlreadyDeFinalized = "HTS:42";
+    public const string InterpreterAlreadyExist = "HTS:43";
+    public const string DefaultInterpreterAlreadyExist = "HTS:44";
 }

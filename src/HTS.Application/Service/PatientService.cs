@@ -53,8 +53,20 @@ public class PatientService : ApplicationService, IPatientService
         bool isAllowedToViewAll = await _authorizationService.IsGrantedAsync("HTS.PatientViewAll");
         if (!isAllowedToViewAll)
         {
-            var hospitals = (await _hospitalRepository.WithDetailsAsync()).AsNoTracking().Where(h => h.HospitalStaffs.Any(hs => hs.UserId == _currentUser.Id) || h.HospitalPricers.Any(hs => hs.UserId == _currentUser.Id));
-            List<Guid> authorizedHospitalStaffIds = hospitals.SelectMany(h=>h.HospitalStaffs).Select(hs=>hs.UserId).ToList().Union(hospitals.SelectMany(h => h.HospitalPricers).Select(hs => hs.UserId).ToList()).ToList();
+            var hospitals = (await _hospitalRepository.WithDetailsAsync())
+                .AsNoTracking()
+                .Where(h => h.HospitalStaffs.Any(hs => hs.UserId == _currentUser.Id) 
+                            || h.HospitalPricers.Any(hs => hs.UserId == _currentUser.Id)
+                            || h.HospitalInterpreters.Any(hs => hs.UserId == _currentUser.Id));
+            List<Guid> authorizedHospitalStaffIds = hospitals.SelectMany(h=>h.HospitalStaffs)
+                .Select(hs=>hs.UserId)
+                .ToList()
+                .Union(hospitals.SelectMany(h => h.HospitalPricers)
+                    .Select(hs => hs.UserId)
+                    .ToList())
+                .Union(hospitals.SelectMany(h => h.HospitalInterpreters)
+                    .Select(hs => hs.UserId)
+                    .ToList()).ToList();
             patientList = patientList.Where(p => authorizedHospitalStaffIds.Contains(p.CreatorId.Value)).ToList();
         }
         

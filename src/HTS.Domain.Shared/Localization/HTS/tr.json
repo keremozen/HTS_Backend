@@ -70,7 +70,7 @@
     "HTS:37": "Proforma oluşturulmamış bir operasyon kaydı bulunamadı.",
     "HTS:38": "Hastane temsilcisi notunu sadece oluşturan kişi geri çekebilir",
     "HTS:39": "Ödemesi tamamlanmış proforma için ödeme bilgisi değiştirilemez.",
-    "HTS:40": "Davet mektubu işlemi için onaylanmış proforma ve hastane bilgisi olmalıdır.",
+    "HTS:40": "Davet mektubu işlemi için hastane bilgisi olmalıdır.",
     "HTS:41": "Tedavi sürecinin durumu zaten sonlandırıldığı için tekrar sonlandırılamaz.",
     "HTS:42": "Tedavi sürecinin durumu zaten aktif için sonlandırma geri alınamaz.",
     "HTS:43": "Eklenmeye çalışılan tercuman mevcuttur.",

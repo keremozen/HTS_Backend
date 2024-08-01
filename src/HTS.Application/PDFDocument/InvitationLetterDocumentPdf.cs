@@ -17,11 +17,11 @@ namespace HTS.PDFDocument
 {
     public class InvitationLetterDocumentPdf : IDocument
     {
-        private Proforma _proforma;
+        private Operation _operation;
         private SalesMethodAndCompanionInfo _salesMethodAndCompanionInfo;
-        public InvitationLetterDocumentPdf(Proforma proforma, SalesMethodAndCompanionInfo salesMethodAndCompanionInfo)
+        public InvitationLetterDocumentPdf(Operation operation, SalesMethodAndCompanionInfo salesMethodAndCompanionInfo)
         {
-            _proforma = proforma;
+            _operation = operation;
             _salesMethodAndCompanionInfo = salesMethodAndCompanionInfo;
         }
 
@@ -51,7 +51,7 @@ namespace HTS.PDFDocument
             var boldTextStyle = TextStyle.Default.FontFamily("Calibri").FontSize(11).Bold();
             var patientName =
                 $"{_salesMethodAndCompanionInfo.PatientTreatmentProcess.Patient.Name} {_salesMethodAndCompanionInfo.PatientTreatmentProcess.Patient.Surname}";
-            var hospitalName = _proforma.Operation.Hospital != null ? _proforma.Operation.Hospital.Name : _proforma.Operation.HospitalResponse.HospitalConsultation?.Hospital.Name;
+            var hospitalName = _operation.Hospital != null ? _operation.Hospital.Name : _operation.HospitalResponse.HospitalConsultation?.Hospital.Name;
 
             container.PaddingTop(10).Column(column =>
             {

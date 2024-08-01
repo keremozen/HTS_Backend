@@ -24,18 +24,21 @@ public class InvitationLetterDocumentService : ApplicationService, IInvitationLe
     private readonly IRepository<InvitationLetterDocument, int> _documentRepository;
     private readonly IRepository<SalesMethodAndCompanionInfo, int> _salesMethodAndCompanionInfoRepository;
     private readonly IRepository<Proforma, int> _proformaRepository;
+    private readonly IRepository<Operation, int> _operationRepository;
     private readonly ICurrentUser _currentUser;
     private readonly IConfiguration _configuration;
 
     public InvitationLetterDocumentService(IRepository<InvitationLetterDocument, int> documentRepository,
         IRepository<SalesMethodAndCompanionInfo, int> salesMethodAndCompanionInfoRepository,
         IRepository<Proforma, int> proformaRepository,
+        IRepository<Operation, int> operationRepository,
         ICurrentUser currentUser,
         IConfiguration configuration)
     {
         _documentRepository = documentRepository;
         _salesMethodAndCompanionInfoRepository = salesMethodAndCompanionInfoRepository;
         _proformaRepository = proformaRepository;
+        _operationRepository = operationRepository;
         _currentUser = currentUser;
         _configuration = configuration;
     }
@@ -141,27 +144,24 @@ public class InvitationLetterDocumentService : ApplicationService, IInvitationLe
             throw new HTSBusinessException(ErrorCode.RelationalDataIsMissing);
         }
 
-        var proforma = await (await _proformaRepository.GetQueryableAsync())
-            .Include(p => p.Operation)
-            .ThenInclude(o => o.Hospital)
-            .Include(p => p.Operation)
-            .ThenInclude(o => o.HospitalResponse)
+        var operation = await (await _operationRepository.GetQueryableAsync())
+            .Include(o => o.Hospital)
+            .Include(o => o.HospitalResponse)
             .ThenInclude(hr => hr.HospitalConsultation)
             .ThenInclude(hc => hc.Hospital)
-            .FirstOrDefaultAsync(p =>
-                p.Operation.PatientTreatmentProcessId == salesMethodEntity.PatientTreatmentProcessId
-                && (p.ProformaStatusId == ProformaStatusEnum.PaymentCompleted.GetHashCode() ||
-                    p.ProformaStatusId == ProformaStatusEnum.WaitingForPayment.GetHashCode()));
-        if (proforma == null
-            || (proforma.Operation.HospitalId == null
-                && proforma.Operation.HospitalResponse.HospitalConsultation?.HospitalId == null))
+            .OrderByDescending(o => o.CreationTime)
+            .FirstOrDefaultAsync(o =>
+                o.PatientTreatmentProcessId == salesMethodEntity.PatientTreatmentProcessId);
+        if (operation == null
+            || (operation.HospitalId == null
+                && operation.HospitalResponse.HospitalConsultation?.HospitalId == null))
         {
             throw new HTSBusinessException(ErrorCode.ThereIsNoHospitalOrApprovedProforma);
         }
 
         QuestPDF.Settings.License = LicenseType.Community;
         QuestPDF.Settings.CheckIfAllTextGlyphsAreAvailable = false;
-        var document = new InvitationLetterDocumentPdf(proforma, salesMethodEntity);
+        var document = new InvitationLetterDocumentPdf(operation, salesMethodEntity);
         return document.GeneratePdf();
     }
 }

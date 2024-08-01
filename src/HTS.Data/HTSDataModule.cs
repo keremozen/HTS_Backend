@@ -82,7 +82,9 @@ namespace HTS.Data
                                                                          .ThenInclude(s => s.User)
                                                                          .Include(h => h.HospitalPricers)
                                                                          .ThenInclude(s => s.User)
-                                                                         .Include(h => h.HospitalUHBStaffs);
+                                                                         .Include(h => h.HospitalUHBStaffs)
+                                                                         .Include(h => h.HospitalInterpreters)
+                                                                         .ThenInclude(s => s.User);
                 });
 
                 options.Entity<HospitalStaff>(entityOptions =>

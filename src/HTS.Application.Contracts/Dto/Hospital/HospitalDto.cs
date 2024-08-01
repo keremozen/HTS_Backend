@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using HTS.Dto.City;
+using HTS.Dto.HospitalInterpreter;
 using HTS.Dto.HospitalPricer;
 using HTS.Dto.HospitalStaff;
 using HTS.Dto.HospitalUHBStaff;
@@ -23,4 +24,5 @@ public class HospitalDto : EntityDto<int>
     public List<HospitalStaffDto> HospitalStaffs { get; set; }
     public List<HospitalUHBStaffDto> HospitalUHBStaffs { get; set; }
     public List<HospitalPricerDto> HospitalPricers { get; set; }
+    public List<HospitalInterpreterDto> HospitalInterpreters { get; set; }
 }

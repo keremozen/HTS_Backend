@@ -20,6 +20,8 @@ namespace HTS.Data.Entity
         public bool IsFinalized { get; set; } = false;
         public int? FinalizationTypeId { get; set; }
         public string? FinalizationDescription { get; set; }
+        public bool? Completed { get; set; }
+    
         [ForeignKey("PatientId")]
         public Patient Patient { get; set; }
         [ForeignKey("TreatmentProcessStatusId")]

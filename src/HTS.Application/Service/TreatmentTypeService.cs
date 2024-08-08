@@ -32,26 +32,5 @@ public class TreatmentTypeService : ApplicationService, ITreatmentTypeService
         var totalCount = await _treatmentTypeRepository.CountAsync();//item count
         return new PagedResultDto<TreatmentTypeDto>(totalCount,responseList);
     }
-
-    [Authorize("HTS.TreatmentTypeManagement")]
-    public async Task<TreatmentTypeDto> CreateAsync(SaveTreatmentTypeDto treatmentType)
-    {
-        var entity = ObjectMapper.Map<SaveTreatmentTypeDto, TreatmentType>(treatmentType);
-        await _treatmentTypeRepository.InsertAsync(entity);
-        return ObjectMapper.Map<TreatmentType, TreatmentTypeDto>(entity);
-    }
-
-    [Authorize("HTS.TreatmentTypeManagement")]
-    public async Task<TreatmentTypeDto> UpdateAsync(int id, SaveTreatmentTypeDto treatmentType)
-    {
-        var entity = await _treatmentTypeRepository.GetAsync(id);
-        ObjectMapper.Map(treatmentType, entity);
-        return ObjectMapper.Map<TreatmentType,TreatmentTypeDto>( await _treatmentTypeRepository.UpdateAsync(entity));
-    }
-
-    [Authorize("HTS.TreatmentTypeManagement")]
-    public async Task DeleteAsync(int id)
-    {
-        await _treatmentTypeRepository.DeleteAsync(id);
-    }
+    
 }

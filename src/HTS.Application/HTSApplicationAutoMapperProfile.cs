@@ -93,7 +93,6 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<SaveBranchDto, Branch>();
         CreateMap<ProcessType, ProcessTypeDto>();
         CreateMap<TreatmentType, TreatmentTypeDto>();
-        CreateMap<SaveTreatmentTypeDto, TreatmentType>();
         CreateMap<RejectReason, RejectReasonDto>();
         CreateMap<SaveRejectReasonDto, RejectReason>();
         

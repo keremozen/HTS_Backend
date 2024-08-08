@@ -392,5 +392,17 @@ namespace HTS.Enum
             /// </summary>
             AppointmentScheduling = 16
         }
+        
+        public enum TreatmentTypeEnum
+        {
+            /// <summary>
+            /// Yatarak tedavi
+            /// </summary>
+            InPatient = 1,
+            /// <summary>
+            /// Ayakta tedavi
+            /// </summary>
+            OutPatient = 2
+        }
     }
 }

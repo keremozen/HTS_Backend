@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -23,4 +24,14 @@ public class SaveSalesMethodAndCompanionInfoDto
     public int? PhoneCountryCodeId { get; set; }
     public int? CompanionNationalityId { get; set; }
     
+    public Guid? AppointedInterpreterId { get; set; }
+    public bool AnyInvitationLetter { get; set; }
+    public bool IsDocumentTranslationRequired { get; set; }
+    public bool AdvancePaymentRequested { get; set; }
+    public bool AnyTravelPlan { get; set; }
+    public DateTime? TravelDateToTurkey { get; set; }
+    [StringLength(500)]
+    public string TurkeyDestination { get; set; }
+    public string TravelDescription { get; set; }
+    public DateTime? TreatmentDate { get; set; }
 }

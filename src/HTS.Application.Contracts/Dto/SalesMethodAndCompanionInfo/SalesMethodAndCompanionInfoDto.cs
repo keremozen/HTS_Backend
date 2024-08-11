@@ -1,3 +1,4 @@
+using System;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Identity;
 
@@ -16,4 +17,14 @@ public class SalesMethodAndCompanionInfoDto :EntityDto<int>
     public int? ContractedInstitutionStaffId { get; set; }
     public int? PhoneCountryCodeId { get; set; }
     public int? CompanionNationalityId { get; set; } 
+    
+    public Guid? AppointedInterpreterId { get; set; }
+    public bool AnyInvitationLetter { get; set; }
+    public bool IsDocumentTranslationRequired { get; set; }
+    public bool AdvancePaymentRequested { get; set; }
+    public bool AnyTravelPlan { get; set; }
+    public DateTime? TravelDateToTurkey { get; set; }
+    public string TurkeyDestination { get; set; }
+    public string TravelDescription { get; set; }
+    public DateTime? TreatmentDate { get; set; }
 }

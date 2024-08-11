@@ -14,17 +14,28 @@ namespace HTS.Data.Entity
         public string? CompanionEmail { get; set; }
         [StringLength(20)]
         public string? CompanionPhoneNumber { get; set; }
+        public int? PhoneCountryCodeId { get; set; }
         [StringLength(20)]
         public string? CompanionRelationship { get; set; }
         [StringLength(50)]
         public string? CompanionPassportNumber { get; set; }
+        public int? CompanionNationalityId { get; set; }
         
         public int PatientTreatmentProcessId { get; set; }
         public int? PatientAdmissionMethodId { get; set; }
         public int? ContractedInstitutionId { get; set; }
         public int? ContractedInstitutionStaffId { get; set; }
-        public int? PhoneCountryCodeId { get; set; }
-        public int? CompanionNationalityId { get; set; }
+       
+        public Guid? AppointedInterpreterId { get; set; }
+        public bool AnyInvitationLetter { get; set; }
+        public bool IsDocumentTranslationRequired { get; set; }
+        public bool AdvancePaymentRequested { get; set; }
+        public bool AnyTravelPlan { get; set; }
+        public DateTime? TravelDateToTurkey { get; set; }
+        public DateTime? TreatmentDate { get; set; }
+        [StringLength(500)]
+        public string? TurkeyDestination { get; set; }
+        public string? TravelDescription { get; set; }
 
         [ForeignKey("PatientTreatmentProcessId")]
         public PatientTreatmentProcess PatientTreatmentProcess { get; set; }
@@ -39,5 +50,6 @@ namespace HTS.Data.Entity
         [ForeignKey("CompanionNationalityId")]
         public Nationality? CompanionNationality { get; set; }
         public virtual ICollection<InvitationLetterDocument> InvitationLetterDocuments { get; set; }
+        public virtual ICollection<InterpreterAppointment> InterpreterAppointments { get; set; }
     }
 }

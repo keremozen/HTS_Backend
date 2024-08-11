@@ -11,6 +11,6 @@ namespace HTS.Data.Entity
         public string Name { get; set; }
         [Required]
         public bool IsActive { get; set; }
-     
+        public virtual ICollection<InterpreterAppointment> InterpreterAppointments { get; set; }
     }
 }

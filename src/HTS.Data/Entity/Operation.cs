@@ -11,15 +11,14 @@ namespace HTS.Data.Entity
     {
         [Required]
         public int HospitalResponseId { get; set; }
-        public DateTime? TravelDateToTurkey { get; set; }
-        public DateTime? TreatmentDate { get; set; }
+       
+        
         public int TreatmentTypeId { get; set; }
-        public bool? AnyInvitationLetter { get; set; }
+        
         public int OperationTypeId { get; set; }
         public int? PatientTreatmentProcessId { get; set; }
         public int? HospitalId { get; set; }
         public int OperationStatusId { get; set; }
-        public Guid? AppointedInterpreterId { get; set; }
 
         [ForeignKey("HospitalResponseId")]
         public HospitalResponse HospitalResponse { get; set; }

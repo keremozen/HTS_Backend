@@ -16,15 +16,11 @@ namespace HTS.Dto.Operation;
 public class OperationDto: FullAuditedEntityWithUserDto<int, IdentityUserDto>
 {
     public int HospitalResponseId { get; set; }
-    public DateTime? TravelDateToTurkey { get; set; }
-    public DateTime? TreatmentDate { get; set; }
-    public int? TreatmentTypeId { get; set; }
-    public bool? AnyInvitationLetter { get; set; }
+    public int TreatmentTypeId { get; set; }
     public int? PatientTreatmentProcessId { get; set; }
     public int? HospitalId { get; set; }
     public OperationTypeEnum OperationTypeId { get; set; }
     public OperationStatusEnum OperationStatusId { get; set; }
-    public Guid? AppointedInterpreterId { get; set; }
     public TreatmentTypeDto TreatmentType { get; set; }
     public OperationTypeDto OperationType { get; set; }
     public OperationStatusDto OperationStatus { get; set; }

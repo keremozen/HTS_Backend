@@ -46,6 +46,7 @@ namespace HTS.Data
         public DbSet<PatientNoteStatus> PatientNoteStatuses { get; set; }
         public DbSet<PatientTreatmentProcess> PatientTreatmentProcesses { get; set; }
         public DbSet<SalesMethodAndCompanionInfo> SalesMethodAndCompanionInfos { get; set; }
+        public DbSet<InterpreterAppointment>  InterpreterAppointments { get; set; }
         public DbSet<TreatmentProcessStatus> TreatmentProcessStatuses { get; set; }
         public DbSet<HospitalizationType> HospitalizationTypes { get; set; }
         public DbSet<HospitalResponse> HospitalResponses { get; set; }

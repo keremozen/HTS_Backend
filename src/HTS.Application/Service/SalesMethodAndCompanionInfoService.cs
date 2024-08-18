@@ -9,6 +9,7 @@ using HTS.Dto.PatientNote;
 using HTS.Dto.SalesMethodAndCompanionInfo;
 using HTS.Interface;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
@@ -23,18 +24,24 @@ public class SalesMethodAndCompanionInfoService : ApplicationService, ISalesMeth
 {
     private readonly IRepository<SalesMethodAndCompanionInfo, int> _salesMethodAndCompanionInfoRepository;
     private readonly IIdentityUserRepository _userRepository;
+    private readonly IRepository<InterpreterAppointment, int> _interpreterAppointmentRepository;
     public SalesMethodAndCompanionInfoService(IRepository<SalesMethodAndCompanionInfo, int> salesMethodAndCompanionInfoRepository,
-        IIdentityUserRepository userRepository)
+        IIdentityUserRepository userRepository,
+        IRepository<InterpreterAppointment, int> interpreterAppointmentRepository)
     {
         _salesMethodAndCompanionInfoRepository = salesMethodAndCompanionInfoRepository;
         _userRepository = userRepository;
+        _interpreterAppointmentRepository = interpreterAppointmentRepository;
     }
 
     public async Task<SalesMethodAndCompanionInfoDto> GetByPatientTreatmentProcessIdAsync(int ptpId)
     {
         try
         {
-            var response = await _salesMethodAndCompanionInfoRepository.GetAsync(i => i.PatientTreatmentProcessId == ptpId);
+            var response =await (await _salesMethodAndCompanionInfoRepository.GetQueryableAsync())
+                .AsNoTracking()
+                .Include(s => s.InterpreterAppointments)
+                .FirstOrDefaultAsync(i => i.PatientTreatmentProcessId == ptpId);
             return ObjectMapper.Map<SalesMethodAndCompanionInfo, SalesMethodAndCompanionInfoDto>(response);
         }
         catch (EntityNotFoundException)
@@ -48,7 +55,9 @@ public class SalesMethodAndCompanionInfoService : ApplicationService, ISalesMeth
         var entity = await _salesMethodAndCompanionInfoRepository.FirstOrDefaultAsync(i =>
                   i.PatientTreatmentProcessId == salesMethodAndCompanionInfo.PatientTreatmentProcessId);
         if (entity != null)
-        {
+        {//Update process
+            //Delete child records
+            await _interpreterAppointmentRepository.DeleteManyAsync(entity.InterpreterAppointments.Select(a => a.Id).ToList());
             ObjectMapper.Map(salesMethodAndCompanionInfo, entity);
             await _salesMethodAndCompanionInfoRepository.UpdateAsync(entity);
         }

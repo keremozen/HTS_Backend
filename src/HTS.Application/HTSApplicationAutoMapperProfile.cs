@@ -58,6 +58,7 @@ using HTS.Dto.ProformaNotIncludingService;
 using HTS.Dto.ProformaProcess;
 using HTS.Dto.RejectReason;
 using HTS.Dto.SalesMethodAndCompanionInfo;
+using HTS.Dto.SMCIInterpreterAppointment;
 using HTS.Dto.TaskType;
 using HTS.Dto.TreatmentProcessStatus;
 using HTS.Dto.TreatmentType;
@@ -130,6 +131,9 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<PatientTreatmentProcess, PatientTreatmentProcessDto>();
         CreateMap<PatientTreatmentProcess, PatientTreatmentProcessDetailedDto>();
         CreateMap<SaveSalesMethodAndCompanionInfoDto, SalesMethodAndCompanionInfo>();
+        CreateMap<SalesMethodAndCompanionInfo, SalesMethodAndCompanionInfoDto>();
+        CreateMap<SaveSMCIInterpreterAppointmentDto, InterpreterAppointment>();
+        CreateMap<InterpreterAppointment, SMCIInterpreterAppointmentDto>();
         CreateMap<SalesMethodAndCompanionInfo, SalesMethodAndCompanionInfoDto>();
         CreateMap<SaveDocumentDto, InvitationLetterDocument>();
         CreateMap<InvitationLetterDocument, SaveDocumentDto>();

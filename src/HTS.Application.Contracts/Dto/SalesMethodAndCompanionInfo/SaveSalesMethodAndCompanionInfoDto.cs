@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using HTS.Dto.SMCIInterpreterAppointment;
 
 namespace HTS.Dto.SalesMethodAndCompanionInfo;
 
@@ -34,4 +36,5 @@ public class SaveSalesMethodAndCompanionInfoDto
     public string TurkeyDestination { get; set; }
     public string TravelDescription { get; set; }
     public DateTime? TreatmentDate { get; set; }
+    public virtual ICollection<SaveSMCIInterpreterAppointmentDto> InterpreterAppointments { get; set; }
 }

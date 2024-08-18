@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using HTS.Dto.SMCIInterpreterAppointment;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Identity;
 
@@ -27,4 +29,5 @@ public class SalesMethodAndCompanionInfoDto :EntityDto<int>
     public string TurkeyDestination { get; set; }
     public string TravelDescription { get; set; }
     public DateTime? TreatmentDate { get; set; }
+    public virtual ICollection<SMCIInterpreterAppointmentDto> InterpreterAppointments { get; set; }
 }

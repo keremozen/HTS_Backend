@@ -128,7 +128,9 @@ public class HTSApplicationAutoMapperProfile : Profile
         CreateMap<HospitalUHBStaff, HospitalUHBStaffDto>();
         CreateMap<SaveHospitalInterpreterDto, HospitalInterpreter>();
         CreateMap<HospitalInterpreter, HospitalInterpreterDto>();
-        CreateMap<PatientTreatmentProcess, PatientTreatmentProcessDto>();
+        CreateMap<PatientTreatmentProcess, PatientTreatmentProcessDto>()
+            .ForMember(dest => dest.PatientNameSurname, 
+            opt => opt.MapFrom(src => src.Patient.Name + " " + src.Patient.Surname));;
         CreateMap<PatientTreatmentProcess, PatientTreatmentProcessDetailedDto>();
         CreateMap<SaveSalesMethodAndCompanionInfoDto, SalesMethodAndCompanionInfo>();
         CreateMap<SalesMethodAndCompanionInfo, SalesMethodAndCompanionInfoDto>();

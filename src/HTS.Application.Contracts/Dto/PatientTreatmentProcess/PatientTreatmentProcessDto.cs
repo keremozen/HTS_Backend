@@ -13,4 +13,5 @@ public class PatientTreatmentProcessDto  : AuditedEntityWithUserDto<int,Identity
     public bool IsFinalized { get; set; }
     public PatientTreatmentStatusEnum TreatmentProcessStatusId { get; set; }
     public TreatmentProcessStatusDto TreatmentProcessStatus { get; set; }
+    public string PatientNameSurname { get; set; }
 }

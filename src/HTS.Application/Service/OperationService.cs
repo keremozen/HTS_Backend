@@ -131,7 +131,6 @@ public class OperationService : ApplicationService, IOperationService
     /// <exception cref="HTSBusinessException">Check response exceptions</exception>
     private void IsDataValidToSave(SaveOperationDto operation)
     {
-
         //If status is ok, check data
         if (operation.HospitalResponse.HospitalResponseTypeId == EntityEnum.HospitalResponseTypeEnum.SuitableForTreatment.GetHashCode())
         {

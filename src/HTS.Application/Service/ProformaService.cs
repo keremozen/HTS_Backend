@@ -157,14 +157,28 @@ public class ProformaService : ApplicationService, IProformaService
             (await _proformaRepository.WithDetailsAsync((p => p.Operation), (p => p.Operation.PatientTreatmentProcess)))
             .FirstOrDefault(p => p.Id == id);
         await IsDataValidToSend(proforma);
+        bool isOnPatient = proforma!.Operation.TreatmentTypeId == TreatmentTypeEnum.OutPatient.GetHashCode();//Ayakta tedavi
+        //Ayakta tedavi için mfb onayı otomatik olacak.
+        int proformaStatusId = isOnPatient
+            ? ProformaStatusEnum.WillBeTransferedToPatient.GetHashCode()
+            : ProformaStatusEnum.MFBWaitingApproval.GetHashCode();
+
+        int operationStatusId = isOnPatient
+            ? OperationStatusEnum.ProformaApprovedWillBeTransferredToPatient.GetHashCode()
+            : OperationStatusEnum.ProformaCreatedWaitingForMFBApproval.GetHashCode();
+
+        int treatmentProcessStatusId = isOnPatient
+            ? PatientTreatmentStatusEnum
+                .ProformaApprovedWillBeTransferredToPatient.GetHashCode()
+            : PatientTreatmentStatusEnum
+                .ProformaCreatedWaitingForMFBApproval.GetHashCode(); 
+        
         //Treatment process, operation, proforma status update
         proforma.RejectReasonId = null;
         proforma.RejectReasonMFB = null;
-        proforma.ProformaStatusId = EntityEnum.ProformaStatusEnum.MFBWaitingApproval.GetHashCode();
-        proforma.Operation.OperationStatusId =
-            EntityEnum.OperationStatusEnum.ProformaCreatedWaitingForMFBApproval.GetHashCode();
-        proforma.Operation.PatientTreatmentProcess.TreatmentProcessStatusId = EntityEnum.PatientTreatmentStatusEnum
-            .ProformaCreatedWaitingForMFBApproval.GetHashCode();
+        proforma.ProformaStatusId = proformaStatusId;
+        proforma.Operation.OperationStatusId =operationStatusId;
+        proforma.Operation.PatientTreatmentProcess!.TreatmentProcessStatusId = treatmentProcessStatusId;
         await _proformaRepository.UpdateAsync(proforma);
         //Close pricing task
         await _htsTaskService.CloseTask(new SaveHTSTaskDto()
@@ -175,6 +189,17 @@ public class ProformaService : ApplicationService, IProformaService
             TreatmentCode = proforma.Operation.PatientTreatmentProcess.TreatmentCode,
             PatientId = proforma.Operation.PatientTreatmentProcess.PatientId
         });
+        if (isOnPatient)//Ayakta tedavi de mfb onaylamış gibi task aç
+        {
+            await _htsTaskService.CreateAsync(new SaveHTSTaskDto()
+            {
+                HospitalId = proforma.Operation.HospitalId,
+                RelatedEntityId = proforma.Operation.Id,
+                TaskType = TaskTypeEnum.PatientApproval,
+                TreatmentCode = proforma.Operation.PatientTreatmentProcess.TreatmentCode,
+                PatientId = proforma.Operation.PatientTreatmentProcess.PatientId
+            });
+        }
     }
 
     public async Task ApproveMFBAsync(int id)
@@ -185,10 +210,10 @@ public class ProformaService : ApplicationService, IProformaService
             .FirstOrDefault(p => p.Id == id);
         await IsDataValidToApproveMFB(proforma);
         //Treatment process, operation, proforma status update
-        proforma.ProformaStatusId = EntityEnum.ProformaStatusEnum.WillBeTransferedToPatient.GetHashCode();
+        proforma!.ProformaStatusId = ProformaStatusEnum.WillBeTransferedToPatient.GetHashCode();
         proforma.Operation.OperationStatusId =
-            EntityEnum.OperationStatusEnum.ProformaApprovedWillBeTransferredToPatient.GetHashCode();
-        proforma.Operation.PatientTreatmentProcess.TreatmentProcessStatusId = EntityEnum.PatientTreatmentStatusEnum
+            OperationStatusEnum.ProformaApprovedWillBeTransferredToPatient.GetHashCode();
+        proforma.Operation.PatientTreatmentProcess!.TreatmentProcessStatusId = PatientTreatmentStatusEnum
             .ProformaApprovedWillBeTransferredToPatient.GetHashCode();
         await _proformaRepository.UpdateAsync(proforma);
         await _htsTaskService.CreateAsync(new SaveHTSTaskDto()

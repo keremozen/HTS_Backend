@@ -34,6 +34,9 @@ using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography;
 using Microsoft.Extensions.Hosting.Internal;
 using Volo.Abp.OpenIddict;
+using Volo.Abp.BackgroundJobs.Hangfire;
+using Hangfire;
+using Hangfire.PostgreSql;
 
 namespace HTS;
 
@@ -49,7 +52,8 @@ namespace HTS;
     typeof(AbpAspNetCoreSerilogModule),
     typeof(AbpSwashbuckleModule)
 )]
-public class HTSHttpApiHostModule : AbpModule
+[DependsOn(typeof(AbpBackgroundJobsHangfireModule))]
+    public class HTSHttpApiHostModule : AbpModule
 {
     public override void PreConfigureServices(ServiceConfigurationContext context)
     {
@@ -198,6 +202,16 @@ public class HTSHttpApiHostModule : AbpModule
         });
     }
 
+    private void ConfigureHangfire(ServiceConfigurationContext context, IConfiguration configuration)
+    {
+        //GlobalConfiguration.Configuration.UsePostgreSqlStorage(configuration.GetConnectionString("Default"));
+        context.Services.AddHangfire(config =>
+        {
+            config.UsePostgreSqlStorage(configuration.GetConnectionString("Default"));
+        });
+        //JobStorage.Current = new PostgreSqlStorage(configuration.GetConnectionString("Default"));
+    }
+
     public override void OnApplicationInitialization(ApplicationInitializationContext context)
     {
         var app = context.GetApplicationBuilder();
@@ -242,6 +256,7 @@ public class HTSHttpApiHostModule : AbpModule
 
         app.UseAuditing();
         app.UseAbpSerilogEnrichers();
+        //app.UseHangfireDashboard(); //should add to the request pipeline before the app.UseConfiguredEndpoints()
         app.UseConfiguredEndpoints();
     }
 

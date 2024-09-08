@@ -16,9 +16,11 @@ using HTS.Enum;
 using HTS.Interface;
 using HTS.Localization;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
+using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.ObjectMapping;
 using static HTS.Enum.EntityEnum;
@@ -62,6 +64,19 @@ public class HospitalResponseService : ApplicationService, IHospitalResponseServ
     {
         var query = (await _hospitalResponseRepository.WithDetailsAsync()).Where(hr => hr.HospitalConsultationId == consultationId);
         return ObjectMapper.Map<HospitalResponse, HospitalResponseDto>(await AsyncExecuter.FirstOrDefaultAsync(query));
+    }
+
+    [AllowAnonymous]
+    public async Task<PagedResultDto<HospitalResponseDto>> GetByHospitalIdAsync(int hospitalId)
+    {
+        var entity = await (await _hospitalResponseRepository.WithDetailsAsync())
+            .AsNoTracking()
+            .Where(hr => hr.HospitalConsultation.HospitalId == hospitalId)
+            .ToListAsync();
+        var responseList = ObjectMapper.Map<List<HospitalResponse>, List<HospitalResponseDto>>(entity);
+        var totalCount = entity.Count();
+
+        return new PagedResultDto<HospitalResponseDto>(totalCount, responseList);
     }
 
     [AllowAnonymous]

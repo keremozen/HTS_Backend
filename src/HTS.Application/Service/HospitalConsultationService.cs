@@ -51,7 +51,7 @@ public class HospitalConsultationService : ApplicationService, IHospitalConsulta
 
     public async Task<HospitalConsultationDto> GetAsync(int id)
     {
-        var query = (await _hcRepository.WithDetailsAsync()).Where(p => p.Id == id);
+        var query = (await _hcRepository.WithDetailsAsync()).Include(hc => hc.HospitalConsultationDocuments).ThenInclude(d => d.DocumentType).Where(p => p.Id == id);
         var consultation = await AsyncExecuter.FirstOrDefaultAsync(query);
         return ObjectMapper.Map<HospitalConsultation, HospitalConsultationDto>(consultation);
     }
@@ -60,14 +60,14 @@ public class HospitalConsultationService : ApplicationService, IHospitalConsulta
     public async Task<PagedResultDto<HospitalConsultationDto>> GetByPatientTreatmenProcessAsync(int ptpId)
     {
         var query = await _hcRepository.WithDetailsAsync();
-        query = query.Where(hc => hc.PatientTreatmentProcessId == ptpId);
+        query = query.Include(hc => hc.HospitalConsultationDocuments).ThenInclude(d => d.DocumentType).Where(hc => hc.PatientTreatmentProcessId == ptpId);
 
         var responseList = ObjectMapper.Map<List<HospitalConsultation>, List<HospitalConsultationDto>>(await AsyncExecuter.ToListAsync(query));
         var totalCount = await _hcRepository.CountAsync();//item count
 
         return new PagedResultDto<HospitalConsultationDto>(totalCount, responseList);
     }
-    
+
     public async Task<PagedResultDto<HospitalConsultationDto>> GetByHospitalIdAsync(int hospitalId)
     {
         var entity = await (await _hcRepository.WithDetailsAsync())
@@ -124,9 +124,9 @@ public class HospitalConsultationService : ApplicationService, IHospitalConsulta
             var uhbList = hospital?.HospitalUHBStaffs.Select(s => s.Email).ToList();
             if (uhbList?.Any() ?? false)
             {
-                #if !DEBUG
+#if !DEBUG
                 Helper.SendMail(uhbList, string.Format(mailBodyFormat, string.Format(urlFormat, RandomString(8), Convert.ToBase64String(Encoding.UTF8.GetBytes(hc.Id.ToString())))));
-                #endif
+#endif
             }
         }
     }

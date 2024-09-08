@@ -114,6 +114,7 @@ namespace HTS.Data
                 {
                     entityOptions.DefaultWithDetailsFunc = query => query.Include(hc => hc.Creator)
                                                                          .Include(hc => hc.PatientTreatmentProcess)
+                                                                         .ThenInclude(tp => tp.Patient)
                                                                          .Include(hc => hc.HospitalConsultationStatus)
                                                                          .Include(hc => hc.HospitalConsultationDocuments);
                 });
@@ -169,14 +170,14 @@ namespace HTS.Data
                     entityOptions.DefaultWithDetailsFunc = query => query.Include(p => p.Currency)
                         .Include(p => p.PaymentKind);
                 });
-                
+
                 options.Entity<HTSTask>(entityOptions =>
                 {
                     entityOptions.DefaultWithDetailsFunc = query => query.Include(t => t.Patient)
                         .Include(t => t.User)
                         .Include(t => t.TaskType);
                 });
-                
+
             });
         }
     }

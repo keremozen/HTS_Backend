@@ -152,12 +152,12 @@ public class InvitationLetterDocumentService : ApplicationService, IInvitationLe
             .OrderByDescending(o => o.CreationTime)
             .FirstOrDefaultAsync(o =>
                 o.PatientTreatmentProcessId == salesMethodEntity.PatientTreatmentProcessId);
-        if (operation == null
+        /*if (operation == null
             || (operation.HospitalId == null
                 && operation.HospitalResponse.HospitalConsultation?.HospitalId == null))
         {
             throw new HTSBusinessException(ErrorCode.ThereIsNoHospitalOrApprovedProforma);
-        }
+        }*/
 
         QuestPDF.Settings.License = LicenseType.Community;
         QuestPDF.Settings.CheckIfAllTextGlyphsAreAvailable = false;

@@ -25,4 +25,5 @@ public class HospitalResponseDto : EntityDto<int>
     public ICollection<HospitalResponseProcessDto> HospitalResponseProcesses { get; set; }
     public ICollection<HospitalAgentNoteDto> HospitalAgentNotes { get; set; }
     public HospitalConsultationDto  HospitalConsultation { get; set; }
+    public DateTime CreationTime { get; set; }
 }

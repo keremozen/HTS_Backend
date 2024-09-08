@@ -224,6 +224,17 @@ public class ProformaService : ApplicationService, IProformaService
             TreatmentCode = proforma.Operation.PatientTreatmentProcess.TreatmentCode,
             PatientId = proforma.Operation.PatientTreatmentProcess.PatientId
         });
+        //Send email to hospital staff
+        var detailedProforma = (await _proformaRepository.WithDetailsAsync(
+            p => p.Operation,
+            p => p.Operation.PatientTreatmentProcess,
+                (p => p.Operation.PatientTreatmentProcess.Patient),
+                p => p.Operation.Hospital,
+                p => p.Operation.Hospital.HospitalStaffs,
+                p => p.Operation.Hospital.HospitalStaffs.Select(hs => hs.User)))
+            .AsNoTracking()
+            .FirstOrDefault(p => p.Id == id);
+        SendEMailToHospitalStaffProformaApprovedWillBeSendToPatient(detailedProforma);
     }
 
     public async Task<Object> SaveAndApproveMFBAsync(SaveProformaDto proforma)
@@ -275,11 +286,26 @@ public class ProformaService : ApplicationService, IProformaService
         await _proformaRepository.UpdateAsync(proforma);
         //Close patient approval task
         await ClosePatientApprovalTask(proforma);
+        
+        //Send email to hospital staff and pricers
+        var detailedProforma = (await _proformaRepository.WithDetailsAsync(
+                p => p.Operation,
+                p => p.Operation.PatientTreatmentProcess,
+                (p => p.Operation.PatientTreatmentProcess.Patient),
+                p => p.Operation.Hospital,
+                p => p.Operation.Hospital.HospitalStaffs,
+                p => p.Operation.Hospital.HospitalStaffs.Select(hs => hs.User),
+                p => p.Operation.Hospital.HospitalPricers,
+                p => p.Operation.Hospital.HospitalPricers.Select(hp => hp.User)))
+            .AsNoTracking()
+            .FirstOrDefault(p => p.Id == id);
+        SendEMailToHospitalStaffAndPricersProformaSendToPatient(detailedProforma);
+        
     }
 
     private async Task SendEMailToPatient(Proforma proforma, string eMail)
     {
-        //Send mail to hospital consultations
+       
         string mailBody = $"Dear {proforma.Operation.PatientTreatmentProcess.Patient.Name} {proforma.Operation.PatientTreatmentProcess.Patient.Surname}," +
                           $"<br><br>Your application has been reviewed and the necessary treatment plan has been prepared. " +
                           $"You can find the details of your treatment process in the appendix.Proforma that is generated for your treatment is attached to email.<br>" +
@@ -288,7 +314,94 @@ public class ProformaService : ApplicationService, IProformaService
         var mailSubject = $"Treatment Plan is Ready | {proforma.ProformaCode}";
         Helper.SendMail(eMail, mailBody, proformaReceipt.File, subject: mailSubject, fileName:"Proforma.pdf");
     }
+    
+    
+    /// <summary>
+    /// If proforma operation has hospital, send email to hospital staff
+    /// Proforma approved. Will be transfered to patient.
+    /// </summary>
+    /// <param name="proforma"></param>
+    private void SendEMailToHospitalStaffProformaApprovedWillBeSendToPatient(Proforma proforma)
+    {
+        if (proforma.Operation.HospitalId is null)
+        {//no emails to send
+            return;
+        }
 
+        var toList = proforma.Operation.Hospital?.HospitalStaffs.Select(s => s.User.Email).ToList();
+        if (toList?.Any() ?? false)
+        {
+            string mailBody = $"Sayın İlgili," +
+                              $"<br><br>{proforma.Operation.PatientTreatmentProcess?.Patient.Name} {proforma.Operation.PatientTreatmentProcess?.Patient.Surname} " +
+                              $"hastasının hastanenizde tedavi görmesi amaçlı tedavi planı fiyatlandırılmıştır.";
+     
+            var mailSubject = $"Proforma Hazırlandı - [{proforma.Operation.PatientTreatmentProcess?.Patient.Name}/{proforma.Operation.PatientTreatmentProcess?.Patient.Surname}]";
+            Helper.SendMail(toList, mailBody,file:null, subject: mailSubject, fileName:null);
+        }
+      
+    }
+
+    
+    /// <summary>
+    /// If proforma operation has hospital, send email to hospital staff and pricers.
+    /// Proforma mfb approved, send to patient
+    /// </summary>
+    /// <param name="proforma"></param>
+    private void SendEMailToHospitalStaffAndPricersProformaSendToPatient(Proforma proforma)
+    {
+        if (proforma.Operation.HospitalId is null)
+        {//no emails to send
+            return;
+        }
+
+        var toList = proforma.Operation.Hospital?.HospitalStaffs
+            .Select(s => s.User.Email)
+            .Concat(proforma.Operation.Hospital.HospitalPricers
+                .Select(p => p.User.Email))
+            .ToList();
+        if (toList?.Any() ?? false)
+        {
+            string mailBody = $"Sayın İlgili," +
+                              $"<br><br>{proforma.Operation.PatientTreatmentProcess?.Patient.Name} {proforma.Operation.PatientTreatmentProcess?.Patient.Surname} " +
+                              $"hastasının hastanenizde tedavi görmesi amaçlı proforma iletilmiştir.";
+     
+            var mailSubject = $"Proforma İletildi - [{proforma.Operation.PatientTreatmentProcess?.Patient.Name}/{proforma.Operation.PatientTreatmentProcess?.Patient.Surname}]";
+            Helper.SendMail(toList, mailBody,file:null, subject: mailSubject, fileName:null);
+        }
+      
+    }
+
+    /// <summary>
+    /// If proforma operation has hospital, send email to hospital staff and pricers.
+    /// Proforma patient approved
+    /// </summary>
+    /// <param name="proforma"></param>
+    private void SendEMailToHospitalStaffAndPricersPatientApprovedRejected(Proforma proforma, bool isApproved)
+    {
+        if (proforma.Operation.HospitalId is null)
+        {//no emails to send
+            return;
+        }
+
+        var toList = proforma.Operation.Hospital?.HospitalStaffs
+            .Select(s => s.User.Email)
+            .Concat(proforma.Operation.Hospital.HospitalPricers
+                .Select(p => p.User.Email))
+            .ToList();
+        if (toList?.Any() ?? false)
+        {
+            string mailBody = $"Sayın İlgili," +
+                              $"<br><br>{proforma.Operation.PatientTreatmentProcess?.Patient.Name} {proforma.Operation.PatientTreatmentProcess?.Patient.Surname} " +
+                              $"hastasının hastanenizde tedavi görmesi amaçlı iletilen proforma cevaplanmıştır.<br>" +
+                              $"Proforma Cevabı: {(isApproved ? "Onaylandı." : "Reddedildi.")} ";
+     
+            var mailSubject = $"Proforma Cevaplandı - [{proforma.Operation.PatientTreatmentProcess?.Patient.Name}/{proforma.Operation.PatientTreatmentProcess?.Patient.Surname}]";
+            Helper.SendMail(toList, mailBody,file:null, subject: mailSubject, fileName:null);
+        }
+      
+    }
+
+    
     public async Task ApprovePatientAsync(int id)
     {
         //Get entity from db
@@ -304,6 +417,20 @@ public class ProformaService : ApplicationService, IProformaService
         proforma.Operation.PatientTreatmentProcess.TreatmentProcessStatusId = EntityEnum.PatientTreatmentStatusEnum
             .ProformaApprovedWaitingForPayment.GetHashCode();
         await _proformaRepository.UpdateAsync(proforma);
+        
+        //Send email to hospital staff and pricers
+        var detailedProforma = (await _proformaRepository.WithDetailsAsync(
+                p => p.Operation,
+                p => p.Operation.PatientTreatmentProcess,
+                (p => p.Operation.PatientTreatmentProcess.Patient),
+                p => p.Operation.Hospital,
+                p => p.Operation.Hospital.HospitalStaffs,
+                p => p.Operation.Hospital.HospitalStaffs.Select(hs => hs.User),
+                p => p.Operation.Hospital.HospitalPricers,
+                p => p.Operation.Hospital.HospitalPricers.Select(hp => hp.User)))
+            .AsNoTracking()
+            .FirstOrDefault(p => p.Id == id);
+        SendEMailToHospitalStaffAndPricersPatientApprovedRejected(detailedProforma, true);
     }
 
     private async Task ClosePatientApprovalTask(Proforma proforma)
@@ -333,6 +460,19 @@ public class ProformaService : ApplicationService, IProformaService
             .PatientRejectedProforma.GetHashCode();
         proforma.RejectReasonId = rejectProforma.RejectReasonId;
         await _proformaRepository.UpdateAsync(proforma);
+        //Send email to hospital staff and pricers
+        var detailedProforma = (await _proformaRepository.WithDetailsAsync(
+                p => p.Operation,
+                p => p.Operation.PatientTreatmentProcess,
+                (p => p.Operation.PatientTreatmentProcess.Patient),
+                p => p.Operation.Hospital,
+                p => p.Operation.Hospital.HospitalStaffs,
+                p => p.Operation.Hospital.HospitalStaffs.Select(hs => hs.User),
+                p => p.Operation.Hospital.HospitalPricers,
+                p => p.Operation.Hospital.HospitalPricers.Select(hp => hp.User)))
+            .AsNoTracking()
+            .FirstOrDefault(p => p.Id == rejectProforma.Id);
+        SendEMailToHospitalStaffAndPricersPatientApprovedRejected(detailedProforma, false);
     }
 
     private async Task<int> GetVersion(Proforma entity)

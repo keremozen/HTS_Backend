@@ -108,6 +108,7 @@ public class HospitalConsultationService : ApplicationService, IHospitalConsulta
 
         await _hcRepository.InsertManyAsync(entityList, true);
         await SendEMailToHospitalUHBs(entityList);
+        await SendEMailToHospitalStaffs(entityList, hospitalConsultation.PatientTreatmentProcessId);
     }
 
     private async Task SendEMailToHospitalUHBs(List<HospitalConsultation> entityList)
@@ -128,6 +129,35 @@ public class HospitalConsultationService : ApplicationService, IHospitalConsulta
                 Helper.SendMail(uhbList, string.Format(mailBodyFormat, string.Format(urlFormat, RandomString(8), Convert.ToBase64String(Encoding.UTF8.GetBytes(hc.Id.ToString())))));
 #endif
             }
+        }
+    }
+    
+    private async Task SendEMailToHospitalStaffs(List<HospitalConsultation> entityList, int ptpId)
+    {
+        //Send mail to hospital staffs
+        var hospitalIds = entityList.Select(c => c.HospitalId).ToList();
+        var hospitals = await (await _hospitalRepository.WithDetailsAsync(h => h.HospitalStaffs,
+                h => h.HospitalStaffs.Select(s => s.User))).AsNoTracking()
+            .Where(h => hospitalIds.Contains(h.Id)).ToListAsync();
+        
+
+        var toList = hospitals.SelectMany(h => h.HospitalStaffs)
+            .Select(s => s.User.Email)
+            .ToList();
+        if (toList?.Any() ?? false)
+        {
+
+          var ptp= await  (await _ptpRepository.WithDetailsAsync(ptp => ptp.Patient))
+                .AsNoTracking().FirstOrDefaultAsync(ptp => ptp.Id == ptpId);
+            
+            string mailBody = $"Sayın İlgili," +
+                              $"<br><br>{ptp.Patient.Name} {ptp.Patient.Surname} " +
+                              $"hastasının hastanenizde tedavi görmesi amaçlı proforma iletilmiştir.";
+     
+            var mailSubject = $"Hastaneye Danışıldı - [{ptp.Patient.Name}/{ptp.Patient.Surname}]";
+#if !DEBUG
+            Helper.SendMail(toList, mailBody,file:null, subject: mailSubject, fileName:null);
+#endif
         }
     }
 

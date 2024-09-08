@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using HTS.BusinessException;
+using HTS.Common;
 using HTS.Data.Entity;
 using HTS.Dto.HospitalConsultation;
 using HTS.Dto.HTSTask;
@@ -95,15 +96,49 @@ public class OperationService : ApplicationService, IOperationService
         entity.OperationStatusId = OperationStatusEnum.PriceExpecting.GetHashCode();
         await _operationRepository.UpdateAsync(entity);
        //Create Task
-       var relatedEntity = (await _operationRepository.WithDetailsAsync((o => o.PatientTreatmentProcess))).FirstOrDefault(o => o.Id == id);
+       var operationWithRelation = (await _operationRepository.WithDetailsAsync(
+           (o => o.PatientTreatmentProcess),
+           (o => o.PatientTreatmentProcess.Patient),
+           o => o.Hospital,
+           o => o.Hospital.HospitalStaffs,
+           o => o.Hospital.HospitalStaffs.Select(hs => hs.User)))
+           .AsNoTracking()
+           .FirstOrDefault(o => o.Id == id);
+      
        await _htsTaskService.CreateAsync(new SaveHTSTaskDto()
        {
            HospitalId = entity.HospitalId,
            RelatedEntityId = id,
            TaskType = TaskTypeEnum.Pricing,
-           TreatmentCode = relatedEntity.PatientTreatmentProcess.TreatmentCode,
-           PatientId = relatedEntity.PatientTreatmentProcess.PatientId
+           TreatmentCode = operationWithRelation?.PatientTreatmentProcess?.TreatmentCode,
+           PatientId = operationWithRelation.PatientTreatmentProcess.PatientId
        });
+       //Send email to hospital staff
+       SendEMailToHospitalStaff(operationWithRelation);
+    }
+
+    /// <summary>
+    /// If operation has hospital, send email to hospital staff
+    /// </summary>
+    /// <param name="operation"></param>
+    private void SendEMailToHospitalStaff(Operation operation)
+    {
+        if (operation.HospitalId is null)
+        {//no emails to send
+            return;
+        }
+
+        var toList = operation.Hospital?.HospitalStaffs.Select(s => s.User.Email).ToList();
+        if (toList?.Any() ?? false)
+        {
+            string mailBody = $"Sayın İlgili," +
+                              $"<br><br>{operation.PatientTreatmentProcess?.Patient.Name} {operation.PatientTreatmentProcess?.Patient.Surname} " +
+                              $"hastasının hastanenizde tedavi görmesi amaçlı tedavi planı oluşturulmuş ve fiyatlandırmaya gönderilmiştir.";
+     
+            var mailSubject = $"Tedavi Planı Hazırlandı - [{operation.PatientTreatmentProcess?.Patient.Name}/{operation.PatientTreatmentProcess?.Patient.Surname}]";
+            Helper.SendMail(toList, mailBody,file:null, subject: mailSubject, fileName:null);
+        }
+      
     }
 
     /// <summary>

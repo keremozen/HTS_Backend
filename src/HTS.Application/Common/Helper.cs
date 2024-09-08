@@ -11,6 +11,14 @@ namespace HTS.Common;
 
 public static class Helper
 {
+    /// <summary>
+    /// Send Mail
+    /// </summary>
+    /// <param name="toList">To email list</param>
+    /// <param name="body">Mail body</param>
+    /// <param name="file">Attachment nullable</param>
+    /// <param name="subject">Subject nullable</param>
+    /// <param name="fileName">File Name nullable</param>
     public static void SendMail(List<string> toList, string body, byte[] file=null, string subject = null,string fileName = null)
     {
         string fromEmail = "info@ushas.com.tr";

@@ -87,8 +87,18 @@ public class HospitalResponseService : ApplicationService, IHospitalResponseServ
         var entity = ObjectMapper.Map<SaveHospitalResponseDto, HospitalResponse>(hospitalResponse);
 
         var hConsultation = hospitalResponse.HospitalConsultationId.HasValue ?
-            (await _hcRepository.WithDetailsAsync((hc => hc.Hospital), (hc => hc.PatientTreatmentProcess.Patient), (hc => hc.HospitalResponses), (hc => hc.Creator))).FirstOrDefault(hc => hc.Id == hospitalResponse.HospitalConsultationId.Value) :
+            (await _hcRepository.WithDetailsAsync((hc => hc.Hospital),
+                hc => hc.Hospital.HospitalStaffs,
+                hc => hc.Hospital.HospitalStaffs.Select(s => s.User),
+                (hc => hc.PatientTreatmentProcess.Patient), 
+                (hc => hc.HospitalResponses), 
+                (hc => hc.Creator))).FirstOrDefault(hc => hc.Id == hospitalResponse.HospitalConsultationId.Value) :
             null;
+        if (hConsultation is  null)
+        {
+            return;
+        }
+     
         if (hospitalResponse.HospitalResponseTypeId == HospitalResponseTypeEnum.SuitableForTreatment.GetHashCode())
         {
             hConsultation.HospitalConsultationStatusId = HospitalConsultationStatusEnum.SuitableForTreatment.GetHashCode();
@@ -106,12 +116,13 @@ public class HospitalResponseService : ApplicationService, IHospitalResponseServ
            PatientTreatmentStatusEnum.HospitalAskedWaitingAssessment.GetHashCode();
 
 
-
         hConsultation.HospitalResponses.Add(entity);
         await _hcRepository.UpdateAsync(hConsultation);
 
         //hastane danışma kaydını oluşturan kullanıcıya mail atılacak
         await SendEMailToHospitalStaff(hospitalResponse.HospitalResponseTypeId, hConsultation);
+        //Hastane kullanıcılarına bilgilendirme maili at
+        await SendEMailToHospitalStaffs(hospitalResponse.HospitalResponseTypeId, hConsultation);
     }
 
     private async Task SendEMailToHospitalStaff(int responseTypeId, HospitalConsultation consultation)
@@ -123,6 +134,23 @@ public class HospitalResponseService : ApplicationService, IHospitalResponseServ
                                     consultation.Hospital.Name,
                                     responseType?.Name);
         Helper.SendMail(consultation.Creator.Email, mailBodyFormat, file:null, _localizer["HospitalResponseCompleted:MailSubject"]);
+    }
+    
+    private async Task SendEMailToHospitalStaffs(int responseTypeId, HospitalConsultation consultation)
+    {
+        var responseType = (await _responseTypeRepository.WithDetailsAsync()).FirstOrDefault(hr => hr.Id == responseTypeId);
+        var toList = consultation.Hospital?.HospitalStaffs.Select(s => s.User.Email).ToList();
+        if (toList?.Any() ?? false)
+        {
+            string mailBody = $"Sayın İlgili," +
+                              $"<br><br>{consultation.PatientTreatmentProcess.Patient.Name} {consultation.PatientTreatmentProcess.Patient.Surname} " +
+                              $"isimli hasta için yapılan danışma {consultation.Hospital.Name} tarafından cevaplanmıştır."+
+                              $"<br>Hastane Cevabı: {responseType?.Name}"+
+                              $"<br>İyi günler dileriz.";
+     
+            var mailSubject = $"HTS - Hastane Cevabı Hk.";
+            Helper.SendMail(toList, mailBody,file:null, subject: mailSubject, fileName:null);
+        }
     }
 
     [Authorize]

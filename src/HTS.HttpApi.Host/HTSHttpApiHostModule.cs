@@ -99,6 +99,7 @@ namespace HTS;
         ConfigureVirtualFileSystem(context);
         ConfigureCors(context, configuration);
         ConfigureSwaggerServices(context, configuration);
+        ConfigureHangfire(context, configuration);
     }
 
     private void ConfigureAuthentication(ServiceConfigurationContext context)
@@ -209,7 +210,7 @@ namespace HTS;
         {
             config.UsePostgreSqlStorage(configuration.GetConnectionString("Default"));
         });
-        //JobStorage.Current = new PostgreSqlStorage(configuration.GetConnectionString("Default"));
+        JobStorage.Current = new PostgreSqlStorage(configuration.GetConnectionString("Default"));
     }
 
     public override void OnApplicationInitialization(ApplicationInitializationContext context)
@@ -256,7 +257,7 @@ namespace HTS;
 
         app.UseAuditing();
         app.UseAbpSerilogEnrichers();
-        //app.UseHangfireDashboard(); //should add to the request pipeline before the app.UseConfiguredEndpoints()
+        app.UseHangfireDashboard();
         app.UseConfiguredEndpoints();
     }
 

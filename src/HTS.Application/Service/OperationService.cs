@@ -11,8 +11,10 @@ using HTS.Dto.HTSTask;
 using HTS.Dto.Operation;
 using HTS.Enum;
 using HTS.Interface;
+using HTS.Localization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
@@ -28,18 +30,21 @@ public class OperationService : ApplicationService, IOperationService
     private readonly IRepository<HospitalResponseBranch, int> _hospitalResponseBranchRepository;
     private readonly IRepository<HospitalResponseProcess, int> _hospitalResponseProcessRepository;
     private readonly IHTSTaskService _htsTaskService;
+    private readonly IStringLocalizer<HTSResource> _localizer;
 
     public OperationService(IRepository<Operation, int> operationRepository,
         IRepository<PatientTreatmentProcess, int> patientTreatmentProcessRepository,
         IRepository<HospitalResponseBranch, int> hospitalResponseBranchRepository,
         IRepository<HospitalResponseProcess, int> hospitalResponseProcessRepository,
-        IHTSTaskService htsTaskService)
+        IHTSTaskService htsTaskService,
+        IStringLocalizer<HTSResource> localizer)
     {
         _operationRepository = operationRepository;
         _patientTreatmentProcessRepository = patientTreatmentProcessRepository;
         _hospitalResponseBranchRepository = hospitalResponseBranchRepository;
         _hospitalResponseProcessRepository = hospitalResponseProcessRepository;
         _htsTaskService = htsTaskService;
+        _localizer = localizer;
     }
 
     public async Task<OperationDto> GetAsync(int id)
@@ -131,11 +136,9 @@ public class OperationService : ApplicationService, IOperationService
         var toList = operation.Hospital?.HospitalStaffs.Select(s => s.User.Email).ToList();
         if (toList?.Any() ?? false)
         {
-            string mailBody = $"Sayın İlgili," +
-                              $"<br><br>{operation.PatientTreatmentProcess?.Patient.Name} {operation.PatientTreatmentProcess?.Patient.Surname} " +
-                              $"hastasının hastanenizde tedavi görmesi amaçlı tedavi planı oluşturulmuş ve fiyatlandırmaya gönderilmiştir.";
-     
-            var mailSubject = $"Tedavi Planı Hazırlandı - [{operation.PatientTreatmentProcess?.Patient.Name}/{operation.PatientTreatmentProcess?.Patient.Surname}]";
+            var patientName = $"{operation.PatientTreatmentProcess?.Patient.Name} {operation.PatientTreatmentProcess?.Patient.Surname}";    
+            string mailBody = string.Format(_localizer["SendToPricing:MailBody"],patientName);
+            var mailSubject =string.Format(_localizer["SendToPricing:MailSubject"],patientName);
             Helper.SendMail(toList, mailBody,file:null, subject: mailSubject, fileName:null);
         }
       

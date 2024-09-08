@@ -133,7 +133,9 @@ public class HospitalResponseService : ApplicationService, IHospitalResponseServ
                                     consultation.PatientTreatmentProcess.Patient.Name + " " + consultation.PatientTreatmentProcess.Patient.Surname,
                                     consultation.Hospital.Name,
                                     responseType?.Name);
+#if !DEBUG
         Helper.SendMail(consultation.Creator.Email, mailBodyFormat, file:null, _localizer["HospitalResponseCompleted:MailSubject"]);
+#endif
     }
     
     private async Task SendEMailToHospitalStaffs(int responseTypeId, HospitalConsultation consultation)
@@ -142,14 +144,15 @@ public class HospitalResponseService : ApplicationService, IHospitalResponseServ
         var toList = consultation.Hospital?.HospitalStaffs.Select(s => s.User.Email).ToList();
         if (toList?.Any() ?? false)
         {
-            string mailBody = $"Sayın İlgili," +
-                              $"<br><br>{consultation.PatientTreatmentProcess.Patient.Name} {consultation.PatientTreatmentProcess.Patient.Surname} " +
-                              $"isimli hasta için yapılan danışma {consultation.Hospital.Name} tarafından cevaplanmıştır."+
-                              $"<br>Hastane Cevabı: {responseType?.Name}"+
-                              $"<br>İyi günler dileriz.";
+            string mailBody = string.Format(_localizer["HospitalResponseCompletedHospitalStaff:MailBody"],
+                consultation.PatientTreatmentProcess.Patient.Name + " " + consultation.PatientTreatmentProcess.Patient.Surname,
+                consultation.Hospital.Name,
+                responseType?.Name);
      
-            var mailSubject = $"HTS - Hastane Cevabı Hk.";
+            var mailSubject =_localizer["HospitalResponseCompletedHospitalStaff:MailSubject"];
+#if !DEBUG
             Helper.SendMail(toList, mailBody,file:null, subject: mailSubject, fileName:null);
+#endif
         }
     }
 

@@ -738,6 +738,16 @@
     "PricerTask:MailBody": "Sayın İlgili,<br>{0} hastası adına {1} kodlu tedavi kaydında bulunan operasyonun fiyatlandırılması bekleniyor.",
     "PricerTask:MailSubject": "USHAŞ HTS - Fiyatlandırma Görevi",
     "PatientApprovalTask:MailBody": "Sayın İlgili,<br>{0} hastası adına {1} kodlu tedavi kaydında oluşturulan proformanın hastaya iletilmesi bekleniyor.",
-    "PatientApprovalTask:MailSubject": "USHAŞ HTS - Proformanın İletilmesi Görevi"
+    "PatientApprovalTask:MailSubject": "USHAŞ HTS - Proformanın İletilmesi Görevi",
+    "HospitalResponseCompletedHospitalStaff:MailBody": "Dear sir/madam,<br>The hospital consultation requested for {0} is responded by {1}.<br>Hospital Response: {2}<br>Have a nice day.",
+    "HospitalResponseCompletedHospitalStaff:MailSubject": "HTS - Hospital Response",
+    "HospitalConsultationInformation:MailBody": "Dear Concerned,<br>For {0} patient, your hospital has been consulted.",
+    "HospitalConsultationInformation:MailSubject": "Hospital Consulted - [{0}]",
+    "ProformaWillBeSendToPatient:MailBody": "Dear Concerned,<br>{0} patient treatment plan is priced to be cured in your hospital.",
+    "ProformaWillBeSendToPatient:MailSubject": "Proforma Prepaired - [{0}]",
+    "ProformaSendToPatient:MailBody": "Dear Concerned,<br>{0} patient proforma is sent to your hospital.",
+    "ProformaSendToPatient:MailSubject": "Proforma Transfered - [{0}]",
+    "SendToPricing:MailBody": "Dear Concerned,<br>{0} patient, patient treatment process is created and pricing is sent.",
+    "SendToPricing:MailSubject": "Patient Treatment Process Is Ready - [{0}]"
   }
 }

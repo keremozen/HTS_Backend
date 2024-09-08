@@ -331,11 +331,9 @@ public class ProformaService : ApplicationService, IProformaService
         var toList = proforma.Operation.Hospital?.HospitalStaffs.Select(s => s.User.Email).ToList();
         if (toList?.Any() ?? false)
         {
-            string mailBody = $"Sayın İlgili," +
-                              $"<br><br>{proforma.Operation.PatientTreatmentProcess?.Patient.Name} {proforma.Operation.PatientTreatmentProcess?.Patient.Surname} " +
-                              $"hastasının hastanenizde tedavi görmesi amaçlı tedavi planı fiyatlandırılmıştır.";
-     
-            var mailSubject = $"Proforma Hazırlandı - [{proforma.Operation.PatientTreatmentProcess?.Patient.Name}/{proforma.Operation.PatientTreatmentProcess?.Patient.Surname}]";
+            var patientName = $"{proforma.Operation.PatientTreatmentProcess?.Patient.Name} {proforma.Operation.PatientTreatmentProcess?.Patient.Surname}";    
+            string mailBody = string.Format(_localizer["ProformaWillBeSendToPatient:MailBody"],patientName);
+            var mailSubject =string.Format(_localizer["ProformaWillBeSendToPatient:MailSubject"],patientName);
             Helper.SendMail(toList, mailBody,file:null, subject: mailSubject, fileName:null);
         }
       
@@ -361,11 +359,10 @@ public class ProformaService : ApplicationService, IProformaService
             .ToList();
         if (toList?.Any() ?? false)
         {
-            string mailBody = $"Sayın İlgili," +
-                              $"<br><br>{proforma.Operation.PatientTreatmentProcess?.Patient.Name} {proforma.Operation.PatientTreatmentProcess?.Patient.Surname} " +
-                              $"hastasının hastanenizde tedavi görmesi amaçlı proforma iletilmiştir.";
-     
-            var mailSubject = $"Proforma İletildi - [{proforma.Operation.PatientTreatmentProcess?.Patient.Name}/{proforma.Operation.PatientTreatmentProcess?.Patient.Surname}]";
+            var patientName = $"{proforma.Operation.PatientTreatmentProcess?.Patient.Name} {proforma.Operation.PatientTreatmentProcess?.Patient.Surname}";    
+            string mailBody = string.Format(_localizer["ProformaSendToPatient:MailBody"],patientName);
+            var mailSubject =string.Format(_localizer["ProformaSendToPatient:MailSubject"],patientName);
+            
             Helper.SendMail(toList, mailBody,file:null, subject: mailSubject, fileName:null);
         }
       

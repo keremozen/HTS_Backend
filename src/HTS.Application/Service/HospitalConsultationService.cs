@@ -149,12 +149,9 @@ public class HospitalConsultationService : ApplicationService, IHospitalConsulta
 
           var ptp= await  (await _ptpRepository.WithDetailsAsync(ptp => ptp.Patient))
                 .AsNoTracking().FirstOrDefaultAsync(ptp => ptp.Id == ptpId);
-            
-            string mailBody = $"Sayın İlgili," +
-                              $"<br><br>{ptp.Patient.Name} {ptp.Patient.Surname} " +
-                              $"hastasının hastanenizde tedavi görmesi amaçlı proforma iletilmiştir.";
-     
-            var mailSubject = $"Hastaneye Danışıldı - [{ptp.Patient.Name}/{ptp.Patient.Surname}]";
+          var patientName = $"{ptp.Patient.Name} {ptp.Patient.Surname}";             
+          string mailBody = string.Format(_localizer["HospitalConsultationInformation:MailBody"],patientName);
+          var mailSubject =string.Format(_localizer["HospitalConsultationInformation:MailSubject"],patientName);
 #if !DEBUG
             Helper.SendMail(toList, mailBody,file:null, subject: mailSubject, fileName:null);
 #endif

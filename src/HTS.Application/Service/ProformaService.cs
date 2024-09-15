@@ -18,6 +18,7 @@ using QuestPDF.Fluent;
 using QuestPDF.Infrastructure;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
+using Volo.Abp.Users;
 using static HTS.Enum.EntityEnum;
 
 namespace HTS.Service;
@@ -32,6 +33,8 @@ public class ProformaService : ApplicationService, IProformaService
     private readonly IRepository<Operation, int> _operationRepository;
     private readonly IStringLocalizer<HTSResource> _localizer;
     private readonly IHTSTaskService _htsTaskService;
+    private readonly IRepository<HospitalInterpreter, int> _hiRepository;
+    private readonly ICurrentUser _currentUser;
 
     public ProformaService(IRepository<Proforma, int> proformaRepository,
         IRepository<ExchangeRateInformation, int> exchangeRateRepository,
@@ -40,7 +43,9 @@ public class ProformaService : ApplicationService, IProformaService
         IRepository<RejectReason, int> rejectReasonRepository,
         IRepository<PatientTreatmentProcess, int> patientTreatmentProcessRepository,
         IStringLocalizer<HTSResource> localizer,
-        IHTSTaskService htsTaskService
+        IHTSTaskService htsTaskService,
+        IRepository<HospitalInterpreter, int> hiRepository,
+        ICurrentUser currentUser
         )
     {
         _proformaRepository = proformaRepository;
@@ -51,6 +56,8 @@ public class ProformaService : ApplicationService, IProformaService
         _operationRepository = operationRepository;
         _localizer = localizer;
         _htsTaskService = htsTaskService;
+        _hiRepository = hiRepository;
+        _currentUser = currentUser;
     }
 
     public async Task<List<ProformaListDto>> GetNameListByOperationIdAsync(int operationId)
@@ -62,6 +69,11 @@ public class ProformaService : ApplicationService, IProformaService
 
     public async Task<List<ProformaPricingListDto>> GetPricingListByPTPIdAsync(int ptpId)
     {
+        if (!await HavingPermissionToProcess())
+        {
+            return null;
+        }
+        
         List<int> proformaStatuses = new List<int>
         {
             EntityEnum.ProformaStatusEnum.PatientRejected.GetHashCode(),
@@ -85,6 +97,10 @@ public class ProformaService : ApplicationService, IProformaService
 
     public async Task<ProformaDto> GetByIdAsync(int proformaId)
     {
+        if (!await HavingPermissionToProcess())
+        {
+            return null;
+        }
         var query = (await _proformaRepository.WithDetailsAsync()).FirstOrDefaultAsync(p => p.Id == proformaId);
         return ObjectMapper.Map<Proforma, ProformaDto>(await query);
     }
@@ -956,7 +972,11 @@ public class ProformaService : ApplicationService, IProformaService
 
     public async Task<ProformaPdfDto> CreateProformaPdf(int id)
     {
-        
+        if (!await HavingPermissionToProcess())
+        {
+            return null;
+        }
+
         byte[] bytes = null;
         var proforma = (await _proformaRepository.WithDetailsAsync()).AsNoTracking().FirstOrDefault(p => p.Id == id);
         var patient = (await _proformaRepository.WithDetailsAsync()).AsNoTracking().FirstOrDefault(p => p.Id == id)?
@@ -976,6 +996,20 @@ public class ProformaService : ApplicationService, IProformaService
             PatientNameSurname = patient != null ? $"{patient.Name}-{patient.Surname}" : string.Empty
         };
         return response;
+    }
+
+    private async Task<bool> HavingPermissionToProcess()
+    {
+        // Check if the current user is an interpreter by querying the repository
+        var isInterpreter = await (await _hiRepository.GetQueryableAsync())
+            .AsNoTracking()
+            .AnyAsync(hs => hs.UserId == _currentUser.Id);
+        if (isInterpreter)
+        {
+            //Interpreter can not see
+            return false;
+        }
+        return false;
     }
 
     private async Task<int> GetOperationId(SaveENabizProformaDto proforma)

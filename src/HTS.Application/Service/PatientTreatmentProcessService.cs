@@ -20,6 +20,7 @@ using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Identity;
+using Volo.Abp.Users;
 using static HTS.Enum.EntityEnum;
 
 namespace HTS.Service;
@@ -32,13 +33,17 @@ public class PatientTreatmentProcessService : ApplicationService, IPatientTreatm
     private readonly IRepository<ProcessCost, int> _pCostRepository;
     private readonly IIdentityUserRepository _userRepository;
     private readonly IUSSService _ussService;
+    private readonly ICurrentUser _currentUser;
+    private readonly IRepository<HospitalInterpreter, int> _hospitalInterpreterRepository;
 
     public PatientTreatmentProcessService(IRepository<PatientTreatmentProcess, int> patientTreatmentProcessRepository,
         IRepository<Proforma, int> proformaRepository,
         IRepository<ENabizProcess, int> eNabizProcessRepository,
         IRepository<ProcessCost, int> pCostRepository,
         IIdentityUserRepository userRepository,
-        IUSSService ussService)
+        IRepository<HospitalInterpreter, int> hospitalInterpreterRepository,
+        IUSSService ussService,
+        ICurrentUser currentUser)
     {
         _patientTreatmentProcessRepository = patientTreatmentProcessRepository;
         _userRepository = userRepository;
@@ -46,6 +51,8 @@ public class PatientTreatmentProcessService : ApplicationService, IPatientTreatm
         _proformaRepository = proformaRepository;
         _eNabizProcessRepository = eNabizProcessRepository;
         _pCostRepository = pCostRepository;
+        _hospitalInterpreterRepository = hospitalInterpreterRepository;
+        _currentUser = currentUser;
     }
 
     [Authorize]
@@ -56,40 +63,46 @@ public class PatientTreatmentProcessService : ApplicationService, IPatientTreatm
             .AsNoTracking()
             .Where(t => t.PatientId == patientId)
             .ToListAsync();
-        var proformas = await (await _proformaRepository.GetQueryableAsync()).AsNoTracking()
-            .Include(p => p.ProformaProcesses)
-            .Include(p => p.Operation)
-            .Include(p => p.Payments)
-            .ThenInclude(p => p.PaymentItems)
-            .Where(p => patientTreatmentProcesses.Select(t => t.Id)
-                            .Contains(p.Operation.PatientTreatmentProcessId.Value)
-                        && (p.ProformaStatusId == ProformaStatusEnum.WaitingForPayment.GetHashCode()
-                            || p.ProformaStatusId == ProformaStatusEnum.PaymentCompleted.GetHashCode()))
-            .ToListAsync();
-        //Group to get latest proforma
-        var groupList = from p in proformas
-            group p by p.OperationId
-            into g
-            select new
-            {
-                Version = proformas.Where(p => p.OperationId == g.Key).Max(p => p.Version),
-                OperationId = g.Key,
-            };
-        proformas = proformas
-            .Where(p => groupList.Any(pp => pp.OperationId == p.OperationId && pp.Version == p.Version)).ToList();
 
-        var eNabizList = await (await _eNabizProcessRepository.GetQueryableAsync()).AsNoTracking()
-            .Include(e => e.Process)
-            .ThenInclude(p => p.ProcessCosts)
-            .Include(e => e.Process)
-            .ThenInclude(p => p.ProcessRelationChildren)
-            // .Include(e => e.Process)
-            // .ThenInclude(p => p.ProcessRelations)
-            .Where(e => patientTreatmentProcesses.Select(t => t.TreatmentCode).Contains(e.TreatmentCode)
-                        && e.ProcessId != null)
-            .ToListAsync();
+        bool isAuthorized = await HavingPermissionToProcessPrices();
 
+        var proformas = new List<Proforma>();
+        var eNabizList = new List<ENabizProcess>();
+        if (!isAuthorized)//Interpreter will not see proforma and price
+        {
+            proformas = await (await _proformaRepository.GetQueryableAsync()).AsNoTracking()
+                .Include(p => p.ProformaProcesses)
+                .Include(p => p.Operation)
+                .Include(p => p.Payments)
+                .ThenInclude(p => p.PaymentItems)
+                .Where(p => patientTreatmentProcesses.Select(t => t.Id)
+                                .Contains(p.Operation.PatientTreatmentProcessId.Value)
+                            && (p.ProformaStatusId == ProformaStatusEnum.WaitingForPayment.GetHashCode()
+                                || p.ProformaStatusId == ProformaStatusEnum.PaymentCompleted.GetHashCode()))
+                .ToListAsync();
+            //Group to get latest proforma
+            var groupList = from p in proformas
+                group p by p.OperationId
+                into g
+                select new
+                {
+                    Version = proformas.Where(p => p.OperationId == g.Key).Max(p => p.Version),
+                    OperationId = g.Key,
+                };
+            proformas = proformas
+                .Where(p => groupList.Any(pp => pp.OperationId == p.OperationId && pp.Version == p.Version)).ToList();
 
+            eNabizList = await (await _eNabizProcessRepository.GetQueryableAsync()).AsNoTracking()
+                .Include(e => e.Process)
+                .ThenInclude(p => p.ProcessCosts)
+                .Include(e => e.Process)
+                .ThenInclude(p => p.ProcessRelationChildren)
+                // .Include(e => e.Process)
+                // .ThenInclude(p => p.ProcessRelations)
+                .Where(e => patientTreatmentProcesses.Select(t => t.TreatmentCode).Contains(e.TreatmentCode)
+                            && e.ProcessId != null)
+                .ToListAsync();
+        }
         var responseList = new List<PatientTreatmentProcessDetailedDto>();
         foreach (var ptp in patientTreatmentProcesses)
         {
@@ -263,5 +276,19 @@ public class PatientTreatmentProcessService : ApplicationService, IPatientTreatm
         }
 
         throw new HTSBusinessException(ErrorCode.TreatmentNumberCouldNotBeGenerated);
+    }
+    
+    private async Task<bool> HavingPermissionToProcessPrices()
+    {
+        // Check if the current user is an interpreter by querying the repository
+        var isInterpreter = await (await _hospitalInterpreterRepository.GetQueryableAsync())
+            .AsNoTracking()
+            .AnyAsync(hs => hs.UserId == _currentUser.Id);
+        if (isInterpreter)
+        {
+            //Interpreter can not see
+            return false;
+        }
+        return false;
     }
 }

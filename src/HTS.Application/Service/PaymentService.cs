@@ -34,6 +34,7 @@ public class PaymentService : ApplicationService, IPaymentService
     private readonly ICurrentUser _currentUser;
     private readonly IRepository<Hospital, int> _hospitalRepository;
     private readonly IRepository<ExchangeRateInformation, int> _erRepository;
+    private readonly IRepository<HospitalInterpreter, int> _hiRepository;
 
 
     public PaymentService(IRepository<Payment, int> paymentRepository,
@@ -42,6 +43,7 @@ public class PaymentService : ApplicationService, IPaymentService
         IRepository<PatientTreatmentProcess, int> ptpRepository,
         IRepository<Hospital, int> hospitalRepository,
         IRepository<ExchangeRateInformation, int> erRepository,
+        IRepository<HospitalInterpreter, int> hiRepository,
         ICurrentUser currentUser
         )
     {
@@ -51,17 +53,26 @@ public class PaymentService : ApplicationService, IPaymentService
         _ptpRepository = ptpRepository;
         _hospitalRepository = hospitalRepository;
         _erRepository = erRepository;
+        _hiRepository = hiRepository;
         _currentUser = currentUser;
     }
 
     public async Task<PaymentDto> GetAsync(int id)
     {
+        if (!await HavingPermissionToProcess())
+        {
+            return null;
+        }
         var query = (await _paymentRepository.WithDetailsAsync()).Where(p => p.Id == id);
         var payment = await AsyncExecuter.FirstOrDefaultAsync(query);
         return ObjectMapper.Map<Payment, PaymentDto>(payment);
     }
     public async Task<PagedResultDto<ListPaymentDto>> GetListAsync(int ptpId)
     {
+        if (!await HavingPermissionToProcess())
+        {
+            return null;
+        }
         //Get all entities
         var query = (await _paymentRepository.WithDetailsAsync()).Include(p => p.PaymentReason)
             .Where(p => p.PtpId == ptpId);
@@ -248,6 +259,20 @@ public class PaymentService : ApplicationService, IPaymentService
             bytes = document.GeneratePdf();
         }
         return bytes;
+    }
+    
+    private async Task<bool> HavingPermissionToProcess()
+    {
+        // Check if the current user is an interpreter by querying the repository
+        var isInterpreter = await (await _hiRepository.GetQueryableAsync())
+            .AsNoTracking()
+            .AnyAsync(hs => hs.UserId == _currentUser.Id);
+        if (isInterpreter)
+        {
+            //Interpreter can not see
+            return false;
+        }
+        return false;
     }
 
 }

@@ -100,25 +100,29 @@ public class OperationService : ApplicationService, IOperationService
         IsDataValidToSendToPricing(entity);
         entity.OperationStatusId = OperationStatusEnum.PriceExpecting.GetHashCode();
         await _operationRepository.UpdateAsync(entity);
+        var operationWithRelation = await _operationRepository.GetQueryableAsync();
+        operationWithRelation = operationWithRelation
+            .Include(o => o.PatientTreatmentProcess) // Include PatientTreatmentProcess
+            .ThenInclude(ptp => ptp.Patient) // Then include Patient in PatientTreatmentProcess
+            .Include(o => o.Hospital) // Include Hospital
+            .ThenInclude(h => h.HospitalStaffs) // Then include HospitalStaffs in Hospital
+            .ThenInclude(hs => hs.User); // Include User for each HospitalStaff
+
+        // AsNoTracking to improve performance for read-only queries
+        operationWithRelation = operationWithRelation.AsNoTracking();
+        // Get the first or default operation with the specified id
+        var result = await operationWithRelation.FirstOrDefaultAsync(o => o.Id == id);
        //Create Task
-       var operationWithRelation = (await _operationRepository.WithDetailsAsync(
-           (o => o.PatientTreatmentProcess),
-           (o => o.PatientTreatmentProcess.Patient),
-           o => o.Hospital,
-           o => o.Hospital.HospitalStaffs))
-           .AsNoTracking()
-           .FirstOrDefault(o => o.Id == id);
-      
        await _htsTaskService.CreateAsync(new SaveHTSTaskDto()
        {
            HospitalId = entity.HospitalId,
            RelatedEntityId = id,
            TaskType = TaskTypeEnum.Pricing,
-           TreatmentCode = operationWithRelation?.PatientTreatmentProcess?.TreatmentCode,
-           PatientId = operationWithRelation.PatientTreatmentProcess.PatientId
+           TreatmentCode = result?.PatientTreatmentProcess?.TreatmentCode,
+           PatientId = result.PatientTreatmentProcess.PatientId
        });
        //Send email to hospital staff
-       SendEMailToHospitalStaff(operationWithRelation);
+       SendEMailToHospitalStaff(result);
     }
 
     /// <summary>

@@ -105,8 +105,7 @@ public class OperationService : ApplicationService, IOperationService
            (o => o.PatientTreatmentProcess),
            (o => o.PatientTreatmentProcess.Patient),
            o => o.Hospital,
-           o => o.Hospital.HospitalStaffs,
-           o => o.Hospital.HospitalStaffs.Select(hs => hs.User)))
+           o => o.Hospital.HospitalStaffs))
            .AsNoTracking()
            .FirstOrDefault(o => o.Id == id);
       

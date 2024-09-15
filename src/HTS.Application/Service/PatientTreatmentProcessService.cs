@@ -289,6 +289,6 @@ public class PatientTreatmentProcessService : ApplicationService, IPatientTreatm
             //Interpreter can not see
             return false;
         }
-        return false;
+        return true;
     }
 }

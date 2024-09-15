@@ -272,7 +272,7 @@ public class PaymentService : ApplicationService, IPaymentService
             //Interpreter can not see
             return false;
         }
-        return false;
+        return true;
     }
 
 }

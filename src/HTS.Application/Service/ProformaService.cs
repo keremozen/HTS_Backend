@@ -312,17 +312,39 @@ public class ProformaService : ApplicationService, IProformaService
         await ClosePatientApprovalTask(proforma);
         
         //Send email to hospital staff and pricers
-        var detailedProforma = (await _proformaRepository.WithDetailsAsync(
-                p => p.Operation,
-                p => p.Operation.PatientTreatmentProcess,
-                (p => p.Operation.PatientTreatmentProcess.Patient),
-                p => p.Operation.Hospital,
-                p => p.Operation.Hospital.HospitalStaffs,
-                p => p.Operation.Hospital.HospitalStaffs.Select(hs => hs.User),
-                p => p.Operation.Hospital.HospitalPricers,
-                p => p.Operation.Hospital.HospitalPricers.Select(hp => hp.User)))
-            .AsNoTracking()
-            .FirstOrDefault(p => p.Id == id);
+        //var detailedProforma = (await _proformaRepository.WithDetailsAsync(
+        //        p => p.Operation,
+        //        p => p.Operation.PatientTreatmentProcess,
+        //        (p => p.Operation.PatientTreatmentProcess.Patient),
+        //        p => p.Operation.Hospital,
+        //        p => p.Operation.Hospital.HospitalStaffs,
+        //        p => p.Operation.Hospital.HospitalStaffs.Select(hs => hs.User),
+        //        p => p.Operation.Hospital.HospitalPricers,
+        //        p => p.Operation.Hospital.HospitalPricers.Select(hp => hp.User)))
+        //    .AsNoTracking()
+        //    .FirstOrDefault(p => p.Id == id);
+
+        var detailedProformaQuery = await _proformaRepository.GetQueryableAsync();
+
+        detailedProformaQuery = detailedProformaQuery
+            .Include(p => p.Operation) // Include Operation
+            .ThenInclude(o => o.PatientTreatmentProcess) // Include PatientTreatmentProcess in Operation
+            .ThenInclude(ptp => ptp.Patient) // Include Patient in PatientTreatmentProcess
+            .Include(p => p.Operation) // Include Operation again
+            .ThenInclude(o => o.Hospital) // Include Hospital in Operation
+            .ThenInclude(h => h.HospitalStaffs) // Include HospitalStaffs in Hospital
+            .ThenInclude(hs => hs.User) // Include User for each HospitalStaff
+            .Include(p => p.Operation) // Include Operation again
+            .ThenInclude(o => o.Hospital) // Include Hospital in Operation
+            .ThenInclude(h => h.HospitalPricers) // Include HospitalPricers in Hospital
+            .ThenInclude(hs => hs.User); // Include User for each HospitalStaff
+
+        // AsNoTracking for read-only query optimization
+        detailedProformaQuery = detailedProformaQuery.AsNoTracking();
+
+        // Retrieve the detailed proforma with the specified ID
+        var detailedProforma = await detailedProformaQuery.FirstOrDefaultAsync(p => p.Id == id);
+
         SendEMailToHospitalStaffAndPricersProformaSendToPatient(detailedProforma);
         
     }

@@ -89,6 +89,7 @@ INSERT INTO "OperationStatuses"("Id", "Name") VALUES (6, 'Proforma İletildi - H
 INSERT INTO "OperationStatuses"("Id", "Name") VALUES (7, 'Hasta Proformayı Reddetti');
 INSERT INTO "OperationStatuses"("Id", "Name") VALUES (8, 'Proforma Onaylandı - Tahsilat Bekleniyor');
 INSERT INTO "OperationStatuses"("Id", "Name") VALUES (9, 'Proforma Tahsil Edildi - Tedavi Aşaması');
+INSERT INTO "OperationStatuses"("Id", "Name") VALUES (10, 'İptal Edildi');
 
 --Proforma status Table
 INSERT INTO "ProformaStatuses"("Id", "Name") VALUES (1, 'Yeni Kayıt');
@@ -100,6 +101,7 @@ INSERT INTO "ProformaStatuses"("Id", "Name") VALUES (6, 'Hasta Proformayı Redde
 INSERT INTO "ProformaStatuses"("Id", "Name") VALUES (7, 'Tahsilat Bekleniyor');
 INSERT INTO "ProformaStatuses"("Id", "Name") VALUES (8, 'Tahsil Edildi');
 INSERT INTO "ProformaStatuses"("Id", "Name") VALUES (9, 'MFB Güncelledi - İptal');
+INSERT INTO "ProformaStatuses"("Id", "Name") VALUES (10, 'İptal Edildi');
 
 --Process type Table
 INSERT INTO "ProcessTypes"("Id", "Name", "IsActive") VALUES (1, 'Sut Kodu', true);

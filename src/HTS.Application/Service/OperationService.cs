@@ -93,6 +93,38 @@ public class OperationService : ApplicationService, IOperationService
         ObjectMapper.Map(operation, entity);
         await _operationRepository.UpdateAsync(entity);
     }
+    
+    public async Task CancelOperationAsync(int id)
+    {
+        //Get entity from db
+        var operation =
+            (await _operationRepository.WithDetailsAsync((o => o.Proformas)))
+            .FirstOrDefault(o => o.Id == id);
+      
+        // Check if the operation exists
+        if (operation == null)
+        {
+            throw new HTSBusinessException(ErrorCode.BadRequest);
+        }
+
+        // Check if the operation is already canceled
+        if (operation.OperationStatusId == OperationStatusEnum.Cancelled.GetHashCode())
+        {
+            throw new HTSBusinessException(ErrorCode.OperationAllreadyCancelled);
+        }
+
+        // Set the operation status to "Cancelled"
+        operation.OperationStatusId = OperationStatusEnum.Cancelled.GetHashCode();
+        operation.Proformas = operation.Proformas.Select(p =>
+        {
+            p.ProformaStatusId = ProformaStatusEnum.Cancelled.GetHashCode();
+            return p;
+        }).ToList();
+        await _operationRepository.UpdateAsync(operation);
+        
+    }
+
+
 
     public async Task SendToPricing(int id)
     {

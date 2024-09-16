@@ -75,7 +75,8 @@
     "HTS:42": "Patient treatment process is already re finalized.",
     "HTS:43": "The hospital interpreter already exists.",
     "HTS:44": "One default hospital interpreter already exits. Multiple default hospital interpreters are not allowed.",
-
+    "HTS:45": "Operation already cancelled.",
+    
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Successful",
     "ToastTitle:Info": "Information",

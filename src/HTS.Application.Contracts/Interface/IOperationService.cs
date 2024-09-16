@@ -36,6 +36,13 @@ namespace HTS.Interface
         Task UpdateAsync(int id, SaveOperationDto operation);
 
         /// <summary>
+        /// Cancels operation with related proformas
+        /// </summary>
+        /// <param name="id">To be cancelled operation</param>
+        /// <returns></returns>
+        Task CancelOperationAsync(int id);
+        
+        /// <summary>
         /// Send to pricing
         /// </summary>
         /// <param name="id">To be send entity id</param>

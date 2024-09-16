@@ -229,7 +229,11 @@ namespace HTS.Enum
             /// <summary>
             /// Proforma Tahsil Edildi - Tedavi Aşaması
             /// </summary>
-            PaymentCompletedTreatmentProcess = 9
+            PaymentCompletedTreatmentProcess = 9,
+            /// <summary>
+            /// İptal edildi
+            /// </summary>
+            Cancelled = 10
         }
 
         public enum ProcessTypeEnum
@@ -281,7 +285,11 @@ namespace HTS.Enum
             /// <summary>
             /// MFB Güncelledi - İptal
             /// </summary>
-            MFBUpdatedCancelled = 9
+            MFBUpdatedCancelled = 9,
+            /// <summary>
+            /// İptal edildi
+            /// </summary>
+            Cancelled = 10
         }
         
         public enum PaymentStatusEnum

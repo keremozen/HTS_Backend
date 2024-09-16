@@ -44,4 +44,5 @@ public static class  ErrorCode
     public const string PtpAlreadyDeFinalized = "HTS:42";
     public const string InterpreterAlreadyExist = "HTS:43";
     public const string DefaultInterpreterAlreadyExist = "HTS:44";
+    public const string OperationAllreadyCancelled = "HTS:45";
 }

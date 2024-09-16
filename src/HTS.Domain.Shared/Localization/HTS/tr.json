@@ -75,6 +75,7 @@
     "HTS:42": "Tedavi sürecinin durumu zaten aktif için sonlandırma geri alınamaz.",
     "HTS:43": "Eklenmeye çalışılan tercuman mevcuttur.",
     "HTS:44": "Varsayılan bir tercuman mevcuttur. Birden çok varsayılan tercuman eklenemez.",
+    "HTS:45": "Operasyon kaydının durumu zaten iptal edildi.",
 
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Başarılı",

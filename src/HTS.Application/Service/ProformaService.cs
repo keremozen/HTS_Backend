@@ -311,19 +311,6 @@ public class ProformaService : ApplicationService, IProformaService
         //Close patient approval task
         await ClosePatientApprovalTask(proforma);
         
-        //Send email to hospital staff and pricers
-        //var detailedProforma = (await _proformaRepository.WithDetailsAsync(
-        //        p => p.Operation,
-        //        p => p.Operation.PatientTreatmentProcess,
-        //        (p => p.Operation.PatientTreatmentProcess.Patient),
-        //        p => p.Operation.Hospital,
-        //        p => p.Operation.Hospital.HospitalStaffs,
-        //        p => p.Operation.Hospital.HospitalStaffs.Select(hs => hs.User),
-        //        p => p.Operation.Hospital.HospitalPricers,
-        //        p => p.Operation.Hospital.HospitalPricers.Select(hp => hp.User)))
-        //    .AsNoTracking()
-        //    .FirstOrDefault(p => p.Id == id);
-
         var detailedProformaQuery = await _proformaRepository.GetQueryableAsync();
 
         detailedProformaQuery = detailedProformaQuery

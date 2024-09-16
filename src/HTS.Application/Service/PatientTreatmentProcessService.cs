@@ -68,7 +68,7 @@ public class PatientTreatmentProcessService : ApplicationService, IPatientTreatm
 
         var proformas = new List<Proforma>();
         var eNabizList = new List<ENabizProcess>();
-        if (!isAuthorized)//Interpreter will not see proforma and price
+        if (isAuthorized)//Get proforma and price if authorized
         {
             proformas = await (await _proformaRepository.GetQueryableAsync()).AsNoTracking()
                 .Include(p => p.ProformaProcesses)

@@ -610,6 +610,10 @@
     "OperationalInfo:Field:AnyInvitationLetter": "Davet mektubu talebi var mı?",
     "OperationalInfo:Button:CreateProforma": "Fiyatlandır",
     "OperationalInfo:Button:SendToPricing": "Fiyatlandırmaya Gönder",
+    "OperationalInfo:Button:Cancel": "İptal Et",
+    "OperationalInfo:Button:Copy": "Kopyala",
+    "OperatiomalInfo:Message:CancelConfirm": "Operasyonu iptal etmek istediğinize emin misiniz?",
+    "OperatiomalInfo:Message:CopyConfirm": "Operasyonu kopyalamak istediğinize emin misiniz?",
 
     /*PROFORMA*/
     "Proforma:Title": "Proforma Sihirbazı",

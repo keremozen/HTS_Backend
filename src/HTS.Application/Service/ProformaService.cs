@@ -82,7 +82,8 @@ public class ProformaService : ApplicationService, IProformaService
             EntityEnum.ProformaStatusEnum.WillBeTransferedToPatient.GetHashCode(),
             EntityEnum.ProformaStatusEnum.MFBWaitingApproval.GetHashCode(),
             EntityEnum.ProformaStatusEnum.MFBRejected.GetHashCode(),
-            EntityEnum.ProformaStatusEnum.WaitingForPatientApproval.GetHashCode()
+            EntityEnum.ProformaStatusEnum.WaitingForPatientApproval.GetHashCode(),
+            EntityEnum.ProformaStatusEnum.Cancelled.GetHashCode(),
         };
         var query = await (await _proformaRepository.WithDetailsAsync(p => p.Creator))
             .Include(p => p.ProformaStatus)

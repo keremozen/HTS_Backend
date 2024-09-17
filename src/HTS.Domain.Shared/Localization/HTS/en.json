@@ -76,7 +76,7 @@
     "HTS:43": "The hospital interpreter already exists.",
     "HTS:44": "One default hospital interpreter already exits. Multiple default hospital interpreters are not allowed.",
     "HTS:45": "Operation already cancelled.",
-    
+
     /*TOAST TITLES*/
     "ToastTitle:Successful": "Successful",
     "ToastTitle:Info": "Information",
@@ -603,11 +603,15 @@
     "OperationalInfo:Column:DetailsAndActions": "Details and Actions",
     "OperationalInfo:Field:TravelDateToTurkey": "Travel Date To Turkey",
     "OperationalInfo:Field:TreatmentDate": "Treatment Date",
-    "OperationalInfo:Field:AppointedInterpreter": "Appointed Interpreter",
+    //"OperationalInfo:Field:AppointedInterpreter": "Appointed Interpreter",
     "OperationalInfo:Field:TreatmentType": "Treatment Type",
     "OperationalInfo:Field:AnyInvitationLetter": "Is there an invitation letter request?",
     "OperationalInfo:Button:CreateProforma": "Create Proforma",
     "OperationalInfo:Button:SendToPricing": "Send To Pricing",
+    "OperationalInfo:Button:Cancel": "Cancel",
+    "OperationalInfo:Button:Copy": "Copy",
+    "OperatiomalInfo:Message:CancelConfirm": "Are you sure you want to cancel the operation?",
+    "OperatiomalInfo:Message:CopyConfirm": "Are you sure you want to copy the operation?",
 
     /*PROFORMA*/
     "Proforma:Title": "Proforma Wizard",

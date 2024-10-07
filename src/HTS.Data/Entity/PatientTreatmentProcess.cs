@@ -29,5 +29,6 @@ namespace HTS.Data.Entity
         [ForeignKey("FinalizationTypeId")]
         public FinalizationType? FinalizationType { get; set; }
         public virtual ICollection<HospitalConsultation> HospitalConsultations { get; set; }
+        public virtual ICollection<SalesMethodAndCompanionInfo> SalesMethodAndCompanionInfos { get; set; }
     }
 }

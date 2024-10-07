@@ -13,6 +13,7 @@ using HTS.Localization;
 using HTS.PDFDocument;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Localization;
 using QuestPDF.Fluent;
 using QuestPDF.Infrastructure;
@@ -31,10 +32,14 @@ public class ProformaService : ApplicationService, IProformaService
     private readonly IRepository<RejectReason, int> _rejectReasonRepository;
     private readonly IRepository<PatientTreatmentProcess, int> _patientTreatmentProcessRepository;
     private readonly IRepository<Operation, int> _operationRepository;
+    private readonly IRepository<SalesMethodAndCompanionInfo, int> _salesMethodAndCompanionInfoRepository;
     private readonly IStringLocalizer<HTSResource> _localizer;
     private readonly IHTSTaskService _htsTaskService;
     private readonly IRepository<HospitalInterpreter, int> _hiRepository;
     private readonly ICurrentUser _currentUser;
+    private readonly IUserService _userService;
+    private IConfiguration _config;
+    private readonly IRepository<HTSTask, int> _taskRepository;
 
     public ProformaService(IRepository<Proforma, int> proformaRepository,
         IRepository<ExchangeRateInformation, int> exchangeRateRepository,
@@ -45,7 +50,11 @@ public class ProformaService : ApplicationService, IProformaService
         IStringLocalizer<HTSResource> localizer,
         IHTSTaskService htsTaskService,
         IRepository<HospitalInterpreter, int> hiRepository,
-        ICurrentUser currentUser
+        IRepository<SalesMethodAndCompanionInfo, int> salesMethodAndCompanionInfoRepository,
+        ICurrentUser currentUser,
+        IRepository<HTSTask, int> taskRepository,
+        IUserService userService,
+        IConfiguration config
         )
     {
         _proformaRepository = proformaRepository;
@@ -57,7 +66,11 @@ public class ProformaService : ApplicationService, IProformaService
         _localizer = localizer;
         _htsTaskService = htsTaskService;
         _hiRepository = hiRepository;
+        _salesMethodAndCompanionInfoRepository = salesMethodAndCompanionInfoRepository;
         _currentUser = currentUser;
+        _taskRepository = taskRepository;
+        _userService = userService;
+        _config = config;
     }
 
     public async Task<List<ProformaListDto>> GetNameListByOperationIdAsync(int operationId)
@@ -463,7 +476,12 @@ public class ProformaService : ApplicationService, IProformaService
             .Include(p => p.Operation) // Include Operation again
             .ThenInclude(o => o.Hospital) // Include Hospital in Operation
             .ThenInclude(h => h.HospitalPricers) // Include HospitalPricers in Hospital
-            .ThenInclude(hp => hp.User); // Include User for each HospitalPricer
+            .ThenInclude(hp => hp.User) // Include User for each HospitalPricer
+            .Include(p => p.Operation) // Include Operation again
+            .ThenInclude(o => o.Creator) // Include creator in Operation
+            .Include(p => p.Operation) // Include Operation again
+            .ThenInclude(o => o.PatientTreatmentProcess) // Include PatientTreatmentProcess in Operation
+            .ThenInclude(ptp => ptp.SalesMethodAndCompanionInfos);
 
         // AsNoTracking for read-only query optimization
         detailedProformaQuery = detailedProformaQuery.AsNoTracking();
@@ -471,6 +489,76 @@ public class ProformaService : ApplicationService, IProformaService
         // Retrieve the detailed proforma with the specified ID
         var detailedProforma = await detailedProformaQuery.FirstOrDefaultAsync(p => p.Id == id);
         SendEMailToHospitalStaffAndPricersPatientApprovedRejected(detailedProforma, true);
+
+        var salesMethodEntity = detailedProforma.Operation.PatientTreatmentProcess?.SalesMethodAndCompanionInfos
+            .OrderByDescending(s => s.CreationTime).FirstOrDefault();
+        //Operasyon kaydını oluşturan kullanıcı. (Hasta TİK'e devredildiyse TİK rolündeki kullanıcılar)
+        string urlFormat = _config["ServiceURL:TaskUrlFormat"];
+        string taskUrl = string.Format(urlFormat, detailedProforma.Operation.PatientTreatmentProcess?.PatientId);
+        if (salesMethodEntity?.AdvancePaymentRequested ?? false)
+        {
+            if (detailedProforma.Operation.PatientTreatmentProcess.Patient.IsAssignedToTik ?? false)
+            {
+                //Get tik users
+                var tikUsers = await _userService.GetTikStaffListAsync();
+                if (!(tikUsers?.Any() ?? false))
+                {
+                    return;
+                }
+
+                //Create task
+                List<HTSTask> tasks = new List<HTSTask>();
+                foreach (var tik in tikUsers)
+                {
+                    tasks.Add(GetTask(TaskTypeEnum.RequestingDownPayment, tik.Id, detailedProforma.Operation.PatientTreatmentProcess.PatientId, detailedProforma.Id, taskUrl));
+                }
+                await _taskRepository.InsertManyAsync(tasks);
+            }
+            else
+            {
+                var task = GetTask(TaskTypeEnum.RequestingDownPayment,detailedProforma.Operation.Creator.Id, detailedProforma.Operation.PatientTreatmentProcess.PatientId, detailedProforma.Id, taskUrl);
+                await _taskRepository.InsertAsync(task);
+            }
+        }
+        else if (salesMethodEntity?.AnyTravelPlan ?? false)
+        {
+            if (detailedProforma.Operation.PatientTreatmentProcess.Patient.IsAssignedToTik ?? false)
+            {
+                //Get tik users
+                var tikUsers = await _userService.GetTikStaffListAsync();
+                if (!(tikUsers?.Any() ?? false))
+                {
+                    return;
+                }
+
+                //Create task
+                List<HTSTask> tasks = new List<HTSTask>();
+                foreach (var tik in tikUsers)
+                {
+                    tasks.Add(GetTask(TaskTypeEnum.EnteringTravelAccommodationPlan, tik.Id, detailedProforma.Operation.PatientTreatmentProcess.PatientId, detailedProforma.Id, taskUrl));
+                }
+                await _taskRepository.InsertManyAsync(tasks);
+            }
+            else
+            {
+                var task = GetTask(TaskTypeEnum.EnteringTravelAccommodationPlan,detailedProforma.Operation.Creator.Id, detailedProforma.Operation.PatientTreatmentProcess.PatientId, detailedProforma.Id, taskUrl);
+                await _taskRepository.InsertAsync(task);
+            }
+        }
+    }
+    
+    private static HTSTask GetTask(TaskTypeEnum taskType, Guid userId, int patientId, int relatedEntityId,
+        string taskUrl)
+    {
+        return new HTSTask()
+        {
+            TaskTypeId = taskType.GetHashCode(),
+            UserId = userId,
+            IsActive = true,
+            PatientId = patientId,
+            RelatedEntityId = relatedEntityId,
+            Url = taskUrl
+        };
     }
 
     private async Task ClosePatientApprovalTask(Proforma proforma)

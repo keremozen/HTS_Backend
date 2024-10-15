@@ -510,13 +510,13 @@ public class ProformaService : ApplicationService, IProformaService
                 List<HTSTask> tasks = new List<HTSTask>();
                 foreach (var tik in tikUsers)
                 {
-                    tasks.Add(GetTask(TaskTypeEnum.RequestingDownPayment, tik.Id, detailedProforma.Operation.PatientTreatmentProcess.PatientId, detailedProforma.Id, taskUrl));
+                    tasks.Add(GetTask(TaskTypeEnum.RequestingDownPayment, tik.Id, detailedProforma.Operation.PatientTreatmentProcess.PatientId, salesMethodEntity.PatientTreatmentProcessId, taskUrl));
                 }
                 await _taskRepository.InsertManyAsync(tasks);
             }
             else
             {
-                var task = GetTask(TaskTypeEnum.RequestingDownPayment,detailedProforma.Operation.Creator.Id, detailedProforma.Operation.PatientTreatmentProcess.PatientId, detailedProforma.Id, taskUrl);
+                var task = GetTask(TaskTypeEnum.RequestingDownPayment,detailedProforma.Operation.Creator.Id, detailedProforma.Operation.PatientTreatmentProcess.PatientId, salesMethodEntity.PatientTreatmentProcessId, taskUrl);
                 await _taskRepository.InsertAsync(task);
             }
         }
@@ -535,13 +535,13 @@ public class ProformaService : ApplicationService, IProformaService
                 List<HTSTask> tasks = new List<HTSTask>();
                 foreach (var tik in tikUsers)
                 {
-                    tasks.Add(GetTask(TaskTypeEnum.EnteringTravelAccommodationPlan, tik.Id, detailedProforma.Operation.PatientTreatmentProcess.PatientId, detailedProforma.Id, taskUrl));
+                    tasks.Add(GetTask(TaskTypeEnum.EnteringTravelAccommodationPlan, tik.Id, detailedProforma.Operation.PatientTreatmentProcess.PatientId, salesMethodEntity.PatientTreatmentProcessId, taskUrl));
                 }
                 await _taskRepository.InsertManyAsync(tasks);
             }
             else
             {
-                var task = GetTask(TaskTypeEnum.EnteringTravelAccommodationPlan,detailedProforma.Operation.Creator.Id, detailedProforma.Operation.PatientTreatmentProcess.PatientId, detailedProforma.Id, taskUrl);
+                var task = GetTask(TaskTypeEnum.EnteringTravelAccommodationPlan,detailedProforma.Operation.Creator.Id, detailedProforma.Operation.PatientTreatmentProcess.PatientId, salesMethodEntity.PatientTreatmentProcessId, taskUrl);
                 await _taskRepository.InsertAsync(task);
             }
         }

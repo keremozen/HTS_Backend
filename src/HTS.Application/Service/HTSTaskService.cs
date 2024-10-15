@@ -240,8 +240,67 @@ public class HTSTaskService : ApplicationService, IHTSTaskService
                 t.IsActive = false;
                 return t;
             }).ToList();
+            await  CreateEnteringDownPaymentTask(tasks);
             await _taskRepository.UpdateManyAsync(tasks);
         }
+    }
+
+    private async Task CreateEnteringDownPaymentTask(List<HTSTask> tasks)
+    {
+        if (tasks.Any(t => t.TaskTypeId == EntityEnum.TaskTypeEnum.RequestingDownPayment.GetHashCode()))
+        {
+            var matchedTask = tasks.FirstOrDefault(t =>
+                t.TaskTypeId == EntityEnum.TaskTypeEnum.RequestingDownPayment.GetHashCode());
+            //Ön ödemenin talep edilmesi taskı kapanıyor ise yeni task aç. Ön Ödemenin Girilmesi taski
+            
+            //operasyona git, proforma onaylandı tahsilat bekleniyor operasyonundaki hastane fiyatlandırıcılarına task aç
+            var operationQuery = await _operationRepository.GetQueryableAsync();
+            operationQuery = operationQuery
+                .Include(o => o.PatientTreatmentProcess) // Include PatientTreatmentProcess in Operation
+                .ThenInclude(ptp => ptp.Patient) // Include Patient in PatientTreatmentProcess
+                .Include(o => o.Hospital) // Include Hospital in Operation
+                .ThenInclude(h => h.HospitalPricers) // Include HospitalPricers in Hospital
+                .ThenInclude(hs => hs.User); // Include User for each HospitalStaff
+
+            // AsNoTracking for read-only query optimization
+            operationQuery = operationQuery.AsNoTracking();
+
+            // Retrieve the detailed proforma with the specified ID
+            var operation = await operationQuery.FirstOrDefaultAsync(p => p.PatientTreatmentProcessId == matchedTask.RelatedEntityId
+             && p.OperationStatusId == EntityEnum.OperationStatusEnum.ProformaApprovedWaitingForPayment.GetHashCode());
+
+            string urlFormat = _config["ServiceURL:TaskUrlFormat"];
+            string taskUrl = string.Format(urlFormat, operation.PatientTreatmentProcess?.PatientId);
+
+            //Create task
+            List<HTSTask> newTasks = new List<HTSTask>();
+            if (operation.Hospital != null)
+            {
+                foreach (var pricer in operation.Hospital.HospitalPricers)
+                {
+                    newTasks.Add(GetTask(EntityEnum.TaskTypeEnum.EnteringDownPayment, pricer.UserId,
+                        matchedTask!.PatientId, matchedTask.RelatedEntityId,
+                        taskUrl));
+                }
+                await _taskRepository.InsertManyAsync(newTasks);
+            }
+        
+         
+        }
+    }
+
+    private static HTSTask GetTask(EntityEnum.TaskTypeEnum taskType, Guid userId, int patientId, int relatedEntityId,
+        string taskUrl)
+    {
+        return new HTSTask()
+        {
+            TaskTypeId = taskType.GetHashCode(),
+            UserId = userId,
+            IsActive = true,
+            PatientId = patientId,
+            RelatedEntityId = relatedEntityId,
+            Url = taskUrl
+        };
     }
 
 

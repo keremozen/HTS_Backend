@@ -55,6 +55,7 @@ public class SalesMethodAndCompanionInfoService : ApplicationService, ISalesMeth
             var response =await (await _salesMethodAndCompanionInfoRepository.GetQueryableAsync())
                 .AsNoTracking()
                 .Include(s => s.InterpreterAppointments)
+                .ThenInclude(a=>a.Branch)
                 .FirstOrDefaultAsync(i => i.PatientTreatmentProcessId == ptpId);
             return ObjectMapper.Map<SalesMethodAndCompanionInfo, SalesMethodAndCompanionInfoDto>(response);
         }
@@ -71,7 +72,12 @@ public class SalesMethodAndCompanionInfoService : ApplicationService, ISalesMeth
         if (entity != null)
         {//Update process
             //Delete child records
-            await _interpreterAppointmentRepository.DeleteManyAsync(entity.InterpreterAppointments.Select(a => a.Id).ToList());
+            if (entity.InterpreterAppointments != null)
+            {
+                await _interpreterAppointmentRepository.DeleteManyAsync(entity.InterpreterAppointments.Select(a => a.Id)
+                    .ToList());
+            }
+
             ObjectMapper.Map(salesMethodAndCompanionInfo, entity);
             await _salesMethodAndCompanionInfoRepository.UpdateAsync(entity);
         }
